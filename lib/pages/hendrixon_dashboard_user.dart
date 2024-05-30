@@ -104,7 +104,7 @@ class HendrixonDashboardUser extends StatelessWidget {
                                             ),
                                           ),
                                           TextSpan(
-                                            text: '\n' 'MANAGEMENT SYSTEM',
+                                            text: '\n' 'MANAGEMENT SYSTEMS',
                                             style: GoogleFonts.getFont(
                                               'Montserrat',
                                               fontWeight: FontWeight.w700,
@@ -715,8 +715,8 @@ class HendrixonDashboardUser extends StatelessWidget {
                                                       child: Container(
                                                         padding:
                                                             const EdgeInsets
-                                                                .fromLTRB(20,
-                                                                10, 20, 10),
+                                                                .fromLTRB(
+                                                                20, 10, 20, 10),
                                                         child: Text(
                                                           'View More',
                                                           style: GoogleFonts
