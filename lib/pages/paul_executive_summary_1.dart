@@ -6,8 +6,7 @@ class PaulExecutiveSummary1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    Container(
+    return Container(
       decoration: const BoxDecoration(
         color: Color(0xFF5CF659),
       ),
@@ -32,12 +31,7 @@ class PaulExecutiveSummary1 extends StatelessWidget {
                 ),
               ),
               Text(
-                'The project aims to address the needs of the Career Center Office and College Deans in tracking graduates' employability and alumni engagement.
-              The Career Center Office requires the ability to assess graduates' career success and access data on workforce development.
-              College Deans need insights on alumni engagement for program improvement.
-              System requirements include integrating systems for tracking graduates' employability and alumni success.
-              Implementation of data analysis tools is essential to evaluate workforce development initiatives and guide program enhancements.
-              The project emphasizes aligning academic programs with industry demands, leveraging analytics for informed decision-making, and enhancing career outcomes and educational quality in the higher education sector.',
+                'The project aims to address the needs of the Career Center Office and College Deans in tracking graduates employability and alumni engagement.\nThe Career Center Office requires the ability to assess graduates career success and access data on workforce development.\nCollege Deans need insights on alumni engagement for program improvement.\nSystem requirements include integrating systems for tracking graduates employability and alumni success.\nImplementation of data analysis tools is essential to evaluate workforce development initiatives and guide program enhancements.\nThe project emphasizes aligning academic programs with industry demands, leveraging analytics for informed decision-making, and enhancing career outcomes and educational quality in the higher education sector.',
                 style: GoogleFonts.getFont(
                   'Montserrat',
                   fontWeight: FontWeight.w400,

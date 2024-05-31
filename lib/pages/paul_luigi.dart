@@ -7,8 +7,7 @@ class PaulLuigi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    Container(
+    return Container(
       decoration: BoxDecoration(
         border: Border.all(color: const Color(0xFF000000)),
         borderRadius: BorderRadius.circular(20),
@@ -43,7 +42,6 @@ class PaulLuigi extends StatelessWidget {
                     height: 36,
                     child: SvgPicture.asset(
                       'assets/images/ellipse_51.jpeg.jpeg',
-                      'assets/vectors/ellipse_539_x2.svg',
                     ),
                   ),
                 ),

@@ -6,8 +6,7 @@ class PaulExecutiveSummary2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    Container(
+    return Container(
       decoration: const BoxDecoration(
         color: Color(0xFF5CF659),
       ),
@@ -44,8 +43,7 @@ class PaulExecutiveSummary2 extends StatelessWidget {
                     ),
                     children: [
                       TextSpan(
-                        text: ' I use scrum methodology for this module
-              ',
+                        text: ' I use scrum methodology for this module',
                         style: GoogleFonts.getFont(
                           'Inter',
                           fontWeight: FontWeight.w400,
@@ -64,7 +62,8 @@ class PaulExecutiveSummary2 extends StatelessWidget {
                         ),
                       ),
                       TextSpan(
-                        text: 'https://docs.google.com/document/d/1hI0rCBT9UpjXkIFBh8jsq7ZkB71ClgbcfnJw41dQE-s/edit',
+                        text:
+                            'https://docs.google.com/document/d/1hI0rCBT9UpjXkIFBh8jsq7ZkB71ClgbcfnJw41dQE-s/edit',
                         style: GoogleFonts.getFont(
                           'Inter',
                           fontWeight: FontWeight.w400,
@@ -88,8 +87,7 @@ class PaulExecutiveSummary2 extends StatelessWidget {
                   ),
                   children: [
                     TextSpan(
-                      text: ' 
-              ',
+                      text: ' ',
                       style: GoogleFonts.getFont(
                         'Inter',
                         fontWeight: FontWeight.w400,
@@ -108,7 +106,8 @@ class PaulExecutiveSummary2 extends StatelessWidget {
                       ),
                     ),
                     TextSpan(
-                      text: 'https://docs.google.com/document/d/1We5njaz9smwst2QspzVJubZusrdiZNR8tSQHDbw5J8w/edit',
+                      text:
+                          'https://docs.google.com/document/d/1We5njaz9smwst2QspzVJubZusrdiZNR8tSQHDbw5J8w/edit',
                       style: GoogleFonts.getFont(
                         'Inter',
                         fontWeight: FontWeight.w400,

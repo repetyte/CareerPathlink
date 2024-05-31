@@ -6,8 +6,7 @@ class PaulExecutiveSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    Container(
+    return Container(
       decoration: const BoxDecoration(
         color: Color(0xFF5CF659),
       ),
@@ -91,22 +90,22 @@ class PaulExecutiveSummary extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.fromLTRB(43.6, 0, 0, 0),
-                  style: GoogleFonts.getFont(
-                    'Montserrat',
-                    fontWeight: FontWeight.w400,
-                    fontSize: 40,
-                    color: const Color(0xFF000000),
-                  ),
-                child: const Text(
-                  '       a) Integration of a system to track graduates employability and workforce development initiatives to monitor and enhance career outcomes.',
-                ),
-              ),
+              // Container(
+              //   margin: const EdgeInsets.fromLTRB(43.6, 0, 0, 0),\
+              //   style: GoogleFonts.getFont(
+              //       'Montserrat',
+              //       fontWeight: FontWeight.w400,
+              //       fontSize: 40,
+              //       color: const Color(0xFF000000),
+              //     ),
+              //   child: const Text(
+              //     '       a) Integration of a system to track graduates employability and workforce development initiatives to monitor and enhance career outcomes.',
+              //   ),
+              // ),
             ],
           ),
         ),
       ),
-    )
+    );
   }
 }

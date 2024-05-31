@@ -6,8 +6,7 @@ class PaulExecutiveSummary3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    Container(
+    return Container(
       decoration: const BoxDecoration(
         color: Color(0xFF5CF659),
       ),
@@ -41,8 +40,7 @@ class PaulExecutiveSummary3 extends StatelessWidget {
                   ),
                   children: [
                     TextSpan(
-                      text: 'Career Center Office:
-              ',
+                      text: 'Career Center Office:',
                       style: GoogleFonts.getFont(
                         'Montserrat',
                         fontWeight: FontWeight.w600,
@@ -51,14 +49,11 @@ class PaulExecutiveSummary3 extends StatelessWidget {
                       ),
                     ),
                     TextSpan(
-                      text: '             Provide access to data on workforce development for a comprehensive understanding of industry trends.
-                           Integrate a system for tracking graduates' employability and workforce development progress.
-                           Implement data analysis tools to assess the success of workforce development initiatives.
-              ',
+                      text:
+                          '             Provide access to data on workforce development for a comprehensive understanding of industry trends.\nIntegrate a system for tracking graduates employability and workforce development progress.\nImplement data analysis tools to assess the success of workforce development initiatives.',
                     ),
                     TextSpan(
-                      text: 'College Deans:
-              ',
+                      text: 'College Deans:',
                       style: GoogleFonts.getFont(
                         'Montserrat',
                         fontWeight: FontWeight.w600,
@@ -67,10 +62,8 @@ class PaulExecutiveSummary3 extends StatelessWidget {
                       ),
                     ),
                     TextSpan(
-                      text: '             Enable access to data on alumni engagement and success for informed decision-making.
-                           Develop a module for College Deans to access alumni engagement and success data.
-                           Implement analytics tools to guide program improvement strategies based on alumni outcomes.
-              ',
+                      text:
+                          '             Enable access to data on alumni engagement and success for informed decision-making.\nDevelop a module for College Deans to access alumni engagement and success data.\nImplement analytics tools to guide program improvement strategies based on alumni outcomes.',
                       style: GoogleFonts.getFont(
                         'Montserrat',
                         fontWeight: FontWeight.w400,
