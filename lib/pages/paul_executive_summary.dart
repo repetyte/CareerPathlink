@@ -67,13 +67,12 @@ class PaulExecutiveSummary extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.fromLTRB(43.6, 0, 67.9, 29),
                 child: Text(
-                  '        a) The Career Center Office needs the ability to track and assess graduates' employability to ensure they are successful in their careers.
-                     b) Access to data on workforce development is crucial for understanding industry trends and aligning graduates' skills with market demands.',
+                  '        a) The Career Center Office needs the ability to track and assess graduates employability to ensure they are successful in their careers.\nb) Access to data on workforce development is crucial for understanding industry trends and aligning graduates skills with market demands.',
                   style: GoogleFonts.getFont(
                     'Montserrat',
                     fontWeight: FontWeight.w400,
                     fontSize: 40,
-                    color: Color(0xFF000000),
+                    color: const Color(0xFF000000),
                   ),
                 ),
               ),
@@ -93,16 +92,15 @@ class PaulExecutiveSummary extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.fromLTRB(43.6, 0, 0, 0),Implementation of data analysis tools to assess the effectiveness of workforce development initiatives and make informed decisions.',
+                margin: const EdgeInsets.fromLTRB(43.6, 0, 0, 0),
                   style: GoogleFonts.getFont(
                     'Montserrat',
                     fontWeight: FontWeight.w400,
                     fontSize: 40,
                     color: const Color(0xFF000000),
                   ),
-                child: Text(
-                  '       a) Integration of a system to track graduates' employability and workforce development initiatives to monitor and enhance career outcomes.
-                     b) 
+                child: const Text(
+                  '       a) Integration of a system to track graduates employability and workforce development initiatives to monitor and enhance career outcomes.',
                 ),
               ),
             ],

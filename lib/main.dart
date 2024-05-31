@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/hendrixon_dashboard_user.dart';
+import 'package:flutter_app/pages/paul_dean_graduates_unemployed_ccs.dart';
 
 void main() => runApp(const MyApp());
 
@@ -122,7 +122,7 @@ class MyApp extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.on_device_training),
+                leading: const Icon(Icons.transcribe),
                 title: const Text(
                   'Career Engagement and Training',
                   style: TextStyle(
@@ -137,7 +137,7 @@ class MyApp extends StatelessWidget {
             ],
           ),
         ),
-        body: const HendrixonDashboardUser(),
+        body: const PaulDeanGraduatesUnemployedCcs(),
       ),
     );
   }
