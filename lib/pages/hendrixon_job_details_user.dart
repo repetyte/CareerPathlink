@@ -146,22 +146,24 @@ class HendrixonJobDetailsUser extends StatelessWidget {
                                   ),
                                 ),
                                 Container(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(23.8, 49, 0, 59),
+                                  padding: const EdgeInsets.fromLTRB(
+                                      23.8, 49, 0, 59),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Container(
-                                        margin:
-                                            const EdgeInsets.fromLTRB(0, 0, 0, 4),
+                                        margin: const EdgeInsets.fromLTRB(
+                                            0, 0, 0, 4),
                                         child: Align(
                                           alignment: Alignment.topLeft,
                                           child: SizedBox(
                                             width: 278.4,
                                             child: Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
@@ -173,7 +175,8 @@ class HendrixonJobDetailsUser extends StatelessWidget {
                                                     width: 215.4,
                                                     child: Text(
                                                       'Junior Financial Analyst',
-                                                      style: GoogleFonts.getFont(
+                                                      style:
+                                                          GoogleFonts.getFont(
                                                         'Montserrat',
                                                         fontWeight:
                                                             FontWeight.w700,
@@ -190,15 +193,16 @@ class HendrixonJobDetailsUser extends StatelessWidget {
                                                           0, 0, 0, 37),
                                                   child: Container(
                                                     decoration: BoxDecoration(
-                                                      color:
-                                                          const Color(0xFFFFFFFF),
+                                                      color: const Color(
+                                                          0xFFFFFFFF),
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               20),
                                                     ),
                                                     child: Container(
                                                       padding: const EdgeInsets
-                                                          .fromLTRB(5, 5, 5.4, 5),
+                                                          .fromLTRB(
+                                                          5, 5, 5.4, 5),
                                                       child: Text(
                                                         'Open',
                                                         style:
@@ -263,8 +267,8 @@ class HendrixonJobDetailsUser extends StatelessWidget {
                                   ),
                                 ),
                                 Container(
-                                  margin:
-                                      const EdgeInsets.fromLTRB(0.2, 0, 11.7, 0),
+                                  margin: const EdgeInsets.fromLTRB(
+                                      0.2, 0, 11.7, 0),
                                   child: Text(
                                     'Entry Level',
                                     style: GoogleFonts.getFont(
@@ -424,7 +428,8 @@ class HendrixonJobDetailsUser extends StatelessWidget {
                                   ),
                                 ),
                                 Container(
-                                  margin: const EdgeInsets.fromLTRB(0.2, 0, 0, 0),
+                                  margin:
+                                      const EdgeInsets.fromLTRB(0.2, 0, 0, 0),
                                   child: Text(
                                     'Domestic/Around Philippines',
                                     style: GoogleFonts.getFont(
@@ -586,7 +591,8 @@ class HendrixonJobDetailsUser extends StatelessWidget {
                                           const EdgeInsets.fromLTRB(0, 0, 4, 0),
                                       child: Container(
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(25),
+                                          borderRadius:
+                                              BorderRadius.circular(25),
                                           image: const DecorationImage(
                                             fit: BoxFit.cover,
                                             image: AssetImage(
@@ -620,7 +626,8 @@ class HendrixonJobDetailsUser extends StatelessWidget {
                                                   'Montserrat',
                                                   fontWeight: FontWeight.w700,
                                                   fontSize: 12,
-                                                  color: const Color(0xFF000000),
+                                                  color:
+                                                      const Color(0xFF000000),
                                                 ),
                                               ),
                                             ),
@@ -653,8 +660,8 @@ class HendrixonJobDetailsUser extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(40),
                               ),
                               child: Container(
-                                padding:
-                                    const EdgeInsets.fromLTRB(16.9, 10, 16.9, 10),
+                                padding: const EdgeInsets.fromLTRB(
+                                    16.9, 10, 16.9, 10),
                                 child: Text(
                                   'Submit Resume',
                                   style: GoogleFonts.getFont(
