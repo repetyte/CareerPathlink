@@ -48,7 +48,7 @@ class PaulExecutiveSummary3 extends StatelessWidget {
                         height: 1.3,
                       ),
                     ),
-                    TextSpan(
+                    const TextSpan(
                       text:
                           '             Provide access to data on workforce development for a comprehensive understanding of industry trends.\nIntegrate a system for tracking graduates employability and workforce development progress.\nImplement data analysis tools to assess the success of workforce development initiatives.',
                     ),
@@ -68,7 +68,7 @@ class PaulExecutiveSummary3 extends StatelessWidget {
                         'Montserrat',
                         fontWeight: FontWeight.w400,
                         fontSize: 40,
-                        color: Color(0xFF000000),
+                        color: const Color(0xFF000000),
                       ),
                     ),
                   ],

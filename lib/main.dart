@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/pages/hendrixon_job_details_admin.dart';
-import 'package:flutter_app/pages/hendrixon_job_details_user.dart';
-import 'package:flutter_app/pages/paul_dean_graduates_unemployed_ccs.dart';
 
 void main() => runApp(const MyApp());
 

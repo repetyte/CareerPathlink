@@ -36,7 +36,7 @@ class PaulExecutiveSummary1 extends StatelessWidget {
                   'Montserrat',
                   fontWeight: FontWeight.w400,
                   fontSize: 40,
-                  color: Color(0xFF000000),
+                  color: const Color(0xFF000000),
                 ),
               ),
             ],
