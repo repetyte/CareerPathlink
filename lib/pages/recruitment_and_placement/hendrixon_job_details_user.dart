@@ -30,23 +30,6 @@ class HendrixonJobDetailsUser extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        // Container(
-                        //   margin: const EdgeInsets.fromLTRB(0, 5.5, 4, 4.5),
-                        //   child: Container(
-                        //     decoration: const BoxDecoration(
-                        //       image: DecorationImage(
-                        //         fit: BoxFit.contain,
-                        //         image: AssetImage(
-                        //           'assets/images/menu.png',
-                        //         ),
-                        //       ),
-                        //     ),
-                        //     child: const SizedBox(
-                        //       width: 24,
-                        //       height: 30,
-                        //     ),
-                        //   ),
-                        // ),
                         Container(
                           child: Text(
                             'Recruitment and Placement',

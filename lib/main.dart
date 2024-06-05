@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/hendrixon_job_details_admin.dart';
+import 'package:flutter_app/pages/recruitment_and_placement/hendrixon_dashboard_user.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -9,7 +11,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'hello',
       theme: ThemeData(
         fontFamily: 'Montserrat',
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
@@ -98,31 +100,34 @@ class MyApp extends StatelessWidget {
                 // child: Text('University\nCAREER CENTER\nManagement System'),
               ),
               ListTile(
-                leading: const Icon(Icons.home),
-                title: const Text('Home'),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
-              ),
+                  leading: const Icon(Icons.home),
+                  title: const Text('Home'),
+                  onTap: () {
+                    // Update the state of the app.
+                    // ...
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute<void>(
+                            builder: (BuildContext context) =>
+                            const JobPostingScreen()));
+                  }),
               ListTile(
                 leading: const Icon(Icons.work),
                 title: const Text(
                   'Recruitment and Placement',
                   style: TextStyle(
-                      // fontSize: 16,
-                      // // fontWeight: FontWeight.w700,
-                      // // color: Color(0xFFFF0000)
-                      ),
+                    // fontSize: 16,
+                    // fontWeight: FontWeight.w700,
+                    // color: Color(0xFFFF0000)
+                  ),
                 ),
                 onTap: () {
                   // Update the state of the app.
                   // ...
-                  Navigator.pop(context);
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.transcribe),
+                leading: const Icon(Icons.on_device_training),
                 title: const Text(
                   'Career Engagement and Training',
                   style: TextStyle(
@@ -137,7 +142,7 @@ class MyApp extends StatelessWidget {
             ],
           ),
         ),
-        body: const HendrixonJobDetailsAdmin(),
+        body: const JobPostingScreen(),
       ),
     );
   }

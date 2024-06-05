@@ -12,8 +12,11 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.6
   google_fonts: ^6.2.1
+  http: ^1.2.1
+  provider: ^6.1.2
 
   flutter_svg: any
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -1637,3 +1640,9 @@ flutter:
   - assets/vectors/vector_398_x2.svg
   - assets/vectors/vector_200_x2.svg
 
+  fonts:
+     - family: Montserrat
+       fonts:
+         - asset: fonts/Montserrat-Regular.ttf
+         - asset: fonts/Montserrat-Bold.ttf
+           weight: 700
