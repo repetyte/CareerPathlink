@@ -40,7 +40,7 @@ if($num > 0){
     }
 
     http_response_code(200);
-    echo json_encode($jobs_arr);
+    echo json_encode($jobs_arr["records"]);
 } else {
     http_response_code(404);
     echo json_encode(array("message" => "No jobs found."));

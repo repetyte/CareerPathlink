@@ -20,11 +20,29 @@ $data = json_decode(file_get_contents("php://input"));
 if(
     !empty($data->job_title) &&
     !empty($data->status) &&
-    // Other fields here...
+    !empty($data->field_industry) &&
+    !empty($data->job_level) &&
+    !empty($data->yrs_of_experience_needed) &&
+    !empty($data->contractual_status) &&
+    !empty($data->salary) &&
+    !empty($data->job_location) &&
+    !empty($data->job_description) &&
+    !empty($data->requirements) &&
+    !empty($data->job_responsibilities) &&
+    !empty($data->industry_partner) &&
 ) {
     $job->job_title = $data->job_title;
     $job->status = $data->status;
-    // Assign other fields here...
+    $job->field_industry = $data->field_industry;
+    $job->job_level = $data->job_level;
+    $job->yrs_of_experience_needed = $data->yrs_of_experience_needed;
+    $job->contractual_status = $data->contractual_status;
+    $job->salary = $data->salary;
+    $job->job_location = $data->job_location;
+    $job->job_description = $data->job_description;
+    $job->requirements = $data->requirements;
+    $job->job_responsibilities = $data->job_responsibilities;
+    $job->industry_partner = $data->industry_partner;
 
     if($job->create()){
         http_response_code(201);
