@@ -29,7 +29,7 @@ if(
     !empty($data->job_description) &&
     !empty($data->requirements) &&
     !empty($data->job_responsibilities) &&
-    !empty($data->industry_partner) &&
+    !empty($data->industry_partner)
 ) {
     $job->job_title = $data->job_title;
     $job->status = $data->status;

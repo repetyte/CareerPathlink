@@ -13,16 +13,30 @@ class JobPostingDetailsScreen extends StatefulWidget {
 
 class _JobPostingDetailsScreenState extends State<JobPostingDetailsScreen> {
   late Future<List<JobPosting>> futureJobPostings;
+  final ApiService apiService = ApiService();
 
   @override
   void initState() {
     super.initState();
-    futureJobPostings = Provider.of<ApiService>(context, listen: false).fetchJobPostings();
+    futureJobPostings = apiService.fetchJobPostings();
   }
 
-  Future<void> _refreshJobPostings() async {
+  void _refreshJobPostings() {
     setState(() {
-      futureJobPostings = Provider.of<ApiService>(context, listen: false).fetchJobPostings();
+      futureJobPostings = apiService.fetchJobPostings();
+    });
+  }
+
+  void _deleteSJobPosting(int? id) {
+    apiService.deleteJobPosting(id).then((_) {
+      _refreshJobPostings();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Student deleted successfully')),
+      );
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to delete student: $error')),
+      );
     });
   }
 

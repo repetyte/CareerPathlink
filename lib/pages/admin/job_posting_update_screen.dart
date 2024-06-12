@@ -30,18 +30,18 @@ class _JobPostingUpdateScreenState extends State<JobPostingUpdateScreen> {
   @override
   void initState() {
     super.initState();
-    jobTitle = widget.jobPosting.jobTitle;
-    jobStatus = widget.jobPosting.jobStatus;
-    fieldIndustry = widget.jobPosting.fieldIndustry;
-    jobLevel = widget.jobPosting.jobLevel;
-    yrsOfExperienceNeeded = widget.jobPosting.yrsOfExperienceNeeded;
-    contractualStatus = widget.jobPosting.contractualStatus;
-    salary = widget.jobPosting.salary;
-    jobLocation = widget.jobPosting.jobLocation;
-    jobDescription = widget.jobPosting.jobDescription;
-    requirements = widget.jobPosting.requirements;
-    jobResponsibilities = widget.jobPosting.jobResponsibilities;
-    industryPartner = widget.jobPosting.industryPartner;
+    jobTitle = widget.jobPosting.jobTitle ?? '';
+    jobStatus = widget.jobPosting.jobStatus ?? '';
+    fieldIndustry = widget.jobPosting.fieldIndustry ?? '';
+    jobLevel = widget.jobPosting.jobLevel ?? '';
+    yrsOfExperienceNeeded = widget.jobPosting.yrsOfExperienceNeeded ?? '';
+    contractualStatus = widget.jobPosting.contractualStatus ?? '';
+    salary = widget.jobPosting.salary ?? '';
+    jobLocation = widget.jobPosting.jobLocation ?? '';
+    jobDescription = widget.jobPosting.jobDescription ?? '';
+    requirements = widget.jobPosting.requirements ?? '';
+    jobResponsibilities = widget.jobPosting.jobResponsibilities ?? '';
+    industryPartner = widget.jobPosting.industryPartner ?? '';
   }
 
   @override

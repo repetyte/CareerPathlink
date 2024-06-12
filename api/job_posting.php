@@ -85,24 +85,26 @@ class JobPosting {
     }
 
     function update(){
-        $query = "UPDATE
-                    ". $this->table_name. "
-                SET
-                    job_title=:job_title,
-                    status=:status,
-                    field_industry=:field_industry,
-                    job_level=:job_level,
-                    yrs_of_experience_needed=:yrs_of_experience_needed,
-                    contractual_status=:contractual_status,
-                    salary=:salary,
-                    job_location=:job_location,
-                    job_description=:job_description,
-                    requirements=:requirements,
-                    job_responsibilities=:job_responsibilities,
-                    industry_partner=:industry_partner";
+        $query = "UPDATE " . $this->table_name . "
+                  SET
+                      job_title=:job_title,
+                      status=:status,
+                      field_industry=:field_industry,
+                      job_level=:job_level,
+                      yrs_of_experience_needed=:yrs_of_experience_needed,
+                      contractual_status=:contractual_status,
+                      salary=:salary,
+                      job_location=:job_location,
+                      job_description=:job_description,
+                      requirements=:requirements,
+                      job_responsibilities=:job_responsibilities,
+                      industry_partner=:industry_partner
+                  WHERE job_id = :job_id";
 
         $stmt = $this->conn->prepare($query);
 
+        // Sanitize input
+        $this->job_id=htmlspecialchars(strip_tags($this->job_id));
         $this->job_title=htmlspecialchars(strip_tags($this->job_title));
         $this->status=htmlspecialchars(strip_tags($this->status));
         $this->field_industry=htmlspecialchars(strip_tags($this->field_industry));
@@ -116,44 +118,39 @@ class JobPosting {
         $this->job_responsibilities=htmlspecialchars(strip_tags($this->job_responsibilities));
         $this->industry_partner=htmlspecialchars(strip_tags($this->industry_partner));
 
-        $stmt->bindParam(":job_title", $this->job_title);
-        $stmt->bindParam(":status", $this->status);
-        $stmt->bindParam(":field_industry", $this->field_industry);
-        $stmt->bindParam(":job_level", $this->job_level);
-        $stmt->bindParam(":yrs_of_experience_needed", $this->yrs_of_experience_needed);
-        $stmt->bindParam(":contractual_status", $this->contractual_status);
-        $stmt->bindParam(":salary", $this->salary);
-        $stmt->bindParam(":job_location", $this->job_location);
-        $stmt->bindParam(":job_description", $this->job_description);
-        $stmt->bindParam(":requirements", $this->requirements);
-        $stmt->bindParam(":job_responsibilities", $this->job_responsibilities);
-        $stmt->bindParam(":industry_partner", $this->industry_partner);
+        // Bind parameters
+        $stmt->bindParam(':job_id', $this->job_id);
+        $stmt->bindParam(':job_title', $this->job_title);
+        $stmt->bindParam(':status', $this->status);
+        $stmt->bindParam(':field_industry', $this->field_industry);
+        $stmt->bindParam(':job_level', $this->job_level);
+        $stmt->bindParam(':yrs_of_experience_needed', $this->yrs_of_experience_needed);
+        $stmt->bindParam(':contractual_status', $this->contractual_status);
+        $stmt->bindParam(':salary', $this->salary);
+        $stmt->bindParam(':job_location', $this->job_location);
+        $stmt->bindParam(':job_description', $this->job_description);
+        $stmt->bindParam(':requirements', $this->requirements);
+        $stmt->bindParam(':job_responsibilities', $this->job_responsibilities);
+        $stmt->bindParam(':industry_partner', $this->industry_partner);
 
         if($stmt->execute()){
             return true;
         }
 
         return false;
-
-        $stmt->close();
-        $stmt = null;
-        $this->conn = null;
     }
 
     function delete(){
-        $query = "DELETE FROM ". $this->table_name. " WHERE job_id =?";
+        $query = "DELETE FROM " . $this->table_name . " WHERE job_id = :job_id";
         $stmt = $this->conn->prepare($query);
         $this->job_id=htmlspecialchars(strip_tags($this->job_id));
-        $stmt->bindParam(1, $this->job_id);
+        $stmt->bindParam(':job_id', $this->job_id); // Correct binding
         if($stmt->execute()){
             return true;
         }
 
         return false;
-
-        $stmt->close();
-        $stmt = null;
-        $this->conn = null;
     }
+
 }
 ?>

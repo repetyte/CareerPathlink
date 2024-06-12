@@ -20,16 +20,16 @@ class ApiService {
     }
   }
 
-  Future<void> createJobPosting(JobPosting jobPosting) async {
-    final response = await http.post(
-      Uri.parse('$apiUrl/create.php'),
-      headers: <String, String>{'Content-Type': 'application/json'},
-      body: jsonEncode(jobPosting.toJson()),
-    );
-    if (response.statusCode != 201) {
-      throw Exception('Failed to create job posting');
-    }
-  }
+  // Future<void> createJobPosting(JobPosting jobPosting) async {
+  //   final response = await http.post(
+  //     Uri.parse('$apiUrl/create.php'),
+  //     headers: <String, String>{'Content-Type': 'application/json'},
+  //     body: jsonEncode(jobPosting.toJson()),
+  //   );
+  //   if (response.statusCode != 201) {
+  //     throw Exception('Failed to create job posting');
+  //   }
+  // }
 
   Future<void> updateJobPosting(JobPosting jobPosting) async {
     final response = await http.put(
@@ -42,7 +42,7 @@ class ApiService {
     }
   }
 
-  Future<void> deleteJobPosting(int jobId) async {
+  Future<void> deleteJobPosting(int? jobId) async {
     final response = await http.delete(
       Uri.parse('$apiUrl/delete.php?job_id=$jobId'),
       headers: <String, String>{'Content-Type': 'application/json'},
@@ -50,6 +50,36 @@ class ApiService {
     );
     if (response.statusCode != 200) {
       throw Exception('Failed to delete job posting');
+    }
+  }
+
+  // Future<List<JobPosting>> fetchJobPostings() async {
+  //   final response = await http.get(Uri.parse('$apiUrl/read.php'));
+  //
+  //   if (response.statusCode == 200) {
+  //     print("Response Body: ${response.body}"); // Log response body
+  //     List jsonResponse = json.decode(response.body)['records'];
+  //     return jsonResponse.map((job) => JobPosting.fromJson(job)).toList();
+  //   } else {
+  //     print("Failed to load job postings: ${response.statusCode}");
+  //     print("Response Body: ${response.body}");
+  //     throw Exception('Failed to load job postings');
+  //   }
+  // }
+
+  Future<void> createJobPosting(JobPosting jobPosting) async {
+    final response = await http.post(
+      Uri.parse('$apiUrl/create.php'),
+      headers: <String, String>{
+        'Content-Type': 'application/json'
+      },
+      body: jsonEncode(jobPosting.toJson()),
+    );
+
+    if (response.statusCode != 201) {
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+      throw Exception('Failed to create job posting');
     }
   }
 }

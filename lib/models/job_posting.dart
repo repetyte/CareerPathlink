@@ -1,20 +1,20 @@
 class JobPosting {
-  final int jobId;
-  late final String jobTitle;
-  late final String jobStatus;
-  late final String fieldIndustry;
-  late final String jobLevel;
-  late final String yrsOfExperienceNeeded;
-  late final String contractualStatus;
-  late final String salary;
-  late final String jobLocation;
-  late final String jobDescription;
-  late final String requirements;
-  late final String jobResponsibilities;
-  late final String industryPartner;
+  final int? jobId;
+  final String jobTitle;
+  final String jobStatus;
+  final String fieldIndustry;
+  final String jobLevel;
+  final String yrsOfExperienceNeeded;
+  final String contractualStatus;
+  final String salary;
+  final String jobLocation;
+  final String jobDescription;
+  final String requirements;
+  final String jobResponsibilities;
+  final String industryPartner;
 
   JobPosting({
-    required this.jobId,
+    this.jobId,
     required this.jobTitle,
     required this.jobStatus,
     required this.fieldIndustry,

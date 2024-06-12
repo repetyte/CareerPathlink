@@ -51,13 +51,12 @@ class MyDrawer extends StatelessWidget {
             ),
             // child: Text('University\nCAREER CENTER\nManagement System'),
           ),
-          const ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Home'),
-              // onTap: (){
-              //   Navigator.push(context,
-              //       new MaterialPageRoute(builder: (context) => new JobPostingScreen()));
-              // }
+          ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text('Home'),
+              onTap: (){
+                // navigateTo("/rr_job_dashboard", context);
+              },
           ),
           ListTile(
             leading: const Icon(Icons.work),
@@ -66,9 +65,8 @@ class MyDrawer extends StatelessWidget {
               style: TextStyle(
               ),
             ),
-            onTap: () {
-              // Update the state of the app.
-              // ...
+            onTap: (){
+              navigateTo("/rr_job_dashboard", context);
             },
           ),
           ListTile(

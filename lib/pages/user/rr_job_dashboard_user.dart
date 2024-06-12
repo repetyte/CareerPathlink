@@ -6,16 +6,14 @@ import 'package:flutter_app/services/api_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'add_job_posting_screen.dart';
-
-class JobPostingScreenUser extends StatefulWidget {
-  const JobPostingScreenUser({super.key});
+class RrJobDashboardUser extends StatefulWidget {
+  const RrJobDashboardUser({super.key});
 
   @override
-  _JobPostingScreenState createState() => _JobPostingScreenState();
+  _RrJobDashboardUserState createState() => _RrJobDashboardUserState();
 }
 
-class _JobPostingScreenState extends State<JobPostingScreen> {
+class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
   late Future<List<JobPosting>> futureJobPostings;
 
   final int _selectedDestination = 0;
@@ -349,7 +347,6 @@ class _JobPostingScreenState extends State<JobPostingScreen> {
                   } else if (snapshot.hasError) {
                     return Center(child: Text("${snapshot.error}"));
                   }
-
                   return const Center(child: CircularProgressIndicator());
                 },
               ),
@@ -357,16 +354,6 @@ class _JobPostingScreenState extends State<JobPostingScreen> {
           ),
         ),
       ]),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (context) =>
-                AddJobPostingScreen(onJobPosted: _refreshJobPostings),
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }
