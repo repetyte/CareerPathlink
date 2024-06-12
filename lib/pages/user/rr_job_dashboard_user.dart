@@ -38,31 +38,108 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
       ),
       drawer: const MyDrawer(),
       body: Column(children: [
-        SingleChildScrollView(
+        Container(
+          margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
           child: Container(
-            margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-            child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 5, 0, 3),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  margin: const EdgeInsets.fromLTRB(0, 5, 0, 3),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage(
+                                  'assets/images/seal_of_university_of_nueva_caceres_2.png',
+                                ),
+                              ),
+                            ),
+                            child: const SizedBox(
+                              width: 48,
+                              height: 48,
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(0, 6.5, 0, 6.5),
+                            child: RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
+                                style: GoogleFonts.getFont(
+                                  'Montserrat',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20,
+                                  color: const Color(0xFF000000),
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: 'UNIVERSITY\n',
+                                    style: GoogleFonts.getFont(
+                                      'Montserrat',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 12,
+                                      height: 1.3,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: 'CAREER CENTER',
+                                    style: GoogleFonts.getFont(
+                                      'Montserrat',
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16,
+                                      height: 1.3,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: '\n' 'MANAGEMENT SYSTEM',
+                                    style: GoogleFonts.getFont(
+                                      'Montserrat',
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 12,
+                                      height: 1.3,
+                                      color: const Color(0xFF000000),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFD9D9D9),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: SizedBox(
+                    width: 88,
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(0, 0, 6, 0),
+                            child: Container(
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   fit: BoxFit.cover,
                                   image: AssetImage(
-                                    'assets/images/seal_of_university_of_nueva_caceres_2.png',
+                                    'assets/images/image_12.png',
                                   ),
                                 ),
                               ),
@@ -71,104 +148,25 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                                 height: 48,
                               ),
                             ),
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(0, 6.5, 0, 6.5),
-                              child: RichText(
-                                textAlign: TextAlign.center,
-                                text: TextSpan(
-                                  style: GoogleFonts.getFont(
-                                    'Montserrat',
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 20,
-                                    color: const Color(0xFF000000),
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: 'UNIVERSITY\n',
-                                      style: GoogleFonts.getFont(
-                                        'Montserrat',
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 12,
-                                        height: 1.3,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: 'CAREER CENTER',
-                                      style: GoogleFonts.getFont(
-                                        'Montserrat',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16,
-                                        height: 1.3,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: '\n' 'MANAGEMENT SYSTEM',
-                                      style: GoogleFonts.getFont(
-                                        'Montserrat',
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 12,
-                                        height: 1.3,
-                                        color: const Color(0xFF000000),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFD9D9D9),
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: SizedBox(
-                      width: 88,
-                      child: Container(
-                        padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(0, 0, 6, 0),
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: AssetImage(
-                                      'assets/images/image_12.png',
-                                    ),
-                                  ),
-                                ),
-                                child: const SizedBox(
-                                  width: 48,
-                                  height: 48,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
+                            width: 12,
+                            height: 7.4,
+                            child: SizedBox(
                               width: 12,
                               height: 7.4,
-                              child: SizedBox(
-                                width: 12,
-                                height: 7.4,
-                                child: SvgPicture.asset(
-                                  'assets/vectors/vector_331_x2.svg',
-                                ),
+                              child: SvgPicture.asset(
+                                'assets/vectors/vector_331_x2.svg',
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -267,14 +265,14 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                     hintText: 'Search jobs here...',
                     prefixIcon: const Icon(Icons.search),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25),
+                      borderRadius: BorderRadius.circular(50),
                     ),
                   ),
                 ),
               ],
             )),
-        Container(
-          child: Expanded(
+        Expanded(
+          child: Container(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: FutureBuilder<List<JobPosting>>(
@@ -327,7 +325,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  JobDetailScreen(
+                                                  RrJobDetailScreen(
                                                       jobPosting: data[index]),
                                             ),
                                           );

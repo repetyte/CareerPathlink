@@ -288,14 +288,14 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                       slivers: <Widget>[
                         SliverGrid(
                           gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             mainAxisSpacing: 10.0,
                             crossAxisSpacing: 10.0,
                             childAspectRatio: 0.5,
                           ),
                           delegate: SliverChildBuilderDelegate(
-                                (BuildContext context, int index) {
+                            (BuildContext context, int index) {
                               return Card(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(25.0),
@@ -305,7 +305,7 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                                   // Adjust the padding as needed
                                   child: Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
                                       Text(data[index].jobTitle,
@@ -329,7 +329,7 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  JobDetailScreen(
+                                                  RrJobDetailScreen(
                                                       jobPosting: data[index]),
                                             ),
                                           );
