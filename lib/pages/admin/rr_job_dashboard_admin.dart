@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/drawer.dart';
 import 'package:flutter_app/models/job_posting.dart';
 import 'package:flutter_app/pages/user/rr_job_detail_screen.dart';
 import 'package:flutter_app/services/api_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class JobPostingScreen extends StatefulWidget {
-  const JobPostingScreen({super.key});
+import 'add_job_posting_screen.dart';
+
+class RrJobDashboardAdmin extends StatefulWidget {
+  const RrJobDashboardAdmin({super.key});
 
   @override
-  _JobPostingScreenState createState() => _JobPostingScreenState();
+  _RrJobDashboardAdminState createState() => _RrJobDashboardAdminState();
 }
 
-class _JobPostingScreenState extends State<JobPostingScreen> {
+class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
   late Future<List<JobPosting>> futureJobPostings;
 
   final int _selectedDestination = 0;
@@ -23,112 +26,45 @@ class _JobPostingScreenState extends State<JobPostingScreen> {
     futureJobPostings = ApiService().fetchJobPostings();
   }
 
+  Future<void> _refreshJobPostings() async {
+    setState(() {
+      futureJobPostings = ApiService().fetchJobPostings();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: false,
+      ),
+      drawer: const MyDrawer(),
       body: Column(children: [
-        Container(
-          margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+        SingleChildScrollView(
           child: Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  margin: const EdgeInsets.fromLTRB(0, 5, 0, 3),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                            decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: AssetImage(
-                                  'assets/images/seal_of_university_of_nueva_caceres_2.png',
-                                ),
-                              ),
-                            ),
-                            child: const SizedBox(
-                              width: 48,
-                              height: 48,
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(0, 6.5, 0, 6.5),
-                            child: RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                style: GoogleFonts.getFont(
-                                  'Montserrat',
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 20,
-                                  color: const Color(0xFF000000),
-                                ),
-                                children: [
-                                  TextSpan(
-                                    text: 'UNIVERSITY\n',
-                                    style: GoogleFonts.getFont(
-                                      'Montserrat',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
-                                      height: 1.3,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: 'CAREER CENTER',
-                                    style: GoogleFonts.getFont(
-                                      'Montserrat',
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 16,
-                                      height: 1.3,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: '\n' 'MANAGEMENT SYSTEM',
-                                    style: GoogleFonts.getFont(
-                                      'Montserrat',
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 12,
-                                      height: 1.3,
-                                      color: const Color(0xFF000000),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFD9D9D9),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: SizedBox(
-                    width: 88,
-                    child: Container(
-                      padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(0, 0, 6, 0),
-                            child: Container(
+            margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(0, 5, 0, 3),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
                               decoration: const BoxDecoration(
                                 image: DecorationImage(
                                   fit: BoxFit.cover,
                                   image: AssetImage(
-                                    'assets/images/image_12.png',
+                                    'assets/images/seal_of_university_of_nueva_caceres_2.png',
                                   ),
                                 ),
                               ),
@@ -137,25 +73,104 @@ class _JobPostingScreenState extends State<JobPostingScreen> {
                                 height: 48,
                               ),
                             ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
-                            width: 12,
-                            height: 7.4,
-                            child: SizedBox(
-                              width: 12,
-                              height: 7.4,
-                              child: SvgPicture.asset(
-                                'assets/vectors/vector_331_x2.svg',
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(0, 6.5, 0, 6.5),
+                              child: RichText(
+                                textAlign: TextAlign.center,
+                                text: TextSpan(
+                                  style: GoogleFonts.getFont(
+                                    'Montserrat',
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 20,
+                                    color: const Color(0xFF000000),
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: 'UNIVERSITY\n',
+                                      style: GoogleFonts.getFont(
+                                        'Montserrat',
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 12,
+                                        height: 1.3,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: 'CAREER CENTER',
+                                      style: GoogleFonts.getFont(
+                                        'Montserrat',
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 16,
+                                        height: 1.3,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: '\n' 'MANAGEMENT SYSTEM',
+                                      style: GoogleFonts.getFont(
+                                        'Montserrat',
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 12,
+                                        height: 1.3,
+                                        color: const Color(0xFF000000),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFD9D9D9),
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: SizedBox(
+                      width: 88,
+                      child: Container(
+                        padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(0, 0, 6, 0),
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage(
+                                      'assets/images/image_12.png',
+                                    ),
+                                  ),
+                                ),
+                                child: const SizedBox(
+                                  width: 48,
+                                  height: 48,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
+                              width: 12,
+                              height: 7.4,
+                              child: SizedBox(
+                                width: 12,
+                                height: 7.4,
+                                child: SvgPicture.asset(
+                                  'assets/vectors/vector_331_x2.svg',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -168,7 +183,7 @@ class _JobPostingScreenState extends State<JobPostingScreen> {
               style: GoogleFonts.getFont(
                 'Montserrat',
                 fontWeight: FontWeight.w700,
-                fontSize: 28,
+                fontSize: 32,
                 color: const Color(0xFF000000),
               ),
             ),
@@ -232,7 +247,7 @@ class _JobPostingScreenState extends State<JobPostingScreen> {
                           style: GoogleFonts.getFont(
                             'Montserrat',
                             fontWeight: FontWeight.w400,
-                            fontSize: 12,
+                            fontSize: 14,
                             color: const Color(0xFFFFFFFF),
                           ),
                         ),
@@ -273,14 +288,14 @@ class _JobPostingScreenState extends State<JobPostingScreen> {
                       slivers: <Widget>[
                         SliverGrid(
                           gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             mainAxisSpacing: 10.0,
                             crossAxisSpacing: 10.0,
-                            childAspectRatio: 0.8,
+                            childAspectRatio: 0.5,
                           ),
                           delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
+                                (BuildContext context, int index) {
                               return Card(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(25.0),
@@ -289,22 +304,23 @@ class _JobPostingScreenState extends State<JobPostingScreen> {
                                   padding: const EdgeInsets.all(20.0),
                                   // Adjust the padding as needed
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
                                       Text(data[index].jobTitle,
                                           style: const TextStyle(
-                                              fontSize: 16,
+                                              fontSize: 20,
                                               fontWeight: FontWeight.bold)),
                                       const SizedBox(height: 10),
                                       Text(data[index].salary,
                                           style: const TextStyle(
-                                            fontSize: 12,
+                                            fontSize: 16,
                                           )),
                                       const SizedBox(height: 10),
                                       Text(data[index].fieldIndustry,
                                           style: const TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 14,
                                           )),
                                       const SizedBox(height: 10),
                                       ElevatedButton(
@@ -333,7 +349,7 @@ class _JobPostingScreenState extends State<JobPostingScreen> {
                   } else if (snapshot.hasError) {
                     return Center(child: Text("${snapshot.error}"));
                   }
-          
+
                   return const Center(child: CircularProgressIndicator());
                 },
               ),
@@ -341,6 +357,16 @@ class _JobPostingScreenState extends State<JobPostingScreen> {
           ),
         ),
       ]),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) =>
+                AddJobPostingScreen(onJobPosted: _refreshJobPostings),
+          );
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
