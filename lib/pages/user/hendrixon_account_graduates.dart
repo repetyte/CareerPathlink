@@ -7,8 +7,7 @@ class HendrixonAccountGraduates extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return 
-    Container(
+    return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(50),
         color: const Color(0xFFD9D9D9),

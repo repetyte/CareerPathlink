@@ -38,138 +38,143 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
     );
   }
 
+  void _showProfileDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const ListTile(
+                  leading: Icon(Icons.person),
+                  title: Text('Profile Name'),
+                  subtitle: Text('Graduate'),
+                ),
+                const Divider(),
+                ListTile(
+                  leading: const Icon(Icons.settings),
+                  title: const Text('Settings'),
+                  onTap: () {
+                    // Navigate to settings
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.logout),
+                  title: const Text('Logout'),
+                  onTap: () {
+                    // Handle logout
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-      ),
-      drawer: const MyDrawer(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 5, 0, 3),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage(
-                                'assets/images/seal_of_university_of_nueva_caceres_2.png',
-                              ),
-                            ),
-                          ),
-                          child: const SizedBox(
-                            width: 48,
-                            height: 48,
+        title: Container(
+          margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage(
+                            'assets/images/seal_of_university_of_nueva_caceres_2.png',
                           ),
                         ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(0, 6.5, 0, 6.5),
-                          child: RichText(
-                            textAlign: TextAlign.center,
-                            text: TextSpan(
+                      ),
+                      child: const SizedBox(
+                        width: 48,
+                        height: 48,
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(0, 6.5, 0, 6.5),
+                      child: RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          style: GoogleFonts.getFont(
+                            'Montserrat',
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20,
+                            color: const Color(0xFF000000),
+                          ),
+                          children: [
+                            TextSpan(
+                              text: 'UNIVERSITY\n',
+                              style: GoogleFonts.getFont(
+                                'Montserrat',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12,
+                                height: 1.3,
+                              ),
+                            ),
+                            TextSpan(
+                              text: 'CAREER CENTER',
                               style: GoogleFonts.getFont(
                                 'Montserrat',
                                 fontWeight: FontWeight.w700,
-                                fontSize: 20,
+                                fontSize: 16,
+                                height: 1.3,
+                              ),
+                            ),
+                            TextSpan(
+                              text: '\n' 'MANAGEMENT SYSTEM',
+                              style: GoogleFonts.getFont(
+                                'Montserrat',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                                height: 1.3,
                                 color: const Color(0xFF000000),
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: 'UNIVERSITY\n',
-                                  style: GoogleFonts.getFont(
-                                    'Montserrat',
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 12,
-                                    height: 1.3,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: 'CAREER CENTER',
-                                  style: GoogleFonts.getFont(
-                                    'Montserrat',
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16,
-                                    height: 1.3,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: '\n' 'MANAGEMENT SYSTEM',
-                                  style: GoogleFonts.getFont(
-                                    'Montserrat',
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 12,
-                                    height: 1.3,
-                                    color: const Color(0xFF000000),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFD9D9D9),
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: SizedBox(
-                      width: 88,
-                      child: Container(
-                        padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(0, 0, 6, 0),
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: AssetImage(
-                                    'assets/images/image_12.png',
-                                  ),
-                                ),
-                              ),
-                              child: const SizedBox(
-                                width: 48,
-                                height: 48,
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
-                              width: 12,
-                              height: 7.4,
-                              child: SizedBox(
-                                width: 12,
-                                height: 7.4,
-                                child: SvgPicture.asset(
-                                  'assets/vectors/vector_331_x2.svg',
-                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
+              GestureDetector(
+                onTap: () => _showProfileDialog(context),
+                child: const CircleAvatar(
+                  backgroundImage: AssetImage(
+                      'assets/images/profile_icon.png'), // Add the path to your profile image
+                  radius: 24,
+                ),
+              ),
+            ],
+          ),
+        ),
+        toolbarHeight: 100,
+      ),
+      drawer: const MyDrawer(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
             Container(
               margin: const EdgeInsets.fromLTRB(16, 24, 0, 24),
               child: Align(
@@ -279,7 +284,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                     List<JobPosting> data = snapshot.data!;
                     return CustomScrollView(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       slivers: <Widget>[
                         SliverGrid(
                           gridDelegate:
@@ -287,7 +292,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                             crossAxisCount: 2,
                             mainAxisSpacing: 10.0,
                             crossAxisSpacing: 10.0,
-                            childAspectRatio: 0.5,
+                            childAspectRatio: 0.6,
                           ),
                           delegate: SliverChildBuilderDelegate(
                             (BuildContext context, int index) {

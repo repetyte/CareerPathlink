@@ -45,33 +45,111 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
+        leading: Container(),
       ),
       drawer: const MyDrawer(),
       body: Column(children: [
         Container(
           margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-          child: Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  margin: const EdgeInsets.fromLTRB(0, 5, 0, 3),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                margin: const EdgeInsets.fromLTRB(0, 5, 0, 3),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage(
+                                'assets/images/seal_of_university_of_nueva_caceres_2.png',
+                              ),
+                            ),
+                          ),
+                          child: const SizedBox(
+                            width: 48,
+                            height: 48,
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(0, 6.5, 0, 6.5),
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              style: GoogleFonts.getFont(
+                                'Montserrat',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20,
+                                color: const Color(0xFF000000),
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: 'UNIVERSITY\n',
+                                  style: GoogleFonts.getFont(
+                                    'Montserrat',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12,
+                                    height: 1.3,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: 'CAREER CENTER',
+                                  style: GoogleFonts.getFont(
+                                    'Montserrat',
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                    height: 1.3,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '\n' 'MANAGEMENT SYSTEM',
+                                  style: GoogleFonts.getFont(
+                                    'Montserrat',
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 12,
+                                    height: 1.3,
+                                    color: const Color(0xFF000000),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFFD9D9D9),
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: SizedBox(
+                  width: 88,
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(0, 0, 6, 0),
+                          child: Container(
                             decoration: const BoxDecoration(
                               image: DecorationImage(
                                 fit: BoxFit.cover,
                                 image: AssetImage(
-                                  'assets/images/seal_of_university_of_nueva_caceres_2.png',
+                                  'assets/images/image_12.png',
                                 ),
                               ),
                             ),
@@ -80,104 +158,25 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                               height: 48,
                             ),
                           ),
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(0, 6.5, 0, 6.5),
-                            child: RichText(
-                              textAlign: TextAlign.center,
-                              text: TextSpan(
-                                style: GoogleFonts.getFont(
-                                  'Montserrat',
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 20,
-                                  color: const Color(0xFF000000),
-                                ),
-                                children: [
-                                  TextSpan(
-                                    text: 'UNIVERSITY\n',
-                                    style: GoogleFonts.getFont(
-                                      'Montserrat',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
-                                      height: 1.3,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: 'CAREER CENTER',
-                                    style: GoogleFonts.getFont(
-                                      'Montserrat',
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 16,
-                                      height: 1.3,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: '\n' 'MANAGEMENT SYSTEM',
-                                    style: GoogleFonts.getFont(
-                                      'Montserrat',
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 12,
-                                      height: 1.3,
-                                      color: const Color(0xFF000000),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFD9D9D9),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: SizedBox(
-                    width: 88,
-                    child: Container(
-                      padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(0, 0, 6, 0),
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: AssetImage(
-                                    'assets/images/image_12.png',
-                                  ),
-                                ),
-                              ),
-                              child: const SizedBox(
-                                width: 48,
-                                height: 48,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
+                          width: 12,
+                          height: 7.4,
+                          child: SizedBox(
                             width: 12,
                             height: 7.4,
-                            child: SizedBox(
-                              width: 12,
-                              height: 7.4,
-                              child: SvgPicture.asset(
-                                'assets/vectors/vector_331_x2.svg',
-                              ),
+                            child: SvgPicture.asset(
+                              'assets/vectors/vector_331_x2.svg',
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
         Container(
@@ -282,82 +281,79 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
               ],
             )),
         Expanded(
-          child: Container(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: FutureBuilder<List<JobPosting>>(
-                future: futureJobPostings,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    List<JobPosting> data = snapshot.data!;
-                    return CustomScrollView(
-                      slivers: <Widget>[
-                        SliverGrid(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 10.0,
-                            crossAxisSpacing: 10.0,
-                            childAspectRatio: 0.5,
-                          ),
-                          delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                              return Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25.0),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  // Adjust the padding as needed
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(data[index].jobTitle,
-                                          style: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold)),
-                                      const SizedBox(height: 10),
-                                      Text(data[index].salary,
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                          )),
-                                      const SizedBox(height: 10),
-                                      Text(data[index].fieldIndustry,
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                          )),
-                                      const SizedBox(height: 10),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  RrJobDetailScreen(
-                                                      jobPosting: data[index]),
-                                            ),
-                                          );
-                                        },
-                                        child: const Text('View More'),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                            childCount: data.length,
-                          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: FutureBuilder<List<JobPosting>>(
+              future: futureJobPostings,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  List<JobPosting> data = snapshot.data!;
+                  return CustomScrollView(
+                    slivers: <Widget>[
+                      SliverGrid(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 10.0,
+                          crossAxisSpacing: 10.0,
+                          childAspectRatio: 0.5,
                         ),
-                      ],
-                    );
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text("${snapshot.error}"));
-                  }
-                  return const Center(child: CircularProgressIndicator());
-                },
-              ),
+                        delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                            return Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                // Adjust the padding as needed
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(data[index].jobTitle,
+                                        style: const TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold)),
+                                    const SizedBox(height: 10),
+                                    Text(data[index].salary,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                        )),
+                                    const SizedBox(height: 10),
+                                    Text(data[index].fieldIndustry,
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                        )),
+                                    const SizedBox(height: 10),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                RrJobDetailScreen(
+                                                    jobPosting: data[index]),
+                                          ),
+                                        );
+                                      },
+                                      child: const Text('View More'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                          childCount: data.length,
+                        ),
+                      ),
+                    ],
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(child: Text("${snapshot.error}"));
+                }
+                return const Center(child: CircularProgressIndicator());
+              },
             ),
           ),
         ),
