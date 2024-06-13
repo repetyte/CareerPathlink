@@ -78,10 +78,6 @@ class JobPosting {
         }
 
         return false;
-
-        $stmt->close();
-        $stmt = null;
-        $this->conn = null;
     }
 
     function update(){

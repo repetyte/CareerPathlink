@@ -7,29 +7,47 @@ class ApiService {
   final String apiUrl = "http://localhost/recruitment_and_placement/api";
 
   // Create and Post new job posting
-  Future<void> postJobPosting(JobPosting jobPosting) async {
-    final url = '$apiUrl/create.php';
+  // Future<void> postJobPosting(JobPosting jobPosting) async {
+  //   final url = '$apiUrl/create.php';
+  //   final response = await http.post(
+  //     Uri.parse(url),
+  //     headers: {'Content-Type': 'application/json'},
+  //     body: json.encode({
+  //       'jobTitle': jobPosting.jobTitle,
+  //       'jobStatus': jobPosting.jobStatus,
+  //       'fieldIndustry': jobPosting.fieldIndustry,
+  //       'jobLevel': jobPosting.jobLevel,
+  //       'yrsOfExperienceNeeded': jobPosting.yrsOfExperienceNeeded,
+  //       'contractualStatus': jobPosting.contractualStatus,
+  //       'salary': jobPosting.salary,
+  //       'jobLocation': jobPosting.jobLocation,
+  //       'jobDescription': jobPosting.jobDescription,
+  //       'requirements': jobPosting.requirements,
+  //       'jobResponsibilities': jobPosting.jobResponsibilities,
+  //       'industryPartner': jobPosting.industryPartner,
+  //     }),
+  //   );
+
+  //   if (response.statusCode != 200) {
+  //     print('Response status: ${response.statusCode}');
+  //     print('Response body: ${response.body}');
+  //     throw Exception('Failed to post job posting');
+  //   }
+  // }
+
+  Future<void> createJobPosting(JobPosting jobPosting) async {
     final response = await http.post(
-      Uri.parse(url),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({
-        'jobTitle': jobPosting.jobTitle,
-        'jobStatus': jobPosting.jobStatus,
-        'fieldIndustry': jobPosting.fieldIndustry,
-        'jobLevel': jobPosting.jobLevel,
-        'yrsOfExperienceNeeded': jobPosting.yrsOfExperienceNeeded,
-        'contractualStatus': jobPosting.contractualStatus,
-        'salary': jobPosting.salary,
-        'jobLocation': jobPosting.jobLocation,
-        'jobDescription': jobPosting.jobDescription,
-        'requirements': jobPosting.requirements,
-        'jobResponsibilities': jobPosting.jobResponsibilities,
-        'industryPartner': jobPosting.industryPartner,
-      }),
+      Uri.parse('$apiUrl/create1.php'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(jobPosting.toJson()),
     );
 
-    if (response.statusCode != 200) {
-      throw Exception('Failed to post job posting');
+    if (response.statusCode != 201) {
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+      throw Exception('Failed to create Job Posting');
     }
   }
 
@@ -72,17 +90,17 @@ class ApiService {
     }
   }
 
-  Future<void> createJobPosting(JobPosting jobPosting) async {
-    final response = await http.post(
-      Uri.parse('$apiUrl/create.php'),
-      headers: <String, String>{'Content-Type': 'application/json'},
-      body: jsonEncode(jobPosting.toJson()),
-    );
+  // Future<void> createJobPosting(JobPosting jobPosting) async {
+  //   final response = await http.post(
+  //     Uri.parse('$apiUrl/create.php'),
+  //     headers: <String, String>{'Content-Type': 'application/json'},
+  //     body: jsonEncode(jobPosting.toJson()),
+  //   );
 
-    if (response.statusCode != 201) {
-      // print('Response status: ${response.statusCode}');
-      // print('Response body: ${response.body}');
-      throw Exception('Failed to create job posting');
-    }
-  }
+  //   if (response.statusCode != 201) {
+  //     // print('Response status: ${response.statusCode}');
+  //     // print('Response body: ${response.body}');
+  //     throw Exception('Failed to create job posting');
+  //   }
+  // }
 }

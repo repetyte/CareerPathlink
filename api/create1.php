@@ -13,7 +13,8 @@ include_once 'job_posting.php';
 
 $database = new Database();
 $db = $database->getConnection();
-$job = new JobPosting($db);
+
+$student = new JobPosting($db);
 
 $data = json_decode(file_get_contents("php://input"));
 
@@ -44,16 +45,16 @@ if (
     $job->job_responsibilities = $data->job_responsibilities;
     $job->industry_partner = $data->industry_partner;
 
-    if ($job->create()) {
-        http_response_code(201);
-        echo json_encode(array("message" => "Job was created."));
+    if ($student->create()) {
+        http_response_code(201); // Created
+        echo json_encode(array("message" => "Student was created."));
     } else {
-        http_response_code(503);
-        echo json_encode(array("message" => "Unable to create job."));
+        http_response_code(503); // Service unavailable
+        echo json_encode(array("message" => "Unable to create student. Database error."));
     }
 } else {
-    http_response_code(400);
-    echo json_encode(array("message" => "Unable to create job. Data is incomplete."));
+    http_response_code(400); // Bad request
+    echo json_encode(array("message" => "Incomplete data. Please provide all required fields."));
 }
 
 function cors()
