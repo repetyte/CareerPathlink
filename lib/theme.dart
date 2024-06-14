@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static const Color primaryColor = Color(0xFFFFFFFF);
-  static const Color secondaryColor = Color(0xFFB0BEC5); // Gray
-  static const Color tertiaryColor = Color(0xFFD32F2F); // Red
+  static const Color secondaryColor = Color(0x80808080); // Gray
+  static const Color tertiaryColor = Color(0xFFFF0000); // Red
 
   static final ThemeData themeData = ThemeData(
+    fontFamily: 'Montserrat',
     primaryColor: primaryColor,
     scaffoldBackgroundColor: primaryColor,
     colorScheme: ColorScheme.fromSwatch().copyWith(
@@ -68,7 +69,7 @@ class AppTheme {
           fontWeight: FontWeight.bold,
         ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
+          borderRadius: BorderRadius.circular(40.0),
         ),
       ),
     ),

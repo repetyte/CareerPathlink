@@ -30,15 +30,13 @@ class HendrixonJobDetailsUser extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
-                          child: Text(
-                            'Recruitment and Placement',
-                            style: GoogleFonts.getFont(
-                              'Montserrat',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16,
-                              color: const Color(0xFF000000),
-                            ),
+                        Text(
+                          'Recruitment and Placement',
+                          style: GoogleFonts.getFont(
+                            'Montserrat',
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                            color: const Color(0xFF000000),
                           ),
                         ),
                       ],
@@ -79,6 +77,8 @@ class HendrixonJobDetailsUser extends StatelessWidget {
                   ),
                 ),
               ),
+              
+              
               Container(
                 margin: const EdgeInsets.fromLTRB(25, 0, 25, 0),
                 child: Container(
@@ -291,15 +291,13 @@ class HendrixonJobDetailsUser extends StatelessWidget {
                                       const EdgeInsets.fromLTRB(0.4, 0, 0.4, 0),
                                   child: Align(
                                     alignment: Alignment.topLeft,
-                                    child: Container(
-                                      child: Text(
-                                        'Fresh Graduate',
-                                        style: GoogleFonts.getFont(
-                                          'Montserrat',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 12,
-                                          color: const Color(0xFF000000),
-                                        ),
+                                    child: Text(
+                                      'Fresh Graduate',
+                                      style: GoogleFonts.getFont(
+                                        'Montserrat',
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 12,
+                                        color: const Color(0xFF000000),
                                       ),
                                     ),
                                   ),
@@ -333,15 +331,13 @@ class HendrixonJobDetailsUser extends StatelessWidget {
                                       const EdgeInsets.fromLTRB(0.4, 0, 0.4, 0),
                                   child: Align(
                                     alignment: Alignment.topLeft,
-                                    child: Container(
-                                      child: Text(
-                                        'Full-time',
-                                        style: GoogleFonts.getFont(
-                                          'Montserrat',
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 12,
-                                          color: const Color(0xFF000000),
-                                        ),
+                                    child: Text(
+                                      'Full-time',
+                                      style: GoogleFonts.getFont(
+                                        'Montserrat',
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 12,
+                                        color: const Color(0xFF000000),
                                       ),
                                     ),
                                   ),
@@ -487,15 +483,13 @@ class HendrixonJobDetailsUser extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  child: Text(
-                                    'Bachelor’s degree in finance, data analysis, economics, math, or engineering.  Intermediate to advanced skills in MS Excel/Google Sheets and PowerPoint.  Interest in reporting and data analysis tools (Tableau and SQL are a plus).  Strong business analytical abilities and attention to detail.  Excellent oral and written communication skills.  Teamwork and collaborative skills.',
-                                    style: GoogleFonts.getFont(
-                                      'Montserrat',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
-                                      color: const Color(0xFF000000),
-                                    ),
+                                Text(
+                                  'Bachelor’s degree in finance, data analysis, economics, math, or engineering.  Intermediate to advanced skills in MS Excel/Google Sheets and PowerPoint.  Interest in reporting and data analysis tools (Tableau and SQL are a plus).  Strong business analytical abilities and attention to detail.  Excellent oral and written communication skills.  Teamwork and collaborative skills.',
+                                  style: GoogleFonts.getFont(
+                                    'Montserrat',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12,
+                                    color: const Color(0xFF000000),
                                   ),
                                 ),
                               ],
@@ -526,15 +520,13 @@ class HendrixonJobDetailsUser extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  child: Text(
-                                    'Monitoring financial performance and identifying trends.  Supporting the monthly and quarterly reporting process for management.  Providing ad-hoc analysis for senior management decisions.  Assisting with financial planning and forecasting.',
-                                    style: GoogleFonts.getFont(
-                                      'Montserrat',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12,
-                                      color: const Color(0xFF000000),
-                                    ),
+                                Text(
+                                  'Monitoring financial performance and identifying trends.  Supporting the monthly and quarterly reporting process for management.  Providing ad-hoc analysis for senior management decisions.  Assisting with financial planning and forecasting.',
+                                  style: GoogleFonts.getFont(
+                                    'Montserrat',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12,
+                                    color: const Color(0xFF000000),
                                   ),
                                 ),
                               ],
