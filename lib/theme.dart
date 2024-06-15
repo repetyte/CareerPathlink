@@ -44,7 +44,6 @@ class AppTheme {
         color: Colors.black,
       ),
     ),
-
     appBarTheme: const AppBarTheme(
       // Appbar  theme
       color: primaryColor,
@@ -57,7 +56,6 @@ class AppTheme {
       iconTheme: IconThemeData(color: Colors.black),
       actionsIconTheme: IconThemeData(color: primaryColor),
     ),
-
     buttonTheme: ButtonThemeData(
       // Button theme
       buttonColor: tertiaryColor, // Red button background color
@@ -66,7 +64,6 @@ class AppTheme {
         borderRadius: BorderRadius.circular(8.0),
       ),
     ),
-    
     elevatedButtonTheme: ElevatedButtonThemeData(
       // Elevated Button Theme
       style: ElevatedButton.styleFrom(

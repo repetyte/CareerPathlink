@@ -393,8 +393,8 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                                       child: Text(
                                         'No job found. Try different keyword/s',
                                         style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                          color: Colors.grey,
                                         ),
                                       ),
                                     );

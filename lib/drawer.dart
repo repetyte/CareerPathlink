@@ -17,7 +17,7 @@ class MyDrawer extends StatelessWidget {
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children:[
+                children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,25 +47,23 @@ class MyDrawer extends StatelessWidget {
                       ]),
                     ],
                   ),
-                ]
-            ),
+                ]),
             // child: Text('University\nCAREER CENTER\nManagement System'),
           ),
           ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Home'),
-              onTap: (){
-                // navigateTo("/rr_job_dashboard", context);
-              },
+            leading: const Icon(Icons.home),
+            title: const Text('Home'),
+            onTap: () {
+              // navigateTo("/rr_job_dashboard", context);
+            },
           ),
           ListTile(
             leading: const Icon(Icons.work),
             title: const Text(
               'Recruitment and Placement',
-              style: TextStyle(
-              ),
+              style: TextStyle(),
             ),
-            onTap: (){
+            onTap: () {
               navigateTo("/rr_job_dashboard", context);
             },
           ),
