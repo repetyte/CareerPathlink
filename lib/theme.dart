@@ -6,6 +6,7 @@ class AppTheme {
   static const Color tertiaryColor = Color(0xFFFF0000); // Red
 
   static final ThemeData themeData = ThemeData(
+    primarySwatch: Colors.grey,
     fontFamily: 'Montserrat',
     primaryColor: primaryColor,
     scaffoldBackgroundColor: primaryColor,
@@ -13,6 +14,7 @@ class AppTheme {
       secondary: secondaryColor, // Gray accent color
     ),
     textTheme: const TextTheme(
+      // Text theme
       displayLarge: TextStyle(
         fontFamily: 'Montserrat',
         fontSize: 32,
@@ -42,7 +44,9 @@ class AppTheme {
         color: Colors.black,
       ),
     ),
+
     appBarTheme: const AppBarTheme(
+      // Appbar  theme
       color: primaryColor,
       titleTextStyle: TextStyle(
         fontFamily: 'Montserrat',
@@ -53,17 +57,23 @@ class AppTheme {
       iconTheme: IconThemeData(color: Colors.black),
       actionsIconTheme: IconThemeData(color: primaryColor),
     ),
+
     buttonTheme: ButtonThemeData(
+      // Button theme
       buttonColor: tertiaryColor, // Red button background color
       textTheme: ButtonTextTheme.primary,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
       ),
     ),
+    
     elevatedButtonTheme: ElevatedButtonThemeData(
+      // Elevated Button Theme
       style: ElevatedButton.styleFrom(
         foregroundColor: primaryColor,
         backgroundColor: tertiaryColor, // Red button text color
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+        // minimumSize: const Size(200, 50),
         textStyle: const TextStyle(
           fontFamily: 'Montserrat',
           fontWeight: FontWeight.bold,

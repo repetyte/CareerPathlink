@@ -120,120 +120,117 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: Container(
-          margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage(
-                            'assets/images/seal_of_university_of_nueva_caceres_2.png',
-                          ),
-                        ),
-                      ),
-                      child: const SizedBox(
-                        width: 48,
-                        height: 48,
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(0, 6.5, 0, 6.5),
-                      child: RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          style: GoogleFonts.getFont(
-                            'Montserrat',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 20,
-                            color: const Color(0xFF000000),
-                          ),
-                          children: [
-                            TextSpan(
-                              text: 'UNIVERSITY\n',
-                              style: GoogleFonts.getFont(
-                                'Montserrat',
-                                fontWeight: FontWeight.w400,
-                                fontSize: 12,
-                                height: 1.3,
-                              ),
-                            ),
-                            TextSpan(
-                              text: 'CAREER CENTER',
-                              style: GoogleFonts.getFont(
-                                'Montserrat',
-                                fontWeight: FontWeight.w700,
-                                fontSize: 16,
-                                height: 1.3,
-                              ),
-                            ),
-                            TextSpan(
-                              text: '\n' 'MANAGEMENT SYSTEM',
-                              style: GoogleFonts.getFont(
-                                'Montserrat',
-                                fontWeight: FontWeight.w700,
-                                fontSize: 12,
-                                height: 1.3,
-                                color: const Color(0xFF000000),
-                              ),
-                            ),
-                          ],
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage(
+                          'assets/images/seal_of_university_of_nueva_caceres_2.png',
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ),
-              GestureDetector(
-                onTap: () => _showProfileDialog(context),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFD9D9D9),
-                    borderRadius: BorderRadius.circular(50),
+                    child: const SizedBox(
+                      width: 48,
+                      height: 48,
+                    ),
                   ),
-                  child: SizedBox(
-                    width: 88,
-                    child: Container(
-                      padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(0, 6.5, 0, 6.5),
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        style: GoogleFonts.getFont(
+                          'Montserrat',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                          color: const Color(0xFF000000),
+                        ),
                         children: [
-                          const CircleAvatar(
-                            backgroundImage: AssetImage(
-                                'assets/images/image_12.png'), // Add the path to your profile image
-                            radius: 24,
+                          TextSpan(
+                            text: 'UNIVERSITY\n',
+                            style: GoogleFonts.getFont(
+                              'Montserrat',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12,
+                              height: 1.3,
+                            ),
                           ),
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
-                            width: 12,
-                            height: 7.4,
-                            child: SizedBox(
-                              width: 12,
-                              height: 7.4,
-                              child: SvgPicture.asset(
-                                'assets/vectors/vector_331_x2.svg',
-                              ),
+                          TextSpan(
+                            text: 'CAREER CENTER',
+                            style: GoogleFonts.getFont(
+                              'Montserrat',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                              height: 1.3,
+                            ),
+                          ),
+                          TextSpan(
+                            text: '\n' 'MANAGEMENT SYSTEM',
+                            style: GoogleFonts.getFont(
+                              'Montserrat',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12,
+                              height: 1.3,
+                              color: const Color(0xFF000000),
                             ),
                           ),
                         ],
                       ),
                     ),
                   ),
+                ],
+              ),
+            ),
+            GestureDetector(
+              onTap: () => _showProfileDialog(context),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFFD9D9D9),
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: SizedBox(
+                  width: 88,
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const CircleAvatar(
+                          backgroundImage: AssetImage(
+                              'assets/images/image_12.png'), // Add the path to your profile image
+                          radius: 24,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
+                          width: 12,
+                          height: 7.4,
+                          child: SizedBox(
+                            width: 12,
+                            height: 7.4,
+                            child: SvgPicture.asset(
+                              'assets/vectors/vector_331_x2.svg',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
         toolbarHeight: 100,
       ),
@@ -419,12 +416,13 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                                         crossAxisCount: crossAxisCount,
                                         mainAxisSpacing: 10.0,
                                         crossAxisSpacing: 10.0,
-                                        childAspectRatio: 0.54,
+                                        childAspectRatio: 0.53,
                                       ),
                                       itemCount: data.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
                                         return Card(
+                                          elevation: 10.0,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(25.0),
