@@ -35,7 +35,7 @@ class JobPosting {
 
   factory JobPosting.fromJson(Map<String, dynamic> json) {
     return JobPosting(
-      jobId: json['job_id'],
+      jobId: json['job_id'] as int?,
       jobTitle: json['job_title'] ?? '',
       status: json['status'] ?? '',
       fieldIndustry: json['field_industry'] ?? '',
@@ -54,11 +54,11 @@ class JobPosting {
           ? IndustryPartner.fromJson(json['industry_partner'])
           : IndustryPartner(
               partnerId: null,
-              profilePic: '',
-              partnerName: 'No Partner Name',
-              partnerLocation: '',
-              contactNo: '',
-              emailAdd: ''),
+              profilePic: 'Profile Pic isnt fetched.',
+              partnerName: 'Partner Name isnt fetched.',
+              partnerLocation: 'Partner Location isnt fetched.',
+              contactNo: 'Contact Number isnt fetched.',
+              emailAdd: 'Email Address isnt fetched.'),
 
       //Option 2
       // industryPartner: IndustryPartner.fromJson({
@@ -82,6 +82,23 @@ class JobPosting {
 
       // Option 4
       // industryPartner: IndustryPartner.fromJson(json['industry_partner'] ?? {}),
+
+      //Option 5
+      // industryPartner: json['industry_partner'] != null
+      //     ? IndustryPartner.fromJson(json['industry_partner'])
+      //     : IndustryPartner(
+      //         partnerId: null,
+      //         profilePic: '',
+      //         partnerName: 'No Partner Name',
+      //         partnerLocation: '',
+      //         contactNo: '',
+      //         emailAdd: ''),
+
+      //Option 6
+      // industryPartner: IndustryPartner.fromJson(json['industry_partner']),
+
+      //Option 7
+      // industryPartner: IndustryPartner.fromJson(json),
     );
   }
 

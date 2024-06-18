@@ -1,5 +1,5 @@
 class IndustryPartner {
-  final int? partnerId;
+  int? partnerId;
   final String? profilePic;
   final String partnerName;
   final String partnerLocation;
@@ -8,7 +8,7 @@ class IndustryPartner {
 
   IndustryPartner({
     this.partnerId,
-    required this.profilePic,
+    this.profilePic,
     required this.partnerName,
     required this.partnerLocation,
     required this.contactNo,
@@ -17,7 +17,7 @@ class IndustryPartner {
 
   factory IndustryPartner.fromJson(Map<String, dynamic> json) {
     return IndustryPartner(
-      partnerId: json['partner_id'] ?? '',
+      partnerId: json['partner_id'] as int?,
       profilePic: json['profile_pic'] ?? '',
       partnerName: json['partner_name'] ?? '',
       partnerLocation: json['partner_location'] ?? '',
