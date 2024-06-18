@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/drawer.dart';
 import 'package:flutter_app/models/job_posting.dart';
-import 'package:flutter_app/pages/admin/add_job_posting_screen.dart';
 import 'package:flutter_app/pages/user/rr_job_details.dart';
 import 'package:flutter_app/services/api_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -31,14 +30,14 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
     _searchController.addListener(_filterJobPostings);
   }
 
-  void _showAddJobPostingDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AddJobPostingDialog(onJobPosted: _refreshJobPostings);
-      },
-    );
-  }
+  // void _showAddJobPostingDialog() {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) {
+  //       return AddJobPostingDialog(onJobPosted: _refreshJobPostings);
+  //     },
+  //   );
+  // }
 
   void _showProfileDialog(BuildContext context) {
     showDialog(
@@ -102,8 +101,8 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
       setState(() {
         _filteredJobPostings = data
             .where((job) =>
-                job.jobTitle.toLowerCase().contains(query) ||
-                job.fieldIndustry.toLowerCase().contains(query))
+        job.jobTitle.toLowerCase().contains(query) ||
+            job.fieldIndustry.toLowerCase().contains(query))
             .toList();
       });
     });
@@ -336,6 +335,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                     children: [
                       Container(
                         margin: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+                        width: 400,
                         child: Column(
                           children: [
                             const SizedBox(height: 20),
@@ -403,20 +403,20 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                                         _filteredJobPostings;
                                     // Determine the number of columns based on screen width
                                     int crossAxisCount =
-                                        (MediaQuery.of(context).size.width /
-                                                225)
-                                            .floor();
+                                    (MediaQuery.of(context).size.width /
+                                        300)
+                                        .floor();
 
                                     return GridView.builder(
                                       shrinkWrap: true,
                                       physics:
-                                          const NeverScrollableScrollPhysics(),
+                                      const NeverScrollableScrollPhysics(),
                                       gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                      SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: crossAxisCount,
                                         mainAxisSpacing: 10.0,
                                         crossAxisSpacing: 10.0,
-                                        childAspectRatio: 0.53,
+                                        childAspectRatio: 0.80,
                                       ),
                                       itemCount: data.length,
                                       itemBuilder:
@@ -425,12 +425,12 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                                           elevation: 10.0,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(25.0),
+                                            BorderRadius.circular(25.0),
                                           ),
                                           clipBehavior: Clip.antiAlias,
                                           child: Column(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                             children: <Widget>[
                                               Image.asset(
                                                 'assets/images/gettyimages_1406724005_dsc_018073.jpeg',
@@ -440,17 +440,17 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                                               ),
                                               Padding(
                                                 padding:
-                                                    const EdgeInsets.all(16.0),
+                                                const EdgeInsets.all(16.0),
                                                 child: Column(
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.start,
                                                   children: [
                                                     Text(data[index].jobTitle,
                                                         style: const TextStyle(
                                                             fontSize: 20,
                                                             fontWeight:
-                                                                FontWeight
-                                                                    .bold)),
+                                                            FontWeight
+                                                                .bold)),
                                                     const SizedBox(height: 4),
                                                     Text(data[index].salary,
                                                         style: const TextStyle(
@@ -478,15 +478,15 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                                                         context,
                                                         MaterialPageRoute(
                                                           builder: (context) =>
-                                                              RrJobDetailScreen(
+                                                              RrJobDetails(
                                                                   jobPosting:
-                                                                      data[
-                                                                          index]),
+                                                                  data[
+                                                                  index]),
                                                         ),
                                                       );
                                                     },
                                                     child:
-                                                        const Text('View More'),
+                                                    const Text('View More'),
                                                   ),
                                                 ),
                                               ),

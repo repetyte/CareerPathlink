@@ -42,7 +42,7 @@ if (
     $job->job_description = $data->job_description;
     $job->requirements = $data->requirements;
     $job->job_responsibilities = $data->job_responsibilities;
-    $job->industry_partner = $data->industry_partner;
+    // $job->industry_partner = $data->industry_partner;
 
     if ($job->create()) {
         http_response_code(201);

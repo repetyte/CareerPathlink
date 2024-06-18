@@ -33,7 +33,13 @@ if($num > 0){
             "job_description" => $job_description,
             "requirements" => $requirements,
             "job_responsibilities" => $job_responsibilities,
-            "industry_partner" => $industry_partner,
+            "cover_photo" => $cover_photo,
+            "partner_id" => $partner_id,
+            "profile_pic" => $profile_pic,
+            "partner_name" => $partner_name,
+            "partner_location" => $partner_location,
+            "contact_no" => $contact_no,
+            "email_add" => $email_add,
         );
 
         array_push($jobs_arr["records"], $job_item);

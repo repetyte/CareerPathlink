@@ -1,7 +1,9 @@
+import 'package:flutter_app/models/industry_partner.dart';
+
 class JobPosting {
   final int? jobId;
   final String jobTitle;
-  final String jobStatus;
+  final String status;
   final String fieldIndustry;
   final String jobLevel;
   final String yrsOfExperienceNeeded;
@@ -11,12 +13,13 @@ class JobPosting {
   final String jobDescription;
   final String requirements;
   final String jobResponsibilities;
-  final String industryPartner;
+  final String? coverPhoto;
+  final IndustryPartner industryPartner;
 
   JobPosting({
     this.jobId,
     required this.jobTitle,
-    required this.jobStatus,
+    required this.status,
     required this.fieldIndustry,
     required this.jobLevel,
     required this.yrsOfExperienceNeeded,
@@ -26,24 +29,33 @@ class JobPosting {
     required this.jobDescription,
     required this.requirements,
     required this.jobResponsibilities,
+    this.coverPhoto,
     required this.industryPartner,
   });
 
   factory JobPosting.fromJson(Map<String, dynamic> json) {
     return JobPosting(
       jobId: json['job_id'],
-      jobTitle: json['job_title'],
-      jobStatus: json['status'],
-      fieldIndustry: json['field_industry'],
-      jobLevel: json['job_level'],
-      yrsOfExperienceNeeded: json['yrs_of_experience_needed'],
-      contractualStatus: json['contractual_status'],
-      salary: json['salary'],
-      jobLocation: json['job_location'],
-      jobDescription: json['job_description'],
-      requirements: json['requirements'],
-      jobResponsibilities: json['job_responsibilities'],
-      industryPartner: json['industry_partner'],
+      jobTitle: json['job_title'] ?? '',
+      status: json['status'] ?? '',
+      fieldIndustry: json['field_industry'] ?? '',
+      jobLevel: json['job_level'] ?? '',
+      yrsOfExperienceNeeded: json['yrs_of_experience_needed'] ?? '',
+      contractualStatus: json['contractual_status'] ?? '',
+      salary: json['salary'] ?? '',
+      jobLocation: json['job_location'] ?? '',
+      jobDescription: json['job_description'] ?? '',
+      requirements: json['requirements'] ?? '',
+      jobResponsibilities: json['job_responsibilities'] ?? '',
+      coverPhoto: json['cover_photo'],
+      industryPartner: IndustryPartner.fromJson({
+        'partner_id': json['partner_id'],
+        'profile_pic': json['profile_pic'],
+        'partner_name': json['partner_name'],
+        'partner_location': json['partner_location'],
+        'contact_no': json['contact_no'],
+        'email_add': json['email_add'],
+      }),
     );
   }
 
@@ -51,7 +63,7 @@ class JobPosting {
     return {
       'job_id': jobId,
       'job_title': jobTitle,
-      'status': jobStatus,
+      'status': status,
       'field_industry': fieldIndustry,
       'job_level': jobLevel,
       'yrs_of_experience_needed': yrsOfExperienceNeeded,
@@ -61,10 +73,8 @@ class JobPosting {
       'job_description': jobDescription,
       'requirements': requirements,
       'job_responsibilities': jobResponsibilities,
+      'cover_photo': coverPhoto,
       'industry_partner': industryPartner
     };
   }
 }
-
-// 1. Naming Conventions: Use camelCase for variable names.
-

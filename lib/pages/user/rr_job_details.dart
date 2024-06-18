@@ -1,12 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/job_posting.dart';
 import 'package:flutter_app/pages/user/rr_document_submission.dart';
+import 'package:flutter_app/services/api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class RrJobDetailScreen extends StatelessWidget {
+class RrJobDetails extends StatefulWidget {
   final JobPosting jobPosting;
 
-  const RrJobDetailScreen({super.key, required this.jobPosting});
+  const RrJobDetails({super.key, required this.jobPosting});
+
+  @override
+  _RrJobDetailsState createState() => _RrJobDetailsState();
+}
+
+class _RrJobDetailsState extends State<RrJobDetails> {
+  // String? industryPartnerName;
+  final ApiService apiService = ApiService();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +43,7 @@ class RrJobDetailScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 24),
+                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                     child: Container(
                       decoration: const BoxDecoration(
                         image: DecorationImage(
@@ -65,66 +79,59 @@ class RrJobDetailScreen extends StatelessWidget {
                             ),
                           ),
                           Container(
-                            padding: const EdgeInsets.fromLTRB(23.8, 49, 0, 59),
+                            padding: const EdgeInsets.fromLTRB(16, 49, 16, 59),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 4),
-                                  child: Align(
-                                    alignment: Alignment.topLeft,
-                                    child: SizedBox(
-                                      width: 400,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          SizedBox(
-                                            width: 300,
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: SizedBox(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            widget.jobPosting.jobTitle,
+                                            style: GoogleFonts.getFont(
+                                              'Montserrat',
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 28,
+                                              color: const Color(0xFFFFFFFF),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFFFFFFF),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          child: Container(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                20, 10, 20, 10),
                                             child: Text(
-                                              jobPosting.jobTitle,
+                                              widget.jobPosting.status,
                                               style: GoogleFonts.getFont(
                                                 'Montserrat',
                                                 fontWeight: FontWeight.w700,
-                                                fontSize: 28,
-                                                color: const Color(0xFFFFFFFF),
+                                                fontSize: 14,
+                                                color: const Color(0xFF008000),
                                               ),
                                             ),
                                           ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: const Color(0xFFFFFFFF),
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                            child: Container(
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      16, 8, 16, 5),
-                                              child: Text(
-                                                jobPosting.jobStatus,
-                                                style: GoogleFonts.getFont(
-                                                  'Montserrat',
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 14,
-                                                  color:
-                                                      const Color(0xFF008000),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
                                 Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    jobPosting.fieldIndustry,
+                                    widget.jobPosting.fieldIndustry,
                                     style: GoogleFonts.getFont(
                                       'Montserrat',
                                       fontWeight: FontWeight.w400,
@@ -149,79 +156,63 @@ class RrJobDetailScreen extends StatelessWidget {
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(jobPosting.jobLevel,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            )),
+                        Text(widget.jobPosting.jobLevel,
+                            style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('Min. Years of Experience Needed: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(jobPosting.yrsOfExperienceNeeded,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            )),
+                        Text(widget.jobPosting.yrsOfExperienceNeeded,
+                            style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('Contractual Status: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(jobPosting.contractualStatus,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            )),
+                        Text(widget.jobPosting.contractualStatus,
+                            style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('Salary Range: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(jobPosting.salary,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            )),
+                        Text(widget.jobPosting.salary,
+                            style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('Location: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(jobPosting.jobLocation,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            )),
+                        Text(widget.jobPosting.jobLocation,
+                            style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('Job Description: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(jobPosting.jobDescription,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            )),
+                        Text(widget.jobPosting.jobDescription,
+                            style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('Requirements: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(jobPosting.requirements,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            )),
+                        Text(widget.jobPosting.requirements,
+                            style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('Job Responsibilities: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(jobPosting.jobResponsibilities,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            )),
+                        Text(widget.jobPosting.jobResponsibilities,
+                            style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('About Employer: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(jobPosting.industryPartner,
+                        Text(widget.jobPosting.industryPartner.partnerName,
                             style: const TextStyle(
                               fontSize: 16,
                             )),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_app/models/job_posting.dart';
 import 'package:flutter_app/services/api_service.dart';
-import 'job_posting_update_screen.dart';
 
 class JobPostingDetailsScreen extends StatefulWidget {
   const JobPostingDetailsScreen({super.key});
@@ -62,17 +61,17 @@ class _JobPostingDetailsScreenState extends State<JobPostingDetailsScreen> {
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        IconButton(
-                          icon: const Icon(Icons.edit),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => JobPostingUpdateScreen(jobPosting: job),
-                              ),
-                            ).then((_) => _refreshJobPostings());
-                          },
-                        ),
+                        // IconButton(
+                        //   icon: const Icon(Icons.edit),
+                        //   onPressed: () {
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) => JobPostingUpdateScreen(jobPosting: job),
+                        //       ),
+                        //     ).then((_) => _refreshJobPostings());
+                        //   },
+                        // ),
                         IconButton(
                           icon: const Icon(Icons.delete),
                           onPressed: () {

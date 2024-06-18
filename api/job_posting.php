@@ -15,14 +15,42 @@ class JobPosting {
     public $job_description;
     public $requirements;
     public $job_responsibilities;
-    public $industry_partner;
+    public $cover_photo;
+    public $partner_id;
+    public $profile_pic;
+    public $partner_name;
+    public $partner_location;
+    public $contact_no;
+    public $email_add;
 
     public function __construct($db){
         $this->conn = $db;
     }
 
     function read(){
-        $query = "SELECT * FROM " . $this->table_name . " ORDER BY job_id DESC";
+//         $query = "SELECT * FROM " . $this->table_name . " ORDER BY job_id DESC";
+        $query = "SELECT
+                      jp.job_id,
+                      jp.job_title,
+                      jp.status,
+                      jp.field_industry,
+                      jp.job_level,
+                      jp.yrs_of_experience_needed,
+                      jp.contractual_status,
+                      jp.salary,
+                      jp.job_location,
+                      jp.job_description,
+                      jp.requirements,
+                      jp.job_responsibilities,
+                      jp.cover_photo,
+                      ip.partner_id,
+                      ip.profile_pic,
+                      ip.partner_name,
+                      ip.partner_location,
+                      ip.contact_no,
+                      ip.email_add
+                  FROM job_posting_tb jp
+                  JOIN industry_partner_tb ip ON jp.industry_partner = ip.partner_id;";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;

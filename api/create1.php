@@ -45,7 +45,7 @@ if (
     $job->job_responsibilities = $data->job_responsibilities;
     $job->industry_partner = $data->industry_partner;
 
-    if ($student->create()) {
+    if ($job->create()) {
         http_response_code(201); // Created
         echo json_encode(array("message" => "Student was created."));
     } else {
