@@ -17,7 +17,7 @@ class IndustryPartner {
 
   factory IndustryPartner.fromJson(Map<String, dynamic> json) {
     return IndustryPartner(
-      partnerId: json['partner_id'],
+      partnerId: json['partner_id'] ?? '',
       profilePic: json['profile_pic'] ?? '',
       partnerName: json['partner_name'] ?? '',
       partnerLocation: json['partner_location'] ?? '',

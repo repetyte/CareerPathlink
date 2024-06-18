@@ -1,4 +1,43 @@
-import 'package:flutter_app/models/industry_partner.dart';
+// import 'package:flutter_app/models/industry_partner.dart';
+class IndustryPartner {
+  final int? partnerId;
+  final String? profilePic;
+  final String partnerName;
+  final String partnerLocation;
+  final String contactNo;
+  final String emailAdd;
+
+  IndustryPartner({
+    this.partnerId,
+    required this.profilePic,
+    required this.partnerName,
+    required this.partnerLocation,
+    required this.contactNo,
+    required this.emailAdd,
+  });
+
+  factory IndustryPartner.fromJson(Map<String, dynamic> json) {
+    return IndustryPartner(
+      partnerId: json['partner_id'] ?? '',
+      profilePic: json['profile_pic'] ?? '',
+      partnerName: json['partner_name'] ?? '',
+      partnerLocation: json['partner_location'] ?? '',
+      contactNo: json['contact_no'] ?? '',
+      emailAdd: json['email_add'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'partner_id': partnerId,
+      'profile_pic': profilePic,
+      'partner_name': partnerName,
+      'partner_location': partnerLocation,
+      'contact_no': contactNo,
+      'email_add': emailAdd,
+    };
+  }
+}
 
 class JobPosting {
   final int? jobId;
@@ -48,14 +87,34 @@ class JobPosting {
       requirements: json['requirements'] ?? '',
       jobResponsibilities: json['job_responsibilities'] ?? '',
       coverPhoto: json['cover_photo'],
-      industryPartner: IndustryPartner.fromJson({
-        'partner_id': json['partner_id'],
-        'profile_pic': json['profile_pic'],
-        'partner_name': json['partner_name'],
-        'partner_location': json['partner_location'],
-        'contact_no': json['contact_no'],
-        'email_add': json['email_add'],
-      }),
+
+      //Option 1
+      // industryPartner: json['industry_partner'] is Map<String, dynamic>
+      //     ? IndustryPartner.fromJson(json['industry_partner'])
+      //     : IndustryPartner(partnerId: null, profilePic: '', partnerName: 'No Partner Name', partnerLocation: '', contactNo: '', emailAdd: ''),
+
+      //Option 2
+      // industryPartner: IndustryPartner.fromJson({
+      //   'partner_id': json['partner_id'],
+      //   'profile_pic': json['profile_pic'],
+      //   'partner_name': json['partner_name'],
+      //   'partner_location': json['partner_location'],
+      //   'contact_no': json['contact_no'],
+      //   'email_add': json['email_add'],
+      // }),
+
+      // Option 3
+      // industryPartner: IndustryPartner(
+      //   partnerId: json['partner_id'],
+      //   profilePic: json['profile_pic'],
+      //   partnerName: json['partner_name'],
+      //   partnerLocation: json['partner_location'],
+      //   contactNo: json['contact_no'],
+      //   emailAdd: json['email_add'],
+      // ),
+
+      // Option 4
+      industryPartner: IndustryPartner.fromJson(json['industry_partner'] ?? {}),
     );
   }
 
@@ -74,7 +133,7 @@ class JobPosting {
       'requirements': requirements,
       'job_responsibilities': jobResponsibilities,
       'cover_photo': coverPhoto,
-      'industry_partner': industryPartner
+      'industry_partner': industryPartner.toJson(),
     };
   }
 }
