@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/drawer.dart';
 import 'package:flutter_app/models/job_posting.dart';
-import 'package:flutter_app/pages/user/rr_job_details.dart';
+import 'package:flutter_app/pages/graduates/recruitment_and_placement/rr_job_details.dart';
 import 'package:flutter_app/services/api_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';

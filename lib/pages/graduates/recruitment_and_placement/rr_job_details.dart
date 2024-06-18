@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/job_posting.dart';
-import 'package:flutter_app/pages/user/rr_document_submission.dart';
+import 'package:flutter_app/pages/graduates/recruitment_and_placement/rr_document_submission.dart';
 import 'package:flutter_app/services/api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,6 +15,7 @@ class RrJobDetails extends StatefulWidget {
 
 class _RrJobDetailsState extends State<RrJobDetails> {
   // String? industryPartnerName;
+  // late final JobPosting jobPosting;
   final ApiService apiService = ApiService();
 
   @override
@@ -229,8 +230,9 @@ class _RrJobDetailsState extends State<RrJobDetails> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  const DocumentSubmissionScreen(),
+                              builder: (context) => DocumentSubmissionScreen(
+                                  jobPosting: widget
+                                      .jobPosting), // Fixed the error here
                             ),
                           );
                         },

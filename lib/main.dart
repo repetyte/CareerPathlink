@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/admin/job_posting_details_screen.dart';
-import 'package:flutter_app/pages/user/rr_job_dashboard_user.dart';
+import 'package:flutter_app/pages/career_center_staff/recruitment_and_placement/job_posting_details_screen.dart';
+import 'package:flutter_app/pages/graduates/recruitment_and_placement/rr_job_dashboard_user.dart';
 import 'theme.dart';
 
 void main() {
