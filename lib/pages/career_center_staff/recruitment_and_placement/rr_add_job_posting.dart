@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/industry_partner.dart';
@@ -6,6 +7,8 @@ import 'package:flutter_app/services/api_service.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RrAddJobPosting extends StatefulWidget {
+  const RrAddJobPosting({super.key});
+
   @override
   _RrAddJobPostingState createState() => _RrAddJobPostingState();
 }
@@ -13,6 +16,8 @@ class RrAddJobPosting extends StatefulWidget {
 class _RrAddJobPostingState extends State<RrAddJobPosting> {
   final ApiService apiService = ApiService();
   final _formKey = GlobalKey<FormState>();
+  File? _image;
+  final picker = ImagePicker();
 
   Uint8List? coverPhoto;
   Uint8List? profilePic;
@@ -32,17 +37,16 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
   String contactNo = '';
   String emailAdd = '';
 
-  Future<void> _pickImage(bool isCoverPhoto) async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      setState(() async {
-        if (isCoverPhoto) {
-          coverPhoto = await image.readAsBytes();
-        } else {
-          profilePic = await image.readAsBytes();
-        }
+  Future<void> _pickImage() async {
+    final XFile? pickedFile =
+        await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
       });
+    } else {
+      print('No image selected.');
     }
   }
 
@@ -60,9 +64,11 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
         jobDescription: jobDescription,
         requirements: requirements,
         jobResponsibilities: jobResponsibilities,
-        coverPhoto: coverPhoto != null ? String.fromCharCodes(coverPhoto!) : null,
+        coverPhoto:
+            coverPhoto != null ? String.fromCharCodes(coverPhoto!) : null,
         industryPartner: IndustryPartner(
-          profilePic: profilePic != null ? String.fromCharCodes(profilePic!) : null,
+          profilePic:
+              profilePic != null ? String.fromCharCodes(profilePic!) : null,
           partnerName: partnerName,
           partnerLocation: partnerLocation,
           contactNo: contactNo,
@@ -72,10 +78,12 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
 
       try {
         await apiService.createJobPosting(jobPosting);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Job added successfully')));
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Job added successfully')));
         Navigator.pop(context);
       } catch (error) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to add job: $error')));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Failed to add job: $error')));
       }
     }
   }
@@ -84,7 +92,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Job Posting'),
+        title: const Text('Add Job Posting'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -94,16 +102,42 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Cover Photo
-              Text('Cover Photo:'),
-              ElevatedButton(
-                onPressed: () => _pickImage(true),
-                child: Text('Choose Cover Photo'),
+              const Text(
+                'Cover Photo:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              if (coverPhoto != null) Image.memory(coverPhoto!, height: 100),
+              const SizedBox(height: 8.0),
+              // Option 1
+              // ElevatedButton(
+              //   onPressed: () => _pickImage(true),
+              //   child: const Text('Choose Cover Photo'),
+              // ),
+              // if (coverPhoto != null) Image.memory(coverPhoto!, height: 100),
+
+              // Option 2
+              // _image == null
+              //     ? const Text('No cover photo selected.')
+              //     : Image.file(_image!),
+              // ElevatedButton(
+              //   onPressed: _pickImage,
+              //   child: const Text('Choose Cover Photo'),
+              // ),
+
+              // Option 3
+              Center(
+                child: _image == null
+                    ? const Text('No image selected.')
+                    : Image.file(_image!),
+              ),
+              ElevatedButton(
+                onPressed: _pickImage,
+                child: const Text('Pick Image'),
+              ),
+              const SizedBox(height: 16.0),
 
               // Job Title
               TextFormField(
-                decoration: InputDecoration(labelText: 'Job Title'),
+                decoration: const InputDecoration(labelText: 'Job Title'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the job title';
@@ -115,7 +149,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
 
               // Status
               DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'Status'),
+                decoration: const InputDecoration(labelText: 'Status'),
                 value: status,
                 onChanged: (newValue) {
                   setState(() {
@@ -132,7 +166,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
 
               // Field/Industry
               DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'Field/Industry'),
+                decoration: const InputDecoration(labelText: 'Field/Industry'),
                 value: fieldIndustry,
                 onChanged: (newValue) {
                   setState(() {
@@ -157,18 +191,15 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
 
               // Job Level
               DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'Job Level'),
+                decoration: const InputDecoration(labelText: 'Job Level'),
                 value: jobLevel,
                 onChanged: (newValue) {
                   setState(() {
                     jobLevel = newValue!;
                   });
                 },
-                items: [
-                  'Entry Level',
-                  'Mid-level',
-                  'Senior Level'
-                ].map((String value) {
+                items: ['Entry Level', 'Mid-level', 'Senior Level']
+                    .map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
@@ -178,7 +209,8 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
 
               // Years of Experience Needed
               DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'Years of Experience Needed'),
+                decoration: const InputDecoration(
+                    labelText: 'Years of Experience Needed'),
                 value: yrsOfExperienceNeeded,
                 onChanged: (newValue) {
                   setState(() {
@@ -201,18 +233,16 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
 
               // Contractual Status
               DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'Contractual Status'),
+                decoration:
+                    const InputDecoration(labelText: 'Contractual Status'),
                 value: contractualStatus,
                 onChanged: (newValue) {
                   setState(() {
                     contractualStatus = newValue!;
                   });
                 },
-                items: [
-                  'Full-time',
-                  'Part-time',
-                  'Contractual'
-                ].map((String value) {
+                items: ['Full-time', 'Part-time', 'Contractual']
+                    .map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
@@ -222,7 +252,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
 
               // Salary Range
               DropdownButtonFormField<String>(
-                decoration: InputDecoration(labelText: 'Salary Range'),
+                decoration: const InputDecoration(labelText: 'Salary Range'),
                 value: salary,
                 onChanged: (newValue) {
                   setState(() {
@@ -244,7 +274,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
 
               // Job Location
               TextFormField(
-                decoration: InputDecoration(labelText: 'Job Location'),
+                decoration: const InputDecoration(labelText: 'Job Location'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the job location';
@@ -256,7 +286,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
 
               // Job Description
               TextFormField(
-                decoration: InputDecoration(labelText: 'Job Description'),
+                decoration: const InputDecoration(labelText: 'Job Description'),
                 maxLines: 3,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -269,7 +299,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
 
               // Requirements
               TextFormField(
-                decoration: InputDecoration(labelText: 'Requirements'),
+                decoration: const InputDecoration(labelText: 'Requirements'),
                 maxLines: 3,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -282,7 +312,8 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
 
               // Job Responsibilities
               TextFormField(
-                decoration: InputDecoration(labelText: 'Job Responsibilities'),
+                decoration:
+                    const InputDecoration(labelText: 'Job Responsibilities'),
                 maxLines: 3,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -294,19 +325,43 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
               ),
 
               // About Employer
-              Text('About Employer:', style: TextStyle(fontWeight: FontWeight.bold)),
+              const Text('About Employer:',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
 
               // Profile Picture
-              Text('Profile Picture:'),
-              ElevatedButton(
-                onPressed: () => _pickImage(false),
-                child: Text('Choose Profile Picture'),
+              const Text('Profile Picture:'),
+
+              // Option 1
+              // ElevatedButton(
+              //   onPressed: () => _pickImage(false),
+              //   child: const Text('Choose Profile Picture'),
+              // ),
+              // if (profilePic != null) Image.memory(profilePic!, height: 100),
+
+              // Option 2
+              // _image == null
+              //     ? const Text('No pfofile picture selected.')
+              //     : Image.file(_image!),
+              // ElevatedButton(
+              //   onPressed: _pickImage,
+              //   child: const Text('Choose Profile Picture'),
+              // ),
+
+              // Option 3
+              Center(
+                child: _image == null
+                    ? const Text('No image selected.')
+                    : Image.file(_image!),
               ),
-              if (profilePic != null) Image.memory(profilePic!, height: 100),
+              ElevatedButton(
+                onPressed: _pickImage,
+                child: const Text('Choose Profile Pic'),
+              ),
+              const SizedBox(height: 16.0),
 
               // Partner Name
               TextFormField(
-                decoration: InputDecoration(labelText: 'Partner Name'),
+                decoration: const InputDecoration(labelText: 'Partner Name'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the partner name';
@@ -318,7 +373,8 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
 
               // Partner Location
               TextFormField(
-                decoration: InputDecoration(labelText: 'Partner Location'),
+                decoration:
+                    const InputDecoration(labelText: 'Partner Location'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the partner location';
@@ -330,7 +386,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
 
               // Contact Number
               TextFormField(
-                decoration: InputDecoration(labelText: 'Contact Number'),
+                decoration: const InputDecoration(labelText: 'Contact Number'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the contact number';
@@ -342,7 +398,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
 
               // Email Address
               TextFormField(
-                decoration: InputDecoration(labelText: 'Email Address'),
+                decoration: const InputDecoration(labelText: 'Email Address'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the email address';
@@ -353,11 +409,11 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
               ),
 
               // Submit Button
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Center(
                 child: ElevatedButton(
                   onPressed: _submitJobPosting,
-                  child: Text('Post Job'),
+                  child: const Text('Post Job'),
                 ),
               ),
             ],

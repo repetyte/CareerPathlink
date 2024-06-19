@@ -10,9 +10,9 @@ class AppTheme {
     fontFamily: 'Montserrat',
     primaryColor: primaryColor,
     scaffoldBackgroundColor: primaryColor,
-    colorScheme: ColorScheme.fromSwatch().copyWith(
-      secondary: secondaryColor, // Gray accent color
-    ),
+    // colorScheme: ColorScheme.fromSwatch().copyWith(
+    //   secondary: secondaryColor, // Gray accent color
+    // ),
     textTheme: const TextTheme(
       // Text theme
       displayLarge: TextStyle(

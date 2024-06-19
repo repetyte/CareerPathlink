@@ -93,8 +93,8 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
       setState(() {
         _filteredJobPostings = data
             .where((job) =>
-        job.jobTitle.toLowerCase().contains(query) ||
-            job.fieldIndustry.toLowerCase().contains(query))
+                job.jobTitle.toLowerCase().contains(query) ||
+                job.fieldIndustry.toLowerCase().contains(query))
             .toList();
       });
     });
@@ -372,8 +372,17 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
+                                    // return const Center(
+                                    //   child: CircularProgressIndicator(),
+                                    // );
                                     return const Center(
-                                      child: CircularProgressIndicator(),
+                                      child: Text(
+                                        'No job found. Try again later',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
                                     );
                                   } else if (snapshot.hasError) {
                                     return Center(
@@ -395,16 +404,16 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                                         _filteredJobPostings;
                                     // Determine the number of columns based on screen width
                                     int crossAxisCount =
-                                    (MediaQuery.of(context).size.width /
-                                        300)
-                                        .floor();
+                                        (MediaQuery.of(context).size.width /
+                                                300)
+                                            .floor();
 
                                     return GridView.builder(
                                       shrinkWrap: true,
                                       physics:
-                                      const NeverScrollableScrollPhysics(),
+                                          const NeverScrollableScrollPhysics(),
                                       gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: crossAxisCount,
                                         mainAxisSpacing: 10.0,
                                         crossAxisSpacing: 10.0,
@@ -417,12 +426,12 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                                           elevation: 10.0,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                            BorderRadius.circular(25.0),
+                                                BorderRadius.circular(25.0),
                                           ),
                                           clipBehavior: Clip.antiAlias,
                                           child: Column(
                                             crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                                CrossAxisAlignment.start,
                                             children: <Widget>[
                                               Image.asset(
                                                 'assets/images/gettyimages_1406724005_dsc_018073.jpeg',
@@ -432,17 +441,17 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                                               ),
                                               Padding(
                                                 padding:
-                                                const EdgeInsets.all(16.0),
+                                                    const EdgeInsets.all(16.0),
                                                 child: Column(
                                                   crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     Text(data[index].jobTitle,
                                                         style: const TextStyle(
                                                             fontSize: 20,
                                                             fontWeight:
-                                                            FontWeight
-                                                                .bold)),
+                                                                FontWeight
+                                                                    .bold)),
                                                     const SizedBox(height: 4),
                                                     Text(data[index].salary,
                                                         style: const TextStyle(
@@ -472,13 +481,13 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                                                           builder: (context) =>
                                                               RrJobDetails(
                                                                   jobPosting:
-                                                                  data[
-                                                                  index]),
+                                                                      data[
+                                                                          index]),
                                                         ),
                                                       );
                                                     },
                                                     child:
-                                                    const Text('View More'),
+                                                        const Text('View More'),
                                                   ),
                                                 ),
                                               ),
@@ -506,10 +515,13 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => RrAddJobPosting()),
+            MaterialPageRoute(builder: (context) => const RrAddJobPosting()),
           );
         },
-        child: const Icon(Icons.add),
+        child: const Row(children: [
+          Icon(Icons.add),
+          // Text('Add Job'),
+        ]),
       ),
     );
   }

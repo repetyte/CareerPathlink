@@ -380,8 +380,17 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
                                       ConnectionState.waiting) {
+                                    // return const Center(
+                                    //   child: CircularProgressIndicator(),
+                                    // );
                                     return const Center(
-                                      child: CircularProgressIndicator(),
+                                      child: Text(
+                                        'No job found. Try again later',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
                                     );
                                   } else if (snapshot.hasError) {
                                     return Center(
