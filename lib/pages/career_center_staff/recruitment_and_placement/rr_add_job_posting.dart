@@ -5,12 +5,12 @@ import 'package:flutter_app/models/job_posting.dart';
 import 'package:flutter_app/services/api_service.dart';
 import 'package:image_picker/image_picker.dart';
 
-class RrAddJobPostingScreen extends StatefulWidget {
+class RrAddJobPosting extends StatefulWidget {
   @override
-  _RrAddJobPostingScreenState createState() => _RrAddJobPostingScreenState();
+  _RrAddJobPostingState createState() => _RrAddJobPostingState();
 }
 
-class _RrAddJobPostingScreenState extends State<RrAddJobPostingScreen> {
+class _RrAddJobPostingState extends State<RrAddJobPosting> {
   final ApiService apiService = ApiService();
   final _formKey = GlobalKey<FormState>();
 

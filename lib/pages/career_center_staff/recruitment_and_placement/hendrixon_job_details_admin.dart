@@ -47,15 +47,13 @@ class HendrixonJobDetailsAdmin extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Container(
-                          child: Text(
-                            'Recruitment and Placement',
-                            style: GoogleFonts.getFont(
-                              'Montserrat',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16,
-                              color: const Color(0xFF000000),
-                            ),
+                        Text(
+                          'Recruitment and Placement',
+                          style: GoogleFonts.getFont(
+                            'Montserrat',
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                            color: const Color(0xFF000000),
                           ),
                         ),
                       ],

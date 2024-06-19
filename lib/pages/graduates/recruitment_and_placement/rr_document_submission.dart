@@ -7,8 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 class DocumentSubmissionScreen extends StatefulWidget {
   final JobPosting jobPosting;
 
-  const DocumentSubmissionScreen({Key? key, required this.jobPosting})
-      : super(key: key);
+  const DocumentSubmissionScreen({super.key, required this.jobPosting});
 
   @override
   _DocumentSubmissionScreenState createState() =>

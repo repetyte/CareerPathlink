@@ -183,15 +183,13 @@ class HendrixonJobLists extends StatelessWidget {
               margin: const EdgeInsets.fromLTRB(26, 0, 26, 24),
               child: Align(
                 alignment: Alignment.topLeft,
-                child: Container(
-                  child: Text(
-                    'Recruitment and Placement',
-                    style: GoogleFonts.getFont(
-                      'Montserrat',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 28,
-                      color: const Color(0xFF000000),
-                    ),
+                child: Text(
+                  'Recruitment and Placement',
+                  style: GoogleFonts.getFont(
+                    'Montserrat',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 28,
+                    color: const Color(0xFF000000),
                   ),
                 ),
               ),

@@ -26,7 +26,7 @@ class _JobPostingDetailsScreenState extends State<JobPostingDetailsScreen> {
     });
   }
 
-  void _deleteSJobPosting(int? id) {
+  void _deleteJobPosting(int? id) {
     apiService.deleteJobPosting(id).then((_) {
       _refreshJobPostings();
       ScaffoldMessenger.of(context).showSnackBar(

@@ -6,6 +6,20 @@ class ApiService {
 
   final String apiUrl = "http://localhost/recruitment_and_placement/api/read.php";
 
+  // Future<void> createJobPosting(JobPosting jobPosting) async {
+  //   final response = await http.post(
+  //     Uri.parse('$apiUrl/job-postings'),
+  //     headers: <String, String>{
+  //       'Content-Type': 'application/json; charset=UTF-8',
+  //     },
+  //     body: jsonEncode(jobPosting.toJson()),
+  //   );
+  //
+  //   if (response.statusCode != 201) {
+  //     throw Exception('Failed to create job posting');
+  //   }
+  // }
+
   Future<void> createJobPosting(JobPosting jobPosting) async {
     final response = await http.post(
       Uri.parse('$apiUrl/create1.php'),
