@@ -13,6 +13,7 @@ include_once 'job_posting.php';
 
 $database = new Database();
 $db = $database->getConnection();
+
 $job = new JobPosting($db);
 
 $data = json_decode(file_get_contents("php://input"));

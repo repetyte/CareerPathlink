@@ -518,10 +518,7 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
             MaterialPageRoute(builder: (context) => const RrAddJobPosting()),
           );
         },
-        child: const Row(children: [
-          Icon(Icons.add),
-          // Text('Add Job'),
-        ]),
+        child: const Icon(Icons.add),
       ),
     );
   }

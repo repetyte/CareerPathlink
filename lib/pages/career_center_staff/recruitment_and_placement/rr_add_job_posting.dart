@@ -1,5 +1,6 @@
 import 'dart:io';
-import 'dart:typed_data';
+// import 'dart:typed_data';
+import 'package:flutter/foundation.dart'; // Import foundation to check platform
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/industry_partner.dart';
 import 'package:flutter_app/models/job_posting.dart';
@@ -17,7 +18,10 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
   final ApiService apiService = ApiService();
   final _formKey = GlobalKey<FormState>();
   File? _image;
+  Uint8List? _webImage; // To store the image bytes for web
   final picker = ImagePicker();
+  IndustryPartner? _selectedPartner;
+  late Future<List<IndustryPartner>> futureIndustryPartners;
 
   Uint8List? coverPhoto;
   Uint8List? profilePic;
@@ -42,11 +46,20 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
         await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-      });
+      if (kIsWeb) {
+        // For web, store the image bytes
+        setState(() async {
+          _webImage = await pickedFile.readAsBytes();
+        });
+      } else {
+        setState(() {
+          _image = File(pickedFile.path);
+        });
+      }
     } else {
-      print('No image selected.');
+      if (kDebugMode) {
+        print('No image selected.');
+      }
     }
   }
 
@@ -89,6 +102,12 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    futureIndustryPartners = ApiService().fetchIndustryPartners();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -107,27 +126,12 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8.0),
-              // Option 1
-              // ElevatedButton(
-              //   onPressed: () => _pickImage(true),
-              //   child: const Text('Choose Cover Photo'),
-              // ),
-              // if (coverPhoto != null) Image.memory(coverPhoto!, height: 100),
-
-              // Option 2
-              // _image == null
-              //     ? const Text('No cover photo selected.')
-              //     : Image.file(_image!),
-              // ElevatedButton(
-              //   onPressed: _pickImage,
-              //   child: const Text('Choose Cover Photo'),
-              // ),
-
-              // Option 3
               Center(
-                child: _image == null
+                child: _image == null && _webImage == null
                     ? const Text('No image selected.')
-                    : Image.file(_image!),
+                    : kIsWeb
+                        ? Image.memory(_webImage!)
+                        : Image.file(_image!),
               ),
               ElevatedButton(
                 onPressed: _pickImage,
@@ -328,83 +332,43 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
               const Text('About Employer:',
                   style: TextStyle(fontWeight: FontWeight.bold)),
 
-              // Profile Picture
-              const Text('Profile Picture:'),
-
-              // Option 1
-              // ElevatedButton(
-              //   onPressed: () => _pickImage(false),
-              //   child: const Text('Choose Profile Picture'),
-              // ),
-              // if (profilePic != null) Image.memory(profilePic!, height: 100),
-
-              // Option 2
-              // _image == null
-              //     ? const Text('No pfofile picture selected.')
-              //     : Image.file(_image!),
-              // ElevatedButton(
-              //   onPressed: _pickImage,
-              //   child: const Text('Choose Profile Picture'),
-              // ),
-
-              // Option 3
-              Center(
-                child: _image == null
-                    ? const Text('No image selected.')
-                    : Image.file(_image!),
-              ),
-              ElevatedButton(
-                onPressed: _pickImage,
-                child: const Text('Choose Profile Pic'),
-              ),
-              const SizedBox(height: 16.0),
-
-              // Partner Name
-              TextFormField(
-                decoration: const InputDecoration(labelText: 'Partner Name'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the partner name';
+              FutureBuilder<List<IndustryPartner>>(
+                future: futureIndustryPartners,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text("Error: ${snapshot.error}"),
+                    );
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(
+                      child: Text("No industry partners available."),
+                    );
+                  } else {
+                    List<IndustryPartner> partners = snapshot.data!;
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: partners.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(partners[index].partnerName),
+                          subtitle: Text(
+                              '${partners[index].partnerLocation}\n${partners[index].emailAdd}'),
+                          onTap: () {
+                            setState(() {
+                              _selectedPartner = partners[index];
+                            });
+                          },
+                          selected: _selectedPartner == partners[index],
+                          selectedTileColor: Colors.grey[200],
+                        );
+                      },
+                    );
                   }
-                  partnerName = value;
-                  return null;
-                },
-              ),
-
-              // Partner Location
-              TextFormField(
-                decoration:
-                    const InputDecoration(labelText: 'Partner Location'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the partner location';
-                  }
-                  partnerLocation = value;
-                  return null;
-                },
-              ),
-
-              // Contact Number
-              TextFormField(
-                decoration: const InputDecoration(labelText: 'Contact Number'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the contact number';
-                  }
-                  contactNo = value;
-                  return null;
-                },
-              ),
-
-              // Email Address
-              TextFormField(
-                decoration: const InputDecoration(labelText: 'Email Address'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the email address';
-                  }
-                  emailAdd = value;
-                  return null;
                 },
               ),
 

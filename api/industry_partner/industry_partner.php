@@ -2,7 +2,7 @@
 
 class IndustryPartner{
     private $conn;
-    private $table_name = "industry_partner";
+    private $table_name = "industry_partner_tb";
 
     public $partner_id;
     public $partner_name;

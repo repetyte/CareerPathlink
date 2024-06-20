@@ -56,9 +56,9 @@ class JobPosting {
         return $stmt;
     }
 
-    function create(){
+    function create() {
         $query = "INSERT INTO
-                    ". $this->table_name. "
+                    " . $this->table_name . "
                 SET
                     job_title=:job_title,
                     status=:status,
@@ -71,23 +71,34 @@ class JobPosting {
                     job_description=:job_description,
                     requirements=:requirements,
                     job_responsibilities=:job_responsibilities,
-                    industry_partner=:industry_partner";
-
+                    industry_partner=:industry_partner,
+                    cover_photo=:cover_photo,
+                    profile_pic=:profile_pic,
+                    partner_name=:partner_name,
+                    partner_location=:partner_location,
+                    contact_no=:contact_no,
+                    email_add=:email_add";
+    
         $stmt = $this->conn->prepare($query);
-
-        $this->job_title=htmlspecialchars(strip_tags($this->job_title));
-        $this->status=htmlspecialchars(strip_tags($this->status));
-        $this->field_industry=htmlspecialchars(strip_tags($this->field_industry));
-        $this->job_level=htmlspecialchars(strip_tags($this->job_level));
-        $this->yrs_of_experience_needed=htmlspecialchars(strip_tags($this->yrs_of_experience_needed));
-        $this->contractual_status=htmlspecialchars(strip_tags($this->contractual_status));
-        $this->salary=htmlspecialchars(strip_tags($this->salary));
-        $this->job_location=htmlspecialchars(strip_tags($this->job_location));
-        $this->job_description=htmlspecialchars(strip_tags($this->job_description));
-        $this->requirements=htmlspecialchars(strip_tags($this->requirements));
-        $this->job_responsibilities=htmlspecialchars(strip_tags($this->job_responsibilities));
-        $this->industry_partner=htmlspecialchars(strip_tags($this->industry_partner));
-
+    
+        $this->job_title = htmlspecialchars(strip_tags($this->job_title));
+        $this->status = htmlspecialchars(strip_tags($this->status));
+        $this->field_industry = htmlspecialchars(strip_tags($this->field_industry));
+        $this->job_level = htmlspecialchars(strip_tags($this->job_level));
+        $this->yrs_of_experience_needed = htmlspecialchars(strip_tags($this->yrs_of_experience_needed));
+        $this->contractual_status = htmlspecialchars(strip_tags($this->contractual_status));
+        $this->salary = htmlspecialchars(strip_tags($this->salary));
+        $this->job_location = htmlspecialchars(strip_tags($this->job_location));
+        $this->job_description = htmlspecialchars(strip_tags($this->job_description));
+        $this->requirements = htmlspecialchars(strip_tags($this->requirements));
+        $this->job_responsibilities = htmlspecialchars(strip_tags($this->job_responsibilities));
+        $this->cover_photo = htmlspecialchars(strip_tags($this->cover_photo));
+        $this->profile_pic = htmlspecialchars(strip_tags($this->profile_pic));
+        $this->partner_name = htmlspecialchars(strip_tags($this->partner_name));
+        $this->partner_location = htmlspecialchars(strip_tags($this->partner_location));
+        $this->contact_no = htmlspecialchars(strip_tags($this->contact_no));
+        $this->email_add = htmlspecialchars(strip_tags($this->email_add));
+    
         $stmt->bindParam(":job_title", $this->job_title);
         $stmt->bindParam(":status", $this->status);
         $stmt->bindParam(":field_industry", $this->field_industry);
@@ -100,11 +111,17 @@ class JobPosting {
         $stmt->bindParam(":requirements", $this->requirements);
         $stmt->bindParam(":job_responsibilities", $this->job_responsibilities);
         $stmt->bindParam(":industry_partner", $this->industry_partner);
-
-        if($stmt->execute()){
+        $stmt->bindParam(":cover_photo", $this->cover_photo);
+        $stmt->bindParam(":profile_pic", $this->profile_pic);
+        $stmt->bindParam(":partner_name", $this->partner_name);
+        $stmt->bindParam(":partner_location", $this->partner_location);
+        $stmt->bindParam(":contact_no", $this->contact_no);
+        $stmt->bindParam(":email_add", $this->email_add);
+    
+        if ($stmt->execute()) {
             return true;
         }
-
+    
         return false;
     }
 
@@ -163,7 +180,6 @@ class JobPosting {
 
         return false;
     }
-
     function delete(){
         $query = "DELETE FROM " . $this->table_name . " WHERE job_id = :job_id";
         $stmt = $this->conn->prepare($query);
