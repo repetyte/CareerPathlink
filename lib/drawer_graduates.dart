@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class MyDrawer extends StatelessWidget {
-  const MyDrawer({super.key});
+class MyDrawerGraduates extends StatelessWidget {
+  const MyDrawerGraduates({super.key});
 
   navigateTo(String route, BuildContext context) {
     Navigator.of(context).pushReplacementNamed(route);
@@ -64,7 +64,7 @@ class MyDrawer extends StatelessWidget {
               style: TextStyle(),
             ),
             onTap: () {
-              navigateTo("/rr_job_dashboard", context);
+              navigateTo("/rr_job_dashboard_user", context);
             },
           ),
           ListTile(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/drawer.dart';
+import 'package:flutter_app/drawer_cco.dart';
 import 'package:flutter_app/models/job_posting.dart';
 import 'package:flutter_app/pages/career_center_staff/recruitment_and_placement/rr_add_job_posting.dart';
 import 'package:flutter_app/pages/graduates/recruitment_and_placement/rr_job_details.dart';
@@ -225,7 +225,7 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
         ),
         toolbarHeight: 100,
       ),
-      drawer: const MyDrawer(),
+      drawer: const MyDrawerCco(),
       body: SingleChildScrollView(
         child: Column(
           children: [
