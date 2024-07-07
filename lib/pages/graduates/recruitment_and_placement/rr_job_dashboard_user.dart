@@ -134,9 +134,8 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: AssetImage(
-                          'assets/images/seal_of_university_of_nueva_caceres_2.png',
-                        ),
+                        image: NetworkImage(
+                            'https://upload.wikimedia.org/wikipedia/en/d/d1/Seal_of_University_of_Nueva_Caceres.png'),
                       ),
                     ),
                     child: const SizedBox(
@@ -231,7 +230,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
             ),
           ],
         ),
-        // toolbarHeight: 100,
+        toolbarHeight: 100,
       ),
       drawer: const MyDrawerGraduates(),
       body: SingleChildScrollView(
@@ -336,7 +335,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                     children: [
                       Container(
                         margin: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-                        // width: 400,   // searchbar width
+                        width: 500, // searchbar width
                         child: Column(
                           children: [
                             const SizedBox(height: 20),

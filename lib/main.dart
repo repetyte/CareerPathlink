@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Recruitment and Placement',
       theme: AppTheme.themeData,
       // home: const Dashboard(),
-      home: const RrJobDashboardAdmin(),
+      home: const RrJobDashboardUser(),
       initialRoute: '/',
       routes: {
         '/rr_job_dashboard_user': (context) => const RrJobDashboardUser(),
