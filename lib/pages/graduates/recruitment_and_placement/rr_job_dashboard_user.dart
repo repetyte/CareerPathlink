@@ -231,7 +231,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
             ),
           ],
         ),
-        toolbarHeight: 100,
+        // toolbarHeight: 100,
       ),
       drawer: const MyDrawerGraduates(),
       body: SingleChildScrollView(
@@ -254,6 +254,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
             ),
             Container(
               margin: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+              height: 300,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50),
                 image: const DecorationImage(
@@ -275,16 +276,16 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                         color: const Color(0x80000000),
                         borderRadius: BorderRadius.circular(50),
                       ),
-                      child: const SizedBox(
-                        width: 380,
-                        height: 200,
-                      ),
+                      // child: const SizedBox(
+                      //   width: 380,
+                      //   height: 200,
+                      // ),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.fromLTRB(24, 64, 24, 63),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
@@ -335,7 +336,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                     children: [
                       Container(
                         margin: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-                        width: 400,
+                        // width: 400,   // searchbar width
                         child: Column(
                           children: [
                             const SizedBox(height: 20),
