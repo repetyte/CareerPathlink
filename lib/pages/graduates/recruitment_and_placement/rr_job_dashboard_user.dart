@@ -305,7 +305,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+                            'Explore a world of possibilities and take the next step in your career - your gateway to finding the perfect job match',
                             style: GoogleFonts.getFont(
                               'Montserrat',
                               fontWeight: FontWeight.w400,

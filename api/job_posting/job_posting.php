@@ -71,7 +71,6 @@ class JobPosting {
                     job_description=:job_description,
                     requirements=:requirements,
                     job_responsibilities=:job_responsibilities,
-                    industry_partner=:industry_partner,
                     cover_photo=:cover_photo,
                     profile_pic=:profile_pic,
                     partner_name=:partner_name,
@@ -110,7 +109,6 @@ class JobPosting {
         $stmt->bindParam(":job_description", $this->job_description);
         $stmt->bindParam(":requirements", $this->requirements);
         $stmt->bindParam(":job_responsibilities", $this->job_responsibilities);
-        $stmt->bindParam(":industry_partner", $this->industry_partner);
         $stmt->bindParam(":cover_photo", $this->cover_photo);
         $stmt->bindParam(":profile_pic", $this->profile_pic);
         $stmt->bindParam(":partner_name", $this->partner_name);

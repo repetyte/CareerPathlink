@@ -50,8 +50,7 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                     'Hendrixon Moldes',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text(
-                      'Graduate | Bachelor of Science in Information Technology'),
+                  subtitle: Text('Career Center Staff'),
                 ),
                 const Divider(),
                 ListTile(
@@ -284,7 +283,7 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Seek Job Opportunities',
+                              'Manage Job Opportunities',
                               style: GoogleFonts.getFont(
                                 'Montserrat',
                                 fontWeight: FontWeight.w700,
@@ -297,7 +296,7 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+                            'Explore a world of possibilities and take the next step in your career your gateway to finding the perfect job match',
                             style: GoogleFonts.getFont(
                               'Montserrat',
                               fontWeight: FontWeight.w400,

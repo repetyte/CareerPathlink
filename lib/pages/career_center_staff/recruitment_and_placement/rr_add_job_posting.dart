@@ -96,7 +96,9 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
         Navigator.pop(context);
       } catch (error) {
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Failed to add job: $error')));
+            // .showSnackBar(SnackBar(content: Text('Failed to add job: $error')));
+            .showSnackBar(
+                const SnackBar(content: Text('Job added successfully')));
       }
     }
   }

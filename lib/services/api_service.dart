@@ -7,6 +7,7 @@ import 'package:flutter_app/models/job_posting.dart';
 class ApiService {
   final String apiUrl = "http://localhost/final/api";
 
+  // Create Job Posting
   Future<void> createJobPosting(JobPosting jobPosting) async {
     try {
       final response = await http.post(
@@ -22,7 +23,7 @@ class ApiService {
           print('Response status: ${response.statusCode}');
           print('Response body: ${response.body}');
         }
-        throw Exception('Failed to create Job Posting');
+        throw Exception('Failed to create Job Posting.');
       }
     } catch (e) {
       if (kDebugMode) {

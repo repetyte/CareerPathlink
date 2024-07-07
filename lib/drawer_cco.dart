@@ -64,7 +64,7 @@ class MyDrawerCco extends StatelessWidget {
               style: TextStyle(),
             ),
             onTap: () {
-              navigateTo("/rr_job_dashboard", context);
+              navigateTo("/rr_job_dashboard_user", context);
             },
           ),
           ListTile(
