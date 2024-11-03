@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Recruitment and Placement',
+      title: 'Recruitment and Placements',
       theme: AppTheme.themeData,
       // home: const Dashboard(),
       home: const RrJobDashboardUser(),
