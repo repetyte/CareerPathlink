@@ -1,4 +1,3 @@
-import 'package:flutter_app/models/industry_partner.dart';
 
 class JobPosting {
   // Job Posting
