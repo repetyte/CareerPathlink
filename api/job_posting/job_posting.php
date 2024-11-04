@@ -4,6 +4,7 @@ class JobPosting {
     private $table_name = "job_posting_tb";
 
     public $job_id;
+    public $cover_photo;
     public $job_title;
     public $status;
     public $field_industry;
@@ -15,7 +16,6 @@ class JobPosting {
     public $job_description;
     public $requirements;
     public $job_responsibilities;
-    public $cover_photo;
     public $partner_id;
     public $profile_pic;
     public $partner_name;
@@ -31,6 +31,7 @@ class JobPosting {
 //         $query = "SELECT * FROM " . $this->table_name . " ORDER BY job_id DESC";
         $query = "SELECT
                       jp.job_id,
+                      jp.cover_photo,
                       jp.job_title,
                       jp.status,
                       jp.field_industry,
@@ -42,7 +43,6 @@ class JobPosting {
                       jp.job_description,
                       jp.requirements,
                       jp.job_responsibilities,
-                      jp.cover_photo,
                       ip.partner_id,
                       ip.profile_pic,
                       ip.partner_name,

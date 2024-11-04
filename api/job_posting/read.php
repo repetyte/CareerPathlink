@@ -22,6 +22,7 @@ if($num > 0){
 
         $job_item = array(
             "job_id" => $job_id,
+            "cover_photo" => $cover_photo,
             "job_title" => $job_title,
             "status" => $status,
             "field_industry" => $field_industry,
@@ -33,7 +34,6 @@ if($num > 0){
             "job_description" => $job_description,
             "requirements" => $requirements,
             "job_responsibilities" => $job_responsibilities,
-            "cover_photo" => $cover_photo,
             "partner_id" => $partner_id,
             "profile_pic" => $profile_pic,
             "partner_name" => $partner_name,

@@ -64,43 +64,44 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
   }
 
   void _submitJobPosting() async {
-    if (_formKey.currentState!.validate()) {
-      JobPosting jobPosting = JobPosting(
-        jobTitle: jobTitle,
-        status: status,
-        fieldIndustry: fieldIndustry,
-        jobLevel: jobLevel,
-        yrsOfExperienceNeeded: yrsOfExperienceNeeded,
-        contractualStatus: contractualStatus,
-        salary: salary,
-        jobLocation: jobLocation,
-        jobDescription: jobDescription,
-        requirements: requirements,
-        jobResponsibilities: jobResponsibilities,
-        coverPhoto:
-            coverPhoto != null ? String.fromCharCodes(coverPhoto!) : null,
-        industryPartner: IndustryPartner(
-          profilePic:
-              profilePic != null ? String.fromCharCodes(profilePic!) : null,
-          partnerName: partnerName,
-          partnerLocation: partnerLocation,
-          contactNo: contactNo,
-          emailAdd: emailAdd,
-        ),
-      );
+    // TO BE REVISED...
+    // if (_formKey.currentState!.validate()) {
+    //   JobPosting jobPosting = JobPosting(
+    //     jobTitle: jobTitle,
+    //     status: status,
+    //     fieldIndustry: fieldIndustry,
+    //     jobLevel: jobLevel,
+    //     yrsOfExperienceNeeded: yrsOfExperienceNeeded,
+    //     contractualStatus: contractualStatus,
+    //     salary: salary,
+    //     jobLocation: jobLocation,
+    //     jobDescription: jobDescription,
+    //     requirements: requirements,
+    //     jobResponsibilities: jobResponsibilities,
+    //     coverPhoto:
+    //         coverPhoto != null ? String.fromCharCodes(coverPhoto!) : null,
+    //     industryPartner: IndustryPartner(
+    //       profilePic:
+    //           profilePic != null ? String.fromCharCodes(profilePic!) : null,
+    //       partnerName: partnerName,
+    //       partnerLocation: partnerLocation,
+    //       contactNo: contactNo,
+    //       emailAdd: emailAdd,
+    //     ),
+    //   );
 
-      try {
-        await apiService.createJobPosting(jobPosting);
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Job added successfully')));
-        Navigator.pop(context);
-      } catch (error) {
-        ScaffoldMessenger.of(context)
-            // .showSnackBar(SnackBar(content: Text('Failed to add job: $error')));
-            .showSnackBar(
-                const SnackBar(content: Text('Job added successfully')));
-      }
-    }
+    //   try {
+    //     await apiService.createJobPosting(jobPosting);
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //         const SnackBar(content: Text('Job added successfully')));
+    //     Navigator.pop(context);
+    //   } catch (error) {
+    //     ScaffoldMessenger.of(context)
+    //         // .showSnackBar(SnackBar(content: Text('Failed to add job: $error')));
+    //         .showSnackBar(
+    //             const SnackBar(content: Text('Job added successfully')));
+    //   }
+    // }
   }
 
   @override

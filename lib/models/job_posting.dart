@@ -1,7 +1,9 @@
 import 'package:flutter_app/models/industry_partner.dart';
 
 class JobPosting {
+  // Job Posting
   final int? jobId;
+  final String? coverPhoto;
   final String jobTitle;
   final String status;
   final String fieldIndustry;
@@ -13,11 +15,19 @@ class JobPosting {
   final String jobDescription;
   final String requirements;
   final String jobResponsibilities;
-  final String? coverPhoto;
-  final IndustryPartner industryPartner;
+
+  // Referenced Industry Partner
+  final int? partnerId;
+  final String? profilePic;
+  final String partnerName;
+  final String partnerLocation;
+  final String contactNo;
+  final String emailAdd;
 
   JobPosting({
+    // Job Posting
     this.jobId,
+    this.coverPhoto,
     required this.jobTitle,
     required this.status,
     required this.fieldIndustry,
@@ -29,13 +39,21 @@ class JobPosting {
     required this.jobDescription,
     required this.requirements,
     required this.jobResponsibilities,
-    this.coverPhoto,
-    required this.industryPartner,
+
+    // Referenced Industry Partner
+    required this.partnerId, 
+    required this.profilePic, 
+    required this.partnerName, 
+    required this.partnerLocation, 
+    required this.contactNo, 
+    required this.emailAdd,
   });
 
   factory JobPosting.fromJson(Map<String, dynamic> json) {
     return JobPosting(
+      // Job Posting
       jobId: json['job_id'] as int?,
+      coverPhoto: json['cover_photo'],
       jobTitle: json['job_title'] ?? '',
       status: json['status'] ?? '',
       fieldIndustry: json['field_industry'] ?? '',
@@ -47,64 +65,22 @@ class JobPosting {
       jobDescription: json['job_description'] ?? '',
       requirements: json['requirements'] ?? '',
       jobResponsibilities: json['job_responsibilities'] ?? '',
-      coverPhoto: json['cover_photo'],
 
-      //Option 1
-      industryPartner: json['industry_partner'] is Map<String, dynamic>
-          ? IndustryPartner.fromJson(json['industry_partner'])
-          : IndustryPartner(
-              partnerId: null,
-              profilePic: 'Profile Pic isnt fetched.',
-              partnerName: 'Partner Name isnt fetched.',
-              partnerLocation: 'Partner Location isnt fetched.',
-              contactNo: 'Contact Number isnt fetched.',
-              emailAdd: 'Email Address isnt fetched.'),
-
-      //Option 2
-      // industryPartner: IndustryPartner.fromJson({
-      //   'partner_id': json['partner_id'],
-      //   'profile_pic': json['profile_pic'],
-      //   'partner_name': json['partner_name'],
-      //   'partner_location': json['partner_location'],
-      //   'contact_no': json['contact_no'],
-      //   'email_add': json['email_add'],
-      // }),
-
-      // Option 3
-      // industryPartner: IndustryPartner(
-      //   partnerId: json['partner_id'],
-      //   profilePic: json['profile_pic'],
-      //   partnerName: json['partner_name'],
-      //   partnerLocation: json['partner_location'],
-      //   contactNo: json['contact_no'],
-      //   emailAdd: json['email_add'],
-      // ),
-
-      // Option 4
-      // industryPartner: IndustryPartner.fromJson(json['industry_partner'] ?? {}),
-
-      //Option 5
-      // industryPartner: json['industry_partner'] != null
-      //     ? IndustryPartner.fromJson(json['industry_partner'])
-      //     : IndustryPartner(
-      //         partnerId: null,
-      //         profilePic: '',
-      //         partnerName: 'No Partner Name',
-      //         partnerLocation: '',
-      //         contactNo: '',
-      //         emailAdd: ''),
-
-      //Option 6
-      // industryPartner: IndustryPartner.fromJson(json['industry_partner']),
-
-      //Option 7
-      // industryPartner: IndustryPartner.fromJson(json),
+      // Referenced Industry Partner
+      partnerId: json['partner_id'] as int?,
+      profilePic: json['profile_pic'],
+      partnerName: json['partner_name'] ?? '',
+      partnerLocation: json['partner_location'] ?? '',
+      contactNo: json['contact_no'] ?? '',
+      emailAdd: json['email_add'] ?? '',
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      // Job Posting
       'job_id': jobId,
+      'cover_photo': coverPhoto,
       'job_title': jobTitle,
       'status': status,
       'field_industry': fieldIndustry,
@@ -116,8 +92,14 @@ class JobPosting {
       'job_description': jobDescription,
       'requirements': requirements,
       'job_responsibilities': jobResponsibilities,
-      'cover_photo': coverPhoto,
-      'industry_partner': industryPartner.toJson(),
+
+      // Referenced Industry Partner
+      'partner_id': partnerId,
+      'profile_pic': profilePic,
+      'partner_name': partnerName,
+      'partner_location': partnerLocation,
+      'contact_no': contactNo,
+      'email_add': emailAdd,
     };
   }
 }

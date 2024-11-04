@@ -4,16 +4,16 @@ import 'package:flutter_app/pages/graduates/recruitment_and_placement/rr_documen
 import 'package:flutter_app/services/api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class RrJobDetails extends StatefulWidget {
+class RrJobDetailsAdmin extends StatefulWidget {
   final JobPosting jobPosting;
 
-  const RrJobDetails({super.key, required this.jobPosting});
+  const RrJobDetailsAdmin({super.key, required this.jobPosting});
 
   @override
-  _RrJobDetailsState createState() => _RrJobDetailsState();
+  _RrJobDetailsAdminState createState() => _RrJobDetailsAdminState();
 }
 
-class _RrJobDetailsState extends State<RrJobDetails> {
+class _RrJobDetailsAdminState extends State<RrJobDetailsAdmin> {
   // String? industryPartnerName;
   // late final JobPosting jobPosting;
   final ApiService apiService = ApiService();
@@ -213,7 +213,7 @@ class _RrJobDetailsState extends State<RrJobDetails> {
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPosting.industryPartner.partnerName,
+                        Text(widget.jobPosting.partnerName,
                             style: const TextStyle(
                               fontSize: 16,
                             )),
