@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart'; // Import foundation to check platform
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/industry_partner.dart';
-import 'package:flutter_app/models/job_posting.dart';
 import 'package:flutter_app/services/api_service.dart';
 import 'package:image_picker/image_picker.dart';
 

@@ -47,6 +47,7 @@ class ApiService {
     }
   }
 
+  // Read/Fetch Industry Partners
   Future<List<IndustryPartner>> fetchIndustryPartners() async {
     // Add your API call here to fetch industry partners
     final response = await http.get(Uri.parse('$apiUrl/industry_partner/read.php'));
