@@ -1677,7 +1677,8 @@ flutter:
     - assets/images/rectangle_223.png
     - assets/images/seal_of_university_of_nueva_caceres_2.png
     - assets/images/search.png
-
+    - assets/logo/UNC_CareerPathlink.png
+    
   fonts:
     - family: Montserrat
       fonts:

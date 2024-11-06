@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/theme.dart';
 import 'package:flutter_app/drawer_graduates.dart';
 import 'package:flutter_app/models/job_posting.dart';
 import 'package:flutter_app/pages/graduates/recruitment_and_placement/rr_job_details_graduates.dart';
@@ -30,14 +31,14 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
     _searchController.addListener(_filterJobPostings);
   }
 
-  // void _showAddJobPostingDialog() {
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) {
-  //       return AddJobPostingDialog(onJobPosted: _refreshJobPostings);
-  //     },
-  //   );
-  // }
+  void _showAddJobPostingDialog() {
+    // showDialog(
+    //   context: context,
+    //   builder: (context) {
+    //     return AddJobPostingDialog(onJobPosted: _refreshJobPostings);
+    //   },
+    // );
+  }
 
   void _showProfileDialog(BuildContext context) {
     showDialog(
@@ -121,7 +122,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
         centerTitle: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
@@ -134,8 +135,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: NetworkImage(
-                            'https://upload.wikimedia.org/wikipedia/en/d/d1/Seal_of_University_of_Nueva_Caceres.png'),
+                        image: AssetImage('assets/logo/UNC_CareerPathlink.png'),
                       ),
                     ),
                     child: const SizedBox(
@@ -143,49 +143,36 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                       height: 48,
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 6.5, 0, 6.5),
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
+                  Row(
+                    children: [
+                      Text(
+                        'UNC ',
                         style: GoogleFonts.getFont(
                           'Montserrat',
                           fontWeight: FontWeight.w700,
-                          fontSize: 20,
+                          fontSize: 24,
                           color: const Color(0xFF000000),
                         ),
-                        children: [
-                          TextSpan(
-                            text: 'UNIVERSITY\n',
-                            style: GoogleFonts.getFont(
-                              'Montserrat',
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12,
-                              height: 1.3,
-                            ),
-                          ),
-                          TextSpan(
-                            text: 'CAREER CENTER',
-                            style: GoogleFonts.getFont(
-                              'Montserrat',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16,
-                              height: 1.3,
-                            ),
-                          ),
-                          TextSpan(
-                            text: '\n' 'MANAGEMENT SYSTEM',
-                            style: GoogleFonts.getFont(
-                              'Montserrat',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12,
-                              height: 1.3,
-                              color: const Color(0xFF000000),
-                            ),
-                          ),
-                        ],
                       ),
-                    ),
+                      Text(
+                        'Career',
+                        style: GoogleFonts.getFont(
+                          'Montserrat',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 24,
+                          color: const Color(0xFF9E9E9E),
+                        ),
+                      ),
+                      Text(
+                        'Pathlink',
+                        style: GoogleFonts.getFont(
+                          'Montserrat',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 24,
+                          color: const Color.fromARGB(255, 255, 0, 0),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -198,18 +185,28 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: SizedBox(
-                  width: 88,
+                  // width: 88,
                   child: Container(
                     padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const CircleAvatar(
-                          backgroundImage: AssetImage(
+                        CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          backgroundImage: const AssetImage(
                               'assets/images/image_12.png'), // Add the path to your profile image
                           radius: 24,
                         ),
+                        Text('Username (Graduate)',
+                            style: GoogleFonts.getFont(
+                              'Montserrat',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                              color: const Color(0xFF000000),
+                            )),
+                        SizedBox(
+                          width: 4,),
                         Container(
                           margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
                           width: 12,
@@ -305,14 +302,8 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                         Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            'Explore a world of possibilities and take the next step in your career - your gateway to finding the perfect job match',
-                            style: GoogleFonts.getFont(
-                              'Montserrat',
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14,
-                              color: const Color(0xFFFFFFFF),
-                            ),
-                          ),
+                              'Explore a world of possibilities and take the next step in your career - your gateway to finding the perfect job match',
+                              style: TextStyle(color: Colors.white)),
                         ),
                       ],
                     ),
@@ -455,7 +446,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(data[index].jobTitle,
-                                                        style: const TextStyle(
+                                                        style: TextStyle(
                                                             fontSize: 20,
                                                             fontWeight:
                                                                 FontWeight

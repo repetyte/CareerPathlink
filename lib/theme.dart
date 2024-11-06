@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  static const Color primaryColor = Color(0xFFFFFFFF);
+  static const Color primaryColor = Color(0xFFFFFFFF); // White
   static const Color secondaryColor = Color(0x80808080); // Gray
   static const Color tertiaryColor = Color(0xFFFF0000); // Red
 
   static final ThemeData themeData = ThemeData(
-    primarySwatch: Colors.grey,
-    fontFamily: GoogleFonts.montserrat().fontFamily,
+    primarySwatch: Colors.grey, // Gray primary color
+    fontFamily: GoogleFonts.montserrat().fontFamily, // Font family
     primaryColor: primaryColor,
     scaffoldBackgroundColor: primaryColor,
-    colorScheme: ColorScheme.fromSwatch().copyWith(
-      secondary: secondaryColor, // Gray accent color
-    ),
+    // colorScheme: ColorScheme.fromSwatch().copyWith(
+    //   secondary: secondaryColor, // Gray accent color
+    // ),
+    colorScheme: ColorScheme.fromSeed(seedColor: secondaryColor),
+    useMaterial3: true,
     textTheme: const TextTheme(
       // Text theme
       displayLarge: TextStyle(
