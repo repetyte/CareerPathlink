@@ -1,4 +1,3 @@
-
 class JobPosting {
   // Job Posting
   final int? jobId;
