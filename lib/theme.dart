@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static const Color primaryColor = Color(0xFFFFFFFF);
@@ -7,12 +8,12 @@ class AppTheme {
 
   static final ThemeData themeData = ThemeData(
     primarySwatch: Colors.grey,
-    fontFamily: 'Montserrat',
+    fontFamily: GoogleFonts.montserrat().fontFamily,
     primaryColor: primaryColor,
     scaffoldBackgroundColor: primaryColor,
-    // colorScheme: ColorScheme.fromSwatch().copyWith(
-    //   secondary: secondaryColor, // Gray accent color
-    // ),
+    colorScheme: ColorScheme.fromSwatch().copyWith(
+      secondary: secondaryColor, // Gray accent color
+    ),
     textTheme: const TextTheme(
       // Text theme
       displayLarge: TextStyle(
