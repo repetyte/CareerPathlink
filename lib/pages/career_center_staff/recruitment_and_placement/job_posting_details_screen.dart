@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/job_posting_with_partner.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_app/models/job_posting.dart';
 import 'package:flutter_app/services/api_service.dart';
 
 class JobPostingDetailsScreen extends StatefulWidget {
@@ -11,7 +11,7 @@ class JobPostingDetailsScreen extends StatefulWidget {
 }
 
 class _JobPostingDetailsScreenState extends State<JobPostingDetailsScreen> {
-  late Future<List<JobPosting>> futureJobPostings;
+  late Future<List<JobPostingWithPartner>> futureJobPostings;
   final ApiService apiService = ApiService();
 
   @override
@@ -45,15 +45,15 @@ class _JobPostingDetailsScreenState extends State<JobPostingDetailsScreen> {
       appBar: AppBar(
         title: const Text('All Job Postings', style: TextStyle(fontFamily: 'Montserrat')),
       ),
-      body: FutureBuilder<List<JobPosting>>(
+      body: FutureBuilder<List<JobPostingWithPartner>>(
         future: futureJobPostings,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            List<JobPosting> jobPostings = snapshot.data!;
+            List<JobPostingWithPartner> jobPostings = snapshot.data!;
             return ListView.builder(
               itemCount: jobPostings.length,
               itemBuilder: (context, index) {
-                JobPosting job = jobPostings[index];
+                JobPostingWithPartner job = jobPostings[index];
                 return Card(
                   child: ListTile(
                     title: Text(job.jobTitle),

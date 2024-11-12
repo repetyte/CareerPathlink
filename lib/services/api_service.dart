@@ -2,20 +2,20 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_app/models/industry_partner.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_app/models/job_posting.dart';
+import 'package:flutter_app/models/job_posting_with_partner.dart';
 
 class ApiService {
   final String apiUrl = "http://localhost/UNC-CareerPathlink/api";
 
   // Create Job Posting
-  Future<void> createJobPosting(JobPosting jobPosting) async {
+  Future<void> createJobPosting(JobPostingWithPartner jobPostingWithPartner) async {
     try {
       final response = await http.post(
         Uri.parse('$apiUrl/job_posting/create.php'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(jobPosting.toJson()),
+        body: jsonEncode(jobPostingWithPartner.toJson()),
       );
 
       if (response.statusCode != 201) {
@@ -34,14 +34,14 @@ class ApiService {
   }
 
   // Read/Fetch job postings
-  Future<List<JobPosting>> fetchJobPostings() async {
+  Future<List<JobPostingWithPartner>> fetchJobPostings() async {
     // Add your API call here to fetch job postings
     final response = await http.get(Uri.parse('$apiUrl/job_posting/read.php'));
 
     // Verifies if successfully fetched job postings
     if (response.statusCode == 200) {
       List<dynamic> data = jsonDecode(response.body);
-      return data.map((json) => JobPosting.fromJson(json)).toList();
+      return data.map((json) => JobPostingWithPartner.fromJson(json)).toList();
     } else {
       throw Exception('Failed to load job postings');
     }
@@ -61,11 +61,11 @@ class ApiService {
     }
   }
 
-  Future<void> updateJobPosting(JobPosting jobPosting) async {
+  Future<void> updateJobPosting(JobPostingWithPartner jobPostingWithPartner) async {
     final response = await http.put(
       Uri.parse('$apiUrl/update.php'),
       headers: <String, String>{'Content-Type': 'application/json'},
-      body: jsonEncode(jobPosting.toJson()),
+      body: jsonEncode(jobPostingWithPartner.toJson()),
     );
     if (response.statusCode != 200) {
       if (kDebugMode) {

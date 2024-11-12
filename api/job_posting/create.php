@@ -8,13 +8,13 @@ header("Access-Control-Allow-Headers: X-Requested-With");
 
 cors();
 
-include_once 'database.php';
-include_once 'job_posting.php';
+include_once '../database.php';
+include_once 'job_posting_with_partner.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$job = new JobPosting($db);
+$job = new JobPostingWithPartner($db);
 
 $data = json_decode(file_get_contents("php://input"));
 
@@ -43,7 +43,7 @@ if (
     $job->job_description = $data->job_description;
     $job->requirements = $data->requirements;
     $job->job_responsibilities = $data->job_responsibilities;
-    // $job->industry_partner = $data->industry_partner;
+    $job->industry_partner = $data->industry_partner;
 
     if ($job->create()) {
         http_response_code(201);

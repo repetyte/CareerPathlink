@@ -1,13 +1,13 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/job_posting.dart';
+import 'package:flutter_app/models/job_posting_with_partner.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DocumentSubmissionScreen extends StatefulWidget {
-  final JobPosting jobPosting;
+  final JobPostingWithPartner jobPostingWithPartner;
 
-  const DocumentSubmissionScreen({super.key, required this.jobPosting});
+  const DocumentSubmissionScreen({super.key, required this.jobPostingWithPartner});
 
   @override
   _DocumentSubmissionScreenState createState() =>
@@ -38,9 +38,9 @@ class _DocumentSubmissionScreenState extends State<DocumentSubmissionScreen> {
               Card(
                 child: Stack(
                   children: [
-                    widget.jobPosting.coverPhoto != null
+                    widget.jobPostingWithPartner.coverPhoto != null
                         ? Image.memory(
-                            widget.jobPosting.coverPhoto! as Uint8List,
+                            widget.jobPostingWithPartner.coverPhoto! as Uint8List,
                             fit: BoxFit.cover,
                             width: double.infinity,
                             height: 200,
@@ -52,7 +52,7 @@ class _DocumentSubmissionScreenState extends State<DocumentSubmissionScreen> {
                       bottom: 16,
                       left: 16,
                       child: Text(
-                        widget.jobPosting.jobTitle,
+                        widget.jobPostingWithPartner.jobTitle,
                         style: GoogleFonts.getFont(
                           'Montserrat',
                           fontWeight: FontWeight.w700,
@@ -65,7 +65,7 @@ class _DocumentSubmissionScreenState extends State<DocumentSubmissionScreen> {
                       bottom: 16,
                       right: 16,
                       child: Text(
-                        widget.jobPosting.salary,
+                        widget.jobPostingWithPartner.salary,
                         style: GoogleFonts.getFont(
                           'Montserrat',
                           fontWeight: FontWeight.w700,
@@ -78,7 +78,7 @@ class _DocumentSubmissionScreenState extends State<DocumentSubmissionScreen> {
                       bottom: 48,
                       left: 16,
                       child: Text(
-                        widget.jobPosting.fieldIndustry,
+                        widget.jobPostingWithPartner.fieldIndustry,
                         style: GoogleFonts.getFont(
                           'Montserrat',
                           fontWeight: FontWeight.w400,

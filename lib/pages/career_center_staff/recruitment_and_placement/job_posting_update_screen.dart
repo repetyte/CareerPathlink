@@ -4,7 +4,7 @@
 // import 'package:flutter_app/services/api_service.dart';
 
 // class JobPostingUpdateScreen extends StatefulWidget {
-//   final JobPosting jobPosting;
+//   final JobPostingWithPartner jobPosting;
 
 //   const JobPostingUpdateScreen({super.key, required this.jobPosting});
 
@@ -243,7 +243,7 @@
 //                 onPressed: () {
 //                   if (_formKey.currentState!.validate()) {
 //                     _formKey.currentState!.save();
-//                     JobPosting updatedJob = JobPosting(
+//                     JobPostingWithPartner updatedJob = JobPostingWithPartner(
 //                       jobId: widget.jobPosting.jobId,
 //                       jobTitle: jobTitle,
 //                       jobStatus: jobStatus,

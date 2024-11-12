@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/job_posting.dart';
+import 'package:flutter_app/models/job_posting_with_partner.dart';
 import 'package:flutter_app/pages/graduates/recruitment_and_placement/rr_document_submission.dart';
 import 'package:flutter_app/services/api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RrJobDetailsAdmin extends StatefulWidget {
-  final JobPosting jobPosting;
+  final JobPostingWithPartner jobPostingWithPartner;
 
-  const RrJobDetailsAdmin({super.key, required this.jobPosting});
+  const RrJobDetailsAdmin({super.key, required this.jobPostingWithPartner});
 
   @override
   _RrJobDetailsAdminState createState() => _RrJobDetailsAdminState();
@@ -15,7 +15,7 @@ class RrJobDetailsAdmin extends StatefulWidget {
 
 class _RrJobDetailsAdminState extends State<RrJobDetailsAdmin> {
   // String? industryPartnerName;
-  // late final JobPosting jobPosting;
+  // late final JobPostingWithPartner jobPosting;
   final ApiService apiService = ApiService();
 
   @override
@@ -96,7 +96,7 @@ class _RrJobDetailsAdminState extends State<RrJobDetailsAdmin> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            widget.jobPosting.jobTitle,
+                                            widget.jobPostingWithPartner.jobTitle,
                                             style: GoogleFonts.getFont(
                                               'Montserrat',
                                               fontWeight: FontWeight.w700,
@@ -115,7 +115,7 @@ class _RrJobDetailsAdminState extends State<RrJobDetailsAdmin> {
                                             padding: const EdgeInsets.fromLTRB(
                                                 20, 10, 20, 10),
                                             child: Text(
-                                              widget.jobPosting.status,
+                                              widget.jobPostingWithPartner.status,
                                               style: GoogleFonts.getFont(
                                                 'Montserrat',
                                                 fontWeight: FontWeight.w700,
@@ -132,7 +132,7 @@ class _RrJobDetailsAdminState extends State<RrJobDetailsAdmin> {
                                 Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    widget.jobPosting.fieldIndustry,
+                                    widget.jobPostingWithPartner.fieldIndustry,
                                     style: GoogleFonts.getFont(
                                       'Montserrat',
                                       fontWeight: FontWeight.w400,
@@ -157,63 +157,63 @@ class _RrJobDetailsAdminState extends State<RrJobDetailsAdmin> {
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPosting.jobLevel,
+                        Text(widget.jobPostingWithPartner.jobLevel,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('Min. Years of Experience Needed: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPosting.yrsOfExperienceNeeded,
+                        Text(widget.jobPostingWithPartner.yrsOfExperienceNeeded,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('Contractual Status: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPosting.contractualStatus,
+                        Text(widget.jobPostingWithPartner.contractualStatus,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('Salary Range: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPosting.salary,
+                        Text(widget.jobPostingWithPartner.salary,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('Location: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPosting.jobLocation,
+                        Text(widget.jobPostingWithPartner.jobLocation,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('Job Description: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPosting.jobDescription,
+                        Text(widget.jobPostingWithPartner.jobDescription,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('Requirements: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPosting.requirements,
+                        Text(widget.jobPostingWithPartner.requirements,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('Job Responsibilities: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPosting.jobResponsibilities,
+                        Text(widget.jobPostingWithPartner.jobResponsibilities,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('About Employer: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPosting.partnerName,
+                        Text(widget.jobPostingWithPartner.partnerName.toString(),
                             style: const TextStyle(
                               fontSize: 16,
                             )),
@@ -231,8 +231,8 @@ class _RrJobDetailsAdminState extends State<RrJobDetailsAdmin> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => DocumentSubmissionScreen(
-                                  jobPosting: widget
-                                      .jobPosting), // Fixed the error here
+                                  jobPostingWithPartner: widget
+                                      .jobPostingWithPartner), // Fixed the error here
                             ),
                           );
                         },

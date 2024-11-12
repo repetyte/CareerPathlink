@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/drawer_cco.dart';
-import 'package:flutter_app/models/job_posting.dart';
+import 'package:flutter_app/models/job_posting_with_partner.dart';
 import 'package:flutter_app/pages/career_center_staff/recruitment_and_placement/rr_add_job_posting.dart';
 import 'package:flutter_app/pages/career_center_staff/recruitment_and_placement/rr_job_details_admin.dart';
 import 'package:flutter_app/services/api_service.dart';
@@ -15,9 +15,9 @@ class RrJobDashboardAdmin extends StatefulWidget {
 }
 
 class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
-  late Future<List<JobPosting>> futureJobPostings;
+  late Future<List<JobPostingWithPartner>> futureJobPostings;
   final TextEditingController _searchController = TextEditingController();
-  List<JobPosting> _filteredJobPostings = [];
+  List<JobPostingWithPartner> _filteredJobPostings = [];
 
   @override
   void initState() {
@@ -366,7 +366,7 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              FutureBuilder<List<JobPosting>>(
+                              FutureBuilder<List<JobPostingWithPartner>>(
                                 future: futureJobPostings,
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
@@ -399,7 +399,7 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                                       ),
                                     );
                                   } else {
-                                    List<JobPosting> data =
+                                    List<JobPostingWithPartner> data =
                                         _filteredJobPostings;
                                     // Determine the number of columns based on screen width
                                     int crossAxisCount =
@@ -479,7 +479,7 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                                                         MaterialPageRoute(
                                                           builder: (context) =>
                                                               RrJobDetailsAdmin(
-                                                                  jobPosting:
+                                                                  jobPostingWithPartner:
                                                                       data[
                                                                           index]),
                                                         ),

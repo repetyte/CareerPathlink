@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/drawer_graduates.dart';
-import 'package:flutter_app/models/job_posting.dart';
+import 'package:flutter_app/models/job_posting_with_partner.dart';
 import 'package:flutter_app/pages/graduates/recruitment_and_placement/rr_job_details_graduates.dart';
 import 'package:flutter_app/services/api_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,9 +14,9 @@ class RrJobDashboardUser extends StatefulWidget {
 }
 
 class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
-  late Future<List<JobPosting>> futureJobPostings;
+  late Future<List<JobPostingWithPartner>> futureJobPostings;
   final TextEditingController _searchController = TextEditingController();
-  List<JobPosting> _filteredJobPostings = [];
+  List<JobPostingWithPartner> _filteredJobPostings = [];
 
   @override
   void initState() {
@@ -226,7 +226,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
             ),
           ],
         ),
-        toolbarHeight: 100,
+        toolbarHeight: 92,
       ),
       drawer: const MyDrawerGraduates(),
       body: SingleChildScrollView(
@@ -365,7 +365,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              FutureBuilder<List<JobPosting>>(
+                              FutureBuilder<List<JobPostingWithPartner>>(
                                 future: futureJobPostings,
                                 builder: (context, snapshot) {
                                   if (snapshot.connectionState ==
@@ -398,7 +398,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                                       ),
                                     );
                                   } else {
-                                    List<JobPosting> data =
+                                    List<JobPostingWithPartner> data =
                                         _filteredJobPostings;
                                     // Determine the number of columns based on screen width
                                     int crossAxisCount =

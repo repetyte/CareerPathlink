@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/pages/career_center_staff/recruitment_and_placement/job_posting_details_screen.dart';
+import 'package:flutter_app/pages/career_center_staff/recruitment_and_placement/rr_job_dashboard_admin.dart';
 import 'package:flutter_app/pages/graduates/recruitment_and_placement/rr_job_dashboard_user.dart';
 import 'theme.dart';
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'UNC CareerPathlink',
       theme: AppTheme.themeData,
       // home: const Dashboard(),
-      home: const RrJobDashboardUser(),
+      home: const RrJobDashboardAdmin(),
       initialRoute: '/',
       routes: {
         '/rr_job_dashboard_user': (context) => const RrJobDashboardUser(),

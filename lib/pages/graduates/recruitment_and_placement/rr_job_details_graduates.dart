@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/job_posting.dart';
+import 'package:flutter_app/models/job_posting_with_partner.dart';
 import 'package:flutter_app/pages/graduates/recruitment_and_placement/rr_document_submission.dart';
 import 'package:flutter_app/services/api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RrJobDetailsGraduates extends StatefulWidget {
-  final JobPosting jobPosting;
+  final JobPostingWithPartner jobPosting;
 
   const RrJobDetailsGraduates({super.key, required this.jobPosting});
 
@@ -15,7 +15,7 @@ class RrJobDetailsGraduates extends StatefulWidget {
 
 class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
   // String? industryPartnerName;
-  // late final JobPosting jobPosting;
+  // late final JobPostingWithPartner jobPosting;
   final ApiService apiService = ApiService();
 
   @override
@@ -213,12 +213,12 @@ class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPosting.partnerName,
+                        Text(widget.jobPosting.partnerName.toString(),
                             style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold
                             )),
                             const SizedBox(height: 4),
-                        Text(widget.jobPosting.partnerLocation,
+                        Text(widget.jobPosting.partnerLocation.toString(),
                             style: const TextStyle(
                               fontSize: 16,
                             )),
@@ -236,7 +236,7 @@ class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => DocumentSubmissionScreen(
-                                  jobPosting: widget
+                                  jobPostingWithPartner: widget
                                       .jobPosting), // Fixed the error here
                             ),
                           );

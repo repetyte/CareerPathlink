@@ -1,8 +1,8 @@
 import 'dart:io';
-// import 'dart:typed_data';
 import 'package:flutter/foundation.dart'; // Import foundation to check platform
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/industry_partner.dart';
+import 'package:flutter_app/models/job_posting_with_partner.dart';
 import 'package:flutter_app/services/api_service.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -35,73 +35,75 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
   String jobDescription = '';
   String requirements = '';
   String jobResponsibilities = '';
-  String partnerName = '';
-  String partnerLocation = '';
-  String contactNo = '';
-  String emailAdd = '';
+  int industryPartner = 0;
 
   Future<void> _pickImage() async {
-    final XFile? pickedFile =
-        await picker.pickImage(source: ImageSource.gallery);
+  final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-    if (pickedFile != null) {
-      if (kIsWeb) {
-        // For web, store the image bytes
-        setState(() async {
-          _webImage = await pickedFile.readAsBytes();
-        });
-      } else {
-        setState(() {
-          _image = File(pickedFile.path);
-        });
-      }
+  if (pickedFile != null) {
+    if (kIsWeb) {
+      // For web, store the image bytes without marking setState as async
+      final webImageBytes = await pickedFile.readAsBytes();
+      setState(() {
+        _webImage = webImageBytes;
+      });
     } else {
-      if (kDebugMode) {
-        print('No image selected.');
-      }
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  } else {
+    if (kDebugMode) {
+      print('No image selected.');
     }
   }
+}
 
   void _submitJobPosting() async {
-    // TO BE REVISED...
-    // if (_formKey.currentState!.validate()) {
-    //   JobPosting jobPosting = JobPosting(
-    //     jobTitle: jobTitle,
-    //     status: status,
-    //     fieldIndustry: fieldIndustry,
-    //     jobLevel: jobLevel,
-    //     yrsOfExperienceNeeded: yrsOfExperienceNeeded,
-    //     contractualStatus: contractualStatus,
-    //     salary: salary,
-    //     jobLocation: jobLocation,
-    //     jobDescription: jobDescription,
-    //     requirements: requirements,
-    //     jobResponsibilities: jobResponsibilities,
-    //     coverPhoto:
-    //         coverPhoto != null ? String.fromCharCodes(coverPhoto!) : null,
-    //     industryPartner: IndustryPartner(
-    //       profilePic:
-    //           profilePic != null ? String.fromCharCodes(profilePic!) : null,
-    //       partnerName: partnerName,
-    //       partnerLocation: partnerLocation,
-    //       contactNo: contactNo,
-    //       emailAdd: emailAdd,
-    //     ),
-    //   );
+  if (_formKey.currentState!.validate()) {
+    // If the platform is web, use _webImage for cover photo; otherwise, use _image
+    final Uint8List? coverPhotoBytes = kIsWeb
+        ? _webImage
+        : _image != null
+            ? await _image!.readAsBytes()
+            : null;
 
-    //   try {
-    //     await apiService.createJobPosting(jobPosting);
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //         const SnackBar(content: Text('Job added successfully')));
-    //     Navigator.pop(context);
-    //   } catch (error) {
-    //     ScaffoldMessenger.of(context)
-    //         // .showSnackBar(SnackBar(content: Text('Failed to add job: $error')));
-    //         .showSnackBar(
-    //             const SnackBar(content: Text('Job added successfully')));
-    //   }
-    // }
+    // Ensure _selectedPartner is selected before proceeding
+    if (_selectedPartner == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please select an industry partner.')));
+      return;
+    }
+
+    // Construct the job posting data
+    final jobPostingData = {
+      'cover_photo': coverPhotoBytes,
+      'job_title': jobTitle,
+      'status': status,
+      'field_industry': fieldIndustry,
+      'job_level': jobLevel,
+      'yrs_of_experience_needed': yrsOfExperienceNeeded,
+      'contractual_status': contractualStatus,
+      'salary': salary,
+      'job_location': jobLocation,
+      'job_description': jobDescription,
+      'requirements': requirements,
+      'job_responsibilities': jobResponsibilities,
+      'industry_partner': _selectedPartner!.partnerId,
+    };
+
+    try {
+      await apiService.createJobPosting(jobPostingData as JobPostingWithPartner);
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Job added successfully')));
+      Navigator.pop(context);
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to add job: $error')));
+    }
   }
+}
+
 
   @override
   void initState() {
