@@ -2,20 +2,20 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_app/models/industry_partner.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_app/models/job_posting_with_partner.dart';
+import 'package:flutter_app/models/job_posting.dart';
 
 class ApiService {
   final String apiUrl = "http://localhost/UNC-CareerPathlink/api";
 
   // Create Job Posting
-  Future<void> createJobPosting(JobPostingWithPartner jobPostingWithPartner) async {
+  Future<void> createJobPosting(JobPosting jobPosting) async {
     try {
       final response = await http.post(
         Uri.parse('$apiUrl/job_posting/create.php'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(jobPostingWithPartner.toJson()),
+        body: jsonEncode(jobPosting.toJson()),
       );
 
       if (response.statusCode != 201) {

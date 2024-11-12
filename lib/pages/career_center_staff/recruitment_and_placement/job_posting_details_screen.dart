@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/job_posting_with_partner.dart';
+import 'package:flutter_app/models/job_posting.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_app/services/api_service.dart';
 

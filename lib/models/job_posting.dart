@@ -15,6 +15,7 @@ class JobPosting {
   final String jobDescription;
   final String requirements;
   final String jobResponsibilities;
+  final int? industryPartner;
 
   // Constructor for job posting properties only
   JobPosting({
@@ -31,6 +32,7 @@ class JobPosting {
     required this.jobDescription,
     required this.requirements,
     required this.jobResponsibilities,
+    required this.industryPartner,
   });
 
   // Factory method for creating a JobPosting from JSON
@@ -49,6 +51,7 @@ class JobPosting {
       jobDescription: json['job_description'] ?? '',
       requirements: json['requirements'] ?? '',
       jobResponsibilities: json['job_responsibilities'] ?? '',
+      industryPartner: json['industry_partner'] as int?,
     );
   }
 
@@ -68,6 +71,7 @@ class JobPosting {
       'job_description': jobDescription,
       'requirements': requirements,
       'job_responsibilities': jobResponsibilities,
+      'industry_partner': industryPartner,
     };
   }
 }
@@ -83,40 +87,27 @@ class JobPostingWithPartner extends JobPosting {
 
   // Constructor for job posting with industry partner properties
   JobPostingWithPartner({
-    int? jobId,
-    Uint8List? coverPhoto,
-    required String jobTitle,
-    required String status,
-    required String fieldIndustry,
-    required String jobLevel,
-    required String yrsOfExperienceNeeded,
-    required String contractualStatus,
-    required String salary,
-    required String jobLocation,
-    required String jobDescription,
-    required String requirements,
-    required String jobResponsibilities,
+    super.jobId,
+    super.coverPhoto,
+    required super.jobTitle,
+    required super.status,
+    required super.fieldIndustry,
+    required super.jobLevel,
+    required super.yrsOfExperienceNeeded,
+    required super.contractualStatus,
+    required super.salary,
+    required super.jobLocation,
+    required super.jobDescription,
+    required super.requirements,
+    required super.jobResponsibilities,
+    super.industryPartner,
     this.partnerId,
     this.profilePic,
     this.partnerName,
     this.partnerLocation,
     this.contactNo,
     this.emailAdd,
-  }) : super(
-          jobId: jobId,
-          coverPhoto: coverPhoto,
-          jobTitle: jobTitle,
-          status: status,
-          fieldIndustry: fieldIndustry,
-          jobLevel: jobLevel,
-          yrsOfExperienceNeeded: yrsOfExperienceNeeded,
-          contractualStatus: contractualStatus,
-          salary: salary,
-          jobLocation: jobLocation,
-          jobDescription: jobDescription,
-          requirements: requirements,
-          jobResponsibilities: jobResponsibilities,
-        );
+  });
 
   // Factory method for creating JobPostingWithPartner from JSON
   factory JobPostingWithPartner.fromJson(Map<String, dynamic> json) {
@@ -134,6 +125,7 @@ class JobPostingWithPartner extends JobPosting {
       jobDescription: json['job_description'] ?? '',
       requirements: json['requirements'] ?? '',
       jobResponsibilities: json['job_responsibilities'] ?? '',
+      industryPartner: json['industry_partner'] as int,
       partnerId: json['partner_id'] as int?,
       profilePic: json['profile_pic'],
       partnerName: json['partner_name'] ?? '',

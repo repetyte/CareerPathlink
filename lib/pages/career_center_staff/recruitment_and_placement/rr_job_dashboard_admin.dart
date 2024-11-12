@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/drawer_cco.dart';
-import 'package:flutter_app/models/job_posting_with_partner.dart';
+import 'package:flutter_app/models/job_posting.dart';
 import 'package:flutter_app/pages/career_center_staff/recruitment_and_placement/rr_add_job_posting.dart';
 import 'package:flutter_app/pages/career_center_staff/recruitment_and_placement/rr_job_details_admin.dart';
 import 'package:flutter_app/services/api_service.dart';

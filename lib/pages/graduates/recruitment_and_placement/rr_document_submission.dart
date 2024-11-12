@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/job_posting_with_partner.dart';
+import 'package:flutter_app/models/job_posting.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DocumentSubmissionScreen extends StatefulWidget {

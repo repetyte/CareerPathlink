@@ -9,7 +9,7 @@ header("Access-Control-Allow-Headers: X-Requested-With");
 cors();
 
 include_once '../database.php';
-include_once 'job_posting_with_partner.php';
+include_once 'job_posting.php';
 
 $database = new Database();
 $db = $database->getConnection();

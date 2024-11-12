@@ -5,7 +5,7 @@ header("Access-Control-Allow-Methods: DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 include_once '../database.php';
-include_once 'job_posting_with_partner.php';
+include_once 'job_posting.php';
 
 $database = new Database();
 $db = $database->getConnection();

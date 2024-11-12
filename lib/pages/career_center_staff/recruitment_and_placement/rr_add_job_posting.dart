@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart'; // Import foundation to check platform
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/industry_partner.dart';
-import 'package:flutter_app/models/job_posting_with_partner.dart';
+import 'package:flutter_app/models/job_posting.dart';
 import 'package:flutter_app/services/api_service.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -76,24 +76,46 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
     }
 
     // Construct the job posting data
-    final jobPostingData = {
-      'cover_photo': coverPhotoBytes,
-      'job_title': jobTitle,
-      'status': status,
-      'field_industry': fieldIndustry,
-      'job_level': jobLevel,
-      'yrs_of_experience_needed': yrsOfExperienceNeeded,
-      'contractual_status': contractualStatus,
-      'salary': salary,
-      'job_location': jobLocation,
-      'job_description': jobDescription,
-      'requirements': requirements,
-      'job_responsibilities': jobResponsibilities,
-      'industry_partner': _selectedPartner!.partnerId,
-    };
+    // final jobPostingData = {
+    //   'cover_photo': coverPhotoBytes,
+    //   'job_title': jobTitle,
+    //   'status': status,
+    //   'field_industry': fieldIndustry,
+    //   'job_level': jobLevel,
+    //   'yrs_of_experience_needed': yrsOfExperienceNeeded,
+    //   'contractual_status': contractualStatus,
+    //   'salary': salary,
+    //   'job_location': jobLocation,
+    //   'job_description': jobDescription,
+    //   'requirements': requirements,
+    //   'job_responsibilities': jobResponsibilities,
+    //   'industry_partner': _selectedPartner!.partnerId,
+    // };
+
+    final jobPostingData = JobPosting(
+      coverPhoto: coverPhotoBytes,
+      jobTitle: jobTitle,
+      status: status,
+      fieldIndustry: fieldIndustry,
+      jobLevel: jobLevel,
+      yrsOfExperienceNeeded: yrsOfExperienceNeeded,
+      contractualStatus: contractualStatus,
+      salary: salary,
+      jobLocation: jobLocation,
+      jobDescription: jobDescription,
+      requirements: requirements,
+      jobResponsibilities: jobResponsibilities,
+      industryPartner: _selectedPartner!.partnerId,
+    );
+
+    // Print the job posting data for debugging
+    if (kDebugMode) {
+      print('Job Posting Data:');
+      print(jobPostingData);
+    }
 
     try {
-      await apiService.createJobPosting(jobPostingData as JobPostingWithPartner);
+      await apiService.createJobPosting(jobPostingData);
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Job added successfully')));
       Navigator.pop(context);
