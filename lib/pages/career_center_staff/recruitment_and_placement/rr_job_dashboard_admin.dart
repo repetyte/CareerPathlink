@@ -135,49 +135,36 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                       height: 48,
                     ),
                   ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 6.5, 0, 6.5),
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
+                  Row(
+                    children: [
+                      Text(
+                        'UNC ',
                         style: GoogleFonts.getFont(
                           'Montserrat',
                           fontWeight: FontWeight.w700,
-                          fontSize: 20,
+                          fontSize: 24,
                           color: const Color(0xFF000000),
                         ),
-                        children: [
-                          TextSpan(
-                            text: 'UNIVERSITY\n',
-                            style: GoogleFonts.getFont(
-                              'Montserrat',
-                              fontWeight: FontWeight.w400,
-                              fontSize: 12,
-                              height: 1.3,
-                            ),
-                          ),
-                          TextSpan(
-                            text: 'CAREER CENTER',
-                            style: GoogleFonts.getFont(
-                              'Montserrat',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16,
-                              height: 1.3,
-                            ),
-                          ),
-                          TextSpan(
-                            text: '\n' 'MANAGEMENT SYSTEM',
-                            style: GoogleFonts.getFont(
-                              'Montserrat',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12,
-                              height: 1.3,
-                              color: const Color(0xFF000000),
-                            ),
-                          ),
-                        ],
                       ),
-                    ),
+                      Text(
+                        'Career',
+                        style: GoogleFonts.getFont(
+                          'Montserrat',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 24,
+                          color: const Color(0xFF9E9E9E),
+                        ),
+                      ),
+                      Text(
+                        'Pathlink',
+                        style: GoogleFonts.getFont(
+                          'Montserrat',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 24,
+                          color: const Color.fromARGB(255, 255, 0, 0),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -190,17 +177,38 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: SizedBox(
-                  width: 88,
                   child: Container(
                     padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const CircleAvatar(
+                          backgroundColor: Colors.transparent,
                           backgroundImage: AssetImage(
                               'assets/images/image_12.png'), // Add the path to your profile image
                           radius: 24,
+                        ),
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Jo Ann Dancalan',
+                                  style: GoogleFonts.getFont(
+                                    'Montserrat',
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    color: const Color(0xFF000000),
+                                  )),
+                              Text('Career Center Staff',
+                                  style: GoogleFonts.getFont(
+                                    'Montserrat',
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 12,
+                                    color: const Color(0xFF000000),
+                                  )),
+                            ]),
+                        SizedBox(
+                          width: 4,
                         ),
                         Container(
                           margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
@@ -222,7 +230,7 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
             ),
           ],
         ),
-        toolbarHeight: 100,
+        toolbarHeight: 92,
       ),
       drawer: const MyDrawerCco(),
       body: SingleChildScrollView(
@@ -245,6 +253,7 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
             ),
             Container(
               margin: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+              height: 300,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50),
                 image: const DecorationImage(
@@ -273,9 +282,9 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.fromLTRB(24, 64, 24, 63),
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
@@ -312,7 +321,7 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+              margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
               child: Container(
                 decoration: BoxDecoration(
                   color: const Color(0xFF808080),
@@ -325,36 +334,21 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        margin: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-                        width: 400,
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 20),
-                            TextField(
-                              controller: _searchController,
-                              decoration: InputDecoration(
-                                hintText: 'Search jobs here...',
-                                hintStyle: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .secondary),
-                                prefixIcon: Icon(Icons.search,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .secondary),
-                                filled: true,
-                                fillColor: Colors.white,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(50),
-                                  borderSide: BorderSide.none,
-                                ),
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 16, horizontal: 20),
-                              ),
+                      margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                      width: 500, // searchbar width
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 16),
+                          TextField(
+                            controller: _searchController,
+                            decoration: InputDecoration(
+                              hintText: 'Search jobs here...',
+                              prefixIcon: Icon(Icons.search,),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
+                    ),
                       Container(
                         decoration: BoxDecoration(
                           color: const Color(0xFFD9D9D9),
@@ -510,14 +504,15 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const RrAddJobPosting()),
           );
         },
-        child: const Icon(Icons.add),
+        icon: const Icon(Icons.add),
+        label: const Text("Add Job Posting", style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Montserrat')),
       ),
     );
   }

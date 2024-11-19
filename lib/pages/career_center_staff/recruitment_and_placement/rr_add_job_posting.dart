@@ -1,10 +1,11 @@
 import 'dart:io';
-import 'package:flutter/foundation.dart'; // Import foundation to check platform
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/industry_partner.dart';
 import 'package:flutter_app/models/job_posting.dart';
 import 'package:flutter_app/services/api_service.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:dotted_border/dotted_border.dart'; // Import DottedBorder
 
 class RrAddJobPosting extends StatefulWidget {
   const RrAddJobPosting({super.key});
@@ -16,14 +17,16 @@ class RrAddJobPosting extends StatefulWidget {
 class _RrAddJobPostingState extends State<RrAddJobPosting> {
   final ApiService apiService = ApiService();
   final _formKey = GlobalKey<FormState>();
-  File? _image;
-  Uint8List? _webImage; // To store the image bytes for web
+  // File? image;
+  String? coverPhotoPath; // Changed coverPhoto to String? to store file path
+  Uint8List? _webImage; // Store the image bytes for web
   final picker = ImagePicker();
   IndustryPartner? _selectedPartner;
   late Future<List<IndustryPartner>> futureIndustryPartners;
+  
+  // late Future<List<JobPostingWithPartner>> futureJobPostings;
+  // List<JobPostingWithPartner> _filteredJobPostings = [];
 
-  Uint8List? coverPhoto;
-  Uint8List? profilePic;
   String jobTitle = '';
   String status = 'Open';
   String fieldIndustry = 'Engineering';
@@ -38,99 +41,114 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
   int industryPartner = 0;
 
   Future<void> _pickImage() async {
-  final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-  if (pickedFile != null) {
-    if (kIsWeb) {
-      // For web, store the image bytes without marking setState as async
-      final webImageBytes = await pickedFile.readAsBytes();
-      setState(() {
-        _webImage = webImageBytes;
-      });
+    if (pickedFile != null) {
+      if (kIsWeb) {
+        final webImageBytes = await pickedFile.readAsBytes();
+        setState(() {
+          _webImage = webImageBytes;
+          coverPhotoPath = null; // No path available on web, use bytes
+        });
+        if (kDebugMode) {
+          print('Web image bytes: $webImageBytes');
+        }
+      } else {
+        setState(() {
+          coverPhotoPath = pickedFile.path; // Set file path for mobile/desktop
+          _webImage = null; // No need for bytes when path is available
+        });
+        if (kDebugMode) {
+          print('Cover photo path: $coverPhotoPath');
+        }
+      }
     } else {
-      setState(() {
-        _image = File(pickedFile.path);
-      });
-    }
-  } else {
-    if (kDebugMode) {
-      print('No image selected.');
+      if (kDebugMode) {
+        print('No image selected.');
+      }
     }
   }
-}
+
+  // Future _pickImage() async {
+  //   try {
+  //     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+  //     if (image == null) return;
+  //     final coverPhotoTemp = File(image.path);
+  //     setState(() {
+  //       this.image = coverPhotoTemp;
+  //       coverPhotoPath = image.path; // Update coverPhotoPath with the selected image path
+  //     });
+  //   } on PlatformException catch (e) {
+  //     if (kDebugMode) {
+  //       print('Failed to pick image: $e');
+  //     }
+  //   }
+  // }
 
   void _submitJobPosting() async {
-  if (_formKey.currentState!.validate()) {
-    // If the platform is web, use _webImage for cover photo; otherwise, use _image
-    final Uint8List? coverPhotoBytes = kIsWeb
-        ? _webImage
-        : _image != null
-            ? await _image!.readAsBytes()
-            : null;
+    if (_formKey.currentState!.validate()) {
+      if (_selectedPartner == null) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('Please select an industry partner.')));
+        return;
+      }
 
-    // Ensure _selectedPartner is selected before proceeding
-    if (_selectedPartner == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Please select an industry partner.')));
-      return;
-    }
+      // Check if coverPhotoPath is null
+      if (coverPhotoPath == null && !kIsWeb) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Please select a cover photo.')));
+        return;
+      }
 
-    // Construct the job posting data
-    // final jobPostingData = {
-    //   'cover_photo': coverPhotoBytes,
-    //   'job_title': jobTitle,
-    //   'status': status,
-    //   'field_industry': fieldIndustry,
-    //   'job_level': jobLevel,
-    //   'yrs_of_experience_needed': yrsOfExperienceNeeded,
-    //   'contractual_status': contractualStatus,
-    //   'salary': salary,
-    //   'job_location': jobLocation,
-    //   'job_description': jobDescription,
-    //   'requirements': requirements,
-    //   'job_responsibilities': jobResponsibilities,
-    //   'industry_partner': _selectedPartner!.partnerId,
-    // };
+      final jobPostingData = JobPosting(
+        coverPhoto: coverPhotoPath, // Using path directly for JobPosting
+        jobTitle: jobTitle,
+        status: status,
+        fieldIndustry: fieldIndustry,
+        jobLevel: jobLevel,
+        yrsOfExperienceNeeded: yrsOfExperienceNeeded,
+        contractualStatus: contractualStatus,
+        salary: salary,
+        jobLocation: jobLocation,
+        jobDescription: jobDescription,
+        requirements: requirements,
+        jobResponsibilities: jobResponsibilities,
+        industryPartner: _selectedPartner!.partnerId,
+      );
 
-    final jobPostingData = JobPosting(
-      coverPhoto: coverPhotoBytes,
-      jobTitle: jobTitle,
-      status: status,
-      fieldIndustry: fieldIndustry,
-      jobLevel: jobLevel,
-      yrsOfExperienceNeeded: yrsOfExperienceNeeded,
-      contractualStatus: contractualStatus,
-      salary: salary,
-      jobLocation: jobLocation,
-      jobDescription: jobDescription,
-      requirements: requirements,
-      jobResponsibilities: jobResponsibilities,
-      industryPartner: _selectedPartner!.partnerId,
-    );
+      if (kDebugMode) {
+        print('Job Posting Data: $jobPostingData');
+        print('Cover Photo: ${jobPostingData.coverPhoto}');
+      }
 
-    // Print the job posting data for debugging
-    if (kDebugMode) {
-      print('Job Posting Data:');
-      print(jobPostingData);
-    }
-
-    try {
-      await apiService.createJobPosting(jobPostingData);
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Job added successfully')));
-      Navigator.pop(context);
-    } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to add job: $error')));
+      try {
+        await apiService.createJobPosting(jobPostingData);
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Job added successfully')));
+        Navigator.pop(context);
+        // _refreshJobPostings();
+      } catch (error) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Failed to add job: $error')));
+      }
     }
   }
-}
 
+  // void _refreshJobPostings() async {
+  //   setState(() {
+  //     futureJobPostings = ApiService().fetchJobPostings();
+  //     futureJobPostings.then((data) {
+  //       setState(() {
+  //         _filteredJobPostings = data;
+  //       });
+  //     });
+  //   });
+  // }
 
   @override
   void initState() {
     super.initState();
-    futureIndustryPartners = ApiService().fetchIndustryPartners();
+    futureIndustryPartners = apiService.fetchIndustryPartners();
   }
 
   @override
@@ -146,28 +164,44 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               // Cover Photo
               const Text(
                 'Cover Photo:',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 8.0),
-              Center(
-                child: _image == null && _webImage == null
-                    ? const Text('No image selected.')
-                    : kIsWeb
+              GestureDetector(
+                onTap: _pickImage,
+                child: DottedBorder(
+                  color: Colors.grey,
+                  strokeWidth: 1,
+                  dashPattern: [8, 4],
+                  child: Container(
+                    width: double.infinity,
+                    height: 300,
+                    alignment: Alignment.center,
+                    child: _webImage != null
                         ? Image.memory(_webImage!)
-                        : Image.file(_image!),
+                        : coverPhotoPath != null
+                            ? Image.file(File(coverPhotoPath!))
+                            : const Text(
+                                'Drag and drop an image here\nor tap to select',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                  ),
+                ),
               ),
-              ElevatedButton(
-                onPressed: _pickImage,
-                child: const Text('Pick Image'),
-              ),
-              const SizedBox(height: 16.0),
+              const SizedBox(height: 32.0),
 
               // Job Title
+              const Text(
+                'Job Title:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Job Title'),
+                // decoration: const InputDecoration(labelText: 'Job Title'),
+                decoration: const InputDecoration(hintText: 'Enter Job Title'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the job title';
@@ -176,11 +210,17 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                   return null;
                 },
               ),
+              const SizedBox(height: 16.0),
 
               // Status
+              const Text(
+                'Status:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               DropdownButtonFormField<String>(
-                decoration: const InputDecoration(labelText: 'Status'),
-                value: status,
+                // decoration: const InputDecoration(labelText: 'Status', hintText: 'Job Status'),
+                // value: status,
+                hint: Text('Select an option'),
                 onChanged: (newValue) {
                   setState(() {
                     status = newValue!;
@@ -193,11 +233,17 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                   );
                 }).toList(),
               ),
+              const SizedBox(height: 16.0),
 
               // Field/Industry
+              const Text(
+                'Field/Industry:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               DropdownButtonFormField<String>(
-                decoration: const InputDecoration(labelText: 'Field/Industry'),
-                value: fieldIndustry,
+                // decoration: const InputDecoration(labelText: 'Field/Industry'),
+                // value: fieldIndustry,
+                hint: Text('Select an option'),
                 onChanged: (newValue) {
                   setState(() {
                     fieldIndustry = newValue!;
@@ -218,11 +264,17 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                   );
                 }).toList(),
               ),
+              const SizedBox(height: 16.0),
 
               // Job Level
+              const Text(
+                'Job Level:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               DropdownButtonFormField<String>(
-                decoration: const InputDecoration(labelText: 'Job Level'),
-                value: jobLevel,
+                // decoration: const InputDecoration(labelText: 'Job Level'),
+                // value: jobLevel,
+                hint: Text('Select an option'),
                 onChanged: (newValue) {
                   setState(() {
                     jobLevel = newValue!;
@@ -236,12 +288,18 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                   );
                 }).toList(),
               ),
+              const SizedBox(height: 16.0),
 
               // Years of Experience Needed
+              const Text(
+                'Years of Experience Needed:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               DropdownButtonFormField<String>(
-                decoration: const InputDecoration(
-                    labelText: 'Years of Experience Needed'),
-                value: yrsOfExperienceNeeded,
+                // decoration: const InputDecoration(
+                //     labelText: 'Years of Experience Needed'),
+                // value: yrsOfExperienceNeeded,
+                hint: Text('Select an option'),
                 onChanged: (newValue) {
                   setState(() {
                     yrsOfExperienceNeeded = newValue!;
@@ -260,12 +318,18 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                   );
                 }).toList(),
               ),
+              const SizedBox(height: 16.0),
 
               // Contractual Status
+              const Text(
+                'Contractual Status:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               DropdownButtonFormField<String>(
-                decoration:
-                    const InputDecoration(labelText: 'Contractual Status'),
-                value: contractualStatus,
+                // decoration:
+                //     const InputDecoration(labelText: 'Contractual Status'),
+                // value: contractualStatus,
+                hint: Text('Select an option'),
                 onChanged: (newValue) {
                   setState(() {
                     contractualStatus = newValue!;
@@ -279,11 +343,17 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                   );
                 }).toList(),
               ),
+              const SizedBox(height: 16.0),
 
               // Salary Range
+              const Text(
+                'Salary Range:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               DropdownButtonFormField<String>(
-                decoration: const InputDecoration(labelText: 'Salary Range'),
-                value: salary,
+                // decoration: const InputDecoration(labelText: 'Salary Range'),
+                // value: salary,
+                hint: Text('Select an option'),
                 onChanged: (newValue) {
                   setState(() {
                     salary = newValue!;
@@ -301,10 +371,16 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                   );
                 }).toList(),
               ),
+              const SizedBox(height: 16.0),
 
               // Job Location
+              const Text(
+                'Job Location:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Job Location'),
+                // decoration: const InputDecoration(labelText: 'Job Location'),
+                decoration: const InputDecoration(hintText: 'Enter the job location'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the job location';
@@ -313,10 +389,16 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                   return null;
                 },
               ),
+              const SizedBox(height: 16.0),
 
               // Job Description
+              const Text(
+                'Job Description:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Job Description'),
+                // decoration: const InputDecoration(labelText: 'Job Description'),
+                decoration: const InputDecoration(hintText: 'Enter the job description'),
                 maxLines: 3,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -326,24 +408,36 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                   return null;
                 },
               ),
+              const SizedBox(height: 16.0),
 
               // Requirements
+              const Text(
+                'Requirements:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Requirements'),
+                // decoration: const InputDecoration(labelText: 'Requirements'),
+                decoration: const InputDecoration(hintText: 'Enter the job requirements'),
                 maxLines: 3,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the requirements';
+                    return 'Please enter the job requirements';
                   }
                   requirements = value;
                   return null;
                 },
               ),
+              const SizedBox(height: 16.0),
 
               // Job Responsibilities
+              const Text(
+                'Job Responsibilities:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               TextFormField(
-                decoration:
-                    const InputDecoration(labelText: 'Job Responsibilities'),
+                // decoration:
+                //     const InputDecoration(labelText: 'Job Responsibilities'),
+                decoration: const InputDecoration(hintText: 'Enter the job responsibilities'),
                 maxLines: 3,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -353,11 +447,13 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                   return null;
                 },
               ),
+              const SizedBox(height: 16.0),
 
               // About Employer
-              const Text('About Employer:',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-
+              const Text(
+                'About Employer:',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
               FutureBuilder<List<IndustryPartner>>(
                 future: futureIndustryPartners,
                 builder: (context, snapshot) {
@@ -399,7 +495,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
               ),
 
               // Submit Button
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
               Center(
                 child: ElevatedButton(
                   onPressed: _submitJobPosting,

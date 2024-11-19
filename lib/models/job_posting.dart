@@ -3,7 +3,7 @@ import 'dart:typed_data';
 // Define the JobPosting class with job posting properties only
 class JobPosting {
   final int? jobId;
-  final Uint8List? coverPhoto;
+  final String? coverPhoto;
   final String jobTitle;
   final String status;
   final String fieldIndustry;
