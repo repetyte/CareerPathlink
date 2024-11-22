@@ -1,7 +1,5 @@
 import 'dart:html' as html;
 import 'dart:typed_data';
-import 'dart:io'
-    if (dart.library.html) 'dart:html'; // Platform-specific imports
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
@@ -9,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/models/industry_partner.dart';
 import 'package:flutter_app/models/job_posting.dart';
 import 'package:flutter_app/services/api_service.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:dotted_border/dotted_border.dart';
 
 class RrAddJobPosting extends StatefulWidget {
   const RrAddJobPosting({super.key});
@@ -23,14 +19,12 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
   final ApiService apiService = ApiService();
   final _formKey = GlobalKey<FormState>();
 
-  // String? coverPhotoPath;
-  Uint8List? _webImage;
-  String _imageSource = ''; // Keeps track of the image source (path or URL)
-
   IndustryPartner? _selectedPartner;
   late Future<List<IndustryPartner>> futureIndustryPartners;
 
   String jobTitle = '';
+  Uint8List? coverPhotoBytes;
+  String coverPhotoSource = ''; // Keeps track of the image source (path or URL)
   String status = 'Open';
   String fieldIndustry = 'Engineering';
   String jobLevel = 'Entry Level';
@@ -61,8 +55,8 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
 
     if (result != null) {
       setState(() {
-        _webImage = result.files.first.bytes;
-        _imageSource = result.files.first.name;
+        coverPhotoBytes = result.files.first.bytes;
+        coverPhotoSource = result.files.first.name;
       });
     }
   }
@@ -81,9 +75,9 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
       reader.readAsArrayBuffer(file);
       reader.onLoadEnd.listen((_) {
         setState(() {
-          _webImage = reader.result as Uint8List?;
+          coverPhotoBytes = reader.result as Uint8List?;
           // coverPhotoPath = null; // Clear path if we're using bytes
-          _imageSource = file.name;
+          coverPhotoSource = file.name;
         });
       });
     }
@@ -98,15 +92,15 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
   //     if (kIsWeb) {
   //       final webImageBytes = await pickedFile.readAsBytes();
   //       setState(() {
-  //         _webImage = webImageBytes;
+  //         coverPhotoBytes = webImageBytes;
   //         coverPhotoPath = null; // Clear path if we're using bytes
-  //         _imageSource = 'Gallery';
+  //         coverPhotoSource = 'Gallery';
   //       });
   //     } else {
   //       setState(() {
   //         coverPhotoPath = pickedFile.path;
-  //         _webImage = null; // Clear bytes if we're using path
-  //         _imageSource = pickedFile.path;
+  //         coverPhotoBytes = null; // Clear bytes if we're using path
+  //         coverPhotoSource = pickedFile.path;
   //       });
   //     }
   //   }
@@ -122,7 +116,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
   //     if (kIsWeb) {
   //       final webImageBytes = await pickedFile.readAsBytes();
   //       setState(() {
-  //         _webImage = webImageBytes;
+  //         coverPhotoBytes = webImageBytes;
   //         coverPhotoPath = null; // Not using file paths for web
   //       });
   //       if (kDebugMode) {
@@ -131,7 +125,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
   //     } else {
   //       setState(() {
   //         coverPhotoPath = pickedFile.path; // Path is not valid for web
-  //         _webImage = null;
+  //         coverPhotoBytes = null;
   //       });
   //       if (kDebugMode) {
   //         print('Cover photo path: $coverPhotoPath');
@@ -149,9 +143,9 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
   //     final request =
   //         await html.HttpRequest.request(url, responseType: "arraybuffer");
   //     setState(() {
-  //       _webImage = request.response as Uint8List?;
+  //       coverPhotoBytes = request.response as Uint8List?;
   //       coverPhotoPath = null; // Clear path if using URL
-  //       _imageSource = url;
+  //       coverPhotoSource = url;
   //     });
   //   } catch (e) {
   //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -169,7 +163,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
       }
 
       final jobPostingData = JobPosting(
-        coverPhoto: _imageSource, // Use appropriate source
+        coverPhoto: coverPhotoSource, // Use appropriate source
         jobTitle: jobTitle,
         status: status,
         fieldIndustry: fieldIndustry,
@@ -188,9 +182,9 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
         print(jobPostingData.toJson());
       }
 
-      if (_imageSource != null) {
+      if (coverPhotoSource != null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Image Source: $_imageSource")),
+          SnackBar(content: Text("Image Source: $coverPhotoSource")),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -234,8 +228,8 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                     // width: double.infinity,
                     // height: 300,
                     // alignment: Alignment.center,
-                    // child: _webImage != null
-                    //     ? Image.memory(_webImage!) // For web-uploaded images
+                    // child: coverPhotoBytes != null
+                    //     ? Image.memory(coverPhotoBytes!) // For web-uploaded images
                     //     : coverPhotoPath != null
                     //         ? kIsWeb
                     //             ? Image.network(
@@ -250,7 +244,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                     //             style: TextStyle(color: Colors.grey),
                     //           ),
                     children: [
-                      if (_webImage != null)
+                      if (coverPhotoBytes != null)
                         Container(
                           height: 200,
                           width: double.infinity,
@@ -259,9 +253,9 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                             borderRadius: BorderRadius.circular(40.0),
                           ),
                           child:
-                              Image.memory(_webImage!, fit: BoxFit.contain),
+                              Image.memory(coverPhotoBytes!, fit: BoxFit.contain),
                         ),
-                      if (_webImage == null)
+                      if (coverPhotoBytes == null)
                         Container(
                           height: 200,
                           width: double.infinity,

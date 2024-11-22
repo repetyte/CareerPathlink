@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/job_posting.dart';
-import 'package:flutter_app/pages/graduates/recruitment_and_placement/rr_document_submission.dart';
+import 'package:flutter_app/pages/graduates_account/recruitment_and_placement/rr_document_submission.dart';
 import 'package:flutter_app/services/api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class RrJobDetailsAdmin extends StatefulWidget {
+class RrJobDetailsCCD extends StatefulWidget {
   final JobPostingWithPartner jobPostingWithPartner;
 
-  const RrJobDetailsAdmin({super.key, required this.jobPostingWithPartner});
+  const RrJobDetailsCCD({super.key, required this.jobPostingWithPartner});
 
   @override
-  _RrJobDetailsAdminState createState() => _RrJobDetailsAdminState();
+  _RrJobDetailsCCDState createState() => _RrJobDetailsCCDState();
 }
 
-class _RrJobDetailsAdminState extends State<RrJobDetailsAdmin> {
+class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
   // String? industryPartnerName;
   // late final JobPostingWithPartner jobPosting;
   final ApiService apiService = ApiService();

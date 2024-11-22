@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/drawer_cco.dart';
 import 'package:flutter_app/models/job_posting.dart';
-import 'package:flutter_app/pages/career_center_staff/recruitment_and_placement/rr_add_job_posting.dart';
-import 'package:flutter_app/pages/career_center_staff/recruitment_and_placement/rr_job_details_admin.dart';
+import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_add_job_posting.dart';
+import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_job_details_ccd.dart';
 import 'package:flutter_app/services/api_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -47,10 +47,10 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                 const ListTile(
                   leading: Icon(Icons.person),
                   title: Text(
-                    'Hendrixon Moldes',
+                    'Jo Ann Dancalan',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text('Career Center Staff'),
+                  subtitle: Text('Career Center Director'),
                 ),
                 const Divider(),
                 ListTile(
@@ -199,7 +199,7 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                                     fontSize: 14,
                                     color: const Color(0xFF000000),
                                   )),
-                              Text('Career Center Staff',
+                              Text('Career Center Director',
                                   style: GoogleFonts.getFont(
                                     'Montserrat',
                                     fontWeight: FontWeight.normal,
@@ -472,7 +472,7 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                                                         context,
                                                         MaterialPageRoute(
                                                           builder: (context) =>
-                                                              RrJobDetailsAdmin(
+                                                              RrJobDetailsCCD(
                                                                   jobPostingWithPartner:
                                                                       data[
                                                                           index]),
