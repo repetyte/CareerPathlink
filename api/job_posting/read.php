@@ -8,7 +8,7 @@ include_once 'job_posting.php';
 $database = new Database();
 $db = $database->getConnection();
 
-$job = new JobPosting($db);
+$job = new JobPostingWithPartner($db);
 
 $stmt = $job->read();
 $num = $stmt->rowCount();
@@ -34,6 +34,7 @@ if($num > 0){
             "job_description" => $job_description,
             "requirements" => $requirements,
             "job_responsibilities" => $job_responsibilities,
+            "industry_partner" => $industry_partner,
             "partner_id" => $partner_id,
             "profile_pic" => $profile_pic,
             "partner_name" => $partner_name,

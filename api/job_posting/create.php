@@ -8,17 +8,18 @@ header("Access-Control-Allow-Headers: X-Requested-With");
 
 cors();
 
-include_once 'database.php';
+include_once '../database.php';
 include_once 'job_posting.php';
 
 $database = new Database();
 $db = $database->getConnection();
 
-$job = new JobPosting($db);
+$job = new JobPostingWithPartner($db);
 
 $data = json_decode(file_get_contents("php://input"));
 
 if (
+    !empty($data->cover_photo) &&
     !empty($data->job_title) &&
     !empty($data->status) &&
     !empty($data->field_industry) &&
@@ -32,6 +33,7 @@ if (
     !empty($data->job_responsibilities) &&
     !empty($data->industry_partner)
 ) {
+    $job->cover_photo = $data->cover_photo;
     $job->job_title = $data->job_title;
     $job->status = $data->status;
     $job->field_industry = $data->field_industry;
@@ -43,7 +45,7 @@ if (
     $job->job_description = $data->job_description;
     $job->requirements = $data->requirements;
     $job->job_responsibilities = $data->job_responsibilities;
-    // $job->industry_partner = $data->industry_partner;
+    $job->industry_partner = $data->industry_partner;
 
     if ($job->create()) {
         http_response_code(201);

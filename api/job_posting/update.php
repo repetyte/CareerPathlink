@@ -4,16 +4,17 @@ header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: PUT");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-include_once 'database.php';
+include_once '../database.php';
 include_once 'job_posting.php';
 
 $database = new Database();
 $db = $database->getConnection();
-$job = new JobPosting($db);
+$job = new JobPostingWithPartner($db);
 
 $data = json_decode(file_get_contents("php://input"));
 
 $job->job_id = $data->job_id;
+$job->cover_photo = $data->cover_photo;
 $job->job_title = $data->job_title;
 $job->status = $data->status;
 $job->field_industry = $data->field_industry;
