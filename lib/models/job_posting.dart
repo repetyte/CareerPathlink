@@ -3,7 +3,7 @@ import 'dart:typed_data';
 // Define the JobPosting class with job posting properties only
 class JobPosting {
   final int? jobId;
-  final String? coverPhoto;
+  final String coverPhoto;
   final String jobTitle;
   final String status;
   final String fieldIndustry;
@@ -20,7 +20,7 @@ class JobPosting {
   // Constructor for job posting properties only
   JobPosting({
     this.jobId,
-    this.coverPhoto,
+    required this.coverPhoto,
     required this.jobTitle,
     required this.status,
     required this.fieldIndustry,
@@ -88,7 +88,7 @@ class JobPostingWithPartner extends JobPosting {
   // Constructor for job posting with industry partner properties
   JobPostingWithPartner({
     super.jobId,
-    super.coverPhoto,
+    required super.coverPhoto,
     required super.jobTitle,
     required super.status,
     required super.fieldIndustry,

@@ -19,6 +19,7 @@ $job = new JobPostingWithPartner($db);
 $data = json_decode(file_get_contents("php://input"));
 
 if (
+    !empty($data->cover_photo) &&
     !empty($data->job_title) &&
     !empty($data->status) &&
     !empty($data->field_industry) &&
@@ -32,6 +33,7 @@ if (
     !empty($data->job_responsibilities) &&
     !empty($data->industry_partner)
 ) {
+    $job->cover_photo = $data->cover_photo;
     $job->job_title = $data->job_title;
     $job->status = $data->status;
     $job->field_industry = $data->field_industry;

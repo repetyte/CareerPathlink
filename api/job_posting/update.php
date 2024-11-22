@@ -14,6 +14,7 @@ $job = new JobPostingWithPartner($db);
 $data = json_decode(file_get_contents("php://input"));
 
 $job->job_id = $data->job_id;
+$job->cover_photo = $data->cover_photo;
 $job->job_title = $data->job_title;
 $job->status = $data->status;
 $job->field_industry = $data->field_industry;

@@ -141,6 +141,7 @@ class JobPostingWithPartner {
         $query = "UPDATE " . $this->table_name . "
                   SET
                       job_title=:job_title,
+                      cover_photo=:cover_photo,
                       status=:status,
                       field_industry=:field_industry,
                       job_level=:job_level,
@@ -158,6 +159,7 @@ class JobPostingWithPartner {
 
         // Sanitize input
         $this->job_id=htmlspecialchars(strip_tags($this->job_id));
+        $this->cover_photo=htmlspecialchars(strip_tags($this->cover_photo));
         $this->job_title=htmlspecialchars(strip_tags($this->job_title));
         $this->status=htmlspecialchars(strip_tags($this->status));
         $this->field_industry=htmlspecialchars(strip_tags($this->field_industry));
@@ -173,6 +175,7 @@ class JobPostingWithPartner {
 
         // Bind parameters
         $stmt->bindParam(':job_id', $this->job_id);
+        $stmt->bindParam(':cover_photo', $this->cover_photo);
         $stmt->bindParam(':job_title', $this->job_title);
         $stmt->bindParam(':status', $this->status);
         $stmt->bindParam(':field_industry', $this->field_industry);

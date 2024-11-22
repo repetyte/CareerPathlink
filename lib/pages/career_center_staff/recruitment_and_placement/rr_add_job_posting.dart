@@ -1,11 +1,16 @@
-import 'dart:io';
+import 'dart:html' as html;
+import 'dart:typed_data';
+import 'dart:io'
+    if (dart.library.html) 'dart:html'; // Platform-specific imports
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/industry_partner.dart';
 import 'package:flutter_app/models/job_posting.dart';
 import 'package:flutter_app/services/api_service.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:dotted_border/dotted_border.dart'; // Import DottedBorder
+import 'package:dotted_border/dotted_border.dart';
 
 class RrAddJobPosting extends StatefulWidget {
   const RrAddJobPosting({super.key});
@@ -17,15 +22,13 @@ class RrAddJobPosting extends StatefulWidget {
 class _RrAddJobPostingState extends State<RrAddJobPosting> {
   final ApiService apiService = ApiService();
   final _formKey = GlobalKey<FormState>();
-  // File? image;
-  String? coverPhotoPath; // Changed coverPhoto to String? to store file path
-  Uint8List? _webImage; // Store the image bytes for web
-  final picker = ImagePicker();
+
+  // String? coverPhotoPath;
+  Uint8List? _webImage;
+  String _imageSource = ''; // Keeps track of the image source (path or URL)
+
   IndustryPartner? _selectedPartner;
   late Future<List<IndustryPartner>> futureIndustryPartners;
-  
-  // late Future<List<JobPostingWithPartner>> futureJobPostings;
-  // List<JobPostingWithPartner> _filteredJobPostings = [];
 
   String jobTitle = '';
   String status = 'Open';
@@ -38,50 +41,122 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
   String jobDescription = '';
   String requirements = '';
   String jobResponsibilities = '';
-  int industryPartner = 0;
 
-  Future<void> _pickImage() async {
-    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+  @override
+  void initState() {
+    super.initState();
+    futureIndustryPartners = apiService.fetchIndustryPartners();
 
-    if (pickedFile != null) {
-      if (kIsWeb) {
-        final webImageBytes = await pickedFile.readAsBytes();
-        setState(() {
-          _webImage = webImageBytes;
-          coverPhotoPath = null; // No path available on web, use bytes
-        });
-        if (kDebugMode) {
-          print('Web image bytes: $webImageBytes');
-        }
-      } else {
-        setState(() {
-          coverPhotoPath = pickedFile.path; // Set file path for mobile/desktop
-          _webImage = null; // No need for bytes when path is available
-        });
-        if (kDebugMode) {
-          print('Cover photo path: $coverPhotoPath');
-        }
-      }
-    } else {
-      if (kDebugMode) {
-        print('No image selected.');
-      }
+    final html.Element? body = html.document.body;
+    if (body != null) {
+      body.onDragOver.listen(_handleDragOver);
+      body.onDrop.listen(_handleDrop);
     }
   }
 
-  // Future _pickImage() async {
-  //   try {
-  //     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-  //     if (image == null) return;
-  //     final coverPhotoTemp = File(image.path);
-  //     setState(() {
-  //       this.image = coverPhotoTemp;
-  //       coverPhotoPath = image.path; // Update coverPhotoPath with the selected image path
-  //     });
-  //   } on PlatformException catch (e) {
-  //     if (kDebugMode) {
-  //       print('Failed to pick image: $e');
+  void _pickFromFileExplorer() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+    );
+
+    if (result != null) {
+      setState(() {
+        _webImage = result.files.first.bytes;
+        _imageSource = result.files.first.name;
+      });
+    }
+  }
+
+  void _handleDragOver(html.MouseEvent event) {
+    event.preventDefault();
+  }
+
+  void _handleDrop(html.MouseEvent event) async {
+    event.preventDefault();
+    final html.DataTransfer? dataTransfer = event.dataTransfer;
+    if (dataTransfer != null && dataTransfer.files!.isNotEmpty) {
+      final file = dataTransfer.files!.first;
+      final reader = html.FileReader();
+
+      reader.readAsArrayBuffer(file);
+      reader.onLoadEnd.listen((_) {
+        setState(() {
+          _webImage = reader.result as Uint8List?;
+          // coverPhotoPath = null; // Clear path if we're using bytes
+          _imageSource = file.name;
+        });
+      });
+    }
+  }
+
+  // void _pickImage() async {
+  //   final picker = ImagePicker();
+  //   final XFile? pickedFile =
+  //       await picker.pickImage(source: ImageSource.gallery);
+
+  //   if (pickedFile != null) {
+  //     if (kIsWeb) {
+  //       final webImageBytes = await pickedFile.readAsBytes();
+  //       setState(() {
+  //         _webImage = webImageBytes;
+  //         coverPhotoPath = null; // Clear path if we're using bytes
+  //         _imageSource = 'Gallery';
+  //       });
+  //     } else {
+  //       setState(() {
+  //         coverPhotoPath = pickedFile.path;
+  //         _webImage = null; // Clear bytes if we're using path
+  //         _imageSource = pickedFile.path;
+  //       });
   //     }
+  //   }
+  // }
+
+  // another _pickImage method
+  // Future<void> _pickImage() async {
+  //   final picker = ImagePicker();
+  //   final XFile? pickedFile =
+  //       await picker.pickImage(source: ImageSource.gallery);
+
+  //   if (pickedFile != null) {
+  //     if (kIsWeb) {
+  //       final webImageBytes = await pickedFile.readAsBytes();
+  //       setState(() {
+  //         _webImage = webImageBytes;
+  //         coverPhotoPath = null; // Not using file paths for web
+  //       });
+  //       if (kDebugMode) {
+  //         print('Web image bytes: $webImageBytes');
+  //       }
+  //     } else {
+  //       setState(() {
+  //         coverPhotoPath = pickedFile.path; // Path is not valid for web
+  //         _webImage = null;
+  //       });
+  //       if (kDebugMode) {
+  //         print('Cover photo path: $coverPhotoPath');
+  //       }
+  //     }
+  //   } else {
+  //     if (kDebugMode) {
+  //       print('No image selected.');
+  //     }
+  //   }
+  // }
+
+  // void _handleUrlInput(String url) async {
+  //   try {
+  //     final request =
+  //         await html.HttpRequest.request(url, responseType: "arraybuffer");
+  //     setState(() {
+  //       _webImage = request.response as Uint8List?;
+  //       coverPhotoPath = null; // Clear path if using URL
+  //       _imageSource = url;
+  //     });
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //       content: Text('Error loading image: $e'),
+  //     ));
   //   }
   // }
 
@@ -93,15 +168,8 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
         return;
       }
 
-      // Check if coverPhotoPath is null
-      if (coverPhotoPath == null && !kIsWeb) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Please select a cover photo.')));
-        return;
-      }
-
       final jobPostingData = JobPosting(
-        coverPhoto: coverPhotoPath, // Using path directly for JobPosting
+        coverPhoto: _imageSource, // Use appropriate source
         jobTitle: jobTitle,
         status: status,
         fieldIndustry: fieldIndustry,
@@ -117,8 +185,17 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
       );
 
       if (kDebugMode) {
-        print('Job Posting Data: $jobPostingData');
-        print('Cover Photo: ${jobPostingData.coverPhoto}');
+        print(jobPostingData.toJson());
+      }
+
+      if (_imageSource != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Image Source: $_imageSource")),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("No image selected")),
+        );
       }
 
       try {
@@ -126,29 +203,11 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Job added successfully')));
         Navigator.pop(context);
-        // _refreshJobPostings();
       } catch (error) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Failed to add job: $error')));
       }
     }
-  }
-
-  // void _refreshJobPostings() async {
-  //   setState(() {
-  //     futureJobPostings = ApiService().fetchJobPostings();
-  //     futureJobPostings.then((data) {
-  //       setState(() {
-  //         _filteredJobPostings = data;
-  //       });
-  //     });
-  //   });
-  // }
-
-  @override
-  void initState() {
-    super.initState();
-    futureIndustryPartners = apiService.fetchIndustryPartners();
   }
 
   @override
@@ -164,35 +223,67 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               // Cover Photo
               const Text(
                 'Cover Photo:',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               GestureDetector(
-                onTap: _pickImage,
-                child: DottedBorder(
-                  color: Colors.grey,
-                  strokeWidth: 1,
-                  dashPattern: [8, 4],
-                  child: Container(
-                    width: double.infinity,
-                    height: 300,
-                    alignment: Alignment.center,
-                    child: _webImage != null
-                        ? Image.memory(_webImage!)
-                        : coverPhotoPath != null
-                            ? Image.file(File(coverPhotoPath!))
-                            : const Text(
-                                'Drag and drop an image here\nor tap to select',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                  ),
-                ),
+                onTap: _pickFromFileExplorer,
+                child: Column(
+                    // width: double.infinity,
+                    // height: 300,
+                    // alignment: Alignment.center,
+                    // child: _webImage != null
+                    //     ? Image.memory(_webImage!) // For web-uploaded images
+                    //     : coverPhotoPath != null
+                    //         ? kIsWeb
+                    //             ? Image.network(
+                    //                 coverPhotoPath!) // Display images from URL if `coverPhotoPath` contains a URL
+                    //             : const Text(
+                    //                 'Invalid file path for the web.',
+                    //                 style: TextStyle(color: Colors.red),
+                    //               )
+                    //         : const Text(
+                    //             'Drag and drop an image here\nor tap to select',
+                    //             textAlign: TextAlign.center,
+                    //             style: TextStyle(color: Colors.grey),
+                    //           ),
+                    children: [
+                      if (_webImage != null)
+                        Container(
+                          height: 200,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(40.0),
+                          ),
+                          child:
+                              Image.memory(_webImage!, fit: BoxFit.contain),
+                        ),
+                      if (_webImage == null)
+                        Container(
+                          height: 200,
+                          width: double.infinity,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(40.0),
+                          ),
+                          child: const Text(
+                              "Drag and drop an image or click to select"),
+                        ),
+                    ]),
               ),
-              const SizedBox(height: 32.0),
+              const SizedBox(height: 16.0),
+              // TextField(
+              //   decoration: const InputDecoration(
+              //     labelText: 'Enter Image URL',
+              //     border: OutlineInputBorder(),
+              //   ),
+              //   onSubmitted: _handleUrlInput,
+              // ),
+              // const SizedBox(height: 32.0),
 
               // Job Title
               const Text(
@@ -380,7 +471,8 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
               ),
               TextFormField(
                 // decoration: const InputDecoration(labelText: 'Job Location'),
-                decoration: const InputDecoration(hintText: 'Enter the job location'),
+                decoration:
+                    const InputDecoration(hintText: 'Enter the job location'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the job location';
@@ -398,7 +490,8 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
               ),
               TextFormField(
                 // decoration: const InputDecoration(labelText: 'Job Description'),
-                decoration: const InputDecoration(hintText: 'Enter the job description'),
+                decoration: const InputDecoration(
+                    hintText: 'Enter the job description'),
                 maxLines: 3,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -417,7 +510,8 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
               ),
               TextFormField(
                 // decoration: const InputDecoration(labelText: 'Requirements'),
-                decoration: const InputDecoration(hintText: 'Enter the job requirements'),
+                decoration: const InputDecoration(
+                    hintText: 'Enter the job requirements'),
                 maxLines: 3,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -437,7 +531,8 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
               TextFormField(
                 // decoration:
                 //     const InputDecoration(labelText: 'Job Responsibilities'),
-                decoration: const InputDecoration(hintText: 'Enter the job responsibilities'),
+                decoration: const InputDecoration(
+                    hintText: 'Enter the job responsibilities'),
                 maxLines: 3,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
