@@ -70,7 +70,7 @@ class MyDrawerCco extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.on_device_training),
             title: const Text(
-              'Career Engagement and Training',
+              'Career Coaching',
               style: TextStyle(
                 height: 1.3,
               ),
@@ -84,6 +84,19 @@ class MyDrawerCco extends StatelessWidget {
             leading: const Icon(Icons.bar_chart),
             title: const Text(
               'Graduates Tracer Industry',
+              style: TextStyle(
+                height: 1.3,
+              ),
+            ),
+            onTap: () {
+              // Update the state of the app.
+              // ...
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.on_device_training),
+            title: const Text(
+              'Work Integrated Learning',
               style: TextStyle(
                 height: 1.3,
               ),

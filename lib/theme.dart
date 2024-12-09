@@ -95,6 +95,21 @@ class AppTheme {
       ),
       
     ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        foregroundColor: tertiaryColor, // Red button text color
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+        // minimumSize: const Size(200, 50),
+        elevation: 6, // Shadow elevation
+        textStyle: const TextStyle(
+          fontFamily: 'Montserrat',
+          fontWeight: FontWeight.bold,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(40.0),
+        ),
+      ),
+    ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
       backgroundColor: tertiaryColor, // Red FAB background
       foregroundColor: primaryColor, // White icon/text color

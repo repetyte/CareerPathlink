@@ -100,7 +100,7 @@ class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
                                             style: GoogleFonts.getFont(
                                               'Montserrat',
                                               fontWeight: FontWeight.w700,
-                                              fontSize: 28,
+                                              fontSize: 32,
                                               color: const Color(0xFFFFFFFF),
                                             ),
                                           ),

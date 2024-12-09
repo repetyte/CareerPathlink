@@ -1,8 +1,15 @@
+import 'dart:html' as html;
+
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/job_posting.dart';
-import 'package:flutter_app/pages/graduates_account/recruitment_and_placement/rr_document_submission.dart';
-import 'package:flutter_app/services/api_service.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_update_job_posting.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:flutter_app/models/industry_partner.dart';
+import 'package:flutter_app/models/job_posting.dart';
+import 'package:flutter_app/services/api_service.dart';
 
 class RrJobDetailsCCD extends StatefulWidget {
   final JobPostingWithPartner jobPostingWithPartner;
@@ -14,13 +21,44 @@ class RrJobDetailsCCD extends StatefulWidget {
 }
 
 class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
-  // String? industryPartnerName;
-  // late final JobPostingWithPartner jobPosting;
   final ApiService apiService = ApiService();
+  final _formKey = GlobalKey<FormState>();
+
+  IndustryPartner? _selectedPartner;
+  late Future<List<IndustryPartner>> futureIndustryPartners;
+
+  String jobTitle = '';
+  Uint8List? coverPhotoBytes;
+  String coverPhotoSource = ''; // Keeps track of the image source (path or URL)
+  String status = 'Open';
+  String fieldIndustry = 'Engineering';
+  String jobLevel = 'Entry Level';
+  String yrsOfExperienceNeeded = 'Fresh Graduate';
+  String contractualStatus = 'Full-time';
+  String salary = 'Below PHP 10,000';
+  String jobLocation = '';
+  String jobDescription = '';
+  String requirements = '';
+  String jobResponsibilities = '';
 
   @override
   void initState() {
     super.initState();
+  }
+
+  void _updateJobPosting() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => RrUpdateJobPosting(
+          jobPostingWithPartner: widget.jobPostingWithPartner,
+        ),
+      ),
+    ).then((updated) {
+      if (updated == true) {
+        setState(() {}); // Refresh the job details screen
+      }
+    });
   }
 
   @override
@@ -38,7 +76,7 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
               borderRadius: BorderRadius.circular(50),
             ),
             child: Container(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 24),
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 16),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,11 +134,12 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            widget.jobPostingWithPartner.jobTitle,
+                                            widget
+                                                .jobPostingWithPartner.jobTitle,
                                             style: GoogleFonts.getFont(
                                               'Montserrat',
                                               fontWeight: FontWeight.w700,
-                                              fontSize: 28,
+                                              fontSize: 32,
                                               color: const Color(0xFFFFFFFF),
                                             ),
                                           ),
@@ -115,7 +154,8 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
                                             padding: const EdgeInsets.fromLTRB(
                                                 20, 10, 20, 10),
                                             child: Text(
-                                              widget.jobPostingWithPartner.status,
+                                              widget
+                                                  .jobPostingWithPartner.status,
                                               style: GoogleFonts.getFont(
                                                 'Montserrat',
                                                 fontWeight: FontWeight.w700,
@@ -213,7 +253,8 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.partnerName.toString(),
+                        Text(
+                            widget.jobPostingWithPartner.partnerName.toString(),
                             style: const TextStyle(
                               fontSize: 16,
                             )),
@@ -222,21 +263,27 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.fromLTRB(24.1, 0, 24.1, 0),
+                    margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                     child: Align(
-                      alignment: Alignment.topRight,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DocumentSubmissionScreen(
-                                  jobPostingWithPartner: widget
-                                      .jobPostingWithPartner), // Fixed the error here
+                      alignment: Alignment.bottomRight,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton.icon(
+                            onPressed: () {},
+                            icon: const Icon(Icons.delete),
+                            label: const Text('Delete Job'),
+                          ),
+                          const SizedBox(width: 8),
+                          ElevatedButton.icon(
+                            onPressed: _updateJobPosting,
+                            icon: const Icon(Icons.save),
+                            label: const Text('Update Job'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF008000),
                             ),
-                          );
-                        },
-                        child: const Text('Submit Application'),
+                          ),
+                        ],
                       ),
                     ),
                   ),

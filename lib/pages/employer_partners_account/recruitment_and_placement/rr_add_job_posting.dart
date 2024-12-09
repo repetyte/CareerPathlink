@@ -1,5 +1,4 @@
 import 'dart:html' as html;
-import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
@@ -67,8 +66,8 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
 
   void _handleDrop(html.MouseEvent event) async {
     event.preventDefault();
-    final html.DataTransfer? dataTransfer = event.dataTransfer;
-    if (dataTransfer != null && dataTransfer.files!.isNotEmpty) {
+    final html.DataTransfer dataTransfer = event.dataTransfer;
+    if (dataTransfer.files!.isNotEmpty) {
       final file = dataTransfer.files!.first;
       final reader = html.FileReader();
 
@@ -76,83 +75,11 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
       reader.onLoadEnd.listen((_) {
         setState(() {
           coverPhotoBytes = reader.result as Uint8List?;
-          // coverPhotoPath = null; // Clear path if we're using bytes
           coverPhotoSource = file.name;
         });
       });
     }
   }
-
-  // void _pickImage() async {
-  //   final picker = ImagePicker();
-  //   final XFile? pickedFile =
-  //       await picker.pickImage(source: ImageSource.gallery);
-
-  //   if (pickedFile != null) {
-  //     if (kIsWeb) {
-  //       final webImageBytes = await pickedFile.readAsBytes();
-  //       setState(() {
-  //         coverPhotoBytes = webImageBytes;
-  //         coverPhotoPath = null; // Clear path if we're using bytes
-  //         coverPhotoSource = 'Gallery';
-  //       });
-  //     } else {
-  //       setState(() {
-  //         coverPhotoPath = pickedFile.path;
-  //         coverPhotoBytes = null; // Clear bytes if we're using path
-  //         coverPhotoSource = pickedFile.path;
-  //       });
-  //     }
-  //   }
-  // }
-
-  // another _pickImage method
-  // Future<void> _pickImage() async {
-  //   final picker = ImagePicker();
-  //   final XFile? pickedFile =
-  //       await picker.pickImage(source: ImageSource.gallery);
-
-  //   if (pickedFile != null) {
-  //     if (kIsWeb) {
-  //       final webImageBytes = await pickedFile.readAsBytes();
-  //       setState(() {
-  //         coverPhotoBytes = webImageBytes;
-  //         coverPhotoPath = null; // Not using file paths for web
-  //       });
-  //       if (kDebugMode) {
-  //         print('Web image bytes: $webImageBytes');
-  //       }
-  //     } else {
-  //       setState(() {
-  //         coverPhotoPath = pickedFile.path; // Path is not valid for web
-  //         coverPhotoBytes = null;
-  //       });
-  //       if (kDebugMode) {
-  //         print('Cover photo path: $coverPhotoPath');
-  //       }
-  //     }
-  //   } else {
-  //     if (kDebugMode) {
-  //       print('No image selected.');
-  //     }
-  //   }
-  // }
-
-  // void _handleUrlInput(String url) async {
-  //   try {
-  //     final request =
-  //         await html.HttpRequest.request(url, responseType: "arraybuffer");
-  //     setState(() {
-  //       coverPhotoBytes = request.response as Uint8List?;
-  //       coverPhotoPath = null; // Clear path if using URL
-  //       coverPhotoSource = url;
-  //     });
-  //   } catch (e) {
-  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  //       content: Text('Error loading image: $e'),
-  //     ));
-  //   }
-  // }
 
   void _submitJobPosting() async {
     if (_formKey.currentState!.validate()) {
@@ -180,16 +107,6 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
 
       if (kDebugMode) {
         print(jobPostingData.toJson());
-      }
-
-      if (coverPhotoSource != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Image Source: $coverPhotoSource")),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("No image selected")),
-        );
       }
 
       try {
@@ -224,60 +141,33 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
               ),
               GestureDetector(
                 onTap: _pickFromFileExplorer,
-                child: Column(
-                    // width: double.infinity,
-                    // height: 300,
-                    // alignment: Alignment.center,
-                    // child: coverPhotoBytes != null
-                    //     ? Image.memory(coverPhotoBytes!) // For web-uploaded images
-                    //     : coverPhotoPath != null
-                    //         ? kIsWeb
-                    //             ? Image.network(
-                    //                 coverPhotoPath!) // Display images from URL if `coverPhotoPath` contains a URL
-                    //             : const Text(
-                    //                 'Invalid file path for the web.',
-                    //                 style: TextStyle(color: Colors.red),
-                    //               )
-                    //         : const Text(
-                    //             'Drag and drop an image here\nor tap to select',
-                    //             textAlign: TextAlign.center,
-                    //             style: TextStyle(color: Colors.grey),
-                    //           ),
-                    children: [
-                      if (coverPhotoBytes != null)
-                        Container(
-                          height: 200,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(40.0),
-                          ),
-                          child:
-                              Image.memory(coverPhotoBytes!, fit: BoxFit.contain),
-                        ),
-                      if (coverPhotoBytes == null)
-                        Container(
-                          height: 200,
-                          width: double.infinity,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(40.0),
-                          ),
-                          child: const Text(
-                              "Drag and drop an image or click to select"),
-                        ),
-                    ]),
+                child: Column(children: [
+                  if (coverPhotoBytes != null)
+                    Container(
+                      height: 200,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(40.0),
+                      ),
+                      child:
+                          Image.memory(coverPhotoBytes!, fit: BoxFit.contain),
+                    ),
+                  if (coverPhotoBytes == null)
+                    Container(
+                      height: 200,
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(40.0),
+                      ),
+                      child: const Text(
+                          "Drag and drop an image or click to select"),
+                    ),
+                ]),
               ),
               const SizedBox(height: 16.0),
-              // TextField(
-              //   decoration: const InputDecoration(
-              //     labelText: 'Enter Image URL',
-              //     border: OutlineInputBorder(),
-              //   ),
-              //   onSubmitted: _handleUrlInput,
-              // ),
-              // const SizedBox(height: 32.0),
 
               // Job Title
               const Text(

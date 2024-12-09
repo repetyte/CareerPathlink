@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/drawer_cco.dart';
+import 'package:flutter_app/widgets/drawer/drawer_cco.dart';
 import 'package:flutter_app/models/job_posting.dart';
 import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_add_job_posting.dart';
-import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_job_details_ccd.dart';
+import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_job_details_emp_partners.dart';
 import 'package:flutter_app/services/api_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class RrJobDashboardAdmin extends StatefulWidget {
-  const RrJobDashboardAdmin({super.key});
+class RrJobDashboardEmpPartners extends StatefulWidget {
+  // final JobPostingWithPartner jobPostingWithPartner;
+
+  const RrJobDashboardEmpPartners({super.key});
 
   @override
-  _RrJobDashboardAdminState createState() => _RrJobDashboardAdminState();
+  _RrJobDashboardEmpPartnersState createState() =>
+      _RrJobDashboardEmpPartnersState();
 }
 
-class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
+class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
   late Future<List<JobPostingWithPartner>> futureJobPostings;
   final TextEditingController _searchController = TextEditingController();
   List<JobPostingWithPartner> _filteredJobPostings = [];
@@ -35,39 +38,44 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        var screenSize = MediaQuery.of(context).size;
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50),
+            borderRadius: BorderRadius.circular(40),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const ListTile(
-                  leading: Icon(Icons.person),
-                  title: Text(
-                    'Jo Ann Dancalan',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+          child: SizedBox(
+            width: screenSize.width * 0.8,
+            // height: screenSize.height * 0.5,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const ListTile(
+                    leading: Icon(Icons.person),
+                    title: Text(
+                      'Partner Name',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text('Employer Partner'),
                   ),
-                  subtitle: Text('Career Center Director'),
-                ),
-                const Divider(),
-                ListTile(
-                  leading: const Icon(Icons.settings),
-                  title: const Text('Settings'),
-                  onTap: () {
-                    // Navigate to settings
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.logout),
-                  title: const Text('Logout'),
-                  onTap: () {
-                    // Handle logout
-                  },
-                ),
-              ],
+                  const Divider(),
+                  ListTile(
+                    leading: const Icon(Icons.settings),
+                    title: const Text('Settings'),
+                    onTap: () {
+                      // Navigate to settings
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.logout),
+                    title: const Text('Logout'),
+                    onTap: () {
+                      // Handle logout
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         );
@@ -104,6 +112,21 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
     _searchController.dispose();
     super.dispose();
   }
+
+  // void _addJobPosting() {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => RrJobDetailsCCD(
+  //         jobPostingWithPartner: widget.jobPostingWithPartner,
+  //       ),
+  //     ),
+  //   ).then((updated) {
+  //     if (updated == true) {
+  //       setState(() {}); // Refresh the job details screen
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -192,14 +215,14 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Jo Ann Dancalan',
+                              Text('Partner Name',
                                   style: GoogleFonts.getFont(
                                     'Montserrat',
                                     fontWeight: FontWeight.bold,
                                     fontSize: 14,
                                     color: const Color(0xFF000000),
                                   )),
-                              Text('Career Center Director',
+                              Text('Employer Partner',
                                   style: GoogleFonts.getFont(
                                     'Montserrat',
                                     fontWeight: FontWeight.normal,
@@ -296,7 +319,7 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                               style: GoogleFonts.getFont(
                                 'Montserrat',
                                 fontWeight: FontWeight.w700,
-                                fontSize: 24,
+                                fontSize: 28,
                                 color: const Color(0xFFFFFFFF),
                               ),
                             ),
@@ -334,21 +357,23 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                      margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                      width: 500, // searchbar width
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 16),
-                          TextField(
-                            controller: _searchController,
-                            decoration: InputDecoration(
-                              hintText: 'Search jobs here...',
-                              prefixIcon: Icon(Icons.search,),
+                        margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                        width: 500, // searchbar width
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 16),
+                            TextField(
+                              controller: _searchController,
+                              decoration: InputDecoration(
+                                hintText: 'Search jobs here...',
+                                prefixIcon: Icon(
+                                  Icons.search,
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
                       Container(
                         decoration: BoxDecoration(
                           color: const Color(0xFFD9D9D9),
@@ -512,7 +537,9 @@ class _RrJobDashboardAdminState extends State<RrJobDashboardAdmin> {
           );
         },
         icon: const Icon(Icons.add),
-        label: const Text("Add Job Posting", style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Montserrat')),
+        label: const Text("Add Job Posting",
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontFamily: 'Montserrat')),
       ),
     );
   }

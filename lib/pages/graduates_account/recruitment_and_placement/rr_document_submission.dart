@@ -40,7 +40,7 @@ class _DocumentSubmissionScreenState extends State<DocumentSubmissionScreen> {
                   children: [
                     widget.jobPostingWithPartner.coverPhoto != null
                         ? Image.memory(
-                            widget.jobPostingWithPartner.coverPhoto! as Uint8List,
+                            widget.jobPostingWithPartner.coverPhoto as Uint8List,
                             fit: BoxFit.cover,
                             width: double.infinity,
                             height: 200,
