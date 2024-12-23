@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/drawer_graduates.dart';
+import 'package:flutter_app/widgets/drawer/drawer_graduates.dart';
 import 'package:flutter_app/models/job_posting.dart';
 import 'package:flutter_app/pages/graduates_account/recruitment_and_placement/rr_job_details_graduates.dart';
 import 'package:flutter_app/services/api_service.dart';
