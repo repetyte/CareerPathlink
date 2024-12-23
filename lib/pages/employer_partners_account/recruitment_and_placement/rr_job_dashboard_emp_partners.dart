@@ -452,7 +452,7 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
                                                 CrossAxisAlignment.start,
                                             children: <Widget>[
                                               Image.asset(
-                                                'assets/images/gettyimages_1406724005_dsc_018073.jpeg',
+                                                data[index].coverPhoto,
                                                 width: double.infinity,
                                                 height: 100,
                                                 fit: BoxFit.cover,

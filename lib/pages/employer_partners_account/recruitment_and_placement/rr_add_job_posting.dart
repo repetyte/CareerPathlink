@@ -90,7 +90,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
       }
 
       final jobPostingData = JobPosting(
-        coverPhoto: coverPhotoSource, // Use appropriate source
+        coverPhoto: 'assets/images/$coverPhotoSource', // Use appropriate source
         jobTitle: jobTitle,
         status: status,
         fieldIndustry: fieldIndustry,

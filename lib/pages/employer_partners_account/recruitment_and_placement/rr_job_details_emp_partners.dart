@@ -84,14 +84,14 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
                   Container(
                     margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                     child: Container(
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         image: DecorationImage(
                           fit: BoxFit.cover,
                           image: AssetImage(
-                            'assets/images/rectangle_351.jpeg',
+                            widget.jobPostingWithPartner.coverPhoto,
                           ),
                         ),
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(50),
                           topRight: Radius.circular(50),
                         ),
