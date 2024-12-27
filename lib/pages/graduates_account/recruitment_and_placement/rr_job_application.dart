@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/job_posting.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class JobApplicationScreen extends StatefulWidget {
   final JobPostingWithPartner jobPostingWithPartner;

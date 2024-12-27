@@ -39,8 +39,8 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
   String requirements = '';
   String jobResponsibilities = '';
 
-  List<TextEditingController> _requirementsControllers = [];
-  List<TextEditingController> _responsibilitiesControllers = [];
+  final List<TextEditingController> _requirementsControllers = [];
+  final List<TextEditingController> _responsibilitiesControllers = [];
 
   @override
   void initState() {

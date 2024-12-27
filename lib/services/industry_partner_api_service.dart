@@ -1,8 +1,6 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_app/models/industry_partner.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_app/models/job_posting.dart';
 
 class IndustryPartnerApiService {
   final String apiUrl = "http://localhost/UNC-CareerPathlink/api";
