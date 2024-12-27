@@ -258,7 +258,7 @@
 //                       jobResponsibilities: jobResponsibilities,
 //                       industryPartner: industryPartner, coverPhotoUrl: '',
 //                     );
-//                     Provider.of<ApiService>(context, listen: false)
+//                     Provider.of<JobPostingApiService>(context, listen: false)
 //                         .updateJobPosting(updatedJob)
 //                         .then((_) {
 //                       Navigator.pop(context);

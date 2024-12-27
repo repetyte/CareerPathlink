@@ -77,7 +77,6 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       // Elevated Button Theme
-      
       style: ElevatedButton.styleFrom(
         foregroundColor: primaryColor,
         backgroundColor: tertiaryColor, // Red button text color
@@ -146,5 +145,6 @@ class AppTheme {
       hintStyle: TextStyle(color: secondaryColor), // Gray hint text
       labelStyle: TextStyle(color: quaternaryColor), // Black label text
     ),
+    
   );
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/job_posting.dart';
-import 'package:flutter_app/pages/graduates_account/recruitment_and_placement/rr_document_submission.dart';
-import 'package:flutter_app/services/api_service.dart';
+import 'package:flutter_app/pages/graduates_account/recruitment_and_placement/rr_job_application.dart';
+import 'package:flutter_app/services/job_posting_api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RrJobDetailsGraduates extends StatefulWidget {
@@ -16,7 +16,7 @@ class RrJobDetailsGraduates extends StatefulWidget {
 class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
   // String? industryPartnerName;
   // late final JobPostingWithPartner jobPosting;
-  final ApiService apiService = ApiService();
+  final JobPostingApiService jobPostingApiService = JobPostingApiService();
 
   @override
   void initState() {
@@ -46,14 +46,14 @@ class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
                   Container(
                     margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                     child: Container(
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         image: DecorationImage(
                           fit: BoxFit.cover,
                           image: AssetImage(
-                            'assets/images/rectangle_351.jpeg',
+                            widget.jobPosting.coverPhoto,
                           ),
                         ),
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(50),
                           topRight: Radius.circular(50),
                         ),
@@ -80,7 +80,7 @@ class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
                             ),
                           ),
                           Container(
-                            padding: const EdgeInsets.fromLTRB(16, 49, 16, 59),
+                            padding: const EdgeInsets.fromLTRB(16, 64, 16, 64),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -230,18 +230,19 @@ class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
                     margin: const EdgeInsets.fromLTRB(24.1, 0, 24.1, 0),
                     child: Align(
                       alignment: Alignment.topRight,
-                      child: ElevatedButton(
+                      child: ElevatedButton.icon(
                         onPressed: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DocumentSubmissionScreen(
+                              builder: (context) => JobApplicationScreen(
                                   jobPostingWithPartner: widget
                                       .jobPosting), // Fixed the error here
                             ),
                           );
                         },
-                        child: const Text('Submit Application'),
+                        icon: const Icon(Icons.send),
+                        label: const Text('Submit Application'),
                       ),
                     ),
                   ),

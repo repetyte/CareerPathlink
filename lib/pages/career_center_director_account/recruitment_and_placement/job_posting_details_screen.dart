@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/job_posting.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_app/services/api_service.dart';
+import 'package:flutter_app/services/job_posting_api_service.dart';
 
 class JobPostingDetailsScreen extends StatefulWidget {
   const JobPostingDetailsScreen({super.key});
@@ -12,22 +12,22 @@ class JobPostingDetailsScreen extends StatefulWidget {
 
 class _JobPostingDetailsScreenState extends State<JobPostingDetailsScreen> {
   late Future<List<JobPostingWithPartner>> futureJobPostings;
-  final ApiService apiService = ApiService();
+  final JobPostingApiService jobPostingApiService = JobPostingApiService();
 
   @override
   void initState() {
     super.initState();
-    futureJobPostings = apiService.fetchJobPostings();
+    futureJobPostings = jobPostingApiService.fetchJobPostings();
   }
 
   void _refreshJobPostings() {
     setState(() {
-      futureJobPostings = apiService.fetchJobPostings();
+      futureJobPostings = jobPostingApiService.fetchJobPostings();
     });
   }
 
   void _deleteJobPosting(int? id) {
-    apiService.deleteJobPosting(id).then((_) {
+    jobPostingApiService.deleteJobPosting(id!).then((_) {
       _refreshJobPostings();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Student deleted successfully')),
@@ -75,9 +75,9 @@ class _JobPostingDetailsScreenState extends State<JobPostingDetailsScreen> {
                         IconButton(
                           icon: const Icon(Icons.delete),
                           onPressed: () {
-                            Provider.of<ApiService>(context, listen: false).deleteJobPosting(job.jobId).then((_) {
-                              _refreshJobPostings();
-                            });
+                            // Provider.of<JobPostingApiService>(context, listen: false).deleteJobPosting(job.jobId).then((_) {
+                            //   _refreshJobPostings();
+                            // });
                           },
                         ),
                       ],

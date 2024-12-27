@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/widgets/drawer/drawer_graduates.dart';
 import 'package:flutter_app/models/job_posting.dart';
 import 'package:flutter_app/pages/graduates_account/recruitment_and_placement/rr_job_details_graduates.dart';
-import 'package:flutter_app/services/api_service.dart';
+import 'package:flutter_app/services/job_posting_api_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -21,7 +21,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
   @override
   void initState() {
     super.initState();
-    futureJobPostings = ApiService().fetchJobPostings();
+    futureJobPostings = JobPostingApiService().fetchJobPostings();
     futureJobPostings.then((data) {
       setState(() {
         _filteredJobPostings = data;
@@ -86,7 +86,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
 
   void _refreshJobPostings() async {
     setState(() {
-      futureJobPostings = ApiService().fetchJobPostings();
+      futureJobPostings = JobPostingApiService().fetchJobPostings();
       futureJobPostings.then((data) {
         setState(() {
           _filteredJobPostings = data;
@@ -328,6 +328,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Search Bar
                     Container(
                       margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                       width: 500, // searchbar width
@@ -351,143 +352,130 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                       ),
                       child: Container(
                         padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            FutureBuilder<List<JobPostingWithPartner>>(
-                              future: futureJobPostings,
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  // return const Center(
-                                  //   child: CircularProgressIndicator(),
-                                  // );
-                                  return const Center(
-                                    child: Text(
-                                      'No job found. Try again later',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey,
-                                      ),
+                        child: FutureBuilder<List<JobPostingWithPartner>>(
+                          future: futureJobPostings,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else if (snapshot.hasError) {
+                              return Center(
+                                child: Text("${snapshot.error}"),
+                              );
+                            } else if (!snapshot.hasData ||
+                                _filteredJobPostings.isEmpty) {
+                              return const Center(
+                                child: Text(
+                                  'No job found. Try different keyword/s',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              );
+                            } else {
+                              List<JobPostingWithPartner> data =
+                                  _filteredJobPostings;
+                              // Determine the number of columns based on screen width
+                              int crossAxisCount =
+                                  (MediaQuery.of(context).size.width /
+                                          300)
+                                      .floor();
+                              // Return GridView
+                              return GridView.builder(
+                                shrinkWrap: true,
+                                physics:
+                                    const NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: crossAxisCount,
+                                  mainAxisSpacing: 10.0,
+                                  crossAxisSpacing: 10.0,
+                                  childAspectRatio: 0.80,
+                                ),
+                                itemCount: data.length,
+                                itemBuilder:
+                                    (BuildContext context, int index) {
+                                  return Card(
+                                    elevation: 10.0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(25.0),
                                     ),
-                                  );
-                                } else if (snapshot.hasError) {
-                                  return Center(
-                                    child: Text("${snapshot.error}"),
-                                  );
-                                } else if (!snapshot.hasData ||
-                                    _filteredJobPostings.isEmpty) {
-                                  return const Center(
-                                    child: Text(
-                                      'No job found. Try different keyword/s',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  );
-                                } else {
-                                  List<JobPostingWithPartner> data =
-                                      _filteredJobPostings;
-                                  // Determine the number of columns based on screen width
-                                  int crossAxisCount =
-                                      (MediaQuery.of(context).size.width /
-                                              300)
-                                          .floor();
-                
-                                  return GridView.builder(
-                                    shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: crossAxisCount,
-                                      mainAxisSpacing: 10.0,
-                                      crossAxisSpacing: 10.0,
-                                      childAspectRatio: 0.80,
-                                    ),
-                                    itemCount: data.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return Card(
-                                        elevation: 10.0,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25.0),
+                                    clipBehavior: Clip.antiAlias,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Image.asset(
+                                          data[index].coverPhoto,
+                                          width: double.infinity,
+                                          height: 100,
+                                          fit: BoxFit.cover,
                                         ),
-                                        clipBehavior: Clip.antiAlias,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Image.asset(
-                                              'assets/images/gettyimages_1406724005_dsc_018073.jpeg',
-                                              width: double.infinity,
-                                              height: 100,
-                                              fit: BoxFit.cover,
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(16.0),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(data[index].jobTitle,
-                                                      style: TextStyle(
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight
-                                                                  .bold)),
-                                                  const SizedBox(height: 4),
-                                                  Text(data[index].salary,
-                                                      style: const TextStyle(
-                                                        fontSize: 16,
-                                                      )),
-                                                  const SizedBox(height: 4),
-                                                  Text(
-                                                      data[index]
-                                                          .fieldIndustry,
-                                                      style: const TextStyle(
-                                                        fontSize: 14,
-                                                      )),
-                                                ],
-                                              ),
-                                            ),
-                                            const Spacer(),
-                                            Align(
-                                              alignment: Alignment.bottomLeft,
-                                              child: Padding(
-                                                padding: const EdgeInsets.all(
-                                                    16.0),
-                                                child: ElevatedButton(
-                                                  onPressed: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            RrJobDetailsGraduates(
-                                                                jobPosting:
-                                                                    data[
-                                                                        index]),
-                                                      ),
-                                                    );
-                                                  },
-                                                  child:
-                                                      const Text('View More'),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.all(16.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(data[index].jobTitle,
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight
+                                                              .bold)),
+                                              const SizedBox(height: 4),
+                                              Text(data[index].salary,
+                                                  style: const TextStyle(
+                                                    fontSize: 16,
+                                                  )),
+                                              const SizedBox(height: 4),
+                                              Text(
+                                                  data[index]
+                                                      .fieldIndustry,
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                  )),
+                                            ],
+                                          ),
                                         ),
-                                      );
-                                    },
+                                        const Spacer(),
+                                        Align(
+                                          alignment: Alignment.bottomLeft,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(
+                                                16.0),
+                                            child: ElevatedButton.icon(
+                                              icon: const Icon(Icons
+                                                  .arrow_forward),
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        RrJobDetailsGraduates(
+                                                            jobPosting:
+                                                                data[
+                                                                    index]),
+                                                  ),
+                                                );
+                                              },
+                                              label:
+                                                  const Text('View More'),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   );
-                                }
-                              },
-                            ),
-                          ],
+                                },
+                              );
+                            }
+                          },
                         ),
                       ),
                     ),

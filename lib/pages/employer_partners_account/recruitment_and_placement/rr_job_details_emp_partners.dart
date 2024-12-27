@@ -1,7 +1,5 @@
 import 'dart:html' as html;
 
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_update_job_posting.dart';
@@ -9,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:flutter_app/models/industry_partner.dart';
 import 'package:flutter_app/models/job_posting.dart';
-import 'package:flutter_app/services/api_service.dart';
+import 'package:flutter_app/services/job_posting_api_service.dart';
 
 class RrJobDetailsCCD extends StatefulWidget {
   final JobPostingWithPartner jobPostingWithPartner;
@@ -21,10 +19,9 @@ class RrJobDetailsCCD extends StatefulWidget {
 }
 
 class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
-  final ApiService apiService = ApiService();
-  final _formKey = GlobalKey<FormState>();
+  final JobPostingApiService jobPostingApiService = JobPostingApiService();
+  late Future<List<JobPostingWithPartner>> futureJobPostings;
 
-  IndustryPartner? _selectedPartner;
   late Future<List<IndustryPartner>> futureIndustryPartners;
 
   String jobTitle = '';
@@ -44,21 +41,83 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
   @override
   void initState() {
     super.initState();
+    futureJobPostings = JobPostingApiService().fetchJobPostings();
   }
 
-  void _updateJobPosting() {
+  void _refreshJobPostings() {
+    setState(() {
+      futureJobPostings = JobPostingApiService().fetchJobPostings();
+    });
+  }
+
+  void _updateJobPosting(JobPostingWithPartner jobPostingWithPartner) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => RrUpdateJobPosting(
           jobPostingWithPartner: widget.jobPostingWithPartner,
+          onStudentUpdated: _refreshJobPostings,
         ),
       ),
     ).then((updated) {
       if (updated == true) {
-        setState(() {}); // Refresh the job details screen
+        setState(() {
+          futureJobPostings =
+              JobPostingApiService().fetchJobPostings(); // Refresh job postings
+        });
       }
     });
+  }
+
+  void _deleteJobPosting(int? jobId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Delete Job Posting',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          content:
+              const Text('Are you sure you want to delete this job posting?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Navigator.of(context).pop();
+                // jobPostingApiService.deleteJobPosting(jobPostingWithPartner.jobId).then((_) {
+                //   setState(() {
+                //     futureJobPostings = JobPostingApiService().fetchJobPostings(); // Refresh job postings
+                //   });
+                // });
+                if (jobId != null) {
+                  jobPostingApiService.deleteJobPosting(jobId).then((_) {
+                    _refreshJobPostings();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Student deleted successfully.')),
+                    );
+                    Navigator.of(context).pop();
+                  }).catchError((error) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                          content: Text('Failed to delete student: $error')),
+                    );
+                  });
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Invalid student ID')),
+                  );
+                }
+              },
+              child: const Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -118,7 +177,7 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
                             ),
                           ),
                           Container(
-                            padding: const EdgeInsets.fromLTRB(16, 49, 16, 59),
+                            padding: const EdgeInsets.fromLTRB(16, 64, 16, 64),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -270,18 +329,17 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           TextButton.icon(
-                            onPressed: () {},
+                            onPressed: () =>
+                                _deleteJobPosting(widget.jobPostingWithPartner.jobId),
                             icon: const Icon(Icons.delete),
                             label: const Text('Delete Job'),
                           ),
                           const SizedBox(width: 8),
                           ElevatedButton.icon(
-                            onPressed: _updateJobPosting,
-                            icon: const Icon(Icons.save),
+                            onPressed: () =>
+                                _updateJobPosting(widget.jobPostingWithPartner),
+                            icon: const Icon(Icons.update),
                             label: const Text('Update Job'),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF008000),
-                            ),
                           ),
                         ],
                       ),

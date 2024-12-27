@@ -138,22 +138,28 @@ class JobPostingWithPartner {
      * @return boolean true if the job posting was updated, false otherwise
      */
     function update(){
-        $query = "UPDATE " . $this->table_name . "
+        $query = "UPDATE " . $this->table_name . " jp
+                  JOIN industry_partner_tb ip ON jp.industry_partner = ip.partner_id
                   SET
-                      job_title=:job_title,
-                      cover_photo=:cover_photo,
-                      status=:status,
-                      field_industry=:field_industry,
-                      job_level=:job_level,
-                      yrs_of_experience_needed=:yrs_of_experience_needed,
-                      contractual_status=:contractual_status,
-                      salary=:salary,
-                      job_location=:job_location,
-                      job_description=:job_description,
-                      requirements=:requirements,
-                      job_responsibilities=:job_responsibilities,
-                      industry_partner=:industry_partner
-                  WHERE job_id = :job_id";
+                      jp.job_title=:job_title,
+                      jp.cover_photo=:cover_photo,
+                      jp.status=:status,
+                      jp.field_industry=:field_industry,
+                      jp.job_level=:job_level,
+                      jp.yrs_of_experience_needed=:yrs_of_experience_needed,
+                      jp.contractual_status=:contractual_status,
+                      jp.salary=:salary,
+                      jp.job_location=:job_location,
+                      jp.job_description=:job_description,
+                      jp.requirements=:requirements,
+                      jp.job_responsibilities=:job_responsibilities,
+                      jp.industry_partner=:industry_partner,
+                      ip.partner_name=:partner_name,
+                      ip.profile_pic=:profile_pic,
+                      ip.partner_location=:partner_location,
+                      ip.contact_no=:contact_no,
+                      ip.email_add=:email_add
+                  WHERE jp.job_id = :job_id";
 
         $stmt = $this->conn->prepare($query);
 
@@ -172,6 +178,11 @@ class JobPostingWithPartner {
         $this->requirements=htmlspecialchars(strip_tags($this->requirements));
         $this->job_responsibilities=htmlspecialchars(strip_tags($this->job_responsibilities));
         $this->industry_partner=htmlspecialchars(strip_tags($this->industry_partner));
+        $this->partner_name=htmlspecialchars(strip_tags($this->partner_name));
+        $this->profile_pic=htmlspecialchars(strip_tags($this->profile_pic));
+        $this->partner_location=htmlspecialchars(strip_tags($this->partner_location));
+        $this->contact_no=htmlspecialchars(strip_tags($this->contact_no));
+        $this->email_add=htmlspecialchars(strip_tags($this->email_add));
 
         // Bind parameters
         $stmt->bindParam(':job_id', $this->job_id);
@@ -188,6 +199,11 @@ class JobPostingWithPartner {
         $stmt->bindParam(':requirements', $this->requirements);
         $stmt->bindParam(':job_responsibilities', $this->job_responsibilities);
         $stmt->bindParam(':industry_partner', $this->industry_partner);
+        $stmt->bindParam(':partner_name', $this->partner_name);
+        $stmt->bindParam(':profile_pic', $this->profile_pic);
+        $stmt->bindParam(':partner_location', $this->partner_location);
+        $stmt->bindParam(':contact_no', $this->contact_no);
+        $stmt->bindParam(':email_add', $this->email_add);
 
         if($stmt->execute()){
             return true;

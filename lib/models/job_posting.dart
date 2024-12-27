@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 
 // Define the JobPosting class with job posting properties only
 class JobPosting {
@@ -13,8 +12,8 @@ class JobPosting {
   final String salary;
   final String jobLocation;
   final String jobDescription;
-  final String requirements;
-  final String jobResponsibilities;
+  late final String requirements;
+  late final String jobResponsibilities;
   final int? industryPartner;
 
   // Constructor for job posting properties only
@@ -79,11 +78,11 @@ class JobPosting {
 // Define JobPostingWithPartner class, extending JobPosting
 class JobPostingWithPartner extends JobPosting {
   final int? partnerId;
-  final Uint8List? profilePic;
-  final String? partnerName;
-  final String? partnerLocation;
-  final String? contactNo;
-  final String? emailAdd;
+  final String? profilePic;
+  final String partnerName;
+  final String partnerLocation;
+  final String contactNo;
+  final String emailAdd;
 
   // Constructor for job posting with industry partner properties
   JobPostingWithPartner({
@@ -102,11 +101,11 @@ class JobPostingWithPartner extends JobPosting {
     required super.jobResponsibilities,
     super.industryPartner,
     this.partnerId,
-    this.profilePic,
-    this.partnerName,
-    this.partnerLocation,
-    this.contactNo,
-    this.emailAdd,
+    required this.profilePic,
+    required this.partnerName,
+    required this.partnerLocation,
+    required this.contactNo,
+    required this.emailAdd,
   });
 
   // Factory method for creating JobPostingWithPartner from JSON

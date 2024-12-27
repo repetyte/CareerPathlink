@@ -3,7 +3,7 @@ import 'package:flutter_app/widgets/drawer/drawer_cco.dart';
 import 'package:flutter_app/models/job_posting.dart';
 import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_add_job_posting.dart';
 import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_job_details_emp_partners.dart';
-import 'package:flutter_app/services/api_service.dart';
+import 'package:flutter_app/services/job_posting_api_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -25,7 +25,8 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
   @override
   void initState() {
     super.initState();
-    futureJobPostings = ApiService().fetchJobPostings();
+    futureJobPostings = JobPostingApiService().fetchJobPostings();
+    // _refreshJobPostings();
     futureJobPostings.then((data) {
       setState(() {
         _filteredJobPostings = data;
@@ -85,7 +86,7 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
 
   void _refreshJobPostings() async {
     setState(() {
-      futureJobPostings = ApiService().fetchJobPostings();
+      futureJobPostings = JobPostingApiService().fetchJobPostings();
       futureJobPostings.then((data) {
         setState(() {
           _filteredJobPostings = data;
@@ -113,20 +114,14 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
     super.dispose();
   }
 
-  // void _addJobPosting() {
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (context) => RrJobDetailsCCD(
-  //         jobPostingWithPartner: widget.jobPostingWithPartner,
-  //       ),
-  //     ),
-  //   ).then((updated) {
-  //     if (updated == true) {
-  //       setState(() {}); // Refresh the job details screen
-  //     }
-  //   });
-  // }
+  void _addJobPosting() async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => RrAddJobPosting(onJobPostingAdded: _refreshJobPostings),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -491,7 +486,9 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
                                                 child: Padding(
                                                   padding: const EdgeInsets.all(
                                                       16.0),
-                                                  child: ElevatedButton(
+                                                  child: ElevatedButton.icon(
+                                                    icon: const Icon(Icons
+                                                        .arrow_forward),
                                                     onPressed: () {
                                                       Navigator.push(
                                                         context,
@@ -504,7 +501,7 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
                                                         ),
                                                       );
                                                     },
-                                                    child:
+                                                    label:
                                                         const Text('View More'),
                                                   ),
                                                 ),
@@ -530,12 +527,13 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const RrAddJobPosting()),
-          );
-        },
+        // onPressed: () {
+        //   Navigator.push(
+        //     context,
+        //     MaterialPageRoute(builder: (context) => const RrAddJobPosting()),
+        //   );
+        // },
+        onPressed: _addJobPosting,
         icon: const Icon(Icons.add),
         label: const Text("Add Job Posting",
             style: TextStyle(
