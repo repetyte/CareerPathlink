@@ -125,7 +125,7 @@ class JobPostingWithPartner {
                       ip.partner_location,
                       ip.contact_no,
                       ip.email_add
-                  FROM job_posting_tb jp
+                  FROM " . $this->table_name . " jp
                   JOIN industry_partner_tb ip ON jp.industry_partner = ip.partner_id;";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
@@ -154,6 +154,7 @@ class JobPostingWithPartner {
                       jp.requirements=:requirements,
                       jp.job_responsibilities=:job_responsibilities,
                       jp.industry_partner=:industry_partner,
+                      
                       ip.partner_name=:partner_name,
                       ip.profile_pic=:profile_pic,
                       ip.partner_location=:partner_location,

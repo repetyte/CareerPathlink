@@ -2,27 +2,49 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  static const Color primaryColor = Color(0xFFFFFFFF); // White
-  static const Color secondaryColor = Color(0x80808080); // Gray
-  static const Color tertiaryColor = Color(0xFFFF0000); // Red
-  static const Color quaternaryColor = Color(0xFF000000); // Black
+  static const Color whiteColor = Color(0xFFFFFFFF); // White
+  static const Color greyColor = Color(0x80808080); // Gray
+  static const Color redColor = Color(0xFFFF0000); // Red
+  static const Color blackColor = Color(0xFF000000); // Black
 
   static final OutlineInputBorder roundedInputBorder = OutlineInputBorder(
     borderRadius: BorderRadius.circular(40.0), // Rounded corners
     borderSide: BorderSide(
-      color: secondaryColor, // Gray line color
+      color: greyColor, // Gray line color
     ),
   );
 
   static final ThemeData themeData = ThemeData(
-    primarySwatch: Colors.grey, // Gray primary color
+    primarySwatch: MaterialColor(0xFF808080, <int, Color>{
+      50: Color(0xFFE0E0E0),
+      100: Color(0xFFB3B3B3),
+      200: Color(0xFF808080),
+      300: Color(0xFF4D4D4D),
+      400: Color(0xFF262626),
+      500: Color(0xFF000000),
+      600: Color(0xFF000000),
+      700: Color(0xFF000000),
+      800: Color(0xFF000000),
+      900: Color(0xFF000000),
+    }), // Gray primary color
     fontFamily: GoogleFonts.montserrat().fontFamily, // Font family
-    primaryColor: primaryColor,
-    scaffoldBackgroundColor: primaryColor,
+    primaryColor: whiteColor,
+    hintColor: redColor,
+    scaffoldBackgroundColor: whiteColor,
     colorScheme: ColorScheme.fromSwatch().copyWith(
-      secondary: secondaryColor, // Gray accent color
+      // Primary colors
+      primary: greyColor,
+      secondary: whiteColor,
+      tertiary: redColor,
+      surface: whiteColor,
+      error: redColor,
+
+      // On colors
+      onPrimary: blackColor,
+      onSecondary: blackColor,
+      onSurface: blackColor,
+      onError: whiteColor,
     ),
-    // colorScheme: ColorScheme.fromSeed(seedColor: secondaryColor),
     useMaterial3: true,
     textTheme: const TextTheme(
       // Text theme
@@ -57,19 +79,19 @@ class AppTheme {
     ),
     appBarTheme: const AppBarTheme(
       // Appbar  theme
-      color: primaryColor,
+      color: whiteColor,
       titleTextStyle: TextStyle(
         fontFamily: 'Montserrat',
         fontSize: 20,
         fontWeight: FontWeight.bold,
         color: Colors.black,
       ),
-      iconTheme: IconThemeData(color: quaternaryColor),
-      actionsIconTheme: IconThemeData(color: primaryColor),
+      iconTheme: IconThemeData(color: blackColor),
+      actionsIconTheme: IconThemeData(color: whiteColor),
     ),
     buttonTheme: ButtonThemeData(
       // Button theme
-      buttonColor: tertiaryColor, // Red button background color
+      buttonColor: redColor, // Red button background color
       textTheme: ButtonTextTheme.primary,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(40),
@@ -78,8 +100,8 @@ class AppTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       // Elevated Button Theme
       style: ElevatedButton.styleFrom(
-        foregroundColor: primaryColor,
-        backgroundColor: tertiaryColor, // Red button text color
+        foregroundColor: whiteColor,
+        backgroundColor: redColor, // Red button text color
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
         // minimumSize: const Size(200, 50),
         elevation: 6, // Shadow elevation
@@ -96,7 +118,7 @@ class AppTheme {
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        foregroundColor: tertiaryColor, // Red button text color
+        foregroundColor: redColor, // Red button text color
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
         // minimumSize: const Size(200, 50),
         elevation: 6, // Shadow elevation
@@ -110,8 +132,8 @@ class AppTheme {
       ),
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: tertiaryColor, // Red FAB background
-      foregroundColor: primaryColor, // White icon/text color
+      backgroundColor: redColor, // Red FAB background
+      foregroundColor: whiteColor, // White icon/text color
       elevation: 6, // Shadow elevation
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(40), // Modern rounded corners
@@ -119,31 +141,31 @@ class AppTheme {
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: Colors.white,
+      fillColor: whiteColor,
       border: roundedInputBorder,
       enabledBorder: roundedInputBorder,
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(40),
         borderSide: BorderSide(
-          color: quaternaryColor, // Red line when focused
+          color: blackColor, // Red line when focused
         ),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(40),
         borderSide: BorderSide(
-          color: tertiaryColor, // Red line for errors
+          color: redColor, // Red line for errors
         ),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(40),
         borderSide: BorderSide(
-          color: tertiaryColor, // Red line for focused errors
+          color: redColor, // Red line for focused errors
           width: 2.0,
         ),
       ),
       contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-      hintStyle: TextStyle(color: secondaryColor), // Gray hint text
-      labelStyle: TextStyle(color: quaternaryColor), // Black label text
+      hintStyle: TextStyle(color: greyColor), // Gray hint text
+      labelStyle: TextStyle(color: blackColor), // Black label text
     ),
     
   );

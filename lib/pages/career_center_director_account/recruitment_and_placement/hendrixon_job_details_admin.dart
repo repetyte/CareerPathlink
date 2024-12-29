@@ -939,7 +939,7 @@ class HendrixonJobDetailsAdmin extends StatelessWidget {
                                                       const EdgeInsets.fromLTRB(
                                                           0, 1.5, 0, 1.5),
                                                   child: Text(
-                                                    '<1 year',
+                                                    'Less than 1 Year',
                                                     style: GoogleFonts.getFont(
                                                       'Montserrat',
                                                       fontWeight:

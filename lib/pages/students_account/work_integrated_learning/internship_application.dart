@@ -3,18 +3,19 @@ import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/job_posting.dart';
+import 'package:flutter_app/models/internship.dart';
 
-class JobApplicationScreen extends StatefulWidget {
-  final JobPostingWithPartner jobPostingWithPartner;
+class InternshipApplicationScreen extends StatefulWidget {
+  final InternshipWithPartner internshipWithPartner;
 
-  const JobApplicationScreen({super.key, required this.jobPostingWithPartner});
+  const InternshipApplicationScreen({super.key, required this.internshipWithPartner});
 
   @override
-  _JobApplicationScreenState createState() => _JobApplicationScreenState();
+  _InternshipApplicationScreenState createState() => _InternshipApplicationScreenState();
 }
 
-class _JobApplicationScreenState extends State<JobApplicationScreen> {
+class _InternshipApplicationScreenState extends State<InternshipApplicationScreen> {
+  final _formKey = GlobalKey<FormState>();
   int currentStep = 0;
 
   // Resume variables
@@ -27,8 +28,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
 
   // Controllers for form inputs
   final TextEditingController skillsController = TextEditingController();
-  final TextEditingController certificationsController =
-      TextEditingController();
+  final TextEditingController certificationsController = TextEditingController();
   final TextEditingController educationController = TextEditingController();
 
   // Method to pick Resume
@@ -108,44 +108,42 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              // Job Details Card
-              Card(
-                elevation: 10.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                clipBehavior: Clip.antiAlias,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Image.asset(
-                      widget.jobPostingWithPartner.coverPhoto,
-                      width: double.infinity,
-                      height: 200,
-                      fit: BoxFit.cover,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(widget.jobPostingWithPartner.jobTitle,
-                              style: const TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold)),
-                          const SizedBox(height: 4),
-                          Text(widget.jobPostingWithPartner.salary,
-                              style: const TextStyle(
-                                fontSize: 16,
-                              )),
-                          const SizedBox(height: 4),
-                          Text(widget.jobPostingWithPartner.fieldIndustry,
-                              style: const TextStyle(
-                                fontSize: 14,
-                              )),
-                        ],
+              // Internship Details Card
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Card(
+                  elevation: 10.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Image.asset(
+                        widget.internshipWithPartner.displayPhoto,
+                        width: double.infinity,
+                        height: 200,
+                        fit: BoxFit.cover,
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(widget.internshipWithPartner.internshipTitle,
+                                style: const TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold)),
+                            const SizedBox(height: 4),
+                            Text(widget.internshipWithPartner.partnerName,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                )),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
@@ -171,6 +169,8 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                   }
                 },
                 steps: [
+              
+                  // Document Submission Step
                   Step(
                     title: const Text('Document Submission',
                         style: TextStyle(fontWeight: FontWeight.bold)),
@@ -181,10 +181,12 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                           alignment: Alignment.centerLeft,
                           child: const Text(
                             'Please upload your resume and cover letter:',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(fontWeight: FontWeight.w500),
                           ),
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 8),
+              
+                        // Resume
                         const Text(
                           'Resume: (PDF, DOCX, DOC)',
                         ),
@@ -237,6 +239,8 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                           ),
                         ),
                         const SizedBox(height: 16),
+              
+                        // Cover Letter
                         const Text(
                           'Cover Letter: (PDF, DOCX, DOC)',
                         ),
@@ -288,6 +292,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                             ],
                           ),
                         ),
+                      
                       ],
                     ),
                     isActive: currentStep == 0,
@@ -295,30 +300,37 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                         ? StepState.complete
                         : StepState.indexed,
                   ),
+                  
+                  // Employer Questions Step
                   Step(
                     title: const Text('Employer Questions',
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     content: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Answer the following questions:',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: const Text(
+                            'Answer the following questions:',
+                            style: TextStyle(fontWeight: FontWeight.w500),
+                          ),
                         ),
-                        const SizedBox(height: 16),
-                        const Text('Skills'),
+                        const SizedBox(height: 8),
                         TextField(
                           controller: skillsController,
                           decoration:
-                              const InputDecoration(hintText: 'Enter your skill'),
+                              const InputDecoration(labelText: 'Skills'),
                         ),
                         const SizedBox(height: 8),
-                        const Text('Certifications'),
                         TextField(
                           controller: certificationsController,
                           decoration: const InputDecoration(
-                              hintText: 'Enter your certification'),
+                              labelText: 'Certifications'),
                         ),
+                        // TextField(
+                        //   controller: educationController,
+                        //   decoration: const InputDecoration(
+                        //       labelText: 'Educational Background'),
+                        // ),
                       ],
                     ),
                     isActive: currentStep == 1,
@@ -326,17 +338,23 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                         ? StepState.complete
                         : StepState.indexed,
                   ),
+              
+                  // Review and Submit Step
                   Step(
                     title: const Text('Review and Submit',
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     content: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Review your application:',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: const Text(
+                            'Review your application:',
+                            style: TextStyle(fontWeight: FontWeight.w500),
+                          ),
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 8),
+              
                         const Text('Resume:'),
                         if (resumeBytes != null)
                           Container(
@@ -364,22 +382,9 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                               ],
                             ),
                           ),
-                        if (resumeBytes == null)
-                          Container(
-                            height: 100,
-                            width: double.infinity,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            child: const Text(
-                              "No resume uploaded",
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          ),
                         const SizedBox(height: 16),
+              
+                        // Cover Letter
                         const Text('Cover Letter:'),
                         if (coverLetterBytes != null)
                           Container(
@@ -407,33 +412,15 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                               ],
                             ),
                           ),
-                        if (coverLetterBytes == null)
-                          Container(
-                            height: 100,
-                            width: double.infinity,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            child: const Text(
-                              "No cover letter uploaded",
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          ),
                         const SizedBox(height: 16),
                         const Text('Skills:'),
-                        if (skillsController.text.isNotEmpty)
-                          Text(skillsController.text)
-                        else
-                          const Text('No skills provided', style: TextStyle(color: Colors.grey)),
+                        Text(skillsController.text),
                         const SizedBox(height: 8),
                         const Text('Certifications:'),
-                        if (certificationsController.text.isNotEmpty)
-                          Text(certificationsController.text, style: TextStyle(color: Colors.black))
-                        else
-                          const Text('No certifications provided', style: TextStyle(color: Colors.grey)),
+                        Text(certificationsController.text),
+                        // const SizedBox(height: 8),
+                        // const Text('Educational Background:'),
+                        // Text(educationController.text),
                       ],
                     ),
                     isActive: currentStep == 2,
@@ -442,7 +429,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                         : StepState.indexed,
                   ),
                 ],
-              ),
+              ),           
             ],
           ),
         ),

@@ -76,7 +76,7 @@ class JobPostingApiService {
       // Uri.parse('$apiUrl/delete.php?job_id=$jobId'),
       Uri.parse('$apiUrl/job_posting/delete.php'),
       headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8'},
-      body: jsonEncode({'Job_ID': jobId}),
+      body: jsonEncode({'job_id': jobId}),
     );
     if (response.statusCode != 200) {
       throw Exception('Failed to delete job posting');

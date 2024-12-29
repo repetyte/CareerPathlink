@@ -5,20 +5,20 @@ header("Access-Control-Allow-Methods: DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 include_once '../database.php';
-include_once 'job_posting.php';
+include_once 'internship.php';
 
 $database = new Database();
 $db = $database->getConnection();
-$job = new JobPostingWithPartner($db);
+$internship = new InternshipWithPartner($db);
 
 $data = json_decode(file_get_contents("php://input"));
 
-$job->job_id = $data->job_id;
+$internship->internship_id = $data->internship_id;
 
-if($job->delete()){
+if($internship->delete()){
     http_response_code(200);
-    echo json_encode(array("message" => "Job was deleted."));
+    echo json_encode(array("message" => "Internship was deleted."));
 } else {
     http_response_code(503);
-    echo json_encode(array("message" => "Unable to delete job."));
+    echo json_encode(array("message" => "Unable to delete internship."));
 }

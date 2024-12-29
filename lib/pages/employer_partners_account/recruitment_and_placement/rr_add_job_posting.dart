@@ -449,7 +449,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                                           },
                                           items: [
                                             'Fresh Graduate',
-                                            '<1 year',
+                                            'Less than 1 Year',
                                             '1-3 years',
                                             '3-5 years',
                                             '5+ years'

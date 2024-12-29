@@ -1,0 +1,36 @@
+<?php
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: PUT");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
+include_once '../database.php';
+include_once 'job_posting.php';
+
+$database = new Database();
+$db = $database->getConnection();
+$internship = new InternshipWithPartner($db);
+
+$data = json_decode(file_get_contents("php://input"));
+
+$internship->internship_id = $data->internship_id; // Set internship_id
+$internship->display_photo = $data->display_photo;
+$internship->internship_title = $data->internship_title;
+$internship->description = $data->description;
+$internship->required_skills = $data->required_skills;
+$internship->qualifications = $data->qualifications;
+$internship->additional_skills = $data->additional_skills;
+$internship->industry_partner = $data->industry_partner;
+$internship->partner_name = $data->partner_name;
+$internship->profile_pic = $data->profile_pic;
+$internship->partner_location = $data->partner_location;
+$internship->contact_no = $data->contact_no;
+$internship->email_add = $data->email_add;
+
+if ($internship->update()) {
+    http_response_code(200);
+    echo json_encode(array("message" => "Internship was updated."));
+} else {
+    http_response_code(503);
+    echo json_encode(array("message" => "Unable to update internship."));
+}
