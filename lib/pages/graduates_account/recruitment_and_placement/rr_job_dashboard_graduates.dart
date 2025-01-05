@@ -458,7 +458,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                                                   MaterialPageRoute(
                                                     builder: (context) =>
                                                         RrJobDetailsGraduates(
-                                                            jobPosting:
+                                                            jobPostingWithPartner:
                                                                 data[
                                                                     index]),
                                                   ),

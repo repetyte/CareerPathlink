@@ -311,12 +311,17 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(
-                            widget.jobPostingWithPartner.partnerName.toString(),
+                        const SizedBox(height: 4),
+                        Text(widget.jobPostingWithPartner.partnerName.toString(),
+                            style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold
+                            )),
+                            const SizedBox(height: 4),
+                        Text(widget.jobPostingWithPartner.partnerLocation.toString(),
                             style: const TextStyle(
                               fontSize: 16,
                             )),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 16),
                       ],
                     ),
                   ),

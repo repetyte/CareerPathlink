@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/job_posting.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class JobApplicationScreen extends StatefulWidget {
   final JobPostingWithPartner jobPostingWithPartner;
@@ -73,8 +74,13 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Confirm Submission',
-              style: TextStyle(fontWeight: FontWeight.w900)),
+          title: Text(
+            'Confirm Submission',
+            style: GoogleFonts.getFont(
+              'Montserrat',
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           content:
               const Text('Are you sure you want to submit your application?'),
           actions: <Widget>[
@@ -309,8 +315,8 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                         const Text('Skills'),
                         TextField(
                           controller: skillsController,
-                          decoration:
-                              const InputDecoration(hintText: 'Enter your skill'),
+                          decoration: const InputDecoration(
+                              hintText: 'Enter your skill'),
                         ),
                         const SizedBox(height: 8),
                         const Text('Certifications'),
@@ -427,13 +433,16 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                         if (skillsController.text.isNotEmpty)
                           Text(skillsController.text)
                         else
-                          const Text('No skills provided', style: TextStyle(color: Colors.grey)),
+                          const Text('No skills provided',
+                              style: TextStyle(color: Colors.grey)),
                         const SizedBox(height: 8),
                         const Text('Certifications:'),
                         if (certificationsController.text.isNotEmpty)
-                          Text(certificationsController.text, style: TextStyle(color: Colors.black))
+                          Text(certificationsController.text,
+                              style: TextStyle(color: Colors.black))
                         else
-                          const Text('No certifications provided', style: TextStyle(color: Colors.grey)),
+                          const Text('No certifications provided',
+                              style: TextStyle(color: Colors.grey)),
                       ],
                     ),
                     isActive: currentStep == 2,

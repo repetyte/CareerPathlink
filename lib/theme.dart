@@ -29,7 +29,7 @@ class AppTheme {
     }), // Gray primary color
     fontFamily: GoogleFonts.montserrat().fontFamily, // Font family
     primaryColor: whiteColor,
-    hintColor: redColor,
+    hintColor: greyColor,
     scaffoldBackgroundColor: whiteColor,
     colorScheme: ColorScheme.fromSwatch().copyWith(
       // Primary colors
@@ -46,7 +46,7 @@ class AppTheme {
       onError: whiteColor,
     ),
     useMaterial3: true,
-    textTheme: const TextTheme(
+    textTheme: TextTheme(
       // Text theme
       displayLarge: TextStyle(
         fontFamily: 'Montserrat',
