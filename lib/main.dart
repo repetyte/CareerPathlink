@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       // darkTheme: ThemeData.dark(),
 
       // home: const LoginVisew(),
-      home: const SignUpView(),
+      // home: const SignUpView(),
       // home: const LoginScreen(),
       
       // home: const RrJobDashboardUser(),
@@ -37,8 +37,14 @@ class MyApp extends StatelessWidget {
       // home: const HendrixonAddAjob(),
       initialRoute: '/',
       routes: {
+        '/': (context) => const SignUpView(),
+
+        // Graduates Account Routes
         '/rr_job_dashboard_user': (context) => const RrJobDashboardUser(),
-        '/details': (context) => const JobPostingDetailsScreen(),
+
+        // Employer Partners Account Routes
+        '/rr_job_dashboard_emp_partners': (context) =>
+            const RrJobDashboardEmpPartners(),
       },
     );
   }

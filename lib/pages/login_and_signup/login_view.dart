@@ -3,7 +3,6 @@ import 'package:flutter_app/services/user_api_service.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lottie/lottie.dart';
 
 import '../../constants.dart';
 import '../../controller/simple_ui_controller.dart';
@@ -19,7 +18,7 @@ class _LoginViewState extends State<LoginView> {
   final userApiService = UserApiService();
 
   final TextEditingController _usernameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
+  // TextEditingController emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _selectedUserType =
       TextEditingController(text: '');
@@ -39,48 +38,45 @@ class _LoginViewState extends State<LoginView> {
 
       try {
         if (userType == 'Graduate') {
-          // Fetch Graduate Accounts
-          final graduateAccounts = await userApiService.fetchGraduateAccounts();
-          final account = graduateAccounts.firstWhere(
-            (acc) => acc.username == username && acc.password == password,
-            // orElse: () => null,
-          );
-
-          if (account != null) {
-            // Navigate to Graduate Dashboard
+          final graduate =
+              await userApiService.fetchGraduateAccount(username, password);
+          if (graduate != null) {
+            // Navigate to Graduate Dashboard with graduate account details
             Navigator.pushReplacementNamed(
               context,
-              '/graduates_dashboard',
-              arguments: account,
+              '/rr_job_dashboard_user',
+              arguments: graduate,
             );
           } else {
-            _showError('Invalid Graduate credentials. Please try again.');
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Invalid Graduate credentials.')),
+            );
           }
         } else if (userType == 'Employer Partner') {
-          // Fetch Industry Partner Accounts
-          final industryPartners =
-              await userApiService.fetchIndustryPartners();
-          final account = industryPartners.firstWhere(
-            (acc) => acc.username == username && acc.password == password,
-            // orElse: () => null,
-          );
-
-          if (account != null) {
-            // Navigate to Employer Partner Dashboard
+          final partner = await userApiService.fetchIndustryPartnerAccount(
+              username, password);
+          if (partner != null) {
+            // Navigate to Employer Partner Dashboard with partner account details
             Navigator.pushReplacementNamed(
               context,
               '/emp_partners_dashboard',
-              arguments: account,
+              arguments: partner,
             );
           } else {
-            _showError(
-                'Invalid Employer Partner credentials. Please try again.');
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                  content: Text('Invalid Employer Partner credentials.')),
+            );
           }
         } else {
-          _showError('Please select a valid user type.');
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Invalid user type selected.')),
+          );
         }
       } catch (e) {
-        _showError('An error occurred: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('An error occurred: $e')),
+        );
       } finally {
         setState(() {
           _isLoading = false;
@@ -89,16 +85,10 @@ class _LoginViewState extends State<LoginView> {
     }
   }
 
-  void _showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
-  }
-
   @override
   void dispose() {
     _usernameController.dispose();
-    emailController.dispose();
+    // emailController.dispose();
     _passwordController.dispose();
     _selectedUserType.dispose();
     super.dispose();
@@ -300,7 +290,6 @@ class _LoginViewState extends State<LoginView> {
                 children: [
                   /// username
                   TextFormField(
-                    // style: kTextFormFieldStyle(),
                     decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.person),
                       hintText: 'Username',
@@ -308,13 +297,15 @@ class _LoginViewState extends State<LoginView> {
                     controller: _usernameController,
                     // The validator receives the text that the user has entered.
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter username';
-                      } else if (value.length < 4) {
-                        return 'at least enter 4 characters';
-                      } else if (value.length > 13) {
-                        return 'maximum character is 13';
-                      }
+                      // if (value == null || value.isEmpty) {
+                      //   return 'Please enter username';
+                      // } else if (value.length < 4) {
+                      //   return 'at least enter 4 characters';
+                      // } else if (value.length > 13) {
+                      //   return 'maximum character is 13';
+                      // }
+                      // return null;
+                      value == null || value.isEmpty ? 'Enter username' : null;
                       return null;
                     },
                   ),
@@ -368,13 +359,16 @@ class _LoginViewState extends State<LoginView> {
                       ),
                       // The validator receives the text that the user has entered.
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter some text';
-                        } else if (value.length < 7) {
-                          return 'at least enter 6 characters';
-                        } else if (value.length > 13) {
-                          return 'maximum character is 13';
-                        }
+                        // if (value == null || value.isEmpty) {
+                        //   return 'Please enter some text';
+                        // } else if (value.length < 7) {
+                        //   return 'at least enter 6 characters';
+                        // } else if (value.length > 13) {
+                        //   return 'maximum character is 13';
+                        // }
+                        value == null || value.isEmpty
+                            ? 'Enter password'
+                            : null;
                         return null;
                       },
                     ),
@@ -385,6 +379,9 @@ class _LoginViewState extends State<LoginView> {
 
                   // login as
                   DropdownButtonFormField<String>(
+                    value: _selectedUserType.text.isNotEmpty
+                        ? _selectedUserType.text
+                        : null,
                     hint: Text('Log In As'),
                     decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.switch_account),
@@ -414,9 +411,12 @@ class _LoginViewState extends State<LoginView> {
                       });
                     },
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter user type';
-                      }
+                      // if (value == null || value.isEmpty) {
+                      //   return 'Please enter user type';
+                      // }
+                      value == null || value.isEmpty
+                          ? 'Select user type'
+                          : null;
                       return null;
                     },
                   ),
@@ -495,16 +495,23 @@ class _LoginViewState extends State<LoginView> {
   Widget loginButton() {
     return SizedBox(
       width: double.infinity,
-      child: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : ElevatedButton(
-              // onPressed: _signUp,
-              onPressed: () {
-                // Validate returns true if the form is valid, or false otherwise.
-                _login();
-              },
-              child: const Text('Log In'),
-            ),
+      child:
+          // _isLoading
+          //     ? const Center(child: CircularProgressIndicator())
+          //     : ElevatedButton(
+          //         // onPressed: _signUp,
+          //         onPressed: () {
+          //           // Validate returns true if the form is valid, or false otherwise.
+          //           _login();
+          //         },
+          //         child: const Text('Log In'),
+          //       ),
+          ElevatedButton(
+        onPressed: _isLoading ? null : _login,
+        child: _isLoading
+            ? const CircularProgressIndicator()
+            : const Text('Login'),
+      ),
     );
   }
 }
