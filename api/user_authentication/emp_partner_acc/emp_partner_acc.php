@@ -18,7 +18,6 @@ class EmpPartnerAccount
     public $username;
     public $password;
 
-
     public function __construct($db)
     {
         $this->conn = $db;
@@ -86,12 +85,12 @@ class EmpPartnerAccount
                       ep.contact_no,
                       ep.email_add,
                       ep.user_account,
-                      
+
                       ac.account_id,
                       ac.username,
                       ac.password
                     FROM " . $this->table_name . " ep
-                    JOIN acc_employer_partner ac 
+                    JOIN acc_employer_partner_tb ac 
                     ON ep.user_account = ac.account_id;";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();

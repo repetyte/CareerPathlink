@@ -11,7 +11,7 @@ if ($result->num_rows > 0) {
                 <td>" . $row["full_name"] . "</td>
                 <td>" . $row["age"] . "</td>
                 <td>" . $row["address"] . "</td>
-                <td>" . $row["cp_no"] . "</td>
+                <td>" . $row["contact_no"] . "</td>
                 <td>" . $row["course"] . "</td>
                 <td>" . $row["date_grad"] . "</td>
                 <td>" . $row["job_name"] . "</td>

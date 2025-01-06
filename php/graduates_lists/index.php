@@ -38,16 +38,16 @@
         <span class="close">&times;</span>
         <h2>Create Record</h2>
         <form id="createForm">
-            <label for="grad_id">ID Number:</label><br>
-            <input type="text" id="grad_id" name="grad_id"><br>
+            <label for="graduate_id">ID Number:</label><br>
+            <input type="text" id="graduate_id" name="graduate_id"><br>
             <label for="full_name">Full Name:</label><br>
             <input type="text" id="full_name" name="full_name"><br>
             <label for="age">Age:</label><br>
             <input type="text" id="age" name="age"><br>
             <label for="address">Address:</label><br>
             <input type="text" id="address" name="address"><br>
-            <label for="cp_no">Contact Number:</label><br>
-            <input type="text" id="cp_no" name="cp_no"><br>
+            <label for="contact_no">Contact Number:</label><br>
+            <input type="text" id="contact_no" name="contact_no"><br>
             <label for="course">Course:</label><br>
             <input type="text" id="course" name="course"><br>
             <label for="date_grad">Date of Graduation:</label><br>
@@ -65,15 +65,15 @@
         <span class="close">&times;</span>
         <h2>Update Record</h2>
         <form id="updateForm">
-            <input type="hidden" id="update_id" name="grad_id">
+            <input type="hidden" id="update_id" name="graduate_id">
             <label for="update_full_name">Full Name:</label><br>
             <input type="text" id="update_full_name" name="full_name"><br>
             <label for="update_age">Age:</label><br>
             <input type="text" id="update_age" name="age"><br>
             <label for="update_address">Address:</label><br>
             <input type="text" id="update_address" name="address"><br>
-            <label for="update_cp_no">Contact Number:</label><br>
-            <input type="text" id="update_cp_no" name="cp_no"><br>
+            <label for="update_contact_no">Contact Number:</label><br>
+            <input type="text" id="update_contact_no" name="contact_no"><br>
             <label for="update_course">Course:</label><br>
             <input type="text" id="update_course" name="course"><br>
             <label for="update_date_grad">Date of Graduation:</label><br>

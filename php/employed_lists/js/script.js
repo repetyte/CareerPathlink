@@ -70,7 +70,7 @@ function editRecord(id) {
             document.getElementById("update_full_name").value = employee.full_name;
             document.getElementById("update_age").value = employee.age;
             document.getElementById("update_address").value = employee.address;
-            document.getElementById("update_cp_no").value = employee.cp_no;
+            document.getElementById("update_contact_no").value = employee.contact_no;
             document.getElementById("update_course").value = employee.course;
             document.getElementById("update_date_grad").value = employee.date_grad;
             document.getElementById("update_job_name").value = employee.job_name;

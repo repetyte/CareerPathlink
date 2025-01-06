@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/services/user_api_service.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,19 +16,95 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  TextEditingController nameController = TextEditingController();
+  final userApiService = UserApiService();
+
+  final TextEditingController _usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _selectedUserType =
+      TextEditingController(text: '');
+  bool _isLoading = false;
 
   final _formKey = GlobalKey<FormState>();
 
+  Future<void> _login() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      final username = _usernameController.text;
+      final password = _passwordController.text;
+      final userType = _selectedUserType.text;
+
+      try {
+        if (userType == 'Graduate') {
+          // Fetch Graduate Accounts
+          final graduateAccounts = await userApiService.fetchGraduateAccounts();
+          final account = graduateAccounts.firstWhere(
+            (acc) => acc.username == username && acc.password == password,
+            // orElse: () => null,
+          );
+
+          if (account != null) {
+            // Navigate to Graduate Dashboard
+            Navigator.pushReplacementNamed(
+              context,
+              '/graduates_dashboard',
+              arguments: account,
+            );
+          } else {
+            _showError('Invalid Graduate credentials. Please try again.');
+          }
+        } else if (userType == 'Employer Partner') {
+          // Fetch Industry Partner Accounts
+          final industryPartners =
+              await userApiService.fetchIndustryPartners();
+          final account = industryPartners.firstWhere(
+            (acc) => acc.username == username && acc.password == password,
+            // orElse: () => null,
+          );
+
+          if (account != null) {
+            // Navigate to Employer Partner Dashboard
+            Navigator.pushReplacementNamed(
+              context,
+              '/emp_partners_dashboard',
+              arguments: account,
+            );
+          } else {
+            _showError(
+                'Invalid Employer Partner credentials. Please try again.');
+          }
+        } else {
+          _showError('Please select a valid user type.');
+        }
+      } catch (e) {
+        _showError('An error occurred: $e');
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
+
   @override
   void dispose() {
-    nameController.dispose();
+    _usernameController.dispose();
     emailController.dispose();
-    passwordController.dispose();
+    _passwordController.dispose();
+    _selectedUserType.dispose();
     super.dispose();
   }
+
+  SimpleUIController simpleUIController = Get.put(SimpleUIController());
 
   @override
   Widget build(BuildContext context) {
@@ -67,41 +144,38 @@ class _LoginViewState extends State<LoginView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.all(size.width * 0.06),
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'UNC',
-                            style: GoogleFonts.getFont(
-                              'Montserrat',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 48,
-                              color: Colors.black,
-                            ),
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'UNC',
+                          style: GoogleFonts.getFont(
+                            'Montserrat',
+                            fontWeight: FontWeight.w700,
+                            fontSize: 48,
+                            color: Colors.black,
                           ),
-                          TextSpan(
-                            text: ' Career',
-                            style: GoogleFonts.getFont(
-                              'Montserrat',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 48,
-                              color: Colors.white,
-                            ),
+                        ),
+                        TextSpan(
+                          text: ' Career',
+                          style: GoogleFonts.getFont(
+                            'Montserrat',
+                            fontWeight: FontWeight.w700,
+                            fontSize: 48,
+                            color: Colors.white,
                           ),
-                          TextSpan(
-                            text: 'Pathlink',
-                            style: GoogleFonts.getFont(
-                              'Montserrat',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 48,
-                              color: Colors.red,
-                            ),
+                        ),
+                        TextSpan(
+                          text: 'Pathlink',
+                          style: GoogleFonts.getFont(
+                            'Montserrat',
+                            fontWeight: FontWeight.w700,
+                            fontSize: 48,
+                            color: Colors.red,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ]),
@@ -110,7 +184,7 @@ class _LoginViewState extends State<LoginView> {
         SizedBox(width: size.width * 0.06),
         Expanded(
           flex: 5,
-          child: _buildMainBody(
+          child: _buildLoginForm(
             size,
             simpleUIController,
           ),
@@ -129,7 +203,7 @@ class _LoginViewState extends State<LoginView> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          _buildMainBody(
+          _buildLoginForm(
             size,
             simpleUIController,
           ),
@@ -139,10 +213,7 @@ class _LoginViewState extends State<LoginView> {
   }
 
   /// Main Body
-  Widget _buildMainBody(
-    Size size,
-    SimpleUIController simpleUIController,
-  ) {
+  Widget _buildLoginForm(Size size, SimpleUIController simpleUIController) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,11 +223,51 @@ class _LoginViewState extends State<LoginView> {
         children: [
           size.width > 600
               ? Container()
-              : Lottie.asset(
-                  'assets/wave.json',
-                  height: size.height * 0.2,
+              : Container(
                   width: size.width,
-                  fit: BoxFit.fill,
+                  color: Colors.grey,
+                  child: Column(
+                    children: [
+                      SizedBox(height: size.height * 0.06),
+                      Align(
+                          alignment: Alignment.center,
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'UNC',
+                                  style: GoogleFonts.getFont(
+                                    'Montserrat',
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 32,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: ' Career',
+                                  style: GoogleFonts.getFont(
+                                    'Montserrat',
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 32,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: 'Pathlink',
+                                  style: GoogleFonts.getFont(
+                                    'Montserrat',
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 32,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                      SizedBox(height: size.height * 0.06),
+                    ],
+                  ),
                 ),
           SizedBox(
             height: size.height * 0.03,
@@ -187,17 +298,14 @@ class _LoginViewState extends State<LoginView> {
               key: _formKey,
               child: Column(
                 children: [
-                  /// username or Gmail
+                  /// username
                   TextFormField(
-                    style: kTextFormFieldStyle(),
+                    // style: kTextFormFieldStyle(),
                     decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.person),
-                      hintText: 'Username or Gmail',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                      ),
+                      hintText: 'Username',
                     ),
-                    controller: nameController,
+                    controller: _usernameController,
                     // The validator receives the text that the user has entered.
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -213,34 +321,36 @@ class _LoginViewState extends State<LoginView> {
                   SizedBox(
                     height: size.height * 0.02,
                   ),
-                  TextFormField(
-                    controller: emailController,
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.email_rounded),
-                      hintText: 'gmail',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                      ),
-                    ),
-                    // The validator receives the text that the user has entered.
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter gmail';
-                      } else if (!value.endsWith('@gmail.com')) {
-                        return 'please enter valid gmail';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(
-                    height: size.height * 0.02,
-                  ),
+
+                  // email
+                  // TextFormField(
+                  //   controller: emailController,
+                  //   decoration: const InputDecoration(
+                  //     prefixIcon: Icon(Icons.email_rounded),
+                  //     hintText: 'gmail',
+                  //     border: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.all(Radius.circular(15)),
+                  //     ),
+                  //   ),
+                  //   // The validator receives the text that the user has entered.
+                  //   validator: (value) {
+                  //     if (value == null || value.isEmpty) {
+                  //       return 'Please enter gmail';
+                  //     } else if (!value.endsWith('@gmail.com')) {
+                  //       return 'please enter valid gmail';
+                  //     }
+                  //     return null;
+                  //   },
+                  // ),
+                  // SizedBox(
+                  //   height: size.height * 0.02,
+                  // ),
 
                   /// password
                   Obx(
                     () => TextFormField(
-                      style: kTextFormFieldStyle(),
-                      controller: passwordController,
+                      // style: kTextFormFieldStyle(),
+                      controller: _passwordController,
                       obscureText: simpleUIController.isObscure.value,
                       decoration: InputDecoration(
                         prefixIcon: const Icon(Icons.lock_open),
@@ -255,9 +365,6 @@ class _LoginViewState extends State<LoginView> {
                           },
                         ),
                         hintText: 'Password',
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                        ),
                       ),
                       // The validator receives the text that the user has entered.
                       validator: (value) {
@@ -273,13 +380,51 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ),
                   SizedBox(
-                    height: size.height * 0.01,
+                    height: size.height * 0.02,
                   ),
-                  Text(
-                    'Creating an account means you\'re okay with our Terms of Services and our Privacy Policy',
-                    style: kLoginTermsAndPrivacyStyle(size),
-                    textAlign: TextAlign.center,
+
+                  // login as
+                  DropdownButtonFormField<String>(
+                    hint: Text('Log In As'),
+                    decoration: const InputDecoration(
+                      prefixIcon: Icon(Icons.switch_account),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                      ),
+                    ),
+                    // items: [
+                    //   'Student',
+                    //   'Graduate',
+                    //   'Coach',
+                    //   'Employer Partner',
+                    //   'Career Center Director'
+                    // ]
+                    items: [
+                      'Graduate',
+                      'Employer Partner',
+                    ]
+                        .map((type) => DropdownMenuItem(
+                              value: type,
+                              child: Text(type),
+                            ))
+                        .toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedUserType.text = value!;
+                      });
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter user type';
+                      }
+                      return null;
+                    },
                   ),
+                  // Text(
+                  //   'Creating an account means you\'re okay with our Terms of Services and our Privacy Policy',
+                  //   style: kLoginTermsAndPrivacyStyle(size),
+                  //   textAlign: TextAlign.center,
+                  // ),
                   SizedBox(
                     height: size.height * 0.02,
                   ),
@@ -293,8 +438,6 @@ class _LoginViewState extends State<LoginView> {
                   /// Navigate To Login Screen
                   GestureDetector(
                     onTap: () {
-                      
-
                       // Navigate back
                       Navigator.pop(context);
 
@@ -309,9 +452,10 @@ class _LoginViewState extends State<LoginView> {
                       }
 
                       // Clear input fields
-                      nameController.clear();
-                      emailController.clear();
-                      passwordController.clear();
+                      _usernameController.clear();
+                      // emailController.clear();
+                      _passwordController.clear();
+                      _selectedUserType.clear();
                       debugPrint('Text controllers cleared.');
 
                       // Reset obscure state
@@ -351,16 +495,16 @@ class _LoginViewState extends State<LoginView> {
   Widget loginButton() {
     return SizedBox(
       width: double.infinity,
-      height: 55,
-      child: ElevatedButton(
-        onPressed: () {
-          // Validate returns true if the form is valid, or false otherwise.
-          if (_formKey.currentState!.validate()) {
-            // ... Navigate To your Home Page
-          }
-        },
-        child: const Text('Login'),
-      ),
+      child: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : ElevatedButton(
+              // onPressed: _signUp,
+              onPressed: () {
+                // Validate returns true if the form is valid, or false otherwise.
+                _login();
+              },
+              child: const Text('Log In'),
+            ),
     );
   }
 }

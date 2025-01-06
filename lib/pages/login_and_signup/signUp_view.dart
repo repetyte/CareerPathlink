@@ -26,46 +26,46 @@ class _SignUpViewState extends State<SignUpView> {
   final _formKey = GlobalKey<FormState>();
 
   Future<void> _signUp() async {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        _isLoading = true;
-      });
+    // if (_formKey.currentState!.validate()) {
+    //   setState(() {
+    //     _isLoading = true;
+    //   });
 
-      final username = _usernameController.text;
-      final password = _passwordController.text;
-      final userType = _selectedUserType;
+    //   final username = _usernameController.text;
+    //   final password = _passwordController.text;
+    //   final userType = _selectedUserType;
 
-      try {
-        final success = await userApiService.authenticateUser(
-          username: username,
-          password: password,
-          userType: userType.toString(),
-        );
+    //   try {
+    //     final success = await userApiService.authenticateUser(
+    //       username: username,
+    //       password: password,
+    //       userType: userType.toString(),
+    //     );
 
-        if (success) {
-          // Navigate to appropriate dashboard based on user type
-          if (userType == 'Graduate') {
-            Navigator.pushReplacementNamed(context, '/graduate_dashboard');
-          } else if (userType == 'Industry Partner') {
-            Navigator.pushReplacementNamed(
-                context, '/industry_partner_dashboard');
-          }
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-                content: Text('Invalid credentials. Please try again.')),
-          );
-        }
-      } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('An error occurred: $e')),
-        );
-      } finally {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    }
+    //     if (success) {
+    //       // Navigate to appropriate dashboard based on user type
+    //       if (userType == 'Graduate') {
+    //         Navigator.pushReplacementNamed(context, '/graduate_dashboard');
+    //       } else if (userType == 'Industry Partner') {
+    //         Navigator.pushReplacementNamed(
+    //             context, '/industry_partner_dashboard');
+    //       }
+    //     } else {
+    //       ScaffoldMessenger.of(context).showSnackBar(
+    //         const SnackBar(
+    //             content: Text('Invalid credentials. Please try again.')),
+    //       );
+    //     }
+    //   } catch (e) {
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       SnackBar(content: Text('An error occurred: $e')),
+    //     );
+    //   } finally {
+    //     setState(() {
+    //       _isLoading = false;
+    //     });
+    //   }
+    // }
   }
 
   @override
@@ -361,7 +361,7 @@ class _SignUpViewState extends State<SignUpView> {
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                       ),
                     ),
-                    items: ['Graduate', 'Industry Partner']
+                    items: ['Student', 'Graduate', 'Coach', 'Employer Partner', 'Career Center Director']
                         .map((type) => DropdownMenuItem(
                               value: type,
                               child: Text(type),
@@ -438,7 +438,7 @@ class _SignUpViewState extends State<SignUpView> {
   Widget signUpButton(ThemeData theme) {
     return SizedBox(
       width: double.infinity,
-      height: 55,
+      // height: 55,
       child: _isLoading
           ? const Center(child: CircularProgressIndicator())
           : ElevatedButton(

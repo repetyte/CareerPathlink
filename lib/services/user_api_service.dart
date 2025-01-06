@@ -1,34 +1,34 @@
 import 'dart:convert';
+import 'package:flutter_app/models/graduate.dart';
+import 'package:flutter_app/models/industry_partner.dart';
 import 'package:http/http.dart' as http;
 
 class UserApiService {
-  final String baseUrl = 'http://your-api-url.com'; // Replace with your API base URL
+  final String baseUrl =
+      'http://localhost/UNC-CareerPathlink/api/user_authentication';
 
-  // Authenticate user
-  Future<bool> authenticateUser({
-    required String username,
-    required String password,
-    required String userType,
-  }) async {
-    final endpoint = userType == 'Graduate'
-        ? '/auth/graduates' // Replace with your actual API endpoint for graduates
-        : '/auth/partners'; // Replace with your actual API endpoint for industry partners
-
-    final response = await http.post(
-      Uri.parse('$baseUrl$endpoint'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'username': username,
-        'password': password,
-      }),
-    );
+  // Fetch graduate accounts
+  Future<List<GraduateAccount>> fetchGraduateAccounts() async {
+    final response = await http.get(Uri.parse('$baseUrl/graduates_acc/read.php'));
 
     if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
-      // Check if authentication was successful
-      return data['success'];
+      List<dynamic> data = jsonDecode(response.body);
+      return data.map((json) => GraduateAccount.fromJson(json)).toList();
     } else {
-      throw Exception('Failed to authenticate user');
+      throw Exception('Failed to fetch Graduate accounts');
+    }
+  }
+
+  // Fetch industry partner accounts
+  Future<List<IndustryPartnerAccount>> fetchIndustryPartners() async {
+    final response =
+        await http.get(Uri.parse('$baseUrl/employers_acc/read.php'));
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+      return data.map((json) => IndustryPartnerAccount.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to fetch Industry Partner accounts');
     }
   }
 }

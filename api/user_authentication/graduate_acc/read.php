@@ -2,7 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-include_once '../database.php';
+include_once '../../database.php';
 include_once 'graduate_acc.php';
 
 $database = new Database();
@@ -32,7 +32,7 @@ if($num > 0){
             "gender" => $gender,
             "age" => $age,
             "address" => $address,
-            "cp_no" => $cp_no,
+            "contact_no" => $contact_no,
             "date_grad" => $date_grad,
             "emp_stat" => $emp_stat,
             "user_account" => $user_account,

@@ -66,11 +66,11 @@ function editRecord(id) {
     xhr.onload = function() {
         if (this.status == 200) {
             var graduate = JSON.parse(this.responseText);
-            document.getElementById("update_id").value = graduate.grad_id;
+            document.getElementById("update_id").value = graduate.graduate_id;
             document.getElementById("update_full_name").value = graduate.full_name;
             document.getElementById("update_age").value = graduate.age;
             document.getElementById("update_address").value = graduate.address;
-            document.getElementById("update_cp_no").value = graduate.cp_no;
+            document.getElementById("update_contact_no").value = graduate.contact_no;
             document.getElementById("update_course").value = graduate.course;
             document.getElementById("update_date_grad").value = graduate.date_grad;
             document.getElementById("update_emp_stat").value = graduate.emp_stat;

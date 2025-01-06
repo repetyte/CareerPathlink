@@ -1,9 +1,9 @@
 <?php
 include 'db.php';
 
-$grad_id = $_POST['grad_id'];
+$graduate_id = $_POST['graduate_id'];
 
-$sql = "DELETE FROM graduates_lists WHERE grad_id=$grad_id";
+$sql = "DELETE FROM graduates_lists WHERE graduate_id=$graduate_id";
 
 if ($conn->query($sql) === TRUE) {
     echo "Record deleted successfully";

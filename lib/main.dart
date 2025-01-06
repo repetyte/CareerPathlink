@@ -5,7 +5,6 @@ import 'package:flutter_app/pages/employer_partners_account/recruitment_and_plac
 import 'package:flutter_app/pages/graduates_account/recruitment_and_placement/rr_job_dashboard_graduates.dart';
 import 'package:flutter_app/pages/login_and_signup/signUp_view.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
-import 'package:flutter_app/pages/login_and_signup_ver2/login_screen.dart';
 import 'pages/students_account/work_integrated_learning/internship_dashboard_stud.dart';
 import 'theme.dart';
 import 'package:get/get.dart';
@@ -26,12 +25,13 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.themeData,
       // darkTheme: ThemeData.dark(),
 
-      // home: const LoginView(),
+      // home: const LoginVisew(),
       home: const SignUpView(),
       // home: const LoginScreen(),
       
       // home: const RrJobDashboardUser(),
       // home: const RrJobDashboardEmpPartners(),
+
       // home: InternshipDashboardStud(),
 
       // home: const HendrixonAddAjob(),

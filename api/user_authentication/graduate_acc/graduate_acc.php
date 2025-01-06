@@ -5,7 +5,7 @@ class GraduateAccount
     private $table_name = "graduates_list_tb";
 
     // Graduate Properties
-    public $grad_id;
+    public $graduate_id;
     public $email;
     public $first_name;
     public $middle_name;
@@ -16,7 +16,7 @@ class GraduateAccount
     public $gender;
     public $age;
     public $address;
-    public $cp_no;
+    public $contact_no;
     public $date_grad;
     public $emp_stat;
     public $user_account;
@@ -43,7 +43,7 @@ class GraduateAccount
         $query = "INSERT INTO
                     " . $this->table_name . "
                 SET
-                    grad_id=:grad_id,
+                    graduate_id=:graduate_id,
                     email=:email,
                     first_name=:first_name,
                     middle_name=:middle_name,
@@ -54,7 +54,7 @@ class GraduateAccount
                     gender=:gender,
                     age=:age,
                     address=:address,
-                    cp_no=:cp_no,
+                    contact_no=:contact_no,
                     date_grad=:date_grad,
                     emp_stat=:emp_stat,
                     user_account=:user_account";
@@ -63,7 +63,7 @@ class GraduateAccount
         $stmt = $this->conn->prepare($query);
 
         // sanitize input
-        $this->grad_id = htmlspecialchars(strip_tags($this->grad_id));
+        $this->graduate_id = htmlspecialchars(strip_tags($this->graduate_id));
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->first_name = htmlspecialchars(strip_tags($this->first_name));
         $this->middle_name = htmlspecialchars(strip_tags($this->middle_name));
@@ -74,13 +74,13 @@ class GraduateAccount
         $this->gender = htmlspecialchars(strip_tags($this->gender));
         $this->age = htmlspecialchars(strip_tags($this->age));
         $this->address = htmlspecialchars(strip_tags($this->address));
-        $this->cp_no = htmlspecialchars(strip_tags($this->cp_no));
+        $this->contact_no = htmlspecialchars(strip_tags($this->contact_no));
         $this->date_grad = htmlspecialchars(strip_tags($this->date_grad));
         $this->emp_stat = htmlspecialchars(strip_tags($this->emp_stat));
         $this->user_account = htmlspecialchars(strip_tags($this->user_account));
 
         // bind values
-        $stmt->bindParam(":grad_id", $this->grad_id);
+        $stmt->bindParam(":graduate_id", $this->graduate_id);
         $stmt->bindParam(":email", $this->email);
         $stmt->bindParam(":first_name", $this->first_name);
         $stmt->bindParam(":middle_name", $this->middle_name);
@@ -91,7 +91,7 @@ class GraduateAccount
         $stmt->bindParam(":gender", $this->gender);
         $stmt->bindParam(":age", $this->age);
         $stmt->bindParam(":address", $this->address);
-        $stmt->bindParam(":cp_no", $this->cp_no);
+        $stmt->bindParam(":contact_no", $this->contact_no);
         $stmt->bindParam(":date_grad", $this->date_grad);
         $stmt->bindParam(":emp_stat", $this->emp_stat);
         $stmt->bindParam(":user_account", $this->user_account);
@@ -111,7 +111,7 @@ class GraduateAccount
     function read()
     {
         $query = "SELECT
-                      gd.grad_id,
+                      gd.graduate_id,
                         gd.email,
                         gd.first_name,
                         gd.middle_name,
@@ -122,7 +122,8 @@ class GraduateAccount
                         gd.gender,
                         gd.age,
                         gd.address,
-                        gd.cp_no,
+                        gd.contact_no,
+                        gd.date_grad,
                         gd.emp_stat,
                         gd.user_account,
 
@@ -147,7 +148,7 @@ class GraduateAccount
         $query = "UPDATE " . $this->table_name . " gd
                     JOIN acc_graduates_tb ac ON ip.user_account = ac.account_id
                   SET
-                        gd.grad_id=:grad_id,
+                        gd.graduate_id=:graduate_id,
                         gd.email=:email,
                         gd.first_name=:first_name,
                         gd.middle_name=:middle_name,
@@ -158,7 +159,7 @@ class GraduateAccount
                         gd.gender=:gender,
                         gd.age=:age,
                         gd.address=:address,
-                        gd.cp_no=:cp_no,
+                        gd.contact_no=:contact_no,
                         gd.date_grad=:date_grad,
                         gd.emp_stat=:emp_stat,
                         gd.user_account=:user_account,
@@ -172,7 +173,7 @@ class GraduateAccount
         $stmt = $this->conn->prepare($query);
 
         // Sanitize input
-        $this->grad_id = htmlspecialchars(strip_tags($this->grad_id));
+        $this->graduate_id = htmlspecialchars(strip_tags($this->graduate_id));
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->first_name = htmlspecialchars(strip_tags($this->first_name));
         $this->middle_name = htmlspecialchars(strip_tags($this->middle_name));
@@ -183,7 +184,7 @@ class GraduateAccount
         $this->gender = htmlspecialchars(strip_tags($this->gender));
         $this->age = htmlspecialchars(strip_tags($this->age));
         $this->address = htmlspecialchars(strip_tags($this->address));
-        $this->cp_no = htmlspecialchars(strip_tags($this->cp_no));
+        $this->contact_no = htmlspecialchars(strip_tags($this->contact_no));
         $this->date_grad = htmlspecialchars(strip_tags($this->date_grad));
         $this->emp_stat = htmlspecialchars(strip_tags($this->emp_stat));
         $this->user_account = htmlspecialchars(strip_tags($this->user_account));
@@ -193,7 +194,7 @@ class GraduateAccount
         $this->password = htmlspecialchars(strip_tags($this->password));
 
         // Bind parameters
-        $stmt->bindParam(':grad_id', $this->grad_id);
+        $stmt->bindParam(':graduate_id', $this->graduate_id);
         $stmt->bindParam(':email', $this->email);
         $stmt->bindParam(':first_name', $this->first_name);
         $stmt->bindParam(':middle_name', $this->middle_name);
@@ -204,7 +205,7 @@ class GraduateAccount
         $stmt->bindParam(':gender', $this->gender);
         $stmt->bindParam(':age', $this->age);
         $stmt->bindParam(':address', $this->address);
-        $stmt->bindParam(':cp_no', $this->cp_no);
+        $stmt->bindParam(':contact_no', $this->contact_no);
         $stmt->bindParam(':date_grad', $this->date_grad);
         $stmt->bindParam(':emp_stat', $this->emp_stat);
         $stmt->bindParam(':user_account', $this->user_account);
@@ -227,11 +228,11 @@ class GraduateAccount
      */
     function delete()
     {
-        $query = "DELETE FROM " . $this->table_name . " WHERE grad_id = :grad_id";
+        $query = "DELETE FROM " . $this->table_name . " WHERE graduate_id = :graduate_id";
         $stmt = $this->conn->prepare($query);
 
-        $this->grad_id = htmlspecialchars(strip_tags($this->grad_id));
-        $stmt->bindParam(':grad_id', $this->grad_id);
+        $this->graduate_id = htmlspecialchars(strip_tags($this->graduate_id));
+        $stmt->bindParam(':graduate_id', $this->graduate_id);
 
         if ($stmt->execute()) {
             return true;
