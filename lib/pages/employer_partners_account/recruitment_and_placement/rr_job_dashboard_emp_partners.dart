@@ -207,24 +207,24 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
                               'assets/images/image_12.png'), // Add the path to your profile image
                           radius: 24,
                         ),
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Partner Name',
-                                  style: GoogleFonts.getFont(
-                                    'Montserrat',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                    color: const Color(0xFF000000),
-                                  )),
-                              Text('Employer Partner',
-                                  style: GoogleFonts.getFont(
-                                    'Montserrat',
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 12,
-                                    color: const Color(0xFF000000),
-                                  )),
-                            ]),
+                        // Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     children: [
+                        //       Text('Partner Name',
+                        //           style: GoogleFonts.getFont(
+                        //             'Montserrat',
+                        //             fontWeight: FontWeight.bold,
+                        //             fontSize: 14,
+                        //             color: const Color(0xFF000000),
+                        //           )),
+                        //       Text('Employer Partner',
+                        //           style: GoogleFonts.getFont(
+                        //             'Montserrat',
+                        //             fontWeight: FontWeight.normal,
+                        //             fontSize: 12,
+                        //             color: const Color(0xFF000000),
+                        //           )),
+                        //     ]),
                         SizedBox(
                           width: 4,
                         ),

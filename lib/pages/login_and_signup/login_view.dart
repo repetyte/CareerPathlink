@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/pages/login_and_signup/signUp_view.dart';
 import 'package:flutter_app/services/user_api_service.dart';
 
 import 'package:get/get.dart';
@@ -18,7 +19,6 @@ class _LoginViewState extends State<LoginView> {
   final userApiService = UserApiService();
 
   final TextEditingController _usernameController = TextEditingController();
-  // TextEditingController emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _selectedUserType =
       TextEditingController(text: '');
@@ -88,13 +88,12 @@ class _LoginViewState extends State<LoginView> {
   @override
   void dispose() {
     _usernameController.dispose();
-    // emailController.dispose();
     _passwordController.dispose();
     _selectedUserType.dispose();
     super.dispose();
   }
 
-  SimpleUIController simpleUIController = Get.put(SimpleUIController());
+  final SimpleUIController simpleUIController = Get.put(SimpleUIController());
 
   @override
   Widget build(BuildContext context) {
@@ -297,13 +296,6 @@ class _LoginViewState extends State<LoginView> {
                     controller: _usernameController,
                     // The validator receives the text that the user has entered.
                     validator: (value) {
-                      // if (value == null || value.isEmpty) {
-                      //   return 'Please enter username';
-                      // } else if (value.length < 4) {
-                      //   return 'at least enter 4 characters';
-                      // } else if (value.length > 13) {
-                      //   return 'maximum character is 13';
-                      // }
                       // return null;
                       value == null || value.isEmpty ? 'Enter username' : null;
                       return null;
@@ -312,30 +304,6 @@ class _LoginViewState extends State<LoginView> {
                   SizedBox(
                     height: size.height * 0.02,
                   ),
-
-                  // email
-                  // TextFormField(
-                  //   controller: emailController,
-                  //   decoration: const InputDecoration(
-                  //     prefixIcon: Icon(Icons.email_rounded),
-                  //     hintText: 'gmail',
-                  //     border: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.all(Radius.circular(15)),
-                  //     ),
-                  //   ),
-                  //   // The validator receives the text that the user has entered.
-                  //   validator: (value) {
-                  //     if (value == null || value.isEmpty) {
-                  //       return 'Please enter gmail';
-                  //     } else if (!value.endsWith('@gmail.com')) {
-                  //       return 'please enter valid gmail';
-                  //     }
-                  //     return null;
-                  //   },
-                  // ),
-                  // SizedBox(
-                  //   height: size.height * 0.02,
-                  // ),
 
                   /// password
                   Obx(
@@ -359,13 +327,6 @@ class _LoginViewState extends State<LoginView> {
                       ),
                       // The validator receives the text that the user has entered.
                       validator: (value) {
-                        // if (value == null || value.isEmpty) {
-                        //   return 'Please enter some text';
-                        // } else if (value.length < 7) {
-                        //   return 'at least enter 6 characters';
-                        // } else if (value.length > 13) {
-                        //   return 'maximum character is 13';
-                        // }
                         value == null || value.isEmpty
                             ? 'Enter password'
                             : null;
@@ -381,7 +342,7 @@ class _LoginViewState extends State<LoginView> {
                   DropdownButtonFormField<String>(
                     value: _selectedUserType.text.isNotEmpty
                         ? _selectedUserType.text
-                        : null,
+                        : null, // Ensure no null value
                     hint: Text('Log In As'),
                     decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.switch_account),
@@ -389,13 +350,6 @@ class _LoginViewState extends State<LoginView> {
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                       ),
                     ),
-                    // items: [
-                    //   'Student',
-                    //   'Graduate',
-                    //   'Coach',
-                    //   'Employer Partner',
-                    //   'Career Center Director'
-                    // ]
                     items: [
                       'Graduate',
                       'Employer Partner',
@@ -407,24 +361,17 @@ class _LoginViewState extends State<LoginView> {
                         .toList(),
                     onChanged: (value) {
                       setState(() {
-                        _selectedUserType.text = value!;
+                        _selectedUserType.text =
+                            value ?? ''; // Avoid null values
                       });
                     },
                     validator: (value) {
-                      // if (value == null || value.isEmpty) {
-                      //   return 'Please enter user type';
-                      // }
-                      value == null || value.isEmpty
-                          ? 'Select user type'
-                          : null;
+                      if (value == null || value.isEmpty) {
+                        return 'Select user type';
+                      }
                       return null;
                     },
                   ),
-                  // Text(
-                  //   'Creating an account means you\'re okay with our Terms of Services and our Privacy Policy',
-                  //   style: kLoginTermsAndPrivacyStyle(size),
-                  //   textAlign: TextAlign.center,
-                  // ),
                   SizedBox(
                     height: size.height * 0.02,
                   ),
@@ -438,34 +385,20 @@ class _LoginViewState extends State<LoginView> {
                   /// Navigate To Login Screen
                   GestureDetector(
                     onTap: () {
-                      // Navigate back
-                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SignUpView()),
+                      ).then((_) {
+                        // Clear the form and reset after navigation
+                        _usernameController.clear();
+                        _passwordController.clear();
+                        _selectedUserType.clear();
+                        _formKey.currentState?.reset();
 
-                      debugPrint('Sign up button tapped.');
-
-                      // Reset form state
-                      if (_formKey.currentState != null) {
-                        _formKey.currentState!.reset();
-                        debugPrint('Form successfully reset.');
-                      } else {
-                        debugPrint('FormState is null.');
-                      }
-
-                      // Clear input fields
-                      _usernameController.clear();
-                      // emailController.clear();
-                      _passwordController.clear();
-                      _selectedUserType.clear();
-                      debugPrint('Text controllers cleared.');
-
-                      // Reset obscure state
-                      if (simpleUIController.isObscure != null) {
+                        // Reset UI state
                         simpleUIController.isObscure.value = true;
-                        debugPrint('Password visibility reset.');
-                      } else {
-                        debugPrint('SimpleUIController isObscure is null.');
-                      }
-                      debugPrint('Navigated back to the previous screen.');
+                      });
                     },
                     child: RichText(
                       text: TextSpan(
@@ -495,18 +428,7 @@ class _LoginViewState extends State<LoginView> {
   Widget loginButton() {
     return SizedBox(
       width: double.infinity,
-      child:
-          // _isLoading
-          //     ? const Center(child: CircularProgressIndicator())
-          //     : ElevatedButton(
-          //         // onPressed: _signUp,
-          //         onPressed: () {
-          //           // Validate returns true if the form is valid, or false otherwise.
-          //           _login();
-          //         },
-          //         child: const Text('Log In'),
-          //       ),
-          ElevatedButton(
+      child: ElevatedButton(
         onPressed: _isLoading ? null : _login,
         child: _isLoading
             ? const CircularProgressIndicator()

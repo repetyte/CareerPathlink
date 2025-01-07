@@ -26,46 +26,7 @@ class _SignUpViewState extends State<SignUpView> {
   final _formKey = GlobalKey<FormState>();
 
   Future<void> _signUp() async {
-    // if (_formKey.currentState!.validate()) {
-    //   setState(() {
-    //     _isLoading = true;
-    //   });
-
-    //   final username = _usernameController.text;
-    //   final password = _passwordController.text;
-    //   final userType = _selectedUserType;
-
-    //   try {
-    //     final success = await userApiService.authenticateUser(
-    //       username: username,
-    //       password: password,
-    //       userType: userType.toString(),
-    //     );
-
-    //     if (success) {
-    //       // Navigate to appropriate dashboard based on user type
-    //       if (userType == 'Graduate') {
-    //         Navigator.pushReplacementNamed(context, '/graduate_dashboard');
-    //       } else if (userType == 'Industry Partner') {
-    //         Navigator.pushReplacementNamed(
-    //             context, '/industry_partner_dashboard');
-    //       }
-    //     } else {
-    //       ScaffoldMessenger.of(context).showSnackBar(
-    //         const SnackBar(
-    //             content: Text('Invalid credentials. Please try again.')),
-    //       );
-    //     }
-    //   } catch (e) {
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //       SnackBar(content: Text('An error occurred: $e')),
-    //     );
-    //   } finally {
-    //     setState(() {
-    //       _isLoading = false;
-    //     });
-    //   }
-    // }
+    
   }
 
   @override
@@ -76,7 +37,7 @@ class _SignUpViewState extends State<SignUpView> {
     super.dispose();
   }
 
-  SimpleUIController simpleUIController = Get.put(SimpleUIController());
+  final SimpleUIController simpleUIController = Get.put(SimpleUIController());
 
   @override
   Widget build(BuildContext context) {
@@ -289,30 +250,6 @@ class _SignUpViewState extends State<SignUpView> {
                     height: size.height * 0.02,
                   ),
 
-                  /// Gmail
-                  // TextFormField(
-                  //   controller: _passwordController,
-                  //   decoration: const InputDecoration(
-                  //     prefixIcon: Icon(Icons.email_rounded),
-                  //     hintText: 'gmail',
-                  //     border: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.all(Radius.circular(15)),
-                  //     ),
-                  //   ),
-                  //   // The validator receives the text that the user has entered.
-                  //   validator: (value) {
-                  //     if (value == null || value.isEmpty) {
-                  //       return 'Please enter gmail';
-                  //     } else if (!value.endsWith('@gmail.com')) {
-                  //       return 'please enter valid gmail';
-                  //     }
-                  //     return null;
-                  //   },
-                  // ),
-                  // SizedBox(
-                  //   height: size.height * 0.02,
-                  // ),
-
                   /// password
                   Obx(
                     () => TextFormField(
@@ -379,12 +316,6 @@ class _SignUpViewState extends State<SignUpView> {
                       return null;
                     },
                   ),
-
-                  // Text(
-                  //   'Creating an account means you\'re agree with our Terms of Services and our Privacy Policy',
-                  //   style: kLoginTermsAndPrivacyStyle(size),
-                  //   textAlign: TextAlign.center,
-                  // ),
                   SizedBox(
                     height: size.height * 0.02,
                   ),
@@ -400,7 +331,7 @@ class _SignUpViewState extends State<SignUpView> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        CupertinoPageRoute(builder: (ctx) => const LoginView()),
+                        MaterialPageRoute(builder: (ctx) => const LoginView()),
                       ).then((_) {
                         // Clear the form and reset after navigation
                         _usernameController.clear();

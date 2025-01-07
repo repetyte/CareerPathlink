@@ -196,24 +196,24 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                               'assets/images/image_12.png'), // Add the path to your profile image
                           radius: 24,
                         ),
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Hendrixon Moldes',
-                                  style: GoogleFonts.getFont(
-                                    'Montserrat',
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14,
-                                    color: const Color(0xFF000000),
-                                  )),
-                              Text('Graduate',
-                                  style: GoogleFonts.getFont(
-                                    'Montserrat',
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 12,
-                                    color: const Color(0xFF000000),
-                                  )),
-                            ]),
+                        // Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     children: [
+                        //       Text('Hendrixon Moldes',
+                        //           style: GoogleFonts.getFont(
+                        //             'Montserrat',
+                        //             fontWeight: FontWeight.bold,
+                        //             fontSize: 14,
+                        //             color: const Color(0xFF000000),
+                        //           )),
+                        //       Text('Graduate',
+                        //           style: GoogleFonts.getFont(
+                        //             'Montserrat',
+                        //             fontWeight: FontWeight.normal,
+                        //             fontSize: 12,
+                        //             color: const Color(0xFF000000),
+                        //           )),
+                        //     ]),
                         SizedBox(
                           width: 4,
                         ),

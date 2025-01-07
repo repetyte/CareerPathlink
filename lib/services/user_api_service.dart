@@ -7,31 +7,6 @@ class UserApiService {
   final String apiUrl =
       'http://localhost/UNC-CareerPathlink/api/user_authentication';
 
-  // // Fetch graduate accounts
-  // Future<List<GraduateAccount>> fetchGraduateAccounts() async {
-  //   final response = await http.get(Uri.parse('$apiUrl/graduate_acc/read.php'));
-
-  //   if (response.statusCode == 200) {
-  //     List<dynamic> data = jsonDecode(response.body);
-  //     return data.map((json) => GraduateAccount.fromJson(json)).toList();
-  //   } else {
-  //     throw Exception('Failed to fetch Graduate accounts');
-  //   }
-  // }
-
-  // // Fetch industry partner accounts
-  // Future<List<IndustryPartnerAccount>> fetchIndustryPartners() async {
-  //   final response =
-  //       await http.get(Uri.parse('$apiUrl/emp_partner_acc/read.php'));
-
-  //   if (response.statusCode == 200) {
-  //     List<dynamic> data = jsonDecode(response.body);
-  //     return data.map((json) => IndustryPartnerAccount.fromJson(json)).toList();
-  //   } else {
-  //     throw Exception('Failed to fetch Industry Partner accounts');
-  //   }
-  // }
-
   // Fetch graduate accounts and match user
   Future<GraduateAccount?> fetchGraduateAccount(
       String username, String password) async {
