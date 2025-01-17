@@ -5,6 +5,8 @@ import 'footer.dart'; // Import the Footer widget
 import 'select_coach.dart'; // Import the SelectCoachScreen
 
 class AppointmentBookingScreen extends StatefulWidget {
+  const AppointmentBookingScreen({super.key});
+
   @override
   _AppointmentBookingScreenState createState() =>
       _AppointmentBookingScreenState();

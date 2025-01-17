@@ -7,7 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
 
 class HeaderWidget extends StatelessWidget {
-  const HeaderWidget({Key? key}) : super(key: key);
+  const HeaderWidget({super.key});
 
   // Function to launch Google Maps
   Future<void> _launchGoogleMaps() async {
@@ -56,7 +56,7 @@ class HeaderWidget extends StatelessWidget {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           fit: BoxFit.cover,
-                          image: AssetImage('logo.png'),
+                          image: AssetImage('assets/career_coaching/logo.png'),
                         ),
                       ),
                     ),

@@ -1,9 +1,8 @@
-import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/internship.dart';
+import 'package:flutter_app/models/work_integrated_learning/internship.dart';
 
 class InternshipApplicationScreen extends StatefulWidget {
   final InternshipWithPartner internshipWithPartner;

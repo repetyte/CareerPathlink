@@ -7,7 +7,7 @@ import 'calendar.dart';
 import 'footer.dart'; // Import the footer widget
 
 class SelectCoachScreen extends StatefulWidget {
-  const SelectCoachScreen({Key? key}) : super(key: key);
+  const SelectCoachScreen({super.key});
 
   @override
   _SelectCoachScreenState createState() => _SelectCoachScreenState();
@@ -28,7 +28,7 @@ class _SelectCoachScreenState extends State<SelectCoachScreen> {
 
   Future<void> fetchCoaches() async {
     const url =
-        'http://localhost/scheduling/api/get_coaches.php'; // Replace with your server address
+        'http://localhost/UNC-CareerPathlink/api/career_coaching/get_coaches.php'; // Replace with your server address
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {

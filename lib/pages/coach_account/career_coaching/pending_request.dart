@@ -7,10 +7,10 @@ import 'package:intl/intl.dart';
 class PendingSection extends StatelessWidget {
   final double screenWidth;
 
-  PendingSection({required this.screenWidth});
+  const PendingSection({super.key, required this.screenWidth});
 
   Future<List<Map<String, String>>> fetchPendingRequests() async {
-    const url = 'http://localhost/scheduling/api/read_pending.php';
+    const url = 'http://localhost/UNC-CareerPathlink/api/career_coaching/read_pending.php';
 
     try {
       final response = await http.get(Uri.parse(url));
@@ -27,13 +27,13 @@ class PendingSection extends StatelessWidget {
             };
           }).toList();
         } else {
-          throw Exception('Failed to load pending requests');
+          throw Exception('No pending requests');
         }
       } else {
         throw Exception('Failed to connect to the server');
       }
     } catch (e) {
-      print('Error fetching pending requests: $e');
+      debugPrint('Error fetching pending requests: $e');
       throw Exception('Error fetching pending requests');
     }
   }

@@ -43,7 +43,7 @@ class Slot {
 // API Service to fetch available slots
 class ApiService {
   static const String baseUrl =
-      'http://localhost/scheduling/api'; // Replace with your actual API URL
+      'http://localhost/UNC-CareerPathlink/api/career_coaching'; // Replace with your actual API URL
 
   // Fetch available slots for a selected coach
   static Future<List<Slot>> fetchAvailableSlots(int coachId) async {

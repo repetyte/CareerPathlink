@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_app/models/job_posting.dart';
+import 'package:flutter_app/models/recruitment_and_placement/job_posting.dart';
 
 class JobPostingApiService {
   final String apiUrl = "http://localhost/UNC-CareerPathlink/api";

@@ -1,5 +1,4 @@
 // ignore: file_names
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/services/user_api_service.dart';
 import 'package:get/get.dart';
@@ -22,7 +21,7 @@ class _SignUpViewState extends State<SignUpView> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _selectedUserType =
       TextEditingController(text: '');
-  bool _isLoading = false;
+  final bool _isLoading = false;
   final _formKey = GlobalKey<FormState>();
 
   Future<void> _signUp() async {

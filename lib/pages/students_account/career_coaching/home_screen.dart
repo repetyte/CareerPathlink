@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       child: Center(
-                        child: Image.asset('homepage.png', fit: BoxFit.cover),
+                        child: Image.asset('assets/career_coaching/homepage.png', fit: BoxFit.cover),
                       ),
                     ),
                     Padding(
@@ -174,28 +174,28 @@ class _HomeScreenState extends State<HomeScreen> {
     return [
       _buildImageCard(
         0,
-        'career_coaching.png',
+        'assets/career_coaching/career_coaching.png',
         'Career Coaching',
         'Career Coaching pairs you with experienced alumni who will guide you through career planning and goal-setting. Get the clarity and confidence you need to succeed in your dream career.',
         cardWidth,
       ),
       _buildImageCard(
         1,
-        'mock_interview.webp',
+        'assets/career_coaching/mock_interview.webp',
         'Mock Interview',
         'Practice with professionals who provide real-time feedback and tips. Gain the confidence to handle any interview and stand out to employers.',
         cardWidth,
       ),
       _buildImageCard(
         2,
-        'cv_review.png',
+        'assets/career_coaching/cv_review.png',
         'CV Review',
         'Submit your resume for expert review and get personalized advice on how to make it impactful. A great CV opens doors—let us help you perfect yours!',
         cardWidth,
       ),
       _buildImageCard(
         3,
-        'mentoring_.png',
+        'assets/career_coaching/mentoring_.png',
         'Mentoring',
         'Mentoring connects you with alumni who’ve been where you are. Get career advice and support to make your professional journey a success.',
         cardWidth,

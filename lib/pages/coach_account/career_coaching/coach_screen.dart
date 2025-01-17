@@ -9,7 +9,7 @@ import '../../../widgets/appbar/cc_coach_header.dart';
 class CoachScreen extends StatelessWidget {
   final double screenWidth;
 
-  CoachScreen({required this.screenWidth});
+  const CoachScreen({super.key, required this.screenWidth});
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +21,7 @@ class CoachScreen extends StatelessWidget {
 
 class ProgramScheduleScreen extends StatefulWidget {
   final double screenWidth;
-  const ProgramScheduleScreen({Key? key, required this.screenWidth})
-      : super(key: key);
+  const ProgramScheduleScreen({super.key, required this.screenWidth});
 
   @override
   _ProgramScheduleScreenState createState() => _ProgramScheduleScreenState();

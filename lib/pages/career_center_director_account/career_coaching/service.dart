@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class Service extends StatefulWidget {
   final double screenWidth;
 
-  const Service({Key? key, required this.screenWidth}) : super(key: key);
+  const Service({super.key, required this.screenWidth});
 
   @override
   _ServiceState createState() => _ServiceState();
@@ -24,7 +24,7 @@ class _ServiceState extends State<Service> {
 
   Future<Map<String, double>> fetchProgramPercentages() async {
     final response = await http.get(
-      Uri.parse('http://localhost/scheduling/api/read_service_details.php'),
+      Uri.parse('http://localhost/UNC-CareerPathlink/api/career_coaching/read_service_details.php'),
     );
 
     if (response.statusCode == 200) {

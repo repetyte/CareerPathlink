@@ -77,7 +77,7 @@ class Footer extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset('logo.png', width: 80, height: 80),
+                  Image.asset('assets/career_coaching/logo.png', width: 80, height: 80),
                   const SizedBox(width: 15),
                   Text(
                     "UNIVERSITY OF\nNUEVA CACERES",

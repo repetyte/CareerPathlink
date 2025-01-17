@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_job_dashboard_emp_partners.dart';
+import 'package:flutter_app/pages/graduates_account/recruitment_and_placement/rr_job_dashboard_graduates.dart';
 import 'package:flutter_app/pages/login_and_signup/signUp_view.dart';
 import 'package:flutter_app/services/user_api_service.dart';
 
@@ -38,14 +40,15 @@ class _LoginViewState extends State<LoginView> {
 
       try {
         if (userType == 'Graduate') {
-          final graduate =
+          final graduateAccount =
               await userApiService.fetchGraduateAccount(username, password);
-          if (graduate != null) {
+          if (graduateAccount != null) {
             // Navigate to Graduate Dashboard with graduate account details
-            Navigator.pushReplacementNamed(
+            Navigator.push(
               context,
-              '/rr_job_dashboard_user',
-              arguments: graduate,
+              MaterialPageRoute(
+                builder: (context) => RrJobDashboardUser(graduateAccount: graduateAccount),
+              ),
             );
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -53,14 +56,15 @@ class _LoginViewState extends State<LoginView> {
             );
           }
         } else if (userType == 'Employer Partner') {
-          final partner = await userApiService.fetchIndustryPartnerAccount(
-              username, password);
-          if (partner != null) {
-            // Navigate to Employer Partner Dashboard with partner account details
-            Navigator.pushReplacementNamed(
+          final employerPartnerAccount = await userApiService
+              .fetchIndustryPartnerAccount(username, password);
+          if (employerPartnerAccount != null) {
+            // Navigate to Employer Partner Dashboard with employer partner account details
+            Navigator.push(
               context,
-              '/emp_partners_dashboard',
-              arguments: partner,
+              MaterialPageRoute(
+                builder: (context) => RrJobDashboardEmpPartners(employerPartnerAccount: employerPartnerAccount),
+              ),
             );
           } else {
             ScaffoldMessenger.of(context).showSnackBar(

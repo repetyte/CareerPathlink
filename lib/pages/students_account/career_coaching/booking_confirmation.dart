@@ -4,8 +4,7 @@ import 'home_screen.dart'; // Import the HomeScreen file
 
 class BookingConfirmationScreen extends StatefulWidget {
   const BookingConfirmationScreen(
-      {Key? key, required String coach, required String dateTime})
-      : super(key: key);
+      {super.key, required String coach, required String dateTime});
 
   @override
   _BookingConfirmationScreenState createState() =>
@@ -123,7 +122,7 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen>
 class FadeInEffect extends StatelessWidget {
   final Widget child;
 
-  const FadeInEffect({Key? key, required this.child}) : super(key: key);
+  const FadeInEffect({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

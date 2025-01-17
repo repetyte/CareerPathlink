@@ -1692,6 +1692,19 @@ flutter:
     - assets/images/seal_of_university_of_nueva_caceres_2.png
     - assets/images/search.png
     - assets/logo/UNC_CareerPathlink.png
+    # - assets/career_coaching/logo.png
+    - assets/career_coaching/student_profile.jpg
+    - assets/career_coaching/s1.png
+    - assets/career_coaching/s2.png
+    - assets/career_coaching/s3.png
+    - assets/career_coaching/s4.png
+    - assets/career_coaching/s5.png
+    - assets/career_coaching/s6.png
+    - assets/career_coaching/sample1.png
+    - assets/career_coaching/sample2.png
+    - assets/career_coaching/sample3.png
+    - assets/career_coaching/sample4.png
+    - assets/career_coaching/
     
   fonts:
     - family: Montserrat

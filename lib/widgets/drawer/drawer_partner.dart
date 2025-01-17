@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/graduate.dart';
-import 'package:flutter_app/pages/graduates_account/recruitment_and_placement/rr_job_dashboard_graduates.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MyDrawerGraduates extends StatelessWidget {
-final GraduateAccount graduateAccount;
-
-  const MyDrawerGraduates({super.key, required this.graduateAccount});
+class MyDrawerPartner extends StatelessWidget {
+  const MyDrawerPartner({super.key});
 
   navigateTo(String route, BuildContext context) {
     Navigator.of(context).pushReplacementNamed(route);
@@ -92,12 +88,20 @@ final GraduateAccount graduateAccount;
               style: TextStyle(),
             ),
             onTap: () {
-              Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => RrJobDashboardUser(graduateAccount: graduateAccount),
+              navigateTo("/recruitment_and_placement", context);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.on_device_training),
+            title: const Text(
+              'Work Integrated Learning',
+              style: TextStyle(
+                height: 1.3,
               ),
-            );
+            ),
+            onTap: () {
+              // Update the state of the app.
+              // ...
             },
           ),
         ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/internship.dart';
+import 'package:flutter_app/models/work_integrated_learning/internship.dart';
 import 'package:flutter_app/pages/students_account/work_integrated_learning/internship_application.dart';
 import 'package:flutter_app/services/internship_api_service.dart';
 import 'package:google_fonts/google_fonts.dart';

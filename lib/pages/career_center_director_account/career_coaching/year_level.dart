@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 class YearLevel extends StatefulWidget {
   final double screenWidth;
 
-  const YearLevel({Key? key, required this.screenWidth}) : super(key: key);
+  const YearLevel({super.key, required this.screenWidth});
 
   @override
   _YearLevelState createState() => _YearLevelState();

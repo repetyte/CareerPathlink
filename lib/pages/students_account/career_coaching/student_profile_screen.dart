@@ -19,7 +19,7 @@ class StudentProfileScreen extends StatefulWidget {
 class _StudentProfileScreenState extends State<StudentProfileScreen> {
   // Personal Information variables
   bool _isLoadingStudent = true;
-  bool _isEditing = false;
+  final bool _isEditing = false;
   Student? _student;
 
   // Variables for sessions
@@ -40,8 +40,8 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
 
   Future<void> _pickImage() async {
     try {
-      final ImagePicker _picker = ImagePicker();
-      final XFile? pickedFile = await _picker.pickImage(
+      final ImagePicker picker = ImagePicker();
+      final XFile? pickedFile = await picker.pickImage(
         source: ImageSource.gallery,
       );
 

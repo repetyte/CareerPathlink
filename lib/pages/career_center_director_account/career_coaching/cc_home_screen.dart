@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../widgets/appbar/cc_coach_header.dart';
@@ -9,7 +8,7 @@ import '../../students_account/career_coaching/footer.dart';
 import 'service.dart'; // Import your service widget
 
 class CC_HomeScreen extends StatefulWidget {
-  const CC_HomeScreen({Key? key}) : super(key: key);
+  const CC_HomeScreen({super.key});
 
   @override
   _CC_HomeScreenState createState() => _CC_HomeScreenState();

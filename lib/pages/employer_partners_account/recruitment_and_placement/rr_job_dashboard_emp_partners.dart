@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/widgets/drawer/drawer_cco.dart';
-import 'package:flutter_app/models/job_posting.dart';
+import 'package:flutter_app/models/industry_partner.dart';
+import 'package:flutter_app/models/recruitment_and_placement/job_posting.dart';
 import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_add_job_posting.dart';
 import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_job_details_emp_partners.dart';
 import 'package:flutter_app/services/job_posting_api_service.dart';
+import 'package:flutter_app/widgets/drawer/drawer_partner.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RrJobDashboardEmpPartners extends StatefulWidget {
-  // final JobPostingWithPartner jobPostingWithPartner;
+  final IndustryPartnerAccount employerPartnerAccount;
 
-  const RrJobDashboardEmpPartners({super.key});
+  const RrJobDashboardEmpPartners({super.key, required this.employerPartnerAccount});
 
   @override
   _RrJobDashboardEmpPartnersState createState() =>
@@ -250,7 +251,7 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
         ),
         toolbarHeight: 92,
       ),
-      drawer: const MyDrawerCco(),
+      drawer: const MyDrawerPartner(),
       body: SingleChildScrollView(
         child: Column(
           children: [

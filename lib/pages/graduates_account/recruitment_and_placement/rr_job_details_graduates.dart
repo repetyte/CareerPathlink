@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/job_posting.dart';
+import 'package:flutter_app/models/graduate.dart';
+import 'package:flutter_app/models/recruitment_and_placement/job_posting.dart';
 import 'package:flutter_app/pages/graduates_account/recruitment_and_placement/rr_job_application.dart';
 import 'package:flutter_app/services/job_posting_api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RrJobDetailsGraduates extends StatefulWidget {
   final JobPostingWithPartner jobPostingWithPartner;
+  final GraduateAccount graduateAccount;
 
-  const RrJobDetailsGraduates({super.key, required this.jobPostingWithPartner});
+  const RrJobDetailsGraduates({super.key, required this.jobPostingWithPartner, required this.graduateAccount});
 
   @override
   _RrJobDetailsGraduatesState createState() => _RrJobDetailsGraduatesState();
@@ -237,7 +239,7 @@ class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
                             MaterialPageRoute(
                               builder: (context) => JobApplicationScreen(
                                   jobPostingWithPartner: widget
-                                      .jobPostingWithPartner), // Fixed the error here
+                                      .jobPostingWithPartner, graduateAccount: widget.graduateAccount,), // Fixed the error here
                             ),
                           );
                         },

@@ -7,8 +7,7 @@ import 'package:intl/intl.dart';
 class InProcessRequests extends StatelessWidget {
   final double screenWidth;
 
-  const InProcessRequests({Key? key, required this.screenWidth})
-      : super(key: key);
+  const InProcessRequests({super.key, required this.screenWidth});
 
   // Function to get the program name based on the program ID
   String getProgramName(String programId) {

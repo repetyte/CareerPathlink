@@ -19,4 +19,4 @@ if (password_verify($userInputPassword, $hashedPasswordFromDatabase)) {
 }
 ?>
 
-<!-- http://localhost/scheduling/api/hash_password.php -->
+<!-- http://localhost/UNC-CareerPathlink/api/career_coaching/hash_password.php -->

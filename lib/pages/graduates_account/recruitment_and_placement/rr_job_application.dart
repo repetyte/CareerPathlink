@@ -1,15 +1,16 @@
-import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/job_posting.dart';
+import 'package:flutter_app/models/graduate.dart';
+import 'package:flutter_app/models/recruitment_and_placement/job_posting.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class JobApplicationScreen extends StatefulWidget {
   final JobPostingWithPartner jobPostingWithPartner;
+  final GraduateAccount graduateAccount;
 
-  const JobApplicationScreen({super.key, required this.jobPostingWithPartner});
+  const JobApplicationScreen({super.key, required this.jobPostingWithPartner, required this.graduateAccount});
 
   @override
   _JobApplicationScreenState createState() => _JobApplicationScreenState();

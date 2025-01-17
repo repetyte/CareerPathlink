@@ -615,7 +615,7 @@ class StudentNumberFormatter extends TextInputFormatter {
       TextEditingValue oldValue, TextEditingValue newValue) {
     String newText = newValue.text.replaceAll('-', '');
     if (newText.length > 2) {
-      newText = newText.substring(0, 2) + '-' + newText.substring(2);
+      newText = '${newText.substring(0, 2)}-${newText.substring(2)}';
     }
     return newValue.copyWith(
       text: newText,

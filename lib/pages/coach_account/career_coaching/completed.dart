@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart'; // Import for date formatting
 
 class Completed extends StatelessWidget {
-  const Completed({Key? key}) : super(key: key);
+  const Completed({super.key});
 
   // Function to get the program name based on the program ID
   String getProgramName(String? programId) {

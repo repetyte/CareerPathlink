@@ -7,7 +7,7 @@ import 'dart:convert';
 class Department extends StatefulWidget {
   final double screenWidth;
 
-  const Department({Key? key, required this.screenWidth}) : super(key: key);
+  const Department({super.key, required this.screenWidth});
 
   @override
   _DepartmentState createState() => _DepartmentState();
@@ -25,7 +25,7 @@ class _DepartmentState extends State<Department> {
   Future<List<Map<String, dynamic>>> fetchDepartmentData() async {
     try {
       final response = await http.get(
-          Uri.parse('http://localhost/scheduling/api/read_department.php'));
+          Uri.parse('http://localhost/UNC-CareerPathlink/api/career_coaching/read_department.php'));
 
       if (response.statusCode == 200) {
         var decodedResponse = jsonDecode(response.body);

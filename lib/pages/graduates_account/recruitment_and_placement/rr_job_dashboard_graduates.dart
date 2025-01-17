@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/graduate.dart';
 import 'package:flutter_app/widgets/drawer/drawer_graduates.dart';
-import 'package:flutter_app/models/job_posting.dart';
+import 'package:flutter_app/models/recruitment_and_placement/job_posting.dart';
 import 'package:flutter_app/pages/graduates_account/recruitment_and_placement/rr_job_details_graduates.dart';
 import 'package:flutter_app/services/job_posting_api_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RrJobDashboardUser extends StatefulWidget {
-  const RrJobDashboardUser({super.key});
+  final GraduateAccount graduateAccount;
+  const RrJobDashboardUser({super.key, required this.graduateAccount});
 
   @override
   _RrJobDashboardUserState createState() => _RrJobDashboardUserState();
@@ -21,6 +23,9 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
   @override
   void initState() {
     super.initState();
+    // Print graduate details for testing
+    debugPrint('Graduatesssss ID: ${widget.graduateAccount.graduateId}');
+    debugPrint('Department: ${widget.graduateAccount.department}');
     futureJobPostings = JobPostingApiService().fetchJobPostings();
     futureJobPostings.then((data) {
       setState(() {
@@ -28,15 +33,6 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
       });
     });
     _searchController.addListener(_filterJobPostings);
-  }
-
-  void _showAddJobPostingDialog() {
-    // showDialog(
-    //   context: context,
-    //   builder: (context) {
-    //     return AddJobPostingDialog(onJobPosted: _refreshJobPostings);
-    //   },
-    // );
   }
 
   void _showProfileDialog(BuildContext context) {
@@ -52,13 +48,13 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const ListTile(
-                  leading: Icon(Icons.person),
+                ListTile(
+                  leading: const Icon(Icons.person),
                   title: Text(
-                    'Hendrixon Moldes',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    '${widget.graduateAccount.firstName} ${widget.graduateAccount.lastName}',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  subtitle: Text(
+                  subtitle: const Text(
                       'Graduate | Bachelor of Science in Information Technology'),
                 ),
                 const Divider(),
@@ -134,7 +130,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: AssetImage('assets/logo/UNC_CareerPathlink.png'),
+                        image: AssetImage('assets/images/seal_of_university_of_nueva_caceres_2.png'),
                       ),
                     ),
                     child: const SizedBox(
@@ -239,7 +235,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
         ),
         toolbarHeight: 92,
       ),
-      drawer: const MyDrawerGraduates(),
+      drawer: MyDrawerGraduates(graduateAccount: widget.graduateAccount),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -339,7 +335,9 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                             controller: _searchController,
                             decoration: InputDecoration(
                               hintText: 'Search jobs here...',
-                              prefixIcon: Icon(Icons.search,),
+                              prefixIcon: Icon(
+                                Icons.search,
+                              ),
                             ),
                           ),
                         ],
@@ -380,14 +378,12 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                                   _filteredJobPostings;
                               // Determine the number of columns based on screen width
                               int crossAxisCount =
-                                  (MediaQuery.of(context).size.width /
-                                          300)
+                                  (MediaQuery.of(context).size.width / 300)
                                       .floor();
                               // Return GridView
                               return GridView.builder(
                                 shrinkWrap: true,
-                                physics:
-                                    const NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: crossAxisCount,
@@ -396,13 +392,11 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                                   childAspectRatio: 0.80,
                                 ),
                                 itemCount: data.length,
-                                itemBuilder:
-                                    (BuildContext context, int index) {
+                                itemBuilder: (BuildContext context, int index) {
                                   return Card(
                                     elevation: 10.0,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(25.0),
+                                      borderRadius: BorderRadius.circular(25.0),
                                     ),
                                     clipBehavior: Clip.antiAlias,
                                     child: Column(
@@ -416,8 +410,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                                           fit: BoxFit.cover,
                                         ),
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.all(16.0),
+                                          padding: const EdgeInsets.all(16.0),
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -426,17 +419,14 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                                                   style: TextStyle(
                                                       fontSize: 20,
                                                       fontWeight:
-                                                          FontWeight
-                                                              .bold)),
+                                                          FontWeight.bold)),
                                               const SizedBox(height: 4),
                                               Text(data[index].salary,
                                                   style: const TextStyle(
                                                     fontSize: 16,
                                                   )),
                                               const SizedBox(height: 4),
-                                              Text(
-                                                  data[index]
-                                                      .fieldIndustry,
+                                              Text(data[index].fieldIndustry,
                                                   style: const TextStyle(
                                                     fontSize: 14,
                                                   )),
@@ -447,11 +437,10 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                                         Align(
                                           alignment: Alignment.bottomLeft,
                                           child: Padding(
-                                            padding: const EdgeInsets.all(
-                                                16.0),
+                                            padding: const EdgeInsets.all(16.0),
                                             child: ElevatedButton.icon(
-                                              icon: const Icon(Icons
-                                                  .arrow_forward),
+                                              icon: const Icon(
+                                                  Icons.arrow_forward),
                                               onPressed: () {
                                                 Navigator.push(
                                                   context,
@@ -459,13 +448,11 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                                                     builder: (context) =>
                                                         RrJobDetailsGraduates(
                                                             jobPostingWithPartner:
-                                                                data[
-                                                                    index]),
+                                                                data[index], graduateAccount: widget.graduateAccount,),
                                                   ),
                                                 );
                                               },
-                                              label:
-                                                  const Text('View More'),
+                                              label: const Text('View More'),
                                             ),
                                           ),
                                         ),
