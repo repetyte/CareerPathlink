@@ -52,7 +52,7 @@ class _ServiceState extends State<Service> {
               }
             }
           } catch (e) {
-            print('Error parsing percentage: ${service['percentage']}');
+            debugPrint('Error parsing percentage: ${service['percentage']}');
           }
 
           // Add the percentage to the program's total (or initialize if it's the first time)

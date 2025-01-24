@@ -1,32 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/student.dart';
+import 'package:flutter_app/models/industry_partner.dart';
 import 'package:flutter_app/models/work_integrated_learning/internship.dart';
+import 'package:flutter_app/pages/employer_partners_account/work_integrated_learning/add_internship.dart';
+import 'package:flutter_app/pages/employer_partners_account/work_integrated_learning/internship_details_patner.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
-import 'package:flutter_app/pages/students_account/work_integrated_learning/internship_details_stud.dart';
 import 'package:flutter_app/services/internship_api_service.dart';
-import 'package:flutter_app/widgets/appbar/graduates_header.dart';
-import 'package:flutter_app/widgets/appbar/student_header.dart';
+import 'package:flutter_app/widgets/appbar/partner_header.dart';
+import 'package:flutter_app/widgets/drawer/drawer_partner.dart';
 import 'package:flutter_app/widgets/drawer/drawer_students.dart';
 import 'package:flutter_app/widgets/footer/footer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class InternshipDashboardStud extends StatefulWidget {
-  final StudentAccount studentAccount;
-  const InternshipDashboardStud({super.key, required this.studentAccount});
+class InternshipDashboardPartner extends StatefulWidget {
+  final IndustryPartnerAccount employerPartnerAccount;
+  const InternshipDashboardPartner(
+      {super.key, required this.employerPartnerAccount});
 
   @override
-  _InternshipDashboardStudState createState() =>
-      _InternshipDashboardStudState();
+  _InternshipDashboardPartnerState createState() =>
+      _InternshipDashboardPartnerState();
 }
 
-class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
+class _InternshipDashboardPartnerState
+    extends State<InternshipDashboardPartner> {
   late Future<List<InternshipWithPartner>> futureInternships;
   final TextEditingController _searchController = TextEditingController();
   List<InternshipWithPartner> _filteredInternships = [];
 
   @override
   void initState() {
+    debugPrint(
+        'Employer Partner ID: ${widget.employerPartnerAccount.partnerName}');
+    debugPrint('Employer Partner Location: ${widget.employerPartnerAccount.partnerLocation}\n');
     super.initState();
     futureInternships = InternshipApiService().fetchInternships();
     futureInternships.then((data) {
@@ -54,12 +60,12 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ListTile(
-                    leading: Icon(Icons.person),
+                    leading: const Icon(Icons.person),
                     title: Text(
-                      '${widget.studentAccount.firstName} ${widget.studentAccount.lastName}',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      widget.employerPartnerAccount.partnerName,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    subtitle: Text('Student | ${widget.studentAccount.course}'),
+                    subtitle: Text('Employer Partner'),
                   ),
                   const Divider(),
                   ListTile(
@@ -121,6 +127,15 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
     super.dispose();
   }
 
+  void _addInternship() async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AddInternship(onInternshipAdded: _refreshInternships, employerPartnerAccount: widget.employerPartnerAccount,),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -141,8 +156,7 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: AssetImage(
-                            'assets/images/seal_of_university_of_nueva_caceres_2.png'),
+                        image: AssetImage('assets/images/seal_of_university_of_nueva_caceres_2.png'),
                       ),
                     ),
                     child: const SizedBox(
@@ -204,6 +218,24 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
                               'assets/images/image_12.png'), // Add the path to your profile image
                           radius: 24,
                         ),
+                        // Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     children: [
+                        //       Text('Jennica Mae Ortiz',
+                        //           style: GoogleFonts.getFont(
+                        //             'Montserrat',
+                        //             fontWeight: FontWeight.bold,
+                        //             fontSize: 14,
+                        //             color: const Color(0xFF000000),
+                        //           )),
+                        //       Text('Graduate',
+                        //           style: GoogleFonts.getFont(
+                        //             'Montserrat',
+                        //             fontWeight: FontWeight.normal,
+                        //             fontSize: 12,
+                        //             color: const Color(0xFF000000),
+                        //           )),
+                        //     ]),
                         SizedBox(
                           width: 4,
                         ),
@@ -229,8 +261,8 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
         ),
         toolbarHeight: 92,
       ),
-      drawer: MyDrawerStudents(
-        studentAccount: widget.studentAccount,
+      drawer: MyDrawerPartner(
+        employerPartnerAccount: widget.employerPartnerAccount,
       ),
       body: Column(
         children: [
@@ -239,7 +271,7 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
             child: Material(
               elevation: 4.0,
               shadowColor: Colors.black.withOpacity(0.3),
-              child: const HeaderGraduate(),
+              child: const HeaderPartner(),
             ),
           ),
           Expanded(
@@ -247,7 +279,7 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
               child: Column(
                 children: [
                   Container(
-                    margin: const EdgeInsets.fromLTRB(16, 24, 16, 24),
+                    margin: const EdgeInsets.fromLTRB(16, 24, 16, 16),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
@@ -298,7 +330,7 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
                                 child: Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    'Available Opportunities',
+                                    'Manage Internship Opportunities',
                                     style: GoogleFonts.getFont(
                                       'Montserrat',
                                       fontWeight: FontWeight.w700,
@@ -321,14 +353,14 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                      margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                     child: Container(
                       decoration: BoxDecoration(
                         color: const Color(0xFF808080),
                         borderRadius: BorderRadius.circular(50),
                       ),
                       child: Container(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -352,7 +384,7 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
                                 ],
                               ),
                             ),
-
+                        
                             // Internships
                             Container(
                               decoration: BoxDecoration(
@@ -360,8 +392,7 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
                                 borderRadius: BorderRadius.circular(50),
                               ),
                               child: Container(
-                                padding:
-                                    const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                                padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -369,8 +400,7 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
                                     FutureBuilder<List<InternshipWithPartner>>(
                                       future: futureInternships,
                                       builder: (context, snapshot) {
-                                        if (snapshot.connectionState ==
-                                            ConnectionState.waiting) {
+                                        if (snapshot.connectionState == ConnectionState.waiting) {
                                           return const Center(
                                             child: CircularProgressIndicator(),
                                           );
@@ -390,20 +420,14 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
                                             ),
                                           );
                                         } else {
-                                          List<InternshipWithPartner> data =
-                                              _filteredInternships;
+                                          List<InternshipWithPartner> data = _filteredInternships;
                                           // Determine the number of columns based on screen width
                                           int crossAxisCount =
-                                              (MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      400)
-                                                  .floor();
+                                              (MediaQuery.of(context).size.width / 400).floor();
                                           // Return GridView
                                           return GridView.builder(
                                             shrinkWrap: true,
-                                            physics:
-                                                const NeverScrollableScrollPhysics(),
+                                            physics: const NeverScrollableScrollPhysics(),
                                             gridDelegate:
                                                 SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: crossAxisCount,
@@ -412,19 +436,15 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
                                               childAspectRatio: 2.5,
                                             ),
                                             itemCount: data.length,
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
+                                            itemBuilder: (BuildContext context, int index) {
                                               return Card(
                                                 elevation: 10.0,
                                                 shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          40.0),
+                                                  borderRadius: BorderRadius.circular(40.0),
                                                 ),
                                                 clipBehavior: Clip.antiAlias,
                                                 child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: <Widget>[
                                                     // Image.asset(
                                                     //   data[index].coverPhoto,
@@ -433,24 +453,16 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
                                                     //   fit: BoxFit.cover,
                                                     // ),
                                                     Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              16.0),
+                                                      padding: const EdgeInsets.all(16.0),
                                                       child: Column(
                                                         crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
+                                                            CrossAxisAlignment.start,
                                                         children: [
-                                                          Text(
-                                                              data[index]
-                                                                  .internshipTitle,
+                                                          Text(data[index].internshipTitle,
                                                               style: TextStyle(
                                                                   fontSize: 20,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold)),
-                                                          const SizedBox(
-                                                              height: 4),
+                                                                  fontWeight: FontWeight.bold)),
+                                                          const SizedBox(height: 4),
                                                           // Text(data[index].salary,
                                                           //     style: const TextStyle(
                                                           //       fontSize: 16,
@@ -467,35 +479,25 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
                                                     ),
                                                     const Spacer(),
                                                     Align(
-                                                      alignment:
-                                                          Alignment.bottomRight,
+                                                      alignment: Alignment.bottomRight,
                                                       child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(16.0),
-                                                        child:
-                                                            ElevatedButton.icon(
-                                                          icon: const Icon(Icons
-                                                              .arrow_forward),
+                                                        padding: const EdgeInsets.all(16.0),
+                                                        child: ElevatedButton.icon(
+                                                          icon: const Icon(Icons.arrow_forward),
                                                           onPressed: () {
                                                             Navigator.push(
                                                               context,
                                                               MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        InternshipDetailsStud(
-                                                                  internship:
-                                                                      data[
-                                                                          index],
-                                                                  studentAccount:
-                                                                      widget
-                                                                          .studentAccount,
+                                                                builder: (context) =>
+                                                                    InternshipDetailsPartner(
+                                                                  internship: data[index],
+                                                                  employerPartnerAccount: widget
+                                                                      .employerPartnerAccount,
                                                                 ),
                                                               ),
                                                             );
                                                           },
-                                                          label: const Text(
-                                                              'View More'),
+                                                          label: const Text('View More'),
                                                         ),
                                                       ),
                                                     ),
@@ -522,6 +524,13 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => _addInternship(),
+        icon: const Icon(Icons.add),
+        label: const Text("Add Internship",
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontFamily: 'Montserrat')),
       ),
     );
   }

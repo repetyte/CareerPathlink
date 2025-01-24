@@ -1,4 +1,4 @@
-class Student {
+class Student1 {
   final String studentNo;
   final String name;
   final String department;
@@ -9,7 +9,7 @@ class Student {
   final String email;
   late final String password;
 
-  Student({
+  Student1({
     required this.studentNo,
     required this.name,
     required this.department,
@@ -21,8 +21,8 @@ class Student {
     required this.password,
   });
 
-  factory Student.fromJson(Map<String, dynamic> json) {
-    return Student(
+  factory Student1.fromJson(Map<String, dynamic> json) {
+    return Student1(
       studentNo: json['student_no'],
       name: json['name'],
       department: json['department'],

@@ -2,12 +2,14 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/student.dart';
 import 'package:flutter_app/models/work_integrated_learning/internship.dart';
 
 class InternshipApplicationScreen extends StatefulWidget {
+  final StudentAccount studentAccount;
   final InternshipWithPartner internshipWithPartner;
 
-  const InternshipApplicationScreen({super.key, required this.internshipWithPartner});
+  const InternshipApplicationScreen({super.key, required this.internshipWithPartner, required this.studentAccount});
 
   @override
   _InternshipApplicationScreenState createState() => _InternshipApplicationScreenState();
@@ -63,7 +65,7 @@ class _InternshipApplicationScreenState extends State<InternshipApplicationScree
   void _submitApplication() {
     // TODO: Implement the submission logic
     if (kDebugMode) {
-      print('Application submitted');
+      debugPrint('Application submitted');
     }
   }
 

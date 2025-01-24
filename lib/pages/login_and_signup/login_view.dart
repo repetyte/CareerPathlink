@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/pages/employer_partners_account/partner_home_screen.dart';
 import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_job_dashboard_emp_partners.dart';
+import 'package:flutter_app/pages/graduates_account/graduate_home_screen.dart';
 import 'package:flutter_app/pages/graduates_account/recruitment_and_placement/rr_job_dashboard_graduates.dart';
 import 'package:flutter_app/pages/login_and_signup/signUp_view.dart';
+import 'package:flutter_app/pages/students_account/student_home_screen.dart';
+import 'package:flutter_app/pages/students_account/work_integrated_learning/internship_dashboard_stud.dart';
 import 'package:flutter_app/services/user_api_service.dart';
 
 import 'package:get/get.dart';
@@ -47,7 +51,8 @@ class _LoginViewState extends State<LoginView> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => RrJobDashboardUser(graduateAccount: graduateAccount),
+                builder: (context) =>
+                    HomeScreenGraduate(graduateAccount: graduateAccount),
               ),
             );
           } else {
@@ -63,13 +68,48 @@ class _LoginViewState extends State<LoginView> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => RrJobDashboardEmpPartners(employerPartnerAccount: employerPartnerAccount),
+                builder: (context) => HomeScreenPartner(
+                    employerPartnerAccount: employerPartnerAccount),
               ),
             );
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                   content: Text('Invalid Employer Partner credentials.')),
+            );
+          }
+        } else if (userType == 'Student') {
+          final studentAccount =
+              await userApiService.fetchStudentAccount(username, password);
+          if (studentAccount != null) {
+            // Navigate to Student Dashboard with student account details
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    HomeScreenStudent(studentAccount: studentAccount),
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Invalid Student credentials.')),
+            );
+          }
+        } else if (userType == 'Career Center Director') {
+          final directorAccount =
+              await userApiService.fetchDirectorAccount(username, password);
+          if (directorAccount != null) {
+            // Navigate to Career Center Director Dashboard with director account details
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) =>
+            //         RrJobDashboardUser(directorAccount: directorAccount),
+            //   ),
+            // );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Invalid Director credentials.')),
             );
           }
         } else {
@@ -278,7 +318,7 @@ class _LoginViewState extends State<LoginView> {
           Padding(
             padding: const EdgeInsets.only(left: 16.0),
             child: Text(
-              'Welcome Back Catchy',
+              'Welcome Back UNCean',
               style: kLoginSubtitleStyle(size),
             ),
           ),
@@ -355,6 +395,7 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                     items: [
+                      'Student',
                       'Graduate',
                       'Employer Partner',
                     ]

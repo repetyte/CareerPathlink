@@ -2,12 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_app/models/student.dart';
 import 'package:flutter_app/pages/students_account/career_coaching/calendar.dart';
 import 'dart:convert';
-import 'home_screen.dart'; // Ensure to import your HomeScreen here
+import '../student_home_screen.dart'; // Ensure to import your HomeScreenStudent here
 
 class UploadCVScreen extends StatefulWidget {
-  const UploadCVScreen({super.key});
+  final StudentAccount studentAccount;
+  const UploadCVScreen({super.key, required this.studentAccount});
 
   @override
   _UploadCVScreenState createState() => _UploadCVScreenState();
@@ -40,7 +42,7 @@ class _UploadCVScreenState extends State<UploadCVScreen> {
         );
       }
     } catch (e) {
-      print("Error picking file: $e");
+      debugPrint("Error picking file: $e");
     }
   }
 
@@ -55,12 +57,12 @@ class _UploadCVScreenState extends State<UploadCVScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('CV uploaded successfully!')),
         );
-        // Navigate to HomeScreen after successful upload
+        // Navigate to HomeScreenStudent after successful upload
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  const HomeScreen()), // Navigate to HomeScreen
+                  HomeScreenStudent(studentAccount: widget.studentAccount,)), // Navigate to HomeScreenStudent
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

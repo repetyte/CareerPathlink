@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/student.dart';
+import 'package:flutter_app/pages/students_account/career_coaching/appointment_booking.dart';
+import 'package:flutter_app/pages/students_account/student_home_screen.dart';
+import 'package:flutter_app/pages/students_account/work_integrated_learning/internship_dashboard_stud.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyDrawerStudents extends StatelessWidget {
-  const MyDrawerStudents({super.key});
+  final StudentAccount studentAccount;
+  const MyDrawerStudents({super.key, required this.studentAccount});
 
   navigateTo(String route, BuildContext context) {
     Navigator.of(context).pushReplacementNamed(route);
@@ -79,6 +84,14 @@ class MyDrawerStudents extends StatelessWidget {
             title: const Text('Home'),
             onTap: () {
               // navigateTo("/rr_job_dashboard", context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeScreenStudent(
+                    studentAccount: studentAccount,
+                  ),
+                ),
+              );
             },
           ),
           ListTile(
@@ -90,8 +103,14 @@ class MyDrawerStudents extends StatelessWidget {
               ),
             ),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AppointmentBookingScreen(
+                    studentAccount: studentAccount,
+                  ), // Navigate to AppointmentBookingScreen
+                ),
+              );
             },
           ),
           ListTile(
@@ -103,8 +122,14 @@ class MyDrawerStudents extends StatelessWidget {
               ),
             ),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => InternshipDashboardStud(
+                    studentAccount: studentAccount,
+                  ),
+                ),
+              );
             },
           ),
         ],

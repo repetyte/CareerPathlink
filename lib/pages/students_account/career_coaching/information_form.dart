@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/student.dart';
 import 'package:flutter_app/pages/students_account/career_coaching/calendar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'booking_confirmation.dart';
-import 'footer.dart';
+import '../../../widgets/footer/footer.dart';
 import '../../../widgets/appbar/student_header.dart';
-import 'home_screen.dart';
+import '../student_home_screen.dart';
 import 'package:flutter/services.dart';
 
 class StudentInformationScreen extends StatefulWidget {
+  final StudentAccount studentAccount;
   final String coach;
   final String dateTime;
 
-  const StudentInformationScreen({super.key, required this.coach, required this.dateTime});
+  const StudentInformationScreen({super.key, required this.coach, required this.dateTime, required this.studentAccount});
 
   @override
   _StudentInformationScreenState createState() =>
@@ -39,9 +41,11 @@ class _StudentInformationScreenState extends State<StudentInformationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Fill out your Information'),   
+      ),
       body: Column(
-        children: [
-          HeaderWidget(), // Header stays fixed at the top
+        children: [// Header stays fixed at the top
 
           // Divider with shadow below the header
           Container(
@@ -276,7 +280,7 @@ class _StudentInformationScreenState extends State<StudentInformationScreen> {
                                                   },
                                                   child: Text("No"),
                                                 ),
-                                                // Yes Button - Navigate to HomeScreen
+                                                // Yes Button - Navigate to HomeScreenStudent
                                                 TextButton(
                                                   onPressed: () {
                                                     Navigator.pop(
@@ -285,7 +289,7 @@ class _StudentInformationScreenState extends State<StudentInformationScreen> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              HomeScreen()), // Navigate to HomeScreen
+                                                              HomeScreenStudent(studentAccount: widget.studentAccount,)), // Navigate to HomeScreenStudent
                                                     );
                                                   },
                                                   child: Text("Yes"),
@@ -337,7 +341,6 @@ class _StudentInformationScreenState extends State<StudentInformationScreen> {
                         ),
                       ],
                     ),
-                    const Footer(),
                   ],
                 ),
               ),
@@ -596,7 +599,7 @@ class _StudentInformationScreenState extends State<StudentInformationScreen> {
         MaterialPageRoute(
           builder: (context) => BookingConfirmationScreen(
             coach: widget.coach,
-            dateTime: widget.dateTime,
+            dateTime: widget.dateTime, studentAccount: widget.studentAccount,
           ),
         ),
       );

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/career_center_director_account/career_coaching/cc_home_screen.dart';
-import 'package:flutter_app/pages/coach_account/career_coaching/coach_screen.dart';
-import 'package:flutter_app/pages/students_account/career_coaching/student_profile_screen.dart';
+import 'package:flutter_app/models/student.dart';
+import 'package:flutter_app/pages/students_account/student_home_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';
 
-class HeaderStudent extends StatelessWidget {
-  const HeaderStudent({super.key});
+class HeaderDeanCoach extends StatelessWidget {
+  const HeaderDeanCoach({super.key,});
 
   // Function to launch Google Maps
   Future<void> _launchGoogleMaps() async {
@@ -41,8 +40,8 @@ class HeaderStudent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        
         // Padding(
         //   padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
         //   child: Row(
@@ -51,54 +50,60 @@ class HeaderStudent extends StatelessWidget {
         //       Expanded(
         //         child: Row(
         //           children: [
-        //             Container(
-        //               width: 48,
-        //               height: 48,
-        //               decoration: BoxDecoration(
-        //                 image: DecorationImage(
-        //                   fit: BoxFit.cover,
-        //                   image: AssetImage('assets/career_coaching/logo.png'),
-        //                 ),
-        //               ),
-        //             ),
-        //             SizedBox(width: 8),
         //             Expanded(
-        //               child: Column(
-        //                 crossAxisAlignment: CrossAxisAlignment.start,
+        //               child: Row(
         //                 children: [
-        //                   Text(
-        //                     'UNC',
-        //                     style: GoogleFonts.montserrat(
-        //                       fontWeight: FontWeight.w700,
-        //                       fontSize: 16,
-        //                       color: Colors.black,
+        //                   Container(
+        //                     width: 48,
+        //                     height: 48,
+        //                     decoration: BoxDecoration(
+        //                       image: DecorationImage(
+        //                         fit: BoxFit.cover,
+        //                         image: AssetImage('assets/career_coaching/logo.png'),
+        //                       ),
         //                     ),
         //                   ),
-        //                   Row(
-        //                     children: [
-        //                       Text(
-        //                         'Career',
-        //                         style: GoogleFonts.montserrat(
-        //                           fontWeight: FontWeight.w700,
-        //                           fontSize: 14,
-        //                           color: const Color.fromARGB(
-        //                             255,
-        //                             114,
-        //                             114,
-        //                             114,
-        //                           ), // Gray color
+        //                   SizedBox(width: 8),
+        //                   Expanded(
+        //                     child: Column(
+        //                       crossAxisAlignment: CrossAxisAlignment.start,
+        //                       children: [
+        //                         Text(
+        //                           'UNC',
+        //                           style: GoogleFonts.montserrat(
+        //                             fontWeight: FontWeight.w700,
+        //                             fontSize: 16,
+        //                             color: Colors.black,
+        //                           ),
         //                         ),
-        //                       ),
-        //                       SizedBox(width: 0),
-        //                       Text(
-        //                         'Pathlink',
-        //                         style: GoogleFonts.montserrat(
-        //                           fontWeight: FontWeight.w700,
-        //                           fontSize: 14,
-        //                           color: Color(0xFFEC1D25), // Red color
+        //                         Row(
+        //                           children: [
+        //                             Text(
+        //                               'Career',
+        //                               style: GoogleFonts.montserrat(
+        //                                 fontWeight: FontWeight.w700,
+        //                                 fontSize: 14,
+        //                                 color: const Color.fromARGB(
+        //                                   255,
+        //                                   114,
+        //                                   114,
+        //                                   114,
+        //                                 ), // Gray color
+        //                               ),
+        //                             ),
+        //                             SizedBox(width: 0),
+        //                             Text(
+        //                               'Pathlink',
+        //                               style: GoogleFonts.montserrat(
+        //                                 fontWeight: FontWeight.w700,
+        //                                 fontSize: 14,
+        //                                 color: Color(0xFFEC1D25), // Red color
+        //                               ),
+        //                             ),
+        //                           ],
         //                         ),
-        //                       ),
-        //                     ],
+        //                       ],
+        //                     ),
         //                   ),
         //                 ],
         //               ),
@@ -143,44 +148,21 @@ class HeaderStudent extends StatelessWidget {
         //               ),
         //             ),
         //             onSelected: (value) {
-        //               // Navigate to the StudentProfileScreen if "Profile" is selected
+        //               // Navigate to CareerCenter if "Switch account" is selected
         //               if (value == 1) {
         //                 Navigator.push(
         //                   context,
-        //                   MaterialPageRoute(
-        //                     builder: (context) => StudentProfileScreen(),
-        //                   ),
-        //                 );
-        //               }
-        //               // Navigate to CareerCenter if "Switch account" is selected
-        //               else if (value == 2) {
-        //                 Navigator.push(
-        //                   context,
-        //                   MaterialPageRoute(
-        //                     builder: (context) => CC_HomeScreen(),
-        //                   ),
-        //                 );
-        //               }
-        //               // Navigate to CoachScreen if "Coach Screen" is selected
-        //               else if (value == 3) {
-        //                 Navigator.push(
-        //                   context,
-        //                   MaterialPageRoute(
-        //                     builder: (context) => CoachScreen(
-        //                         screenWidth: MediaQuery.of(context).size.width),
-        //                   ),
+        //                   MaterialPageRoute(builder: (context) => HomeScreenStudent(studentAccount: studentAccount,)),
         //                 );
         //               }
         //               // Handle other selections here (e.g., Logout)
         //             },
         //             itemBuilder: (context) => [
-        //               PopupMenuItem(value: 1, child: Text("Profile")),
         //               PopupMenuItem(
-        //                 value: 2,
-        //                 child: Text("Career Center Screen"),
+        //                 value: 1,
+        //                 child: Text("Switch account"),
         //               ),
-        //               PopupMenuItem(value: 3, child: Text("Coach Screen")),
-        //               PopupMenuItem(value: 4, child: Text("Logout")),
+        //               PopupMenuItem(value: 2, child: Text("Logout")),
         //             ],
         //           ),
         //         ],
@@ -188,7 +170,7 @@ class HeaderStudent extends StatelessWidget {
         //     ],
         //   ),
         // ),
-
+        
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
           child: SingleChildScrollView(

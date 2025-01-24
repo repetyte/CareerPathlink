@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../widgets/appbar/cc_coach_header.dart';
+import '../../../widgets/appbar/dean_coach_header.dart';
 import 'department.dart';
 import 'student_insight.dart';
 import 'year_level.dart';
-import '../../students_account/career_coaching/footer.dart';
+import '../../../widgets/footer/footer.dart';
 import 'service.dart'; // Import your service widget
 
 class CC_HomeScreen extends StatefulWidget {
@@ -178,7 +178,7 @@ class _CC_HomeScreenState extends State<CC_HomeScreen> {
             child: Material(
               elevation: 4.0,
               color: Colors.white,
-              child: const Header(),
+              // child: const HeaderCoach(),
             ),
           ),
         ],

@@ -1,29 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/graduate.dart';
-import 'package:flutter_app/models/recruitment_and_placement/job_posting.dart';
-import 'package:flutter_app/pages/graduates_account/recruitment_and_placement/rr_job_application.dart';
-import 'package:flutter_app/services/job_posting_api_service.dart';
+import 'package:flutter_app/models/industry_partner.dart';
+import 'package:flutter_app/models/work_integrated_learning/internship.dart';
+import 'package:flutter_app/services/internship_api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class RrJobDetailsGraduates extends StatefulWidget {
-  final JobPostingWithPartner jobPostingWithPartner;
-  final GraduateAccount graduateAccount;
+class InternshipDetailsPartner extends StatefulWidget {
+  final InternshipWithPartner internship;
+  final IndustryPartnerAccount employerPartnerAccount;
 
-  const RrJobDetailsGraduates({super.key, required this.jobPostingWithPartner, required this.graduateAccount});
+  const InternshipDetailsPartner({super.key, required this.internship, required this.employerPartnerAccount});
 
   @override
-  _RrJobDetailsGraduatesState createState() => _RrJobDetailsGraduatesState();
+  _InternshipDetailsPartnerState createState() => _InternshipDetailsPartnerState();
 }
 
-class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
-  // String? industryPartnerName;
-  // late final JobPostingWithPartner jobPostingWithPartner;
-  final JobPostingApiService jobPostingApiService = JobPostingApiService();
+class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
+  final InternshipApiService internshipApiService = InternshipApiService();
 
   @override
   void initState() {
-    debugPrint('Graduatesssss ID: ${widget.graduateAccount.graduateId}');
-    debugPrint('Department: ${widget.graduateAccount.department}');
+    debugPrint(
+        'Employer Partner ID: ${widget.employerPartnerAccount.partnerName}');
+    debugPrint('Employer Partner Location: ${widget.employerPartnerAccount.partnerLocation}\n');
     super.initState();
   }
 
@@ -54,7 +52,7 @@ class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
                         image: DecorationImage(
                           fit: BoxFit.cover,
                           image: AssetImage(
-                            widget.jobPostingWithPartner.coverPhoto,
+                            widget.internship.displayPhoto,
                           ),
                         ),
                         borderRadius: const BorderRadius.only(
@@ -100,7 +98,7 @@ class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            widget.jobPostingWithPartner.jobTitle,
+                                            widget.internship.internshipTitle,
                                             style: GoogleFonts.getFont(
                                               'Montserrat',
                                               fontWeight: FontWeight.w700,
@@ -109,25 +107,10 @@ class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
                                             ),
                                           ),
                                         ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: const Color(0xFFFFFFFF),
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                          child: Container(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                20, 10, 20, 10),
-                                            child: Text(
-                                              widget.jobPostingWithPartner.status,
-                                              style: GoogleFonts.getFont(
-                                                'Montserrat',
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 14,
-                                                color: const Color(0xFF008000),
-                                              ),
-                                            ),
-                                          ),
+                                        ElevatedButton(
+                                          onPressed: () {// Call the API to apply for the internship
+                                          },
+                                          child: const Text('Internship Applications'),
                                         ),
                                       ],
                                     ),
@@ -136,11 +119,11 @@ class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
                                 Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    widget.jobPostingWithPartner.fieldIndustry,
+                                    widget.internship.hours,
                                     style: GoogleFonts.getFont(
                                       'Montserrat',
                                       fontWeight: FontWeight.w400,
-                                      fontSize: 14,
+                                      // fontSize: 14,
                                       color: const Color(0xFFFFFFFF),
                                     ),
                                   ),
@@ -157,96 +140,88 @@ class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        const Text('Job Level: ',
+                        const Text('TakeHome Pay: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.jobLevel,
+                        Text(widget.internship.takehomePay,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
-                        const Text('Min. Years of Experience Needed: ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.yrsOfExperienceNeeded,
-                            style: const TextStyle(fontSize: 16)),
-                        const SizedBox(height: 24),
-                        const Text('Contractual Status: ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.contractualStatus,
-                            style: const TextStyle(fontSize: 16)),
-                        const SizedBox(height: 24),
-                        const Text('Salary Range: ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.salary,
-                            style: const TextStyle(fontSize: 16)),
-                        const SizedBox(height: 24),
+
                         const Text('Location: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.jobLocation,
+                        Text(widget.internship.location,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
-                        const Text('Job Description: ',
+
+                        const Text('Required Skills: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.jobDescription,
+                        Text(widget.internship.requiredSkills,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
-                        const Text('Requirements: ',
+
+                        const Text('Qualifications: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.requirements,
+                        Text(widget.internship.qualifications,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
-                        const Text('Job Responsibilities: ',
+
+                        const Text('Description: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.jobResponsibilities,
+                        Text(widget.internship.description,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
+
                         const Text('About Employer: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.partnerName.toString(),
+                        Text(widget.internship.partnerName.toString(),
                             style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold
                             )),
                             const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.partnerLocation.toString(),
+                        Text(widget.internship.partnerLocation.toString(),
                             style: const TextStyle(
                               fontSize: 16,
                             )),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 24),
                       ],
                     ),
                   ),
                   Container(
                     margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                     child: Align(
-                      alignment: Alignment.topRight,
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => JobApplicationScreen(
-                                  jobPostingWithPartner: widget
-                                      .jobPostingWithPartner, graduateAccount: widget.graduateAccount,), // Fixed the error here
-                            ),
-                          );
-                        },
-                        icon: const Icon(Icons.send),
-                        label: const Text('Submit Application'),
+                      alignment: Alignment.bottomRight,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton.icon(
+                            onPressed: () 
+                            {},
+                            // => _deleteJobPosting(
+                            //     widget.jobPostingWithPartner.jobId),
+                            icon: const Icon(Icons.delete),
+                            label: const Text('Delete Job'),
+                          ),
+                          const SizedBox(width: 8),
+                          ElevatedButton.icon(
+                            onPressed: () 
+                            {},
+                            // =>
+                            //     _updateJobPosting(widget.jobPostingWithPartner),
+                            icon: const Icon(Icons.update),
+                            label: const Text('Update Job'),
+                          ),
+                        ],
                       ),
                     ),
                   ),

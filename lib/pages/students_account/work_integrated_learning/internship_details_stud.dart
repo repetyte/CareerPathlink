@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/student.dart';
 import 'package:flutter_app/models/work_integrated_learning/internship.dart';
 import 'package:flutter_app/pages/students_account/work_integrated_learning/internship_application.dart';
 import 'package:flutter_app/services/internship_api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class InternshipDetailsStud extends StatefulWidget {
+  final StudentAccount studentAccount;
   final InternshipWithPartner internship;
 
-  const InternshipDetailsStud({super.key, required this.internship});
+  const InternshipDetailsStud({super.key, required this.internship, required this.studentAccount});
 
   @override
   _InternshipDetailsStudState createState() => _InternshipDetailsStudState();
@@ -109,16 +111,13 @@ class _InternshipDetailsStudState extends State<InternshipDetailsStud> {
                                 ),
                                 Align(
                                   alignment: Alignment.topLeft,
-                                  child: Container(
-                                    padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                                    child: Text(
-                                      widget.internship.description,
-                                      style: GoogleFonts.getFont(
-                                        'Montserrat',
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 14,
-                                        color: const Color(0xFFFFFFFF),
-                                      ),
+                                  child: Text(
+                                    widget.internship.hours,
+                                    style: GoogleFonts.getFont(
+                                      'Montserrat',
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14,
+                                      color: const Color(0xFFFFFFFF),
                                     ),
                                   ),
                                 ),
@@ -134,58 +133,59 @@ class _InternshipDetailsStudState extends State<InternshipDetailsStud> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
+                        const Text('TakeHome Pay: ',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 4),
+                        Text(widget.internship.takehomePay,
+                            style: const TextStyle(fontSize: 16)),
+                        const SizedBox(height: 24),
+
+                        const Text('Location: ',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 4),
+                        Text(widget.internship.location,
+                            style: const TextStyle(fontSize: 16)),
+                        const SizedBox(height: 24),
+
                         const Text('Required Skills: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Container(
-                          padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                          child: Text(widget.internship.requiredSkils,
-                              style: const TextStyle(fontSize: 16)),
-                        ),
+                        Text(widget.internship.requiredSkills,
+                            style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
 
                         const Text('Qualifications: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Container(
-                          padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                          child: Text(widget.internship.qualifications,
-                              style: const TextStyle(fontSize: 16)),
-                        ),
+                        Text(widget.internship.qualifications,
+                            style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
 
-                        const Text('Additional Skils: ',
+                        const Text('Description: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Container(
-                          padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                          child: Text(widget.internship.additionalSkills,
-                              style: const TextStyle(fontSize: 16)),
-                        ),
+                        Text(widget.internship.description,
+                            style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
 
                         const Text('About Employer: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Container(
-                          padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                          child: Text(widget.internship.partnerName.toString(),
-                              style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold
-                              )),
-                        ),
+                        Text(widget.internship.partnerName.toString(),
+                            style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold
+                            )),
                             const SizedBox(height: 4),
-                        Container(
-                          padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                          child: Text(widget.internship.partnerLocation.toString(),
-                              style: const TextStyle(
-                                fontSize: 16,
-                              )),
-                        ),
+                        Text(widget.internship.partnerLocation.toString(),
+                            style: const TextStyle(
+                              fontSize: 16,
+                            )),
                         const SizedBox(height: 24),
                       ],
                     ),
@@ -201,7 +201,7 @@ class _InternshipDetailsStudState extends State<InternshipDetailsStud> {
                             MaterialPageRoute(
                               builder: (context) => InternshipApplicationScreen(
                                   internshipWithPartner: widget
-                                      .internship), // Fixed the error here
+                                      .internship, studentAccount: widget.studentAccount,), // Fixed the error here
                             ),
                           );
                         },

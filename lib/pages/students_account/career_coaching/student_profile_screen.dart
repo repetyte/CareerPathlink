@@ -20,7 +20,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
   // Personal Information variables
   bool _isLoadingStudent = true;
   final bool _isEditing = false;
-  Student? _student;
+  Student1? _student;
 
   // Variables for sessions
   List<Map<String, dynamic>> _upcomingSessions = [];
@@ -50,10 +50,10 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
           _profileImage = File(pickedFile.path);
         });
       } else {
-        print('No image selected.');
+        debugPrint('No image selected.');
       }
     } catch (e) {
-      print('Error picking image: $e');
+      debugPrint('Error picking image: $e');
     }
   }
 
@@ -73,7 +73,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
         _emailController.text = student.email;
       });
     } catch (e) {
-      print('Error loading student profile: $e');
+      debugPrint('Error loading student profile: $e');
       setState(() {
         _isLoadingStudent = false;
       });
@@ -92,7 +92,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
         _isLoadingSessions = false;
       });
     } catch (e) {
-      print('Error loading sessions: $e');
+      debugPrint('Error loading sessions: $e');
       setState(() {
         _isLoadingSessions = false;
       });
@@ -342,7 +342,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                     GestureDetector(
                       onTap: () {
                         // Add your logic for changing the password
-                        print('Change Password tapped');
+                        debugPrint('Change Password tapped');
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(left: 8.0),
@@ -581,7 +581,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
 
   // Method to handle updating the student profile
   void _updateStudentProfile() async {
-    final updatedStudent = Student(
+    final updatedStudent = Student1(
       studentNo: _student?.studentNo ??
           '', // Ensure you get the current student number
       name: _nameController.text,

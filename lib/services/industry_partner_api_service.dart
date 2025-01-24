@@ -18,14 +18,14 @@ class IndustryPartnerApiService {
 
     //   if (response.statusCode != 201) {
     //     if (kDebugMode) {
-    //       print('Response status: ${response.statusCode}');
-    //       print('Response body: ${response.body}');
+    //       debugPrint('Response status: ${response.statusCode}');
+    //       debugPrint('Response body: ${response.body}');
     //     }
     //     throw Exception('Failed to create Job Posting.');
     //   }
     // } catch (e) {
     //   if (kDebugMode) {
-    //     print('Exception: $e');
+    //     debugPrint('Exception: $e');
     //   }
     //   throw Exception('Failed to connect to the server');
     // }
@@ -58,14 +58,14 @@ class IndustryPartnerApiService {
 
     //   if (response.statusCode != 200) {
     //     if (kDebugMode) {
-    //       print('Response status: ${response.statusCode}');
-    //       print('Response body: ${response.body}');
+    //       debugPrint('Response status: ${response.statusCode}');
+    //       debugPrint('Response body: ${response.body}');
     //     }
     //     throw Exception('Failed to update Job Posting.');
     //   }
     // } catch (e) {
     //   if (kDebugMode) {
-    //     print('Exception: $e');
+    //     debugPrint('Exception: $e');
     //   }
     //   throw Exception('Failed to connect to the server');
     // }

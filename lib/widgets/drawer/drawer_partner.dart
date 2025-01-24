@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/industry_partner.dart';
+import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_job_dashboard_emp_partners.dart';
+import 'package:flutter_app/pages/employer_partners_account/work_integrated_learning/internship_dashboard_partner.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyDrawerPartner extends StatelessWidget {
-  const MyDrawerPartner({super.key});
+  final IndustryPartnerAccount employerPartnerAccount;
+
+  const MyDrawerPartner({super.key, required this.employerPartnerAccount});
 
   navigateTo(String route, BuildContext context) {
     Navigator.of(context).pushReplacementNamed(route);
@@ -88,7 +93,12 @@ class MyDrawerPartner extends StatelessWidget {
               style: TextStyle(),
             ),
             onTap: () {
-              navigateTo("/recruitment_and_placement", context);
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RrJobDashboardEmpPartners(employerPartnerAccount: employerPartnerAccount,),
+              ),
+            );
             },
           ),
           ListTile(
@@ -100,8 +110,12 @@ class MyDrawerPartner extends StatelessWidget {
               ),
             ),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InternshipDashboardPartner(employerPartnerAccount: employerPartnerAccount,),
+              ),
+            );
             },
           ),
         ],

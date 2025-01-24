@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:flutter_app/models/career_coaching/coach_model.dart';
 import 'package:flutter_app/models/career_coaching/in_process_appointment_model.dart';
 import 'package:flutter_app/models/career_coaching/pending_model.dart';
@@ -44,33 +45,33 @@ class ApiService {
       // Send request
       var response = await request.send();
 
-      print(
+      debugPrint(
           "Response status: ${response.statusCode}"); // Debug log for status code
 
       if (response.statusCode == 200) {
         var responseData = await response.stream.bytesToString();
-        print("Response data: $responseData"); // Debug log for response
+        debugPrint("Response data: $responseData"); // Debug log for response
 
         try {
           var json = jsonDecode(responseData);
           if (json['success'] == true) {
-            print("Upload successful: ${json['uploaded_at']}"); // Debugging log
+            debugPrint("Upload successful: ${json['uploaded_at']}"); // Debugging log
             return true;
           } else {
-            print("Upload failed: ${json['message']}"); // Debugging log
+            debugPrint("Upload failed: ${json['message']}"); // Debugging log
             return false;
           }
         } catch (e) {
-          print('Error parsing JSON: $e');
-          print('Response data: $responseData'); // Debugging log
+          debugPrint('Error parsing JSON: $e');
+          debugPrint('Response data: $responseData'); // Debugging log
           return false;
         }
       } else {
-        print('Server returned status code: ${response.statusCode}');
+        debugPrint('Server returned status code: ${response.statusCode}');
         return false;
       }
     } catch (e) {
-      print('Error: $e');
+      debugPrint('Error: $e');
       return false;
     }
   }
@@ -84,7 +85,7 @@ class ApiService {
       );
 
       if (response.statusCode == 200) {
-        print('Response: ${response.body}'); // Debugging the API response
+        debugPrint('Response: ${response.body}'); // Debugging the API response
         List<dynamic> data = jsonDecode(response.body);
         return data.map((json) => Slot.fromJson(json)).toList();
       } else {
@@ -105,23 +106,23 @@ class ApiService {
     );
 
     // Debugging: Print the raw response
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    debugPrint('Response status: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
 
       if (data['status'] == 'success') {
         final appointmentId = data['appointment_id']; // Get the ID
-        print("Appointment added successfully with ID: $appointmentId");
+        debugPrint("Appointment added successfully with ID: $appointmentId");
 
         // Optionally, you can return the ID for further use in your app
       } else {
-        print("Error: ${data['message']}");
+        debugPrint("Error: ${data['message']}");
         throw Exception('Failed to add appointment: ${data['message']}');
       }
     } else {
-      print("Error: ${response.statusCode} - ${response.body}");
+      debugPrint("Error: ${response.statusCode} - ${response.body}");
       throw Exception('Failed to add appointment');
     }
   }
@@ -132,7 +133,7 @@ class ApiService {
         await http.get(Uri.parse('$baseUrl/get_upcoming_sessions.php'));
 
     if (response.statusCode == 200) {
-      print(
+      debugPrint(
           'Upcoming Sessions Response: ${response.body}'); // Print the response body for debugging
       var decodedResponse = jsonDecode(response.body);
       if (decodedResponse is Map && decodedResponse.containsKey('data')) {
@@ -152,7 +153,7 @@ class ApiService {
         await http.get(Uri.parse('$baseUrl/get_past_sessions.php'));
 
     if (response.statusCode == 200) {
-      print(
+      debugPrint(
           'Past Sessions Response: ${response.body}'); // Print the response body for debugging
       var decodedResponse = jsonDecode(response.body);
       if (decodedResponse is Map && decodedResponse.containsKey('data')) {
@@ -216,7 +217,7 @@ class ApiService {
             'Failed to load gender distribution. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching gender distribution: $e');
+      debugPrint('Error fetching gender distribution: $e');
       throw Exception('Error fetching gender distribution: $e');
     }
   }
@@ -228,7 +229,7 @@ class ApiService {
           Uri.parse('http://localhost/UNC-CareerPathlink/api/career_coaching/read_year_levels.php'));
 
       if (response.statusCode == 200) {
-        print('Year Levels Response: ${response.body}'); // Debugging log
+        debugPrint('Year Levels Response: ${response.body}'); // Debugging log
         var decodedResponse = jsonDecode(response.body);
 
         // Check if the response contains data
@@ -243,7 +244,7 @@ class ApiService {
             'Failed to load year level insights. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching year level insights: $e');
+      debugPrint('Error fetching year level insights: $e');
       throw Exception('Error fetching year level insights: $e');
     }
   }
@@ -289,7 +290,7 @@ class ApiService {
             'Failed to load department data. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching department data: $e');
+      debugPrint('Error fetching department data: $e');
       throw Exception('Error fetching department data: $e');
     }
   }
@@ -302,8 +303,8 @@ class ApiService {
             'http://localhost/UNC-CareerPathlink/api/career_coaching/read_pending.php'), // Make sure this URL is correct
       );
 
-      print('Response Status: ${response.statusCode}');
-      print('Response Body: ${response.body}');
+      debugPrint('Response Status: ${response.statusCode}');
+      debugPrint('Response Body: ${response.body}');
 
       if (response.statusCode == 200) {
         var decodedResponse = jsonDecode(response.body);
@@ -322,7 +323,7 @@ class ApiService {
             'Failed to load pending appointments. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching pending appointments: $e');
+      debugPrint('Error fetching pending appointments: $e');
       throw Exception('Error fetching pending appointments: $e');
     }
   }
@@ -350,7 +351,7 @@ class ApiService {
             'Failed to load in-process appointments. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching in-process appointments: $e');
+      debugPrint('Error fetching in-process appointments: $e');
       throw Exception('Error fetching in-process appointments: $e');
     }
   }
@@ -369,7 +370,7 @@ class ApiService {
         throw Exception(decodedResponse['message'] ?? 'Unknown error');
       }
     } catch (e) {
-      print('Error updating status: $e');
+      debugPrint('Error updating status: $e');
       return false;
     }
   }
@@ -395,7 +396,7 @@ class ApiService {
             'Failed to load completed appointments. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching completed appointments: $e');
+      debugPrint('Error fetching completed appointments: $e');
       throw Exception('Error fetching completed appointments: $e');
     }
   }

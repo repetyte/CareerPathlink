@@ -3,12 +3,13 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/career_coaching/student_profile_model.dart';
+import 'package:flutter_app/models/student.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'information_form.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../../widgets/appbar/student_header.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'footer.dart';
+import '../../../widgets/footer/footer.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
@@ -67,7 +68,7 @@ class ApiService {
 
   static addAppointment(Map<String, Object?> appointmentData) {}
 
-  static updateStudent(Student updatedStudent) {}
+  static updateStudent(Student1 updatedStudent) {}
 
   static fetchUpcomingSessions() {}
 
@@ -88,9 +89,10 @@ class ApiService {
 
 // Calendar Screen
 class CalendarScreen extends StatefulWidget {
+  final StudentAccount studentAccount;
   final int coachId;
 
-  const CalendarScreen({super.key, required this.coachId});
+  const CalendarScreen({super.key, required this.coachId, required this.studentAccount});
 
   @override
   _CalendarScreenState createState() => _CalendarScreenState();
@@ -112,9 +114,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
         MediaQuery.of(context).size.width > 800; // Detecting web screen size
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Choose a Schedule'),
+      ),
       body: Column(
         children: [
-          const HeaderWidget(),
           const Divider(
             color: Color.fromARGB(255, 238, 233, 233),
             thickness: 2.0,
@@ -293,7 +297,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                                                     coach:
                                                                         'Coach Name',
                                                                     dateTime:
-                                                                        time,
+                                                                        time, studentAccount: widget.studentAccount,
                                                                   ),
                                                                 ),
                                                               );
@@ -506,7 +510,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                                                   coach:
                                                                       'Coach Name',
                                                                   dateTime:
-                                                                      time,
+                                                                      time, studentAccount: widget.studentAccount,
                                                                 ),
                                                               ),
                                                             );
@@ -558,7 +562,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       const SizedBox(height: 95),
                     ],
                   ),
-                  const Footer(),
                 ],
               ),
             ),

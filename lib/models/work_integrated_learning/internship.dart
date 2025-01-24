@@ -3,20 +3,24 @@ class Internship {
   final int? internshipId;
   final String displayPhoto;
   final String internshipTitle;
+  final String takehomePay;
+  final String location;
   final String description;
-  final String requiredSkils;
+  final String requiredSkills;
   final String qualifications;
-  final String additionalSkills;
+  final String hours;
   final int? industryPartner;
 
-  Internship({
+  Internship( {
     this.internshipId,
     required this.displayPhoto,
     required this.internshipTitle,
+    required this.takehomePay, 
+    required this.location,
     required this.description,
-    required this.requiredSkils,
+    required this.requiredSkills,
     required this.qualifications,
-    required this.additionalSkills,
+    required this.hours,
     this.industryPartner,
   });
 
@@ -25,10 +29,12 @@ class Internship {
       internshipId: json['internship_id'] as int?,
       displayPhoto: json['display_photo'],
       internshipTitle: json['internship_title'] ?? '',
+      takehomePay: json['takehome_pay'] ?? '',
+      location: json['location'] ?? '',
       description: json['description'] ?? '',
-      requiredSkils: json['required_skills'] ?? '',
+      requiredSkills: json['required_skills'] ?? '',
       qualifications: json['qualifications'] ?? '',
-      additionalSkills: json['additional_skills'] ?? '',
+      hours: json['hours'] ?? '',
       industryPartner: json['industry_partner'] as int?,
     );
   }
@@ -38,10 +44,12 @@ class Internship {
       'internship_id': internshipId,
       'display_photo': displayPhoto,
       'internship_title': internshipTitle,
+      'takehome_pay': takehomePay,
+      'location': location,
       'description': description,
-      'required_skills': requiredSkils,
+      'required_skills': requiredSkills,
       'qualifications': qualifications,
-      'additional_skills': additionalSkills,
+      'hours': hours,
       'industry_partner': industryPartner,
     };
   }
@@ -59,10 +67,12 @@ class InternshipWithPartner extends Internship {
     required super.internshipId,
     required super.displayPhoto,
     required super.internshipTitle,
+    required super.takehomePay,
+    required super.location,
     required super.description,
-    required super.requiredSkils,
+    required super.requiredSkills,
     required super.qualifications,
-    required super.additionalSkills,
+    required super.hours,
     super.industryPartner,
     this.partnerId,
     this.profilePic,
@@ -77,10 +87,12 @@ class InternshipWithPartner extends Internship {
       internshipId: json['internship_id'] as int?,
       displayPhoto: json['display_photo'],
       internshipTitle: json['internship_title'] ?? '',
+      takehomePay: json['takehome_pay'] ?? '',
+      location: json['location'] ?? '',
       description: json['description'] ?? '',
-      requiredSkils: json['required_skills'] ?? '',
+      requiredSkills: json['required_skills'] ?? '',
       qualifications: json['qualifications'] ?? '',
-      additionalSkills: json['additional_skills'] ?? '',
+      hours: json['hours'] ?? '',
       industryPartner: json['industry_partner'] as int?,
       partnerId: json['partner_id'] as int?,
       profilePic: json['profile_pic'],

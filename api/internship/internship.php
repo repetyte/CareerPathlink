@@ -8,10 +8,12 @@ class InternshipWithPartner
     public $internship_id;
     public $display_photo;
     public $internship_title;
+    public $takehome_pay;
+    public $location;
     public $description;
     public $required_skills;
     public $qualifications;
-    public $additional_skills;
+    public $hours;
     public $industry_partner;
 
     // Partner details
@@ -33,10 +35,12 @@ class InternshipWithPartner
                       i.internship_id, 
                       i.display_photo, 
                       i.internship_title, 
+                      i.takehome_pay,
+                      i.location,
                       i.description, 
                       i.required_skills, 
                       i.qualifications, 
-                      i.additional_skills, 
+                      i.hours, 
                       i.industry_partner,
 
                       p.partner_id, 
@@ -59,10 +63,12 @@ class InternshipWithPartner
         $query = "INSERT INTO " . $this->table_name . " SET 
             display_photo=:display_photo,
             internship_title=:internship_title,
+            takehome_pay=:takehome_pay,
+            location=:location,
             description=:description,
             required_skills=:required_skills,
             qualifications=:qualifications,
-            additional_skills=:additional_skills,
+            hours=:hours,
             industry_partner=:industry_partner";
 
         // Prepare query 
@@ -71,19 +77,23 @@ class InternshipWithPartner
         // Clean data
         $this->display_photo = htmlspecialchars(strip_tags($this->display_photo));
         $this->internship_title = htmlspecialchars(strip_tags($this->internship_title));
+        $this->takehome_pay = htmlspecialchars(strip_tags($this->takehome_pay));
+        $this->location = htmlspecialchars(strip_tags($this->location));
         $this->description = htmlspecialchars(strip_tags($this->description));
         $this->required_skills = htmlspecialchars(strip_tags($this->required_skills));
         $this->qualifications = htmlspecialchars(strip_tags($this->qualifications));
-        $this->additional_skills = htmlspecialchars(strip_tags($this->additional_skills));
+        $this->hours = htmlspecialchars(strip_tags($this->hours));
         $this->industry_partner = htmlspecialchars(strip_tags($this->industry_partner));
 
         // Bind values
         $stmt->bindParam(":display_photo", $this->display_photo);
         $stmt->bindParam(":internship_title", $this->internship_title);
+        $stmt->bindParam(":takehome_pay", $this->takehome_pay);
+        $stmt->bindParam(":location", $this->location);
         $stmt->bindParam(":description", $this->description);
         $stmt->bindParam(":required_skills", $this->required_skills);
         $stmt->bindParam(":qualifications", $this->qualifications);
-        $stmt->bindParam(":additional_skills", $this->additional_skills);
+        $stmt->bindParam(":hours", $this->hours);
         $stmt->bindParam(":industry_partner", $this->industry_partner);
 
         // Execute query
@@ -100,10 +110,12 @@ class InternshipWithPartner
                   SET
                         i.display_photo = :display_photo,
                         i.internship_title = :internship_title,
+                        i.takehome_pay = :takehome_pay,
+                        i.location = :location,
                         i.description = :description,
                         i.required_skills = :required_skills,
                         i.qualifications = :qualifications,
-                        i.additional_skills = :additional_skills,
+                        i.hours = :hours,
                         i.industry_partner = :industry_partner
 
                         p.partner_id = :partner_id,
@@ -121,10 +133,12 @@ class InternshipWithPartner
         $this->internship_id = htmlspecialchars(strip_tags($this->internship_id));
         $this->display_photo = htmlspecialchars(strip_tags($this->display_photo));
         $this->internship_title = htmlspecialchars(strip_tags($this->internship_title));
+        $this->takehome_pay = htmlspecialchars(strip_tags($this->takehome_pay));
+        $this->location = htmlspecialchars(strip_tags($this->location));
         $this->description = htmlspecialchars(strip_tags($this->description));
         $this->required_skills = htmlspecialchars(strip_tags($this->required_skills));
         $this->qualifications = htmlspecialchars(strip_tags($this->qualifications));
-        $this->additional_skills = htmlspecialchars(strip_tags($this->additional_skills));
+        $this->hours = htmlspecialchars(strip_tags($this->hours));
         $this->industry_partner = htmlspecialchars(strip_tags($this->industry_partner));
         $this->partner_id = htmlspecialchars(strip_tags($this->partner_id));
         $this->profile_pic = htmlspecialchars(strip_tags($this->profile_pic));
@@ -137,10 +151,12 @@ class InternshipWithPartner
         $stmt->bindParam(":internship_id", $this->internship_id);
         $stmt->bindParam(":display_photo", $this->display_photo);
         $stmt->bindParam(":internship_title", $this->internship_title);
+        $stmt->bindParam(":takehome_pay", $this->takehome_pay);
+        $stmt->bindParam(":location", $this->location);
         $stmt->bindParam(":description", $this->description);
         $stmt->bindParam(":required_skills", $this->required_skills);
         $stmt->bindParam(":qualifications", $this->qualifications);
-        $stmt->bindParam(":additional_skills", $this->additional_skills);
+        $stmt->bindParam(":hours", $this->hours);
         $stmt->bindParam(":industry_partner", $this->industry_partner);
         $stmt->bindParam(":partner_id", $this->partner_id);
         $stmt->bindParam(":profile_pic", $this->profile_pic);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/graduate.dart';
+import 'package:flutter_app/pages/graduates_account/graduate_home_screen.dart';
 import 'package:flutter_app/pages/graduates_account/recruitment_and_placement/rr_job_dashboard_graduates.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -82,7 +83,14 @@ final GraduateAccount graduateAccount;
             leading: const Icon(Icons.home),
             title: const Text('Home'),
             onTap: () {
-              // navigateTo("/rr_job_dashboard", context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeScreenGraduate(
+                    graduateAccount: graduateAccount,
+                  ),
+                ),
+              );
             },
           ),
           ListTile(

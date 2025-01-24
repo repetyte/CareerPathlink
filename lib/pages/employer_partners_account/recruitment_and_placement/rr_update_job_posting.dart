@@ -11,11 +11,14 @@ import 'package:flutter_app/services/industry_partner_api_service.dart';
 class RrUpdateJobPosting extends StatefulWidget {
   final VoidCallback onStudentUpdated;
   final JobPostingWithPartner jobPostingWithPartner;
+  final IndustryPartnerAccount employerPartnerAccount;
 
-  const RrUpdateJobPosting(
-      {super.key,
-      required this.jobPostingWithPartner,
-      required this.onStudentUpdated,});
+  const RrUpdateJobPosting({
+    super.key,
+    required this.jobPostingWithPartner,
+    required this.onStudentUpdated,
+    required this.employerPartnerAccount,
+  });
 
   @override
   _RrUpdateJobPostingState createState() => _RrUpdateJobPostingState();
@@ -23,7 +26,8 @@ class RrUpdateJobPosting extends StatefulWidget {
 
 class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
   final JobPostingApiService jobPostingApiService = JobPostingApiService();
-  final IndustryPartnerApiService industryPartnerApiService = IndustryPartnerApiService();
+  final IndustryPartnerApiService industryPartnerApiService =
+      IndustryPartnerApiService();
   final _formKey = GlobalKey<FormState>();
 
   IndustryPartner? _selectedPartner;
@@ -46,6 +50,9 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
 
   @override
   void initState() {
+    debugPrint(
+        'Employer Partner ID: ${widget.employerPartnerAccount.partnerName}');
+    debugPrint('Employer Partner Location: ${widget.employerPartnerAccount.partnerLocation}\n');
     super.initState();
     futureIndustryPartners = industryPartnerApiService.fetchIndustryPartners();
 
@@ -150,16 +157,16 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
         jobResponsibilities: _jobResponsibilitiesController.text,
         industryPartner: int.parse(_industryPartnerController.text),
 
-        partnerId: _selectedPartner!.partnerId!,
-        profilePic: _selectedPartner!.profilePic,
-        partnerName: _selectedPartner!.partnerName,
-        partnerLocation: _selectedPartner!.partnerLocation,
-        contactNo: _selectedPartner!.contactNo,
-        emailAdd: _selectedPartner!.emailAdd,
+        partnerId: widget.jobPostingWithPartner.partnerId,
+        profilePic: widget.jobPostingWithPartner.profilePic,
+        partnerName: widget.jobPostingWithPartner.partnerName,
+        partnerLocation: widget.jobPostingWithPartner.partnerLocation,
+        contactNo: widget.jobPostingWithPartner.contactNo,
+        emailAdd: widget.jobPostingWithPartner.emailAdd,
       );
 
       if (kDebugMode) {
-        print(jobPostingData.toJson());
+        debugPrint(jobPostingData.toJson() as String?);
       }
 
       try {
@@ -488,45 +495,51 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
                 'About Employer:',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              FutureBuilder<List<IndustryPartner>>(
-                future: futureIndustryPartners,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: Text("Error: ${snapshot.error}"),
-                    );
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Center(
-                      child: Text("No industry partners available."),
-                    );
-                  } else {
-                    List<IndustryPartner> partners = snapshot.data!;
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: partners.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(partners[index].partnerName),
-                          subtitle: Text(
-                              '${partners[index].partnerLocation}\n${partners[index].emailAdd}'),
-                          onTap: () {
-                            setState(() {
-                              _selectedPartner = partners[index];
-                            });
-                          },
-                          selected: _selectedPartner == partners[index],
-                          selectedTileColor: Colors.grey[200],
-                        );
-                      },
-                    );
-                  }
-                },
+              Text(widget.jobPostingWithPartner.partnerName.toString(),
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.bold)),
+              Text(
+                widget.jobPostingWithPartner.partnerLocation.toString(),
               ),
+              // FutureBuilder<List<IndustryPartner>>(
+              //   future: futureIndustryPartners,
+              //   builder: (context, snapshot) {
+              //     if (snapshot.connectionState == ConnectionState.waiting) {
+              //       return const Center(
+              //         child: CircularProgressIndicator(),
+              //       );
+              //     } else if (snapshot.hasError) {
+              //       return Center(
+              //         child: Text("Error: ${snapshot.error}"),
+              //       );
+              //     } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              //       return const Center(
+              //         child: Text("No industry partners available."),
+              //       );
+              //     } else {
+              //       List<IndustryPartner> partners = snapshot.data!;
+              //       return ListView.builder(
+              //         shrinkWrap: true,
+              //         physics: const NeverScrollableScrollPhysics(),
+              //         itemCount: partners.length,
+              //         itemBuilder: (context, index) {
+              //           return ListTile(
+              //             title: Text(partners[index].partnerName),
+              //             subtitle: Text(
+              //                 '${partners[index].partnerLocation}\n${partners[index].emailAdd}'),
+              //             onTap: () {
+              //               setState(() {
+              //                 _selectedPartner = partners[index];
+              //               });
+              //             },
+              //             selected: _selectedPartner == partners[index],
+              //             selectedTileColor: Colors.grey[200],
+              //           );
+              //         },
+              //       );
+              //     }
+              //   },
+              // ),
 
               // Save Changes Button
               const SizedBox(height: 16),

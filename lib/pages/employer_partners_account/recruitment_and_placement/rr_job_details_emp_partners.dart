@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_update_job_posting.dart';
@@ -10,8 +9,12 @@ import 'package:flutter_app/services/job_posting_api_service.dart';
 
 class RrJobDetailsCCD extends StatefulWidget {
   final JobPostingWithPartner jobPostingWithPartner;
+  final IndustryPartnerAccount employerPartnerAccount;
 
-  const RrJobDetailsCCD({super.key, required this.jobPostingWithPartner});
+  const RrJobDetailsCCD(
+      {super.key,
+      required this.jobPostingWithPartner,
+      required this.employerPartnerAccount});
 
   @override
   _RrJobDetailsCCDState createState() => _RrJobDetailsCCDState();
@@ -39,6 +42,9 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
 
   @override
   void initState() {
+    debugPrint(
+        'Employer Partner ID: ${widget.employerPartnerAccount.partnerName}');
+    debugPrint('Employer Partner Location: ${widget.employerPartnerAccount.partnerLocation}\n');
     super.initState();
     futureJobPostings = JobPostingApiService().fetchJobPostings();
   }
@@ -56,6 +62,7 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
         builder: (context) => RrUpdateJobPosting(
           jobPostingWithPartner: widget.jobPostingWithPartner,
           onStudentUpdated: _refreshJobPostings,
+          employerPartnerAccount: widget.employerPartnerAccount,
         ),
       ),
     ).then((updated) {
@@ -86,12 +93,6 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
             ),
             ElevatedButton(
               onPressed: () {
-                // Navigator.of(context).pop();
-                // jobPostingApiService.deleteJobPosting(jobPostingWithPartner.jobId).then((_) {
-                //   setState(() {
-                //     futureJobPostings = JobPostingApiService().fetchJobPostings(); // Refresh job postings
-                //   });
-                // });
                 if (jobId != null) {
                   jobPostingApiService.deleteJobPosting(jobId).then((_) {
                     _refreshJobPostings();
@@ -202,26 +203,10 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
                                             ),
                                           ),
                                         ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: const Color(0xFFFFFFFF),
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                          child: Container(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                20, 10, 20, 10),
-                                            child: Text(
-                                              widget
-                                                  .jobPostingWithPartner.status,
-                                              style: GoogleFonts.getFont(
-                                                'Montserrat',
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 14,
-                                                color: const Color(0xFF008000),
-                                              ),
-                                            ),
-                                          ),
+                                        ElevatedButton(
+                                          onPressed: () {// Call the API to apply for the internship
+                                          },
+                                          child: const Text('Internship Applications'),
                                         ),
                                       ],
                                     ),
@@ -311,16 +296,14 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.partnerName.toString(),
+                        Text(
+                            widget.jobPostingWithPartner.partnerName.toString(),
                             style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold
-                            )),
-                            const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.partnerLocation.toString(),
-                            style: const TextStyle(
-                              fontSize: 16,
-                            )),
+                                fontSize: 16, fontWeight: FontWeight.bold)),
+                        Text(
+                          widget.jobPostingWithPartner.partnerLocation
+                              .toString(),
+                        ),
                         const SizedBox(height: 16),
                       ],
                     ),
@@ -333,8 +316,8 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           TextButton.icon(
-                            onPressed: () =>
-                                _deleteJobPosting(widget.jobPostingWithPartner.jobId),
+                            onPressed: () => _deleteJobPosting(
+                                widget.jobPostingWithPartner.jobId),
                             icon: const Icon(Icons.delete),
                             label: const Text('Delete Job'),
                           ),

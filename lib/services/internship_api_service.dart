@@ -24,7 +24,7 @@ class InternshipApiService {
     } catch (e) {
       // If the server returns an error.
       if (kDebugMode) {
-        print('Exception: $e');
+        debugPrint('Exception: $e');
       }
       throw Exception('There is a problem from the server. Failed to connect.');
     }
@@ -43,14 +43,14 @@ class InternshipApiService {
 
       if (response.statusCode != 201) {
         if (kDebugMode) {
-          print('Response status: ${response.statusCode}');
-          print('Response body: ${response.body}');
+          debugPrint('Response status: ${response.statusCode}');
+          debugPrint('Response body: ${response.body}');
         }
         throw Exception('Failed to create internship.');
       }
     } catch (e) {
       if (kDebugMode) {
-        print('Exception: $e');
+        debugPrint('Exception: $e');
       }
       throw Exception('There is a problem from the server. Failed to connect.');
     }
@@ -69,14 +69,14 @@ class InternshipApiService {
 
       if (response.statusCode != 200) {
         if (kDebugMode) {
-          print('Response status: ${response.statusCode}');
-          print('Response body: ${response.body}');
+          debugPrint('Response status: ${response.statusCode}');
+          debugPrint('Response body: ${response.body}');
         }
         throw Exception('Failed to update intrership.');
       }
     } catch (e) {
       if (kDebugMode) {
-        print('Exception: $e');
+        debugPrint('Exception: $e');
       }
       throw Exception('There is a problem from the server. Failed to connect.');
     }
@@ -97,7 +97,7 @@ class InternshipApiService {
       }
     } catch (e) {
       if (kDebugMode) {
-        print('Exception: $e');
+        debugPrint('Exception: $e');
       }
       throw Exception('There is a problem from the server. Failed to connect.');
     }

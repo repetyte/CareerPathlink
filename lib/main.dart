@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/controller/simple_ui_controller.dart';
-import 'package:flutter_app/pages/students_account/career_coaching/home_screen.dart';
+import 'package:flutter_app/pages/login_and_signup/login_view.dart';
+import 'package:flutter_app/pages/login_and_signup/signUp_view.dart';
+import 'package:flutter_app/pages/students_account/student_home_screen.dart';
 import 'theme.dart';
 import 'package:get/get.dart';
 
@@ -19,8 +21,8 @@ class MyApp extends StatelessWidget {
       title: 'UNC CareerPathlink',
       theme: AppTheme.themeData,
       // darkTheme: ThemeData.dark(),
-      // home: const SignUpView(), // final route
-      home: const HomeScreen(), // routes for testing purposes
+      home: const LoginView(), // final route
+      // home: const HomeScreenStudent(), // routes for testing purposes
       initialRoute: '/',
       routes: {
         // '/': (context) => const SignUpView(),
@@ -29,7 +31,7 @@ class MyApp extends StatelessWidget {
         // '/graduate/recruitment_and_placement': (context) => const RrJobDashboardUser(graduateAccount: null),
 
         // // Students Account Routes
-        // '/student/career_coachinhg': (context) => const HomeScreen(),
+        // '/student/career_coachinhg': (context) => const HomeScreenStudent(),
         // '/student/work_integrated_learning': (context) => const InternshipDashboardStud(),
 
         // // College Deans/Coach Account Routes
@@ -45,7 +47,6 @@ class MyApp extends StatelessWidget {
         // '/career_center_director/career_coaching': (context) => const JobPostingDetailsScreen(),  // test only: should be Career Coaching
         // '/career_center_director/work_integrated_learning': (context) => const JobPostingDetailsScreen(), // test only: should be Work Integrated Learning
         // '/career_center_director/graduates_tracer_industry': (context) => const JobPostingDetailsScreen(),  // test only: should be Graduates Tracer Industry
-        
       },
     );
   }

@@ -66,7 +66,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
   void _submitApplication() {
     // TODO: Implement the submission logic
     if (kDebugMode) {
-      print('Application submitted');
+      debugPrint('Application submitted');
     }
   }
 
@@ -102,6 +102,13 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
         );
       },
     );
+  }
+
+  @override
+  void initState() {
+    debugPrint('Graduatesssss ID: ${widget.graduateAccount.graduateId}');
+    debugPrint('Department: ${widget.graduateAccount.department}');
+    super.initState();
   }
 
   @override

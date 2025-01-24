@@ -4,25 +4,25 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/industry_partner.dart';
-import 'package:flutter_app/models/recruitment_and_placement/job_posting.dart';
-import 'package:flutter_app/services/job_posting_api_service.dart';
+import 'package:flutter_app/models/work_integrated_learning/internship.dart';
+import 'package:flutter_app/services/internship_api_service.dart';
 import 'package:flutter_app/services/industry_partner_api_service.dart';
 
-class RrAddJobPosting extends StatefulWidget {
+class AddInternship extends StatefulWidget {
   final IndustryPartnerAccount employerPartnerAccount;
-  final VoidCallback onJobPostingAdded;
+  final VoidCallback onInternshipAdded;
 
-  const RrAddJobPosting(
+  const AddInternship(
       {super.key,
-      required this.onJobPostingAdded,
+      required this.onInternshipAdded,
       required this.employerPartnerAccount});
 
   @override
-  _RrAddJobPostingState createState() => _RrAddJobPostingState();
+  _AddInternshipState createState() => _AddInternshipState();
 }
 
-class _RrAddJobPostingState extends State<RrAddJobPosting> {
-  final JobPostingApiService jobPostingApiService = JobPostingApiService();
+class _AddInternshipState extends State<AddInternship> {
+  final InternshipApiService internshipApiService = InternshipApiService();
   final IndustryPartnerApiService industryPartnerApiService =
       IndustryPartnerApiService();
   final _formKey = GlobalKey<FormState>();
@@ -30,28 +30,26 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
   IndustryPartner? _selectedPartner;
   late Future<List<IndustryPartner>> futureIndustryPartners;
 
-  String jobTitle = '';
-  Uint8List? coverPhotoBytes;
-  String coverPhotoSource = ''; // Keeps track of the image source (path or URL)
-  String status = 'Open';
-  String fieldIndustry = 'Engineering';
-  String jobLevel = 'Entry Level';
-  String yrsOfExperienceNeeded = 'Fresh Graduate';
-  String contractualStatus = 'Full-time';
-  String salary = 'Below PHP 10,000';
-  String jobLocation = '';
-  String jobDescription = '';
-  String requirements = '';
-  String jobResponsibilities = '';
+  String internshipTitle = '';
+  Uint8List? displayPhotoBytes;
+  String displayPhotoSource =
+      ''; // Keeps track of the image source (path or URL)
+  int hours = 20;
+  String takehomePay = 'Below PHP 10,000';
+  String location = 'Work From Home';
+  String description = '';
+  String requiredSkills = '';
+  String qualifications = '';
 
-  final List<TextEditingController> _requirementsControllers = [];
-  final List<TextEditingController> _responsibilitiesControllers = [];
+  final List<TextEditingController> _requiredSkillsControllers = [];
+  final List<TextEditingController> _qualificationsControllers = [];
 
   @override
   void initState() {
     debugPrint(
         'Employer Partner ID: ${widget.employerPartnerAccount.partnerName}');
-    debugPrint('Employer Partner Location: ${widget.employerPartnerAccount.partnerLocation}\n');
+    debugPrint(
+        'Employer Partner Location: ${widget.employerPartnerAccount.partnerLocation}\n');
     super.initState();
     futureIndustryPartners = industryPartnerApiService.fetchIndustryPartners();
 
@@ -61,8 +59,8 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
       body.onDrop.listen(_handleDrop);
     }
 
-    _addRequirementField();
-    _addResponsibilityField();
+    _addRequiredSkillField();
+    _addQualificationField();
   }
 
   void _pickFromFileExplorer() async {
@@ -72,8 +70,8 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
 
     if (result != null) {
       setState(() {
-        coverPhotoBytes = result.files.first.bytes;
-        coverPhotoSource = result.files.first.name;
+        displayPhotoBytes = result.files.first.bytes;
+        displayPhotoSource = result.files.first.name;
       });
     }
   }
@@ -92,48 +90,48 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
       reader.readAsArrayBuffer(file);
       reader.onLoadEnd.listen((_) {
         setState(() {
-          coverPhotoBytes = reader.result as Uint8List?;
-          coverPhotoSource = file.name;
+          displayPhotoBytes = reader.result as Uint8List?;
+          displayPhotoSource = file.name;
         });
       });
     }
   }
 
-  void _addRequirementField() {
+  void _addRequiredSkillField() {
     setState(() {
-      _requirementsControllers.add(TextEditingController());
+      _requiredSkillsControllers.add(TextEditingController());
     });
   }
 
-  void _removeRequirementField(int index) {
+  void _removeRequiredSkillField(int index) {
     setState(() {
-      _requirementsControllers.removeAt(index);
+      _requiredSkillsControllers.removeAt(index);
     });
   }
 
-  void _clearRequirementFields() {
+  void _clearRequiredSkillFields() {
     setState(() {
-      _requirementsControllers.clear();
-      _addRequirementField();
+      _requiredSkillsControllers.clear();
+      _addRequiredSkillField();
     });
   }
 
-  void _addResponsibilityField() {
+  void _addQualificationField() {
     setState(() {
-      _responsibilitiesControllers.add(TextEditingController());
+      _qualificationsControllers.add(TextEditingController());
     });
   }
 
-  void _removeResponsibilityField(int index) {
+  void _removeQualificationField(int index) {
     setState(() {
-      _responsibilitiesControllers.removeAt(index);
+      _qualificationsControllers.removeAt(index);
     });
   }
 
-  void _clearResponsibilityFields() {
+  void _clearQualificationFields() {
     setState(() {
-      _responsibilitiesControllers.clear();
-      _addResponsibilityField();
+      _qualificationsControllers.clear();
+      _addQualificationField();
     });
   }
 
@@ -141,7 +139,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
     return controllers.map((controller) => '- ${controller.text}').join('\n');
   }
 
-  Future<void> _submitJobPosting() async {
+  Future<void> _submitInternship() async {
     if (_formKey.currentState!.validate()) {
       // if (_selectedPartner == null) {
       //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -149,38 +147,35 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
       //   return;
       // }
 
-      requirements = _combineFields(_requirementsControllers);
-      jobResponsibilities = _combineFields(_responsibilitiesControllers);
+      requiredSkills = _combineFields(_requiredSkillsControllers);
+      qualifications = _combineFields(_qualificationsControllers);
 
-      final jobPostingData = JobPosting(
-        coverPhoto: 'assets/images/$coverPhotoSource', // Use appropriate source
-        jobTitle: jobTitle,
-        status: status,
-        fieldIndustry: fieldIndustry,
-        jobLevel: jobLevel,
-        yrsOfExperienceNeeded: yrsOfExperienceNeeded,
-        contractualStatus: contractualStatus,
-        salary: salary,
-        jobLocation: jobLocation,
-        jobDescription: jobDescription,
-        requirements: requirements,
-        jobResponsibilities: jobResponsibilities,
+      final internshipData = Internship(
+        displayPhoto:
+            'assets/images/$displayPhotoSource', // Use appropriate source
+        internshipTitle: internshipTitle,
+        hours: '$hours hrs',
+        takehomePay: takehomePay,
+        location: location,
+        description: description,
+        requiredSkills: requiredSkills,
+        qualifications: qualifications,
         industryPartner: widget.employerPartnerAccount.partnerId,
       );
 
       if (kDebugMode) {
-        debugPrint(jobPostingData.toJson() as String?);
+        debugPrint(internshipData.toJson() as String?);
       }
 
       try {
-        await jobPostingApiService.createJobPosting(jobPostingData);
-        widget.onJobPostingAdded();
+        await internshipApiService.createInternship(internshipData);
+        widget.onInternshipAdded();
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Job added successfully')));
+            const SnackBar(content: Text('Internship added successfully')));
         Navigator.pop(context, true);
       } catch (error) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Failed to add job: $error')));
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to add internship: $error')));
       }
     }
   }
@@ -189,7 +184,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Job Posting'),
+        title: const Text('Add Internship Posting'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -254,9 +249,9 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              // Cover Photo
+                                              // Display Photo
                                               const Text(
-                                                'Cover Photo:',
+                                                'Display Photo:',
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 16,
@@ -266,7 +261,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                                               GestureDetector(
                                                 onTap: _pickFromFileExplorer,
                                                 child: Column(children: [
-                                                  if (coverPhotoBytes != null)
+                                                  if (displayPhotoBytes != null)
                                                     Container(
                                                       height: 400,
                                                       width: double.infinity,
@@ -279,10 +274,10 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                                                                 .circular(40.0),
                                                       ),
                                                       child: Image.memory(
-                                                          coverPhotoBytes!,
+                                                          displayPhotoBytes!,
                                                           fit: BoxFit.contain),
                                                     ),
-                                                  if (coverPhotoBytes == null)
+                                                  if (displayPhotoBytes == null)
                                                     Container(
                                                       height: 400,
                                                       width: double.infinity,
@@ -307,56 +302,27 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
 
                                               const SizedBox(height: 16.0),
 
-                                              // Job Title
+                                              // Internship Title
                                               const Text(
-                                                'Job Title:',
+                                                'Internship Title:',
                                                 style: TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.white),
                                               ),
                                               TextFormField(
-                                                // decoration: const InputDecoration(labelText: 'Job Title'),
-                                                decoration:
-                                                    const InputDecoration(
-                                                        hintText:
-                                                            'Enter Job Title'),
+                                                // decoration: const InputDecoration(labelText: 'Internship Title'),
+                                                decoration: const InputDecoration(
+                                                    hintText:
+                                                        'Enter Internship Title'),
                                                 validator: (value) {
                                                   if (value == null ||
                                                       value.isEmpty) {
-                                                    return 'Please enter the job title';
+                                                    return 'Please enter the internship title';
                                                   }
-                                                  jobTitle = value;
+                                                  internshipTitle = value;
                                                   return null;
                                                 },
-                                              ),
-                                              const SizedBox(height: 16.0),
-
-                                              // Status
-                                              const Text(
-                                                'Status:',
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white),
-                                              ),
-                                              DropdownButtonFormField<String>(
-                                                // decoration: const InputDecoration(labelText: 'Status', hintText: 'Job Status'),
-                                                // value: status,
-                                                hint: Text('Select an option'),
-                                                onChanged: (newValue) {
-                                                  setState(() {
-                                                    status = newValue!;
-                                                  });
-                                                },
-                                                items: ['Open', 'Closed']
-                                                    .map((String value) {
-                                                  return DropdownMenuItem<
-                                                      String>(
-                                                    value: value,
-                                                    child: Text(value),
-                                                  );
-                                                }).toList(),
                                               ),
                                             ],
                                           ),
@@ -376,151 +342,51 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        // Field/Industry
+                                        // Internship Hours
                                         const Text(
-                                          'Field/Industry:',
+                                          'Internship Hours:',
                                           style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        DropdownButtonFormField<String>(
-                                          // decoration: const InputDecoration(labelText: 'Field/Industry'),
-                                          // value: fieldIndustry,
-                                          hint: Text('Select an option'),
-                                          onChanged: (newValue) {
-                                            setState(() {
-                                              fieldIndustry = newValue!;
-                                            });
-                                          },
-                                          items: [
-                                            'Engineering',
-                                            'Business and Finance',
-                                            'Information Technology',
-                                            'Education',
-                                            'Healthcare',
-                                            'Law Enforcement',
-                                            'Architecture'
-                                          ].map((String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(value),
-                                            );
-                                          }).toList(),
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                         const SizedBox(height: 16.0),
-
-                                        // Job Level
-                                        const Text(
-                                          'Job Level:',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        DropdownButtonFormField<String>(
-                                          // decoration: const InputDecoration(labelText: 'Job Level'),
-                                          // value: jobLevel,
-                                          hint: Text('Select an option'),
-                                          onChanged: (newValue) {
+                                        Slider(
+                                          min: 20,
+                                          max: 100,
+                                          divisions: 80,
+                                          label: hours.toString(),
+                                          value: hours.toDouble(),
+                                          onChanged: (value) {
                                             setState(() {
-                                              jobLevel = newValue!;
+                                              hours = value.round();
                                             });
                                           },
-                                          items: [
-                                            'Entry Level',
-                                            'Mid-level',
-                                            'Senior Level'
-                                          ].map((String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(value),
-                                            );
-                                          }).toList(),
                                         ),
-                                        const SizedBox(height: 16.0),
 
-                                        // Years of Experience Needed
+                                        // Takehome Pay
                                         const Text(
-                                          'Years of Experience Needed:',
+                                          'Takehome Pay:',
                                           style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                         DropdownButtonFormField<String>(
-                                          // decoration: const InputDecoration(
-                                          //     labelText: 'Years of Experience Needed'),
-                                          // value: yrsOfExperienceNeeded,
+                                          // decoration: const InputDecoration(labelText: 'Status', hintText: 'Internship Status'),
+                                          // value: status,
                                           hint: Text('Select an option'),
                                           onChanged: (newValue) {
                                             setState(() {
-                                              yrsOfExperienceNeeded = newValue!;
-                                            });
-                                          },
-                                          items: [
-                                            'Fresh Graduate',
-                                            'Less than 1 Year',
-                                            '1-3 years',
-                                            '3-5 years',
-                                            '5+ years'
-                                          ].map((String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(value),
-                                            );
-                                          }).toList(),
-                                        ),
-                                        const SizedBox(height: 16.0),
-
-                                        // Contractual Status
-                                        const Text(
-                                          'Contractual Status:',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        DropdownButtonFormField<String>(
-                                          // decoration:
-                                          //     const InputDecoration(labelText: 'Contractual Status'),
-                                          // value: contractualStatus,
-                                          hint: Text('Select an option'),
-                                          onChanged: (newValue) {
-                                            setState(() {
-                                              contractualStatus = newValue!;
-                                            });
-                                          },
-                                          items: [
-                                            'Full-time',
-                                            'Part-time',
-                                            'Contractual'
-                                          ].map((String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(value),
-                                            );
-                                          }).toList(),
-                                        ),
-                                        const SizedBox(height: 16.0),
-
-                                        // Salary Range
-                                        const Text(
-                                          'Salary Range:',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        DropdownButtonFormField<String>(
-                                          // decoration: const InputDecoration(labelText: 'Salary Range'),
-                                          // value: salary,
-                                          hint: Text('Select an option'),
-                                          onChanged: (newValue) {
-                                            setState(() {
-                                              salary = newValue!;
+                                              takehomePay = newValue!;
                                             });
                                           },
                                           items: [
                                             'Below PHP 10,000',
-                                            'PHP 10,000 - PHP 50,000',
-                                            'PHP 50,000 - PHP 100,000',
-                                            'Above PHP 100,000'
+                                            'PHP 10,000 - PHP 15,000',
+                                            'PHP 15,000 - PHP 20,000',
+                                            'PHP 20,000 - PHP 25,000',
+                                            'Above PHP 25,000'
                                           ].map((String value) {
                                             return DropdownMenuItem<String>(
                                               value: value,
@@ -530,24 +396,24 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                                         ),
                                         const SizedBox(height: 16.0),
 
-                                        // Job Location
+                                        // Internship Location
                                         const Text(
-                                          'Job Location:',
+                                          'Internship Location:',
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold),
                                         ),
                                         DropdownButtonFormField<String>(
-                                          // decoration: const InputDecoration(labelText: 'Job Location'),
+                                          // decoration: const InputDecoration(labelText: 'Internship Location'),
                                           // value: jobLocation,
                                           hint: Text('Select an option'),
                                           onChanged: (newValue) {
                                             setState(() {
-                                              jobLocation = newValue!;
+                                              location = newValue!;
                                             });
                                           },
                                           items: [
-                                            'Work from Home',
+                                            'Work From Home',
                                             'Around Naga City',
                                             'Around Camarines Sur',
                                             'Around Bicol Rrgion',
@@ -562,33 +428,33 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                                         ),
                                         const SizedBox(height: 16.0),
 
-                                        // Job Description
+                                        // Internship Description
                                         const Text(
-                                          'Job Description:',
+                                          'Internship Description:',
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold),
                                         ),
                                         TextFormField(
-                                          // decoration: const InputDecoration(labelText: 'Job Description'),
+                                          // decoration: const InputDecoration(labelText: 'Internship Description'),
                                           decoration: const InputDecoration(
                                               hintText:
-                                                  'Enter the job description'),
+                                                  'Enter the internship description'),
                                           maxLines: 5,
                                           validator: (value) {
                                             if (value == null ||
                                                 value.isEmpty) {
-                                              return 'Please enter the job description';
+                                              return 'Please enter the internship description';
                                             }
-                                            jobDescription = value;
+                                            description = value;
                                             return null;
                                           },
                                         ),
                                         const SizedBox(height: 16.0),
 
-                                        // Requirements
+                                        // Required Skills
                                         const Text(
-                                          'Requirements:',
+                                          'Required Skills:',
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold),
@@ -598,22 +464,22 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                                           physics:
                                               NeverScrollableScrollPhysics(),
                                           itemCount:
-                                              _requirementsControllers.length,
+                                              _requiredSkillsControllers.length,
                                           itemBuilder: (context, index) {
                                             return Row(
                                               children: [
                                                 Expanded(
                                                   child: TextFormField(
                                                     controller:
-                                                        _requirementsControllers[
+                                                        _requiredSkillsControllers[
                                                             index],
                                                     decoration: InputDecoration(
                                                         hintText:
-                                                            'Enter requirement ${index + 1}'),
+                                                            'Enter required skill ${index + 1}'),
                                                     validator: (value) {
                                                       if (value == null ||
                                                           value.isEmpty) {
-                                                        return 'Please enter the requirement';
+                                                        return 'Please enter the required skil';
                                                       }
                                                       return null;
                                                     },
@@ -622,7 +488,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                                                 IconButton(
                                                   icon: Icon(Icons.delete),
                                                   onPressed: () =>
-                                                      _removeRequirementField(
+                                                      _removeRequiredSkillField(
                                                           index),
                                                 ),
                                               ],
@@ -633,18 +499,18 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                                         Row(
                                           children: [
                                             ElevatedButton(
-                                              onPressed: _addRequirementField,
+                                              onPressed: _addRequiredSkillField,
                                               style: ButtonStyle(
                                                 backgroundColor:
                                                     WidgetStateProperty.all(
                                                         Colors.green),
                                               ),
                                               // icon: Icon(Icons.add),
-                                              child: Text('Add Requirement'),
+                                              child: Text('Add Required Skill'),
                                             ),
                                             TextButton(
                                               onPressed:
-                                                  _clearRequirementFields,
+                                                  _clearRequiredSkillFields,
                                               // icon: Icon(Icons.clear),
                                               child: Text('Clear'),
                                             ),
@@ -652,9 +518,9 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                                         ),
                                         const SizedBox(height: 16.0),
 
-                                        // Job Responsibilities
+                                        // Internship Qualifications
                                         const Text(
-                                          'Job Responsibilities:',
+                                          'Internship Qualifications:',
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold),
@@ -664,23 +530,22 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                                           physics:
                                               NeverScrollableScrollPhysics(),
                                           itemCount:
-                                              _responsibilitiesControllers
-                                                  .length,
+                                              _qualificationsControllers.length,
                                           itemBuilder: (context, index) {
                                             return Row(
                                               children: [
                                                 Expanded(
                                                   child: TextFormField(
                                                     controller:
-                                                        _responsibilitiesControllers[
+                                                        _qualificationsControllers[
                                                             index],
                                                     decoration: InputDecoration(
                                                         hintText:
-                                                            'Enter responsibility ${index + 1}'),
+                                                            'Enter qualification ${index + 1}'),
                                                     validator: (value) {
                                                       if (value == null ||
                                                           value.isEmpty) {
-                                                        return 'Please enter the responsibility';
+                                                        return 'Please enter the quailification';
                                                       }
                                                       return null;
                                                     },
@@ -689,7 +554,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                                                 IconButton(
                                                   icon: Icon(Icons.delete),
                                                   onPressed: () =>
-                                                      _removeResponsibilityField(
+                                                      _removeQualificationField(
                                                           index),
                                                 ),
                                               ],
@@ -700,18 +565,17 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                                         Row(
                                           children: [
                                             ElevatedButton(
-                                              onPressed:
-                                                  _addResponsibilityField,
+                                              onPressed: _addQualificationField,
                                               style: ButtonStyle(
                                                 backgroundColor:
                                                     WidgetStateProperty.all(
                                                         Colors.green),
                                               ),
-                                              child: Text('Add Responsibility'),
+                                              child: Text('Add Qualification'),
                                             ),
                                             TextButton(
                                               onPressed:
-                                                  _clearResponsibilityFields,
+                                                  _clearQualificationFields,
                                               child: Text(
                                                   'Clear'), // icon: Icon(Icons.clear),
                                             ),
@@ -797,13 +661,14 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                                           child: ElevatedButton.icon(
                                             icon: const Icon(Icons.save),
                                             onPressed: () async {
-                                              // Validate the form and post the job
+                                              // Validate the form and post the internship
                                               if (_formKey.currentState!
                                                   .validate()) {
-                                                await _submitJobPosting();
+                                                await _submitInternship();
                                               }
                                             },
-                                            label: const Text('Post Job'),
+                                            label:
+                                                const Text('Post Internship'),
                                           ),
                                         ),
                                       ],

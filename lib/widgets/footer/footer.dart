@@ -74,96 +74,96 @@ class Footer extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Image.asset('assets/career_coaching/logo.png', width: 80, height: 80),
-                  const SizedBox(width: 15),
-                  Text(
-                    "UNIVERSITY OF\nNUEVA CACERES",
-                    style: GoogleFonts.montserrat(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
+              // Row(
+              //   crossAxisAlignment: CrossAxisAlignment.center,
+              //   children: [
+              //     Image.asset('assets/career_coaching/logo.png', width: 80, height: 80),
+              //     const SizedBox(width: 15),
+              //     Text(
+              //       "UNIVERSITY OF\nNUEVA CACERES",
+              //       style: GoogleFonts.montserrat(
+              //         fontSize: 20,
+              //         fontWeight: FontWeight.bold,
+              //         color: Colors.white,
+              //       ),
+              //     ),
+              //   ],
+              // ),
+              // const SizedBox(height: 10),
               Center(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      "J. Hernandez Ave, Naga City 4400",
-                      style: GoogleFonts.montserrat(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      "09561301775 | 09071566898",
-                      style: GoogleFonts.montserrat(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      "22565-1-862 (UNC)",
-                      style: GoogleFonts.montserrat(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 5),
-                    RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        style: GoogleFonts.montserrat(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        children: [
-                          WidgetSpan(
-                            child: GestureDetector(
-                              onTap: () => _launchEmail("info@unc.edu.ph"),
-                              child: Text(
-                                "info@unc.edu.ph",
-                                style: TextStyle(
-                                  color: const Color(0xFFEC1D25),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const TextSpan(
-                            text: " | ",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          WidgetSpan(
-                            child: GestureDetector(
-                              onTap: () => _launchEmail("admission@unc.edu.ph"),
-                              child: Text(
-                                "admission@unc.edu.ph",
-                                style: TextStyle(
-                                  color: const Color(0xFFEC1D25),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 10),
+                    // Text(
+                    //   "J. Hernandez Ave, Naga City 4400",
+                    //   style: GoogleFonts.montserrat(
+                    //     fontSize: 16,
+                    //     fontWeight: FontWeight.bold,
+                    //     color: Colors.white,
+                    //   ),
+                    //   textAlign: TextAlign.center,
+                    // ),
+                    // const SizedBox(height: 5),
+                    // Text(
+                    //   "09561301775 | 09071566898",
+                    //   style: GoogleFonts.montserrat(
+                    //     fontSize: 16,
+                    //     fontWeight: FontWeight.bold,
+                    //     color: Colors.white,
+                    //   ),
+                    //   textAlign: TextAlign.center,
+                    // ),
+                    // const SizedBox(height: 5),
+                    // Text(
+                    //   "22565-1-862 (UNC)",
+                    //   style: GoogleFonts.montserrat(
+                    //     fontSize: 16,
+                    //     fontWeight: FontWeight.bold,
+                    //     color: Colors.white,
+                    //   ),
+                    //   textAlign: TextAlign.center,
+                    // ),
+                    // const SizedBox(height: 5),
+                    // RichText(
+                    //   textAlign: TextAlign.center,
+                    //   text: TextSpan(
+                    //     style: GoogleFonts.montserrat(
+                    //       fontSize: 16,
+                    //       fontWeight: FontWeight.bold,
+                    //     ),
+                    //     children: [
+                    //       WidgetSpan(
+                    //         child: GestureDetector(
+                    //           onTap: () => _launchEmail("info@unc.edu.ph"),
+                    //           child: Text(
+                    //             "info@unc.edu.ph",
+                    //             style: TextStyle(
+                    //               color: const Color(0xFFEC1D25),
+                    //               fontWeight: FontWeight.bold,
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       const TextSpan(
+                    //         text: " | ",
+                    //         style: TextStyle(color: Colors.white),
+                    //       ),
+                    //       WidgetSpan(
+                    //         child: GestureDetector(
+                    //           onTap: () => _launchEmail("admission@unc.edu.ph"),
+                    //           child: Text(
+                    //             "admission@unc.edu.ph",
+                    //             style: TextStyle(
+                    //               color: const Color(0xFFEC1D25),
+                    //               fontWeight: FontWeight.bold,
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // const SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

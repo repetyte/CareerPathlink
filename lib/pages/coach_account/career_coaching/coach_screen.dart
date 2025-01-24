@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'in_process.dart'; // Import InProcessRequests
 import 'pending_request.dart';
 import 'completed.dart'; // Import Completed
-import '../../students_account/career_coaching/footer.dart';
-import '../../../widgets/appbar/cc_coach_header.dart';
+import '../../../widgets/footer/footer.dart';
+import '../../../widgets/appbar/dean_coach_header.dart';
 
 class CoachScreen extends StatelessWidget {
   final double screenWidth;
@@ -115,7 +115,7 @@ class _ProgramScheduleScreenState extends State<ProgramScheduleScreen> {
             child: Material(
               elevation: 4.0,
               color: Colors.white,
-              child: const Header(),
+              // child: const Header(studentAccount: null,),
             ),
           ),
         ],

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/student.dart';
+import 'package:flutter_app/pages/students_account/career_coaching/appointment_booking.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'home_screen.dart'; // Import the HomeScreen file
+import '../student_home_screen.dart'; // Import the HomeScreenStudent file
 
 class BookingConfirmationScreen extends StatefulWidget {
+  final StudentAccount studentAccount;
   const BookingConfirmationScreen(
-      {super.key, required String coach, required String dateTime});
+      {super.key, required String coach, required String dateTime, required this.studentAccount});
 
   @override
   _BookingConfirmationScreenState createState() =>
@@ -88,7 +91,7 @@ class _BookingConfirmationScreenState extends State<BookingConfirmationScreen>
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()),
+                      MaterialPageRoute(builder: (context) => AppointmentBookingScreen(studentAccount: widget.studentAccount,)),
                     );
                   },
                   style: ElevatedButton.styleFrom(

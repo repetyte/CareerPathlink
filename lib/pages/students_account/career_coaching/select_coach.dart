@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/student.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../widgets/appbar/student_header.dart';
 import 'calendar.dart';
-import 'footer.dart'; // Import the footer widget
+import '../../../widgets/footer/footer.dart'; // Import the footer widget
 
 class SelectCoachScreen extends StatefulWidget {
-  const SelectCoachScreen({super.key});
+  final StudentAccount studentAccount;
+  const SelectCoachScreen({super.key, required this.studentAccount});
 
   @override
   _SelectCoachScreenState createState() => _SelectCoachScreenState();
@@ -66,13 +68,11 @@ class _SelectCoachScreenState extends State<SelectCoachScreen> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Start an Appointment'),
+      ),
       body: Column(
         children: [
-          Material(
-            elevation: 4.0,
-            shadowColor: Colors.black.withOpacity(0.3),
-            child: const HeaderWidget(), // Reusable Header widget
-          ),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -236,8 +236,7 @@ class _SelectCoachScreenState extends State<SelectCoachScreen> {
                                         ),
                                       );
                               },
-                            ),
-                  const Footer(), // Reusable Footer widget
+                            ), // Reusable Footer widget
                 ],
               ),
             ),
@@ -323,8 +322,10 @@ class _SelectCoachScreenState extends State<SelectCoachScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          CalendarScreen(coachId: coachId), // Pass coachId here
+                      builder: (context) => CalendarScreen(
+                        coachId: coachId,
+                        studentAccount: widget.studentAccount,
+                      ), // Pass coachId here
                     ),
                   );
                 },
