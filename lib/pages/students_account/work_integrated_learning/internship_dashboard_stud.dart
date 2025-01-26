@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/student.dart';
+import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/models/work_integrated_learning/internship.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
 import 'package:flutter_app/pages/students_account/work_integrated_learning/internship_details_stud.dart';

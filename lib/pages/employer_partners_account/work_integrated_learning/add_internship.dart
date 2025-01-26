@@ -3,7 +3,7 @@ import 'dart:html' as html;
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/industry_partner.dart';
+import 'package:flutter_app/models/user_role/industry_partner.dart';
 import 'package:flutter_app/models/work_integrated_learning/internship.dart';
 import 'package:flutter_app/services/internship_api_service.dart';
 import 'package:flutter_app/services/industry_partner_api_service.dart';

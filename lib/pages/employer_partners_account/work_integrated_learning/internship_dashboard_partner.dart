@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/industry_partner.dart';
+import 'package:flutter_app/models/user_role/industry_partner.dart';
 import 'package:flutter_app/models/work_integrated_learning/internship.dart';
 import 'package:flutter_app/pages/employer_partners_account/work_integrated_learning/add_internship.dart';
 import 'package:flutter_app/pages/employer_partners_account/work_integrated_learning/internship_details_patner.dart';

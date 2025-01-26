@@ -2,7 +2,7 @@
 class GraduateAccount
 {
     private $conn;
-    private $table_name = "graduates_list_tb";
+    private $table_name = "graduates_tb";
 
     // Graduate Properties
     public $graduate_id;

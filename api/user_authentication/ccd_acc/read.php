@@ -24,6 +24,7 @@ if($num > 0){
             "director_id" => $director_id,
             "unc_email" => $unc_email,
             "first_name" => $first_name,
+            "middle_name" => $middle_name,
             "last_name" => $last_name,
             "user_account" => $user_account,
 

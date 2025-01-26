@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/industry_partner.dart';
+import 'package:flutter_app/models/user_role/industry_partner.dart';
 import 'package:flutter_app/models/recruitment_and_placement/job_posting.dart';
 import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_add_job_posting.dart';
 import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_job_details_emp_partners.dart';
@@ -278,6 +278,7 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  
                   Container(
                     margin: const EdgeInsets.fromLTRB(16, 24, 16, 24),
                     child: Align(
@@ -362,6 +363,7 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
                       ],
                     ),
                   ),
+                  
                   Container(
                     margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                     child: Container(

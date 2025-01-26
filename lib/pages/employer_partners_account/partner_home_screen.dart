@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/industry_partner.dart';
-import 'package:flutter_app/models/student.dart';
+import 'package:flutter_app/models/user_role/industry_partner.dart';
+import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
 import 'package:flutter_app/widgets/appbar/partner_header.dart';
 import 'package:flutter_app/widgets/drawer/drawer_partner.dart';

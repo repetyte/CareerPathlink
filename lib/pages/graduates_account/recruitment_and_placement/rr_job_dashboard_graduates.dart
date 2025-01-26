@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/graduate.dart';
+import 'package:flutter_app/models/user_role/graduate.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
 import 'package:flutter_app/widgets/appbar/graduates_header.dart';
 import 'package:flutter_app/widgets/drawer/drawer_graduates.dart';
@@ -60,8 +60,8 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                       '${widget.graduateAccount.firstName} ${widget.graduateAccount.lastName}',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    subtitle: const Text(
-                        'Graduate | Bachelor of Science in Information Technology'),
+                    subtitle: Text(
+                        'Graduate | ${widget.graduateAccount.course}'),
                   ),
                   const Divider(),
                   ListTile(

@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/career_coaching/coach_model.dart';
+import 'package:flutter_app/models/user_role/coach_model.dart';
 import 'package:flutter_app/models/career_coaching/in_process_appointment_model.dart';
 import 'package:flutter_app/models/career_coaching/pending_model.dart';
-import 'package:flutter_app/models/student.dart';
+import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/pages/students_account/career_coaching/calendar.dart';
 import 'package:http/http.dart' as http;
 // ignore: unused_import

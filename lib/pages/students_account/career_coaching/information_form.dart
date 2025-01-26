@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/student.dart';
+import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/pages/students_account/career_coaching/calendar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'booking_confirmation.dart';

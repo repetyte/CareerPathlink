@@ -1,8 +1,10 @@
 import 'dart:convert';
-import 'package:flutter_app/models/career_center_director.dart';
-import 'package:flutter_app/models/graduate.dart';
-import 'package:flutter_app/models/industry_partner.dart';
-import 'package:flutter_app/models/student.dart';
+import 'package:flutter_app/models/user_role/career_center_director.dart';
+import 'package:flutter_app/models/user_role/coach_model.dart';
+import 'package:flutter_app/models/user_role/college_deans.dart';
+import 'package:flutter_app/models/user_role/graduate.dart';
+import 'package:flutter_app/models/user_role/industry_partner.dart';
+import 'package:flutter_app/models/user_role/student.dart';
 import 'package:http/http.dart' as http;
 
 class UserApiService {
@@ -50,6 +52,49 @@ class UserApiService {
       }
     } else {
       throw Exception('Failed to load graduate accounts');
+    }
+  }
+
+  // Fetch coach accounts and match user
+  Future<CoachAccount?> fetchCoachAccount(
+      String username, String password) async {
+    final response = await http.get(Uri.parse('$apiUrl/coach_acc/read.php'));
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+      final coaches = data.map((json) => CoachAccount.fromJson(json)).toList();
+
+      // Find the matching coach account
+      try {
+        return coaches.firstWhere((coach) =>
+            coach.username == username && coach.password == password);
+      } catch (e) {
+        return null; // Return null if no match is found
+      }
+    } else {
+      throw Exception('Failed to load coach accounts');
+    }
+  }
+
+  // Fetch dean accounts and match user
+  Future<CollegeDeanAccount?> fetchDeanAccount(
+      String username, String password) async {
+    final response = await http.get(Uri.parse('$apiUrl/dean_acc/read.php'));
+
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+      final deans =
+          data.map((json) => CollegeDeanAccount.fromJson(json)).toList();
+
+      // Find the matching dean account
+      try {
+        return deans.firstWhere(
+            (dean) => dean.username == username && dean.password == password);
+      } catch (e) {
+        return null; // Return null if no match is found
+      }
+    } else {
+      throw Exception('Failed to load dean accounts');
     }
   }
 

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/user_role/college_deans.dart';
+import 'package:flutter_app/pages/dean_account/dean_home_screen.dart';
+import 'package:flutter_app/pages/dean_account/graduates_tracer_industry/graduates_tracer.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class MyDrawerDeansCoach extends StatelessWidget {
-  const MyDrawerDeansCoach({super.key});
+class MyDrawerDean extends StatelessWidget {
+  final CollegeDeanAccount collegeDeanAccount;
+  const MyDrawerDean({super.key, required this.collegeDeanAccount});
 
   navigateTo(String route, BuildContext context) {
     Navigator.of(context).pushReplacementNamed(route);
@@ -78,20 +82,13 @@ class MyDrawerDeansCoach extends StatelessWidget {
             leading: const Icon(Icons.home),
             title: const Text('Home'),
             onTap: () {
-              // navigateTo("/rr_job_dashboard", context);
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.on_device_training),
-            title: const Text(
-              'Career Coaching',
-              style: TextStyle(
-                height: 1.3,
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    HomeScreenDean(collegeDeanAccount: collegeDeanAccount),
               ),
-            ),
-            onTap: () {
-              // Update the state of the app.
-              // ...
+            );
             },
           ),
           ListTile(
@@ -103,8 +100,13 @@ class MyDrawerDeansCoach extends StatelessWidget {
               ),
             ),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    TracerDashboardDean(collegeDeanAccount: collegeDeanAccount),
+              ),
+            );
             },
           ),
         ],

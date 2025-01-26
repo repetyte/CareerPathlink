@@ -2,7 +2,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/graduate.dart';
+import 'package:flutter_app/models/user_role/graduate.dart';
 import 'package:flutter_app/models/recruitment_and_placement/job_posting.dart';
 import 'package:google_fonts/google_fonts.dart';
 

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter_app/models/student.dart';
+import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/pages/students_account/career_coaching/calendar.dart';
 import 'dart:convert';
 import '../student_home_screen.dart'; // Ensure to import your HomeScreenStudent here

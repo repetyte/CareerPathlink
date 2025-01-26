@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/pages/career_center_director_account/career_coaching/coaching_home_screen.dart';
+import 'package:flutter_app/pages/career_center_director_account/director_home_screen.dart';
+import 'package:flutter_app/pages/coach_account/coach_home_screen.dart';
+import 'package:flutter_app/pages/dean_account/dean_home_screen.dart';
 import 'package:flutter_app/pages/employer_partners_account/partner_home_screen.dart';
-import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_job_dashboard_emp_partners.dart';
 import 'package:flutter_app/pages/graduates_account/graduate_home_screen.dart';
-import 'package:flutter_app/pages/graduates_account/recruitment_and_placement/rr_job_dashboard_graduates.dart';
 import 'package:flutter_app/pages/login_and_signup/signUp_view.dart';
 import 'package:flutter_app/pages/students_account/student_home_screen.dart';
-import 'package:flutter_app/pages/students_account/work_integrated_learning/internship_dashboard_stud.dart';
 import 'package:flutter_app/services/user_api_service.dart';
 
 import 'package:get/get.dart';
@@ -22,6 +23,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
+  final double screenWidth = 0;
   final userApiService = UserApiService();
 
   final TextEditingController _usernameController = TextEditingController();
@@ -95,18 +97,52 @@ class _LoginViewState extends State<LoginView> {
               const SnackBar(content: Text('Invalid Student credentials.')),
             );
           }
+        } else if (userType == 'College Dean') { 
+          final collegeDeanAccount =
+              await userApiService.fetchDeanAccount(username, password);
+          if (collegeDeanAccount != null) {
+            // Navigate to Dean Dashboard with dean account details
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    HomeScreenDean(collegeDeanAccount: collegeDeanAccount),
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Invalid Dean credentials.')),
+            );
+          }
+        } else if (userType == 'Career Coach') {
+          final coachAccount =
+              await userApiService.fetchCoachAccount(username, password);
+          if (coachAccount != null) {
+            // Navigate to Career Coach Dashboard with career coach account details
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    HomeScreenCoach(coachAccount: coachAccount, screenWidth: screenWidth,),
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Invalid Career Coach credentials.')),
+            );
+          }
         } else if (userType == 'Career Center Director') {
           final directorAccount =
               await userApiService.fetchDirectorAccount(username, password);
           if (directorAccount != null) {
             // Navigate to Career Center Director Dashboard with director account details
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) =>
-            //         RrJobDashboardUser(directorAccount: directorAccount),
-            //   ),
-            // );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    HomeScreenDirector(careerCenterDirectorAccount: directorAccount),
+              ),
+            );
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Invalid Director credentials.')),
@@ -397,7 +433,10 @@ class _LoginViewState extends State<LoginView> {
                     items: [
                       'Student',
                       'Graduate',
+                      'College Dean',
+                      'Career Coach',
                       'Employer Partner',
+                      'Career Center Director',
                     ]
                         .map((type) => DropdownMenuItem(
                               value: type,

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/career_center_director_account/career_coaching/cc_home_screen.dart';
-import 'package:flutter_app/pages/coach_account/career_coaching/coach_screen.dart';
-import 'package:flutter_app/pages/students_account/career_coaching/student_profile_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';

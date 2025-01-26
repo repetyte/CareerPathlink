@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/graduate.dart';
+import 'package:flutter_app/models/user_role/graduate.dart';
 import 'package:flutter_app/pages/graduates_account/graduate_home_screen.dart';
 import 'package:flutter_app/pages/graduates_account/recruitment_and_placement/rr_job_dashboard_graduates.dart';
 import 'package:google_fonts/google_fonts.dart';

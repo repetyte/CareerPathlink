@@ -1,27 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/user_role/coach_model.dart';
+import 'package:flutter_app/pages/login_and_signup/login_view.dart';
+import 'package:flutter_app/widgets/appbar/coach_header.dart';
+import 'package:flutter_app/widgets/drawer/drawer_coach.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'in_process.dart'; // Import InProcessRequests
 import 'pending_request.dart';
 import 'completed.dart'; // Import Completed
 import '../../../widgets/footer/footer.dart';
-import '../../../widgets/appbar/dean_coach_header.dart';
+import '../../../widgets/appbar/dean_header.dart';
 
 class CoachScreen extends StatelessWidget {
+  final CoachAccount coachAccount;
   final double screenWidth;
 
-  const CoachScreen({super.key, required this.screenWidth});
+  const CoachScreen({super.key, required this.screenWidth, required this.coachAccount});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ProgramScheduleScreen(screenWidth: screenWidth),
+      body: ProgramScheduleScreen(screenWidth: screenWidth, coachAccount: coachAccount,),
     );
   }
 }
 
 class ProgramScheduleScreen extends StatefulWidget {
+  final CoachAccount coachAccount;
   final double screenWidth;
-  const ProgramScheduleScreen({super.key, required this.screenWidth});
+  const ProgramScheduleScreen({super.key, required this.screenWidth, required this.coachAccount});
 
   @override
   _ProgramScheduleScreenState createState() => _ProgramScheduleScreenState();
@@ -35,17 +42,290 @@ class _ProgramScheduleScreenState extends State<ProgramScheduleScreen> {
     'Completed', // Added Completed tab
   ];
 
+  
+  void _showProfileDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        var screenSize = MediaQuery.of(context).size;
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(40),
+          ),
+          child: SizedBox(
+            width: screenSize.width * 0.8,
+            // height: screenSize.height * 0.5,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                   ListTile(
+                    leading: Icon(Icons.person),
+                    title: Text(
+                      widget.coachAccount.name,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text('Career Coach'),
+                  ),
+                  const Divider(),
+                  ListTile(
+                    leading: const Icon(Icons.settings),
+                    title: const Text('Settings'),
+                    onTap: () {
+                      // Navigate to settings
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.logout),
+                    title: const Text('Logout'),
+                    onTap: () {
+                      // Handle logout
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginView(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      appBar: AppBar(
+        centerTitle: false,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage(
+                          'assets/images/seal_of_university_of_nueva_caceres_2.png',
+                        ),
+                      ),
+                    ),
+                    child: const SizedBox(
+                      width: 48,
+                      height: 48,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'UNC ',
+                        style: GoogleFonts.getFont(
+                          'Montserrat',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 24,
+                          color: const Color(0xFF000000),
+                        ),
+                      ),
+                      Text(
+                        'Career',
+                        style: GoogleFonts.getFont(
+                          'Montserrat',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 24,
+                          color: const Color(0xFF9E9E9E),
+                        ),
+                      ),
+                      Text(
+                        'Pathlink',
+                        style: GoogleFonts.getFont(
+                          'Montserrat',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 24,
+                          color: const Color.fromARGB(255, 255, 0, 0),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            GestureDetector(
+              onTap: () => _showProfileDialog(context),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFFD9D9D9),
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: SizedBox(
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          backgroundImage: AssetImage(
+                              'assets/images/image_12.png'), // Add the path to your profile image
+                          radius: 24,
+                        ),
+                        // Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     children: [
+                        //       Text('Partner Name',
+                        //           style: GoogleFonts.getFont(
+                        //             'Montserrat',
+                        //             fontWeight: FontWeight.bold,
+                        //             fontSize: 14,
+                        //             color: const Color(0xFF000000),
+                        //           )),
+                        //       Text('Employer Partner',
+                        //           style: GoogleFonts.getFont(
+                        //             'Montserrat',
+                        //             fontWeight: FontWeight.normal,
+                        //             fontSize: 12,
+                        //             color: const Color(0xFF000000),
+                        //           )),
+                        //     ]),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
+                          width: 12,
+                          height: 7.4,
+                          child: SizedBox(
+                            width: 12,
+                            height: 7.4,
+                            child: SvgPicture.asset(
+                              'assets/vectors/vector_331_x2.svg',
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        toolbarHeight: 92,
+      ),
+      drawer: MyDrawerCoach(coachAccount: widget.coachAccount, screenWidth: widget.screenWidth,),
+      body: Column(
         children: [
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 150.0),
-                  child: Column(
+          SizedBox(
+            width: double.infinity,
+            child: Material(
+              elevation: 4.0,
+              shadowColor: Colors.black.withOpacity(0.3),
+              child: const HeaderCoach(),
+            ),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(16, 24, 16, 24),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Career Coaching',
+                        style: GoogleFonts.getFont(
+                          'Montserrat',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 32,
+                          color: const Color(0xFF000000),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+                    height: 300,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      image: const DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage(
+                          'assets/images/rectangle_223.jpeg',
+                        ),
+                      ),
+                    ),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          left: 0,
+                          right: 0,
+                          top: 0,
+                          bottom: 0,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0x80000000),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: const SizedBox(
+                              width: 380,
+                              height: 200,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.fromLTRB(0, 0, 0, 4),
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    'Manage Appointments',
+                                    style: GoogleFonts.getFont(
+                                      'Montserrat',
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 28,
+                                      color: const Color(0xFFFFFFFF),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  'The Career Center Office is staffed with dedicated counselors who assist students in identifying a suitable career path, regardless of whether they already have a specific occupation in mind or are unsure about their direction.',
+                                  style: GoogleFonts.getFont(
+                                    'Montserrat',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                    color: const Color(0xFFFFFFFF),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Column(
                     children: [
                       // Adding more vertical space between the header and the buttons
                       const SizedBox(height: 20), // Increased space here
@@ -90,7 +370,7 @@ class _ProgramScheduleScreenState extends State<ProgramScheduleScreen> {
                         ),
                       ),
                       const SizedBox(height: 10),
-
+                              
                       // Show relevant section based on selectedIndex
                       SizedBox(
                         height: MediaQuery.of(context).size.height - 180,
@@ -103,21 +383,12 @@ class _ProgramScheduleScreenState extends State<ProgramScheduleScreen> {
                       ),
                     ],
                   ),
-                ),
-                const Footer(),
-              ],
+                  const Footer(),
+                ],
+              ),
             ),
           ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Material(
-              elevation: 4.0,
-              color: Colors.white,
-              // child: const Header(studentAccount: null,),
-            ),
-          ),
+          
         ],
       ),
     );

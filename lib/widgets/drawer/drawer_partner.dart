@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/industry_partner.dart';
+import 'package:flutter_app/models/user_role/industry_partner.dart';
 import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_job_dashboard_emp_partners.dart';
 import 'package:flutter_app/pages/employer_partners_account/work_integrated_learning/internship_dashboard_partner.dart';
 import 'package:google_fonts/google_fonts.dart';

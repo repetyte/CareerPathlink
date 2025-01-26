@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/student.dart';
+import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
 import 'package:flutter_app/widgets/drawer/drawer_students.dart';
 import 'package:flutter_svg/svg.dart';
@@ -264,7 +264,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
                                 child: Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    'Seek Job Opportunities',
+                                    'Appointment Booking',
                                     style: GoogleFonts.getFont(
                                       'Montserrat',
                                       fontWeight: FontWeight.w700,
@@ -294,23 +294,6 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "APPOINTMENT",
-                          style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Color(0xFFEC1D25),
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          "BOOKING",
-                          style: GoogleFonts.montserrat(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Colors.black,
-                          ),
-                        ),
                         Padding(
                           padding: const EdgeInsets.only(
                             left: 80,

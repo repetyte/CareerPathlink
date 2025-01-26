@@ -3,7 +3,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/career_coaching/student_profile_model.dart';
-import 'package:flutter_app/models/student.dart';
+import 'package:flutter_app/models/user_role/student.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'information_form.dart';
 import 'package:table_calendar/table_calendar.dart';

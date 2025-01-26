@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/user_role/career_center_director.dart';
+import 'package:flutter_app/pages/career_center_director_account/career_coaching/coaching_home_screen.dart';
+import 'package:flutter_app/pages/career_center_director_account/director_home_screen.dart';
+import 'package:flutter_app/pages/career_center_director_account/graduates_tracer_industry/graduates_tracer.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyDrawerDirector extends StatelessWidget {
-  const MyDrawerDirector({super.key});
+  final CareerCenterDirectorAccount careerCenterDirectorAccount;
+  const MyDrawerDirector({super.key, required this.careerCenterDirectorAccount});
 
   navigateTo(String route, BuildContext context) {
     Navigator.of(context).pushReplacementNamed(route);
@@ -79,7 +84,13 @@ class MyDrawerDirector extends StatelessWidget {
             leading: const Icon(Icons.home),
             title: const Text('Home'),
             onTap: () {
-              // navigateTo("/rr_job_dashboard", context);
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    HomeScreenDirector(careerCenterDirectorAccount: careerCenterDirectorAccount,),
+              ),
+            );
             },
           ),
           ListTile(
@@ -106,8 +117,13 @@ class MyDrawerDirector extends StatelessWidget {
               ),
             ),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    EngagementDashboard(careerCenterDirectorAccount: careerCenterDirectorAccount,),
+              ),
+            );
             },
           ),
           ListTile(
@@ -132,8 +148,13 @@ class MyDrawerDirector extends StatelessWidget {
               ),
             ),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    TracerDashboardPartner(careerCenterDirectorAccount: careerCenterDirectorAccount,),
+              ),
+            );
             },
           ),
           
