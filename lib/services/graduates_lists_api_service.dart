@@ -3,7 +3,7 @@ import 'package:flutter_app/models/graduates_tracer_industry/GraduatesLists.dart
 import 'package:http/http.dart' as http;
 
 class GraduatesListApiService {
-  final String apiUrl = "http://localhost/graduates_tracer/api";
+  final String apiUrl = "http://localhost/UNC-CareerPathlink/api";
 
   // Create a Graduate
   Future<void> createGraduate(GraduatesList graduate) async {

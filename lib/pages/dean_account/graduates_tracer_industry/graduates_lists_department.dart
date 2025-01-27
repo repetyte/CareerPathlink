@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/graduates_tracer_industry/GraduatesLists.dart';
 import 'package:flutter_app/services/graduates_lists_api_service.dart';
@@ -73,13 +74,17 @@ class _GraduatesListsDepartmentDeanState extends State<GraduatesListsDepartmentD
           const SnackBar(content: Text('Graduate created successfully!')),
         );
       } else {
-        print('Failed to create graduate: ${response.body}');
+        if (kDebugMode) {
+          print('Failed to create graduate: ${response.body}');
+        }
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Failed to create graduate')),
         );
       }
     } catch (e) {
-      print('Error creating graduate: $e');
+      if (kDebugMode) {
+        print('Error creating graduate: $e');
+      }
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Error occurred while creating graduate')),
       );

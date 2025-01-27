@@ -3,7 +3,7 @@ import 'package:flutter_app/models/graduates_tracer_industry/EmployedLists.dart'
 import 'package:http/http.dart' as http;
 
 class EmployedListsApiService {
-  final String apiUrl = "http://localhost/graduates_tracer/api";
+  final String apiUrl = "http://localhost/UNC-CareerPathlink/api";
 
   // Create an Employed Record
   Future<void> createEmployedRecord(EmployedLists employed) async {

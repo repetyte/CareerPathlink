@@ -1,5 +1,5 @@
 <?php
-include 'db.php';
+include '../../database.php';
 
 $data = json_decode(file_get_contents("php://input"), true);
 
@@ -28,7 +28,7 @@ if (isset($data['student_no'], $data['last_name'], $data['first_name'])) {
         ':graduation_date' => $data['graduation_date'] // Added graduation_date
     ]);
 
-    echo json_encode(["message" => "Graduate created successfully"]);
+    echo json_encode(["message" => "Employed created successfully"]);
 } else {
     http_response_code(400);
     echo json_encode(["message" => "Invalid data"]);

@@ -1,24 +1,28 @@
 import 'dart:convert';
-
+import 'package:intl/intl.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/graduates_tracer_industry/GraduatesLists.dart';
 import 'package:flutter_app/services/graduates_lists_api_service.dart';
-import 'package:http/http.dart' as http;
 
 class GraduatesListsDepartmentDirector extends StatefulWidget {
   final String departmentName;
 
-  const GraduatesListsDepartmentDirector({super.key, required this.departmentName});
+  const GraduatesListsDepartmentDirector(
+      {super.key, required this.departmentName});
 
   @override
   _GraduatesListsDepartmentDirectorState createState() =>
       _GraduatesListsDepartmentDirectorState();
 }
 
-class _GraduatesListsDepartmentDirectorState extends State<GraduatesListsDepartmentDirector> {
+class _GraduatesListsDepartmentDirectorState
+    extends State<GraduatesListsDepartmentDirector> {
   late Future<List<GraduatesList>> futureGraduatesLists;
   final GraduatesListApiService apiService = GraduatesListApiService();
   final controllers = <String, TextEditingController>{};
+  DateTime birthdate = DateTime.now();
+  DateTime graduationDate = DateTime.now();
 
   @override
   void initState() {
@@ -27,67 +31,84 @@ class _GraduatesListsDepartmentDirectorState extends State<GraduatesListsDepartm
   }
 
   Future<void> createGraduate() async {
-    try {
-      // Validate input fields
-      if (controllers.values.any((controller) => controller.text.isEmpty)) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('All fields are required')),
-        );
-        return;
-      }
-
-      final response = await http.post(
-        Uri.parse('http://localhost/graduates_tracer/api/graduates/create.php'),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({
-          'student_no': controllers['student_no']?.text,
-          'last_name': controllers['last_name']?.text,
-          'first_name': controllers['first_name']?.text,
-          'middle_name': controllers['middle_name']?.text,
-          'birthdate': controllers['birthdate']?.text,
-          'age': int.tryParse(controllers['age']?.text ?? '0') ?? 0,
-          'home_address': controllers['home_address']?.text,
-          'unc_email': controllers['unc_email']?.text,
-          'personal_email': controllers['personal_email']?.text,
-          'facebook_name': controllers['facebook_name']?.text,
-          'course': controllers['course']?.text,
-          '1st_target_employer': controllers['1st_target_employer']?.text,
-          '2nd_target_employer': controllers['2nd_target_employer']?.text,
-          '3rd_target_employer': controllers['3rd_target_employer']?.text,
-          'graduation_date': controllers['graduation_date']?.text,
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        final newGraduate = GraduatesList.fromJson(jsonDecode(response.body));
-
-        setState(() {
-          futureGraduatesLists = futureGraduatesLists.then((list) {
-            final updatedList = List<GraduatesList>.from(list);
-            updatedList.add(newGraduate);
-            return updatedList;
-          });
-        });
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Graduate created successfully!')),
-        );
-      } else {
-        print('Failed to create graduate: ${response.body}');
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to create graduate')),
-        );
-      }
-    } catch (e) {
-      print('Error creating graduate: $e');
+    // Validate if any field is empty
+    if (controllers.values.any((controller) => controller.text.isEmpty)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Error occurred while creating graduate')),
+        const SnackBar(content: Text('All fields are required')),
+      );
+      return;
+    }
+
+    // Parse and validate birthdate
+    DateTime? parsedBirthdate;
+    try {
+      parsedBirthdate = DateTime.parse(controllers['birthdate']?.text ?? '');
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Invalid birthdate format. Use YYYY-MM-DD')),
+      );
+      return;
+    }
+
+    // Parse and validate graduation date
+    DateTime? parsedGraduationDate;
+    try {
+      parsedGraduationDate =
+          DateTime.parse(controllers['graduation_date']?.text ?? '');
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Invalid graduation date format. Use YYYY-MM-DD')),
+      );
+      return;
+    }
+
+    // Create the graduate object with properly extracted text
+    final graduatesListData = GraduatesList(
+      studentNo: controllers['student_no']?.text ?? '',
+      lastName: controllers['last_name']?.text ?? '',
+      firstName: controllers['first_name']?.text ?? '',
+      middleName: controllers['middle_name']?.text ?? '',
+      birthdate: parsedBirthdate, // Format: YYYY-MM-DD
+      age: int.tryParse(controllers['age']?.text ?? '0') ?? 0,
+      homeAddress: controllers['home_address']?.text ?? '',
+      uncEmail: controllers['unc_email']?.text ?? '',
+      personalEmail: controllers['personal_email']?.text ?? '',
+      facebookName: controllers['facebook_name']?.text ?? '',
+      graduationDate: parsedGraduationDate, // Format: YYYY-MM-DD
+      course: controllers['course']?.text ?? '',
+      firstTargetEmployer: controllers['1st_target_employer']?.text ?? '',
+      secondTargetEmployer: controllers['2nd_target_employer']?.text ?? '',
+      thirdTargetEmployer: controllers['3rd_target_employer']?.text ?? '',
+    );
+
+    if (kDebugMode) {
+      debugPrint('Sending data to API: ${graduatesListData.toJson()}');
+    }
+
+    try {
+      await apiService.createGraduate(graduatesListData);
+
+      // Refresh the UI after a successful creation
+      setState(() {
+        futureGraduatesLists = apiService.fetchGraduatesList();
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Graduate added successfully')),
+      );
+      Navigator.pop(context, true);
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to add graduate: $error')),
       );
     }
   }
 
   void showCreateDialog() {
     controllers.clear();
+    birthdate = DateTime.now();
+    graduationDate = DateTime.now();
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -101,17 +122,73 @@ class _GraduatesListsDepartmentDirectorState extends State<GraduatesListsDepartm
                   'last_name',
                   'first_name',
                   'middle_name',
-                  'birthdate',
+                ])
+                  TextField(
+                    controller: controllers[key] = TextEditingController(),
+                    decoration: InputDecoration(
+                        labelText: key.replaceAll('_', ' ').toUpperCase()),
+                  ),
+                const SizedBox(height: 16),
+                // Date Picker for Birthdate
+                Text('BIRTHDATE:',
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
+                TextButton(
+                  onPressed: () async {
+                    final selectedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime.now(),
+                    );
+                    if (selectedDate != null) {
+                      setState(() {
+                        birthdate = selectedDate;
+                      });
+                    }
+                  },
+                  child: Text(
+                    DateFormat('yyyy-MM-dd').format(birthdate),
+                  ),
+                ),
+                for (String key in [
                   'age',
                   'home_address',
                   'unc_email',
                   'personal_email',
                   'facebook_name',
+                ])
+                  TextField(
+                    controller: controllers[key] = TextEditingController(),
+                    decoration: InputDecoration(
+                        labelText: key.replaceAll('_', ' ').toUpperCase()),
+                  ),
+                const SizedBox(height: 16),
+                // Date Picker for Graduation Date
+                Text('GRADUATION DATE:',
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
+                TextButton(
+                  onPressed: () async {
+                    final selectedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1900),
+                      lastDate: DateTime(2100),
+                    );
+                    if (selectedDate != null) {
+                      setState(() {
+                        graduationDate = selectedDate;
+                      });
+                    }
+                  },
+                  child: Text(
+                    DateFormat('yyyy-MM-dd').format(graduationDate),
+                  ),
+                ),
+                for (String key in [
                   'course',
                   '1st_target_employer',
                   '2nd_target_employer',
                   '3rd_target_employer',
-                  'graduation_date'
                 ])
                   TextField(
                     controller: controllers[key] = TextEditingController(),
@@ -128,8 +205,13 @@ class _GraduatesListsDepartmentDirectorState extends State<GraduatesListsDepartm
             ),
             ElevatedButton(
               onPressed: () {
+                controllers['birthdate'] = TextEditingController(
+                  text: DateFormat('yyyy-MM-dd').format(birthdate),
+                );
+                controllers['graduation_date'] = TextEditingController(
+                  text: DateFormat('yyyy-MM-dd').format(graduationDate),
+                );
                 createGraduate();
-                Navigator.of(context).pop();
               },
               child: const Text('Create'),
             ),
@@ -171,30 +253,30 @@ class _GraduatesListsDepartmentDirectorState extends State<GraduatesListsDepartm
                 DataColumn(label: Text('UNC Email')),
                 DataColumn(label: Text('Personal Email')),
                 DataColumn(label: Text('Facebook Name')),
+                DataColumn(label: Text('Graduation Date')),
                 DataColumn(label: Text('Course')),
                 DataColumn(label: Text('1st Target Employer')),
                 DataColumn(label: Text('2nd Target Employer')),
                 DataColumn(label: Text('3rd Target Employer')),
-                DataColumn(label: Text('Graduation Date')),
                 DataColumn(label: Text('Actions')),
               ],
               rows: graduates.map((graduate) {
                 return DataRow(cells: [
                   DataCell(Text(graduate.studentNo?.toString() ?? 'N/A')),
-                  DataCell(Text(graduate.lastName ?? 'N/A')),
-                  DataCell(Text(graduate.firstName ?? 'N/A')),
-                  DataCell(Text(graduate.middleName ?? 'N/A')),
-                  DataCell(Text(graduate.birthdate?.toIso8601String() ?? 'N/A')),
-                  DataCell(Text(graduate.age?.toString() ?? 'N/A')),
-                  DataCell(Text(graduate.homeAddress ?? 'N/A')),
-                  DataCell(Text(graduate.uncEmail ?? 'N/A')),
-                  DataCell(Text(graduate.personalEmail ?? 'N/A')),
-                  DataCell(Text(graduate.facebookName ?? 'N/A')),
-                  DataCell(Text(graduate.course ?? 'N/A')),
-                  DataCell(Text(graduate.firstTargetEmployer ?? 'N/A')),
-                  DataCell(Text(graduate.secondTargetEmployer ?? 'N/A')),
-                  DataCell(Text(graduate.thirdTargetEmployer ?? 'N/A')),
-                  DataCell(Text(graduate.graduationDate?.toIso8601String() ?? 'N/A')),
+                  DataCell(Text(graduate.lastName)),
+                  DataCell(Text(graduate.firstName)),
+                  DataCell(Text(graduate.middleName)),
+                  DataCell(Text(DateFormat('yyyy-MM-dd').format(graduate.birthdate))),
+                  DataCell(Text(graduate.age.toString())),
+                  DataCell(Text(graduate.homeAddress)),
+                  DataCell(Text(graduate.uncEmail)),
+                  DataCell(Text(graduate.personalEmail)),
+                  DataCell(Text(graduate.facebookName)),
+                  DataCell(Text(DateFormat('yyyy-MM-dd').format(graduate.graduationDate))),
+                  DataCell(Text(graduate.course)),
+                  DataCell(Text(graduate.firstTargetEmployer)),
+                  DataCell(Text(graduate.secondTargetEmployer)),
+                  DataCell(Text(graduate.thirdTargetEmployer)),
                   DataCell(Row(
                     children: [
                       IconButton(
