@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/controller/simple_ui_controller.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
-import 'package:flutter_app/pages/login_and_signup/signUp_view.dart';
-import 'package:flutter_app/pages/students_account/student_home_screen.dart';
 import 'theme.dart';
 import 'package:get/get.dart';
 

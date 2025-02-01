@@ -3,8 +3,6 @@ import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/pages/students_account/career_coaching/calendar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'booking_confirmation.dart';
-import '../../../widgets/footer/footer.dart';
-import '../../../widgets/appbar/student_header.dart';
 import '../student_home_screen.dart';
 import 'package:flutter/services.dart';
 

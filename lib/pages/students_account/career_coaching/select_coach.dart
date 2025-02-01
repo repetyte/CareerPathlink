@@ -3,9 +3,8 @@ import 'package:flutter_app/models/user_role/student.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../widgets/appbar/student_header.dart';
 import 'calendar.dart';
-import '../../../widgets/footer/footer.dart'; // Import the footer widget
+// Import the footer widget
 
 class SelectCoachScreen extends StatefulWidget {
   final StudentAccount studentAccount;

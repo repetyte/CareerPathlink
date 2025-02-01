@@ -79,7 +79,7 @@ class AppTheme {
     ),
     appBarTheme: const AppBarTheme(
       // Appbar  theme
-      color: whiteColor,
+      surfaceTintColor: whiteColor,
       titleTextStyle: TextStyle(
         fontFamily: 'Montserrat',
         fontSize: 20,
@@ -100,6 +100,7 @@ class AppTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       // Elevated Button Theme
       style: ElevatedButton.styleFrom(
+        iconColor: whiteColor,
         foregroundColor: whiteColor,
         backgroundColor: redColor, // Red button text color
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
@@ -111,13 +112,13 @@ class AppTheme {
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(40.0),
-          
         ),
       ),
       
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
+        iconColor: redColor,
         foregroundColor: redColor, // Red button text color
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
         // minimumSize: const Size(200, 50),
@@ -140,6 +141,7 @@ class AppTheme {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
+      
       filled: true,
       fillColor: whiteColor,
       border: roundedInputBorder,
@@ -147,7 +149,8 @@ class AppTheme {
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(40),
         borderSide: BorderSide(
-          color: blackColor, // Red line when focused
+          color: greyColor, // Grey line when focused
+          width: 2.0,
         ),
       ),
       errorBorder: OutlineInputBorder(
@@ -167,6 +170,5 @@ class AppTheme {
       hintStyle: TextStyle(color: greyColor), // Gray hint text
       labelStyle: TextStyle(color: blackColor), // Black label text
     ),
-    
   );
 }

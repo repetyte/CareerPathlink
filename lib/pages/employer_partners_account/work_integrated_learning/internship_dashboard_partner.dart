@@ -7,7 +7,6 @@ import 'package:flutter_app/pages/login_and_signup/login_view.dart';
 import 'package:flutter_app/services/internship_api_service.dart';
 import 'package:flutter_app/widgets/appbar/partner_header.dart';
 import 'package:flutter_app/widgets/drawer/drawer_partner.dart';
-import 'package:flutter_app/widgets/drawer/drawer_students.dart';
 import 'package:flutter_app/widgets/footer/footer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';

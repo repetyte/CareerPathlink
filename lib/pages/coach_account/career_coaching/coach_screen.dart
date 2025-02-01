@@ -9,7 +9,6 @@ import 'in_process.dart'; // Import InProcessRequests
 import 'pending_request.dart';
 import 'completed.dart'; // Import Completed
 import '../../../widgets/footer/footer.dart';
-import '../../../widgets/appbar/dean_header.dart';
 
 class CoachScreen extends StatelessWidget {
   final CoachAccount coachAccount;

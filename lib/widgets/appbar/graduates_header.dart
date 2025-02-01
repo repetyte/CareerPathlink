@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/user_role/student.dart';
-import 'package:flutter_app/pages/students_account/student_home_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/services.dart';

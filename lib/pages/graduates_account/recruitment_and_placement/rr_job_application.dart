@@ -1,4 +1,3 @@
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,10 @@ class JobApplicationScreen extends StatefulWidget {
   final JobPostingWithPartner jobPostingWithPartner;
   final GraduateAccount graduateAccount;
 
-  const JobApplicationScreen({super.key, required this.jobPostingWithPartner, required this.graduateAccount});
+  const JobApplicationScreen(
+      {super.key,
+      required this.jobPostingWithPartner,
+      required this.graduateAccount});
 
   @override
   _JobApplicationScreenState createState() => _JobApplicationScreenState();
@@ -28,10 +30,12 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
   String coverLetterSource = '';
 
   // Controllers for form inputs
-  final TextEditingController skillsController = TextEditingController();
-  final TextEditingController certificationsController =
-      TextEditingController();
-  final TextEditingController educationController = TextEditingController();
+  final List<TextEditingController> _skillsControllers = [];
+  final List<TextEditingController> _certificationsControllers = [];
+
+  //Combined Strings
+  String skills = '';
+  String certifications = '';
 
   // Method to pick Resume
   void _pickResume() async {
@@ -63,11 +67,42 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
     }
   }
 
-  void _submitApplication() {
-    // TODO: Implement the submission logic
-    if (kDebugMode) {
-      debugPrint('Application submitted');
-    }
+  void _addSkillField() {
+    setState(() {
+      _skillsControllers.add(TextEditingController());
+    });
+  }
+
+  void _removeSkillField(int index) {
+    setState(() {
+      _skillsControllers.removeAt(index);
+    });
+  }
+
+  void _clearSkillFields() {
+    setState(() {
+      _skillsControllers.clear();
+      _addSkillField();
+    });
+  }
+
+  void _addCertificationField() {
+    setState(() {
+      _certificationsControllers.add(TextEditingController());
+    });
+  }
+
+  void _removeCertificationField(int index) {
+    setState(() {
+      _certificationsControllers.removeAt(index);
+    });
+  }
+
+  void _clearCertificationFields() {
+    setState(() {
+      _certificationsControllers.clear();
+      _addCertificationField();
+    });
   }
 
   void _showSubmissionDialog() {
@@ -103,6 +138,18 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
       },
     );
   }
+  
+  String _combineFields(List<TextEditingController> controllers) {
+    return controllers.map((controller) => '- ${controller.text}').join('\n');
+  }
+
+  void _submitApplication() {
+    // TODO: Implement the submission logic
+    if (kDebugMode) {
+      debugPrint('Application submitted');
+    }
+  }
+  
 
   @override
   void initState() {
@@ -320,18 +367,109 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 16),
+
+                        // Skills
                         const Text('Skills'),
-                        TextField(
-                          controller: skillsController,
-                          decoration: const InputDecoration(
-                              hintText: 'Enter your skill'),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: _skillsControllers.length,
+                          itemBuilder: (context, index) {
+                            return Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: _skillsControllers[index],
+                                    decoration: InputDecoration(
+                                        hintText:
+                                            'Enter skill ${index + 1}'),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter a skill';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.delete),
+                                  onPressed: () => _removeSkillField(index),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 4.0),
+                        Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: _addSkillField,
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    WidgetStateProperty.all(Colors.green),
+                              ),
+                              // icon: Icon(Icons.add),
+                              child: Text('Add Requirement'),
+                            ),
+                            TextButton(
+                              onPressed: _clearSkillFields,
+                              // icon: Icon(Icons.clear),
+                              child: Text('Clear'),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 8),
+
+                        // Certifications
                         const Text('Certifications'),
-                        TextField(
-                          controller: certificationsController,
-                          decoration: const InputDecoration(
-                              hintText: 'Enter your certification'),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: _certificationsControllers.length,
+                          itemBuilder: (context, index) {
+                            return Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: _certificationsControllers[index],
+                                    decoration: InputDecoration(
+                                        hintText:
+                                            'Enter requirement ${index + 1}'),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the requirement';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.delete),
+                                  onPressed: () =>
+                                      _removeCertificationField(index),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 4.0),
+                        Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: _addCertificationField,
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    WidgetStateProperty.all(Colors.green),
+                              ),
+                              // icon: Icon(Icons.add),
+                              child: Text('Add Requirement'),
+                            ),
+                            TextButton(
+                              onPressed: _clearCertificationFields,
+                              // icon: Icon(Icons.clear),
+                              child: Text('Clear'),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -438,15 +576,15 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                           ),
                         const SizedBox(height: 16),
                         const Text('Skills:'),
-                        if (skillsController.text.isNotEmpty)
-                          Text(skillsController.text)
+                        if (_skillsControllers.text.isNotEmpty)
+                          Text(skills = _combineFields(_skillsControllers))
                         else
                           const Text('No skills provided',
                               style: TextStyle(color: Colors.grey)),
                         const SizedBox(height: 8),
                         const Text('Certifications:'),
-                        if (certificationsController.text.isNotEmpty)
-                          Text(certificationsController.text,
+                        if (_certificationsControllers.text.isNotEmpty)
+                          Text(certifications = _combineFields(_certificationsControllers),
                               style: TextStyle(color: Colors.black))
                         else
                           const Text('No certifications provided',

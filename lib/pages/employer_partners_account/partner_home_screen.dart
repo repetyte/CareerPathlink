@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/industry_partner.dart';
-import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
 import 'package:flutter_app/widgets/appbar/partner_header.dart';
 import 'package:flutter_app/widgets/drawer/drawer_partner.dart';
-import 'package:flutter_app/widgets/drawer/drawer_students.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../widgets/footer/footer.dart';
-import '../../widgets/appbar/student_header.dart';
 
 class HomeScreenPartner extends StatefulWidget {
   final IndustryPartnerAccount employerPartnerAccount;
@@ -146,42 +143,45 @@ class _HomeScreenState extends State<HomeScreenPartner> {
                 ],
               ),
             ),
-            GestureDetector(
-              onTap: () => _showProfileDialog(context),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xFFD9D9D9),
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: SizedBox(
-                  child: Container(
-                    padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          backgroundImage: const AssetImage(
-                              'assets/images/image_12.png'), // Add the path to your profile image
-                          radius: 24,
-                        ),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
-                          width: 12,
-                          height: 7.4,
-                          child: SizedBox(
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () => _showProfileDialog(context),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFD9D9D9),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: SizedBox(
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: const AssetImage(
+                                'assets/images/image_12.png'), // Add the path to your profile image
+                            radius: 24,
+                          ),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
                             width: 12,
                             height: 7.4,
-                            child: SvgPicture.asset(
-                              'assets/vectors/vector_331_x2.svg',
+                            child: SizedBox(
+                              width: 12,
+                              height: 7.4,
+                              child: SvgPicture.asset(
+                                'assets/vectors/vector_331_x2.svg',
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -310,7 +310,7 @@ class _HomeScreenState extends State<HomeScreenPartner> {
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: LayoutBuilder(
                         builder: (context, constraints) {
-                          final isMobile = constraints.maxWidth < 600;
+                          final isMobile = constraints.maxWidth < 700;
                           final cardWidth =
                               (isMobile ? constraints.maxWidth : 300)
                                   .toDouble();
