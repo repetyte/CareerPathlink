@@ -34,7 +34,7 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
   late Future<List<IndustryPartner>> futureIndustryPartners;
 
   Uint8List? coverPhotoBytes;
-  String coverPhotoSource = '';
+  late String coverPhotoSource;
   late TextEditingController _titleController;
   late TextEditingController _statusController;
   late TextEditingController _fieldIndustryController;
@@ -57,6 +57,7 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
     futureIndustryPartners = industryPartnerApiService.fetchIndustryPartners();
 
     // Job Posting
+    coverPhotoSource = widget.jobPostingWithPartner.coverPhoto;
     _titleController =
         TextEditingController(text: widget.jobPostingWithPartner.jobTitle);
     _statusController =

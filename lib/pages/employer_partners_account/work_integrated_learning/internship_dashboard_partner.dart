@@ -36,7 +36,8 @@ class _InternshipDashboardPartnerState
     futureInternships = InternshipApiService().fetchInternships();
     futureInternships.then((data) {
       setState(() {
-        _filteredInternships = data;
+        _filteredInternships = data.where((internship) =>
+          internship.partnerId == widget.employerPartnerAccount.partnerId).toList();
       });
     });
     _searchController.addListener(_filterInternships);
@@ -101,7 +102,8 @@ class _InternshipDashboardPartnerState
       futureInternships = InternshipApiService().fetchInternships();
       futureInternships.then((data) {
         setState(() {
-          _filteredInternships = data;
+          _filteredInternships = data.where((internship) =>
+            internship.partnerId == widget.employerPartnerAccount.partnerId).toList();
         });
       });
     });
@@ -112,10 +114,11 @@ class _InternshipDashboardPartnerState
     futureInternships.then((data) {
       setState(() {
         _filteredInternships = data
-            .where((internship) =>
-                internship.internshipTitle.toLowerCase().contains(query) ||
-                internship.description.toLowerCase().contains(query))
-            .toList();
+          .where((internship) =>
+            internship.partnerId == widget.employerPartnerAccount.partnerId &&
+            (internship.internshipTitle.toLowerCase().contains(query) ||
+            internship.description.toLowerCase().contains(query)))
+          .toList();
       });
     });
   }

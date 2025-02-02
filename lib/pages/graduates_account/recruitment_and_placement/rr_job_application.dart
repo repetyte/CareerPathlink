@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/recruitment_and_placement/job_application.dart';
 import 'package:flutter_app/models/user_role/graduate.dart';
 import 'package:flutter_app/models/recruitment_and_placement/job_posting.dart';
+import 'package:flutter_app/services/job_application_api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 class JobApplicationScreen extends StatefulWidget {
   final JobPostingWithPartner jobPostingWithPartner;
@@ -20,6 +25,9 @@ class JobApplicationScreen extends StatefulWidget {
 
 class _JobApplicationScreenState extends State<JobApplicationScreen> {
   int currentStep = 0;
+
+  final JobApplicationApiService jobApplicationApiService =
+      JobApplicationApiService();
 
   // Resume variables
   Uint8List? resumeBytes;
@@ -138,18 +146,47 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
       },
     );
   }
-  
+
   String _combineFields(List<TextEditingController> controllers) {
     return controllers.map((controller) => '- ${controller.text}').join('\n');
   }
 
-  void _submitApplication() {
-    // TODO: Implement the submission logic
+  void _submitApplication() async {
+    skills = _combineFields(_skillsControllers);
+    certifications = _combineFields(_certificationsControllers);
+
+    // final DateFormat dateFormat = DateFormat('yyyy-dd-MM');
+    // final String formattedDate = dateFormat.format(DateTime.now());
+    // final DateTime dateApplied = dateFormat.parse(formattedDate);
+
+    final jobApplicationData = JobApplication(
+      applicant: widget.graduateAccount.graduateId.toString(),
+      job: widget.jobPostingWithPartner.jobId ?? 0,
+      resume: resumeSource,
+      coverLetter: coverLetterSource,
+      skills: skills,
+      certifications: certifications,
+      applicationStatus: 'Pending',
+      dateApplied: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+    );
+
+    // Debugging: Print the JSON data
     if (kDebugMode) {
-      debugPrint('Application submitted');
+      debugPrint(jsonEncode(jobApplicationData.toJson()));
+    }
+
+    try {
+      // Send the job application data to the API
+      await jobApplicationApiService.createJobApplication(jobApplicationData);
+      // widget.onJobPostingAdded();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Job application submitted successfully')));
+      Navigator.pop(context, true);
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to add job application: $error')));
     }
   }
-  
 
   @override
   void initState() {
@@ -173,7 +210,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
               Card(
                 elevation: 10.0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25.0),
+                  borderRadius: BorderRadius.circular(40.0),
                 ),
                 clipBehavior: Clip.antiAlias,
                 child: Column(
@@ -261,7 +298,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(40.0),
                                   ),
                                   child: Row(
                                     children: [
@@ -287,7 +324,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(40.0),
                                   ),
                                   child: const Text(
                                     "Click to upload your resume",
@@ -313,7 +350,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(40.0),
                                   ),
                                   child: Row(
                                     children: [
@@ -339,7 +376,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(40.0),
                                   ),
                                   child: const Text(
                                     "Click to upload your cover letter",
@@ -381,8 +418,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                                   child: TextFormField(
                                     controller: _skillsControllers[index],
                                     decoration: InputDecoration(
-                                        hintText:
-                                            'Enter skill ${index + 1}'),
+                                        hintText: 'Enter skill ${index + 1}'),
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return 'Please enter a skill';
@@ -409,7 +445,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                                     WidgetStateProperty.all(Colors.green),
                               ),
                               // icon: Icon(Icons.add),
-                              child: Text('Add Requirement'),
+                              child: Text('Add your Skill'),
                             ),
                             TextButton(
                               onPressed: _clearSkillFields,
@@ -431,7 +467,8 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                               children: [
                                 Expanded(
                                   child: TextFormField(
-                                    controller: _certificationsControllers[index],
+                                    controller:
+                                        _certificationsControllers[index],
                                     decoration: InputDecoration(
                                         hintText:
                                             'Enter requirement ${index + 1}'),
@@ -462,7 +499,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                                     WidgetStateProperty.all(Colors.green),
                               ),
                               // icon: Icon(Icons.add),
-                              child: Text('Add Requirement'),
+                              child: Text('Add your Certification'),
                             ),
                             TextButton(
                               onPressed: _clearCertificationFields,
@@ -489,6 +526,8 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 16),
+
+                        // Resume
                         const Text('Resume:'),
                         if (resumeBytes != null)
                           Container(
@@ -498,7 +537,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(10.0),
+                              borderRadius: BorderRadius.circular(40.0),
                             ),
                             child: Row(
                               children: [
@@ -524,7 +563,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(10.0),
+                              borderRadius: BorderRadius.circular(40.0),
                             ),
                             child: const Text(
                               "No resume uploaded",
@@ -532,6 +571,8 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                             ),
                           ),
                         const SizedBox(height: 16),
+
+                        // Cover Letter
                         const Text('Cover Letter:'),
                         if (coverLetterBytes != null)
                           Container(
@@ -541,7 +582,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(10.0),
+                              borderRadius: BorderRadius.circular(40.0),
                             ),
                             child: Row(
                               children: [
@@ -567,7 +608,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(10.0),
+                              borderRadius: BorderRadius.circular(40.0),
                             ),
                             child: const Text(
                               "No cover letter uploaded",
@@ -576,15 +617,17 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                           ),
                         const SizedBox(height: 16),
                         const Text('Skills:'),
-                        if (_skillsControllers.text.isNotEmpty)
+                        if (_skillsControllers.isNotEmpty)
                           Text(skills = _combineFields(_skillsControllers))
                         else
                           const Text('No skills provided',
                               style: TextStyle(color: Colors.grey)),
                         const SizedBox(height: 8),
                         const Text('Certifications:'),
-                        if (_certificationsControllers.text.isNotEmpty)
-                          Text(certifications = _combineFields(_certificationsControllers),
+                        if (_certificationsControllers.isNotEmpty)
+                          Text(
+                              certifications =
+                                  _combineFields(_certificationsControllers),
                               style: TextStyle(color: Colors.black))
                         else
                           const Text('No certifications provided',

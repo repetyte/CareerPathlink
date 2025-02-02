@@ -83,7 +83,12 @@ class MyDrawerPartner extends StatelessWidget {
             leading: const Icon(Icons.home),
             title: const Text('Home'),
             onTap: () {
-              // navigateTo("/rr_job_dashboard", context);
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RrJobDashboardEmpPartners(employerPartnerAccount: employerPartnerAccount,),
+              ),
+            );
             },
           ),
           ListTile(

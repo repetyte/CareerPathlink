@@ -33,11 +33,6 @@ class JobPostingWithPartner {
     }
 
     // CRUD Operations
-    /**
-     * Create a new job posting
-     *
-     * @return boolean true if the job posting was created, false otherwise
-     */
     function create() {
         $query = "INSERT INTO
                     " . $this->table_name . "
@@ -97,11 +92,6 @@ class JobPostingWithPartner {
         return false;
     }
 
-    /**
-     * Read all job postings
-     *
-     * @return PDOStatement
-     */
     function read(){
         $query = "SELECT
                       jp.job_id,
@@ -132,11 +122,6 @@ class JobPostingWithPartner {
         return $stmt;
     }
 
-    /**
-     * Update a job posting
-     *
-     * @return boolean true if the job posting was updated, false otherwise
-     */
     function update(){
         $query = "UPDATE " . $this->table_name . " jp
                   JOIN industry_partner_tb ip ON jp.industry_partner = ip.partner_id
@@ -213,11 +198,6 @@ class JobPostingWithPartner {
         return false;
     }
 
-    /**
-     * Delete a job posting given its id
-     *
-     * @return boolean true if the job posting was deleted, false otherwise
-     */
     function delete(){
         $query = "DELETE FROM " . $this->table_name . " WHERE job_id = :job_id";
         $stmt = $this->conn->prepare($query);

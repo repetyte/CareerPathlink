@@ -42,6 +42,7 @@ class AppTheme {
       // On colors
       onPrimary: blackColor,
       onSecondary: blackColor,
+      onTertiary: whiteColor,
       onSurface: blackColor,
       onError: whiteColor,
     ),
@@ -141,7 +142,6 @@ class AppTheme {
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      
       filled: true,
       fillColor: whiteColor,
       border: roundedInputBorder,

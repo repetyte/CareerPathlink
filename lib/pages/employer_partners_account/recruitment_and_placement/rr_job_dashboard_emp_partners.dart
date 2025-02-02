@@ -33,10 +33,10 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
     debugPrint('Employer Partner Location: ${widget.employerPartnerAccount.partnerLocation}\n');
     super.initState();
     futureJobPostings = JobPostingApiService().fetchJobPostings();
-    // _refreshJobPostings();
+    _refreshJobPostings();
     futureJobPostings.then((data) {
       setState(() {
-        _filteredJobPostings = data;
+        _filteredJobPostings = data.where((job) => job.partnerId == widget.employerPartnerAccount.partnerId).toList();
       });
     });
     _searchController.addListener(_filterJobPostings);
@@ -102,7 +102,7 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
       futureJobPostings = JobPostingApiService().fetchJobPostings();
       futureJobPostings.then((data) {
         setState(() {
-          _filteredJobPostings = data;
+          _filteredJobPostings = data.where((job) => job.partnerId == widget.employerPartnerAccount.partnerId).toList();
         });
       });
     });
@@ -114,8 +114,9 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
       setState(() {
         _filteredJobPostings = data
             .where((job) =>
-                job.jobTitle.toLowerCase().contains(query) ||
-                job.fieldIndustry.toLowerCase().contains(query))
+                job.partnerId == widget.employerPartnerAccount.partnerId &&
+                (job.jobTitle.toLowerCase().contains(query) ||
+                 job.fieldIndustry.toLowerCase().contains(query)))
             .toList();
       });
     });
