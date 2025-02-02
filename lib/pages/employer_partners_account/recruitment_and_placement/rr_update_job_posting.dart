@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:html' as html;
 
 import 'package:file_picker/file_picker.dart';
@@ -166,8 +167,9 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
         emailAdd: widget.jobPostingWithPartner.emailAdd,
       );
 
+      // Debugging: Print the JSON data
       if (kDebugMode) {
-        debugPrint(jobPostingData.toJson() as String?);
+        debugPrint(jsonEncode(jobPostingData.toJson()));
       }
 
       try {

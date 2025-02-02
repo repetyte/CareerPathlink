@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:html' as html;
 
 import 'package:file_picker/file_picker.dart';
@@ -11,11 +12,11 @@ import 'package:flutter_app/services/industry_partner_api_service.dart';
 class UpdateInternship extends StatefulWidget {
   final IndustryPartnerAccount employerPartnerAccount;
   final InternshipWithPartner internshipWithPartner;
-  final VoidCallback onInternshipAdded;
+  final VoidCallback onInternshipUpdated;
 
   const UpdateInternship(
       {super.key,
-      required this.onInternshipAdded,
+      required this.onInternshipUpdated,
       required this.employerPartnerAccount,
       required this.internshipWithPartner});
 
@@ -169,7 +170,7 @@ class _UpdateInternshipState extends State<UpdateInternship> {
     return controllers.map((controller) => '- ${controller.text}').join('\n');
   }
 
-  Future<void> _submitInternship() async {
+  Future<void> _updateInternship() async {
     if (_formKey.currentState!.validate()) {
       // if (_selectedPartner == null) {
       //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -183,29 +184,30 @@ class _UpdateInternshipState extends State<UpdateInternship> {
       final internshipData = Internship(
         displayPhoto:
             'assets/images/$displayPhotoSource', // Use appropriate source
-        internshipTitle: internshipTitle,
-        hours: '$hours hrs',
-        takehomePay: takehomePay,
-        location: location,
-        description: description,
-        requiredSkills: requiredSkills,
-        qualifications: qualifications,
+        internshipTitle: _titleController.text,
+        hours: "${_hoursController.text} hrs",
+        takehomePay: _takehomePayController.text,
+        location: _locationController.text,
+        description: _descriptionController.text,
+        requiredSkills: _requiredSkillsController.text,
+        qualifications: _qualificationsController.text,
         industryPartner: widget.employerPartnerAccount.partnerId,
       );
 
+      // Debugging: Print the JSON data
       if (kDebugMode) {
-        debugPrint(internshipData.toJson() as String?);
+        debugPrint(jsonEncode(internshipData.toJson()));
       }
 
       try {
         await internshipApiService.createInternship(internshipData);
-        widget.onInternshipAdded();
+        widget.onInternshipUpdated();
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Internship added successfully')));
+            const SnackBar(content: Text('Internship updated successfully')));
         Navigator.pop(context, true);
       } catch (error) {
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to add internship: $error')));
+            SnackBar(content: Text('Failed to update internship: $error')));
       }
     }
   }
@@ -214,7 +216,7 @@ class _UpdateInternshipState extends State<UpdateInternship> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Internship Posting'),
+        title: const Text('Update Internship Posting'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -341,6 +343,7 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                                     color: Colors.white),
                                               ),
                                               TextFormField(
+                                                controller: _titleController,
                                                 // decoration: const InputDecoration(labelText: 'Internship Title'),
                                                 decoration: const InputDecoration(
                                                     hintText:
@@ -386,7 +389,9 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                           max: 100,
                                           divisions: 80,
                                           label: hours.toString(),
-                                          value: hours.toDouble(),
+                                          value: _hoursController.text.isEmpty
+                                              ? 20
+                                              : double.parse(_hoursController.text),
                                           onChanged: (value) {
                                             setState(() {
                                               hours = value.round();
@@ -404,7 +409,7 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                         ),
                                         DropdownButtonFormField<String>(
                                           // decoration: const InputDecoration(labelText: 'Status', hintText: 'Internship Status'),
-                                          // value: status,
+                                          value: _takehomePayController.text,
                                           hint: Text('Select an option'),
                                           onChanged: (newValue) {
                                             setState(() {
@@ -435,7 +440,7 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                         ),
                                         DropdownButtonFormField<String>(
                                           // decoration: const InputDecoration(labelText: 'Internship Location'),
-                                          // value: jobLocation,
+                                          value: _locationController.text,
                                           hint: Text('Select an option'),
                                           onChanged: (newValue) {
                                             setState(() {
@@ -467,6 +472,7 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                         ),
                                         TextFormField(
                                           // decoration: const InputDecoration(labelText: 'Internship Description'),
+                                          controller: _descriptionController,
                                           decoration: const InputDecoration(
                                               hintText:
                                                   'Enter the internship description'),
@@ -694,7 +700,7 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                               // Validate the form and post the internship
                                               if (_formKey.currentState!
                                                   .validate()) {
-                                                await _submitInternship();
+                                                await _updateInternship();
                                               }
                                             },
                                             label:

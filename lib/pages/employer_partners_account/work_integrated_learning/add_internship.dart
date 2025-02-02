@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:html' as html;
 
 import 'package:file_picker/file_picker.dart';
@@ -163,8 +164,9 @@ class _AddInternshipState extends State<AddInternship> {
         industryPartner: widget.employerPartnerAccount.partnerId,
       );
 
+      // Debugging: Print the JSON data
       if (kDebugMode) {
-        debugPrint(internshipData.toJson() as String?);
+        debugPrint(jsonEncode(internshipData.toJson()));
       }
 
       try {
