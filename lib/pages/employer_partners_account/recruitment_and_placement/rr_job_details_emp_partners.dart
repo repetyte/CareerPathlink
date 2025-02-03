@@ -83,7 +83,7 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
           title: const Text('Delete Job Posting',
               style: TextStyle(fontWeight: FontWeight.bold)),
           content:
-              const Text('Are you sure you want to delete this job posting? All job applications listed will be deleted as well.'),
+              const Text('Are you sure you want to delete this job posting? All applications from this job posting will be deleted.'),
           actions: <Widget>[
             TextButton(
               onPressed: () {

@@ -53,7 +53,8 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
   void initState() {
     debugPrint(
         'Employer Partner ID: ${widget.employerPartnerAccount.partnerName}');
-    debugPrint('Employer Partner Location: ${widget.employerPartnerAccount.partnerLocation}\n');
+    debugPrint(
+        'Employer Partner Location: ${widget.employerPartnerAccount.partnerLocation}\n');
     super.initState();
     futureIndustryPartners = industryPartnerApiService.fetchIndustryPartners();
 
@@ -226,8 +227,14 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(40.0),
                       ),
-                      child: const Text(
-                          "Drag and drop an image or click to select"),
+                      child: widget.jobPostingWithPartner.coverPhoto.isNotEmpty
+                          ? Image.network(
+                              widget.jobPostingWithPartner.coverPhoto,
+                              fit: BoxFit.contain,
+                            )
+                          : const Text(
+                              "Drag and drop an image or click to select",
+                              style: TextStyle(color: Colors.grey)),
                     ),
                 ]),
               ),

@@ -137,7 +137,7 @@ class _AddInternshipState extends State<AddInternship> {
   }
 
   String _combineFields(List<TextEditingController> controllers) {
-    return controllers.map((controller) => '- ${controller.text}').join('\n');
+    return controllers.map((controller) => '• ${controller.text}').join('\n');
   }
 
   Future<void> _submitInternship() async {
@@ -155,7 +155,7 @@ class _AddInternshipState extends State<AddInternship> {
         displayPhoto:
             'assets/images/$displayPhotoSource', // Use appropriate source
         internshipTitle: internshipTitle,
-        hours: '$hours hrs',
+        hours: hours.toString(),
         takehomePay: takehomePay,
         location: location,
         description: description,

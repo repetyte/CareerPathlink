@@ -32,15 +32,6 @@ class _UpdateInternshipState extends State<UpdateInternship> {
 
   IndustryPartner? _selectedPartner;
   late Future<List<IndustryPartner>> futureIndustryPartners;
-
-  String internshipTitle = '';
-  
-  int hours = 20;
-  String takehomePay = 'Below PHP 10,000';
-  String location = 'Work From Home';
-  String description = '';
-  String requiredSkills = '';
-  String qualifications = '';
   
   Uint8List? displayPhotoBytes;
   late String displayPhotoSource; // Keeps track of the image source (path or URL)
@@ -90,8 +81,16 @@ class _UpdateInternshipState extends State<UpdateInternship> {
       emailAdd: widget.internshipWithPartner.emailAdd,
     );
 
-    _addRequiredSkillField();
-    _addQualificationField();
+    // Initialize required skills and qualifications fields
+    _initializeFields(_requiredSkillsController.text, _requiredSkillsControllers);
+    _initializeFields(_qualificationsController.text, _qualificationsControllers);
+  }
+
+  void _initializeFields(String text, List<TextEditingController> controllers) {
+    final statements = text.split('\n').map((s) => s.replaceFirst('• ', '')).toList();
+    for (var statement in statements) {
+      controllers.add(TextEditingController(text: statement));
+    }
   }
 
   void _pickFromFileExplorer() async {
@@ -167,21 +166,16 @@ class _UpdateInternshipState extends State<UpdateInternship> {
   }
 
   String _combineFields(List<TextEditingController> controllers) {
-    return controllers.map((controller) => '- ${controller.text}').join('\n');
+    return controllers.map((controller) => '• ${controller.text}').join('\n');
   }
 
   Future<void> _updateInternship() async {
     if (_formKey.currentState!.validate()) {
-      // if (_selectedPartner == null) {
-      //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      //       content: Text('Please select an industry partner.')));
-      //   return;
-      // }
 
-      requiredSkills = _combineFields(_requiredSkillsControllers);
-      qualifications = _combineFields(_qualificationsControllers);
+      _requiredSkillsController.text = _combineFields(_requiredSkillsControllers);
+      _qualificationsController.text = _combineFields(_qualificationsControllers);
 
-      final internshipData = Internship(
+      final internshipData = InternshipWithPartner(
         displayPhoto:
             'assets/images/$displayPhotoSource', // Use appropriate source
         internshipTitle: _titleController.text,
@@ -191,7 +185,14 @@ class _UpdateInternshipState extends State<UpdateInternship> {
         description: _descriptionController.text,
         requiredSkills: _requiredSkillsController.text,
         qualifications: _qualificationsController.text,
-        industryPartner: widget.employerPartnerAccount.partnerId,
+        industryPartner: int.parse(_industryPartnerController.text),
+
+        partnerId: widget.internshipWithPartner.partnerId,
+        profilePic: widget.internshipWithPartner.profilePic,
+        partnerName: widget.internshipWithPartner.partnerName,
+        partnerLocation: widget.internshipWithPartner.partnerLocation,
+        contactNo: widget.internshipWithPartner.contactNo,
+        emailAdd: widget.internshipWithPartner.emailAdd,
       );
 
       // Debugging: Print the JSON data
@@ -200,7 +201,7 @@ class _UpdateInternshipState extends State<UpdateInternship> {
       }
 
       try {
-        await internshipApiService.createInternship(internshipData);
+        await internshipApiService.updateInternship(internshipData);
         widget.onInternshipUpdated();
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Internship updated successfully')));
@@ -323,11 +324,16 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                                             BorderRadius
                                                                 .circular(40.0),
                                                       ),
-                                                      child: const Text(
-                                                          "Drag and drop an image or click to select",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.grey)),
+                                                      child: widget.internshipWithPartner.displayPhoto.isNotEmpty
+                                                          ? Image.network(
+                                                              widget.internshipWithPartner.displayPhoto,
+                                                              fit: BoxFit.contain,
+                                                            )
+                                                          : const Text(
+                                                              "Drag and drop an image or click to select",
+                                                              style: TextStyle(
+                                                                  color:
+                                                                      Colors.grey)),
                                                     ),
                                                 ]),
                                               ),
@@ -353,7 +359,7 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                                       value.isEmpty) {
                                                     return 'Please enter the internship title';
                                                   }
-                                                  internshipTitle = value;
+                                                  _titleController.text = value;
                                                   return null;
                                                 },
                                               ),
@@ -388,13 +394,11 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                           min: 20,
                                           max: 100,
                                           divisions: 80,
-                                          label: hours.toString(),
-                                          value: _hoursController.text.isEmpty
-                                              ? 20
-                                              : double.parse(_hoursController.text),
+                                          label: _hoursController.text,
+                                          value: int.parse(_hoursController.text).toDouble(),
                                           onChanged: (value) {
                                             setState(() {
-                                              hours = value.round();
+                                              _hoursController.text = value.round().toString();
                                             });
                                           },
                                         ),
@@ -413,7 +417,7 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                           hint: Text('Select an option'),
                                           onChanged: (newValue) {
                                             setState(() {
-                                              takehomePay = newValue!;
+                                              _takehomePayController.text = newValue!;
                                             });
                                           },
                                           items: [
@@ -444,7 +448,7 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                           hint: Text('Select an option'),
                                           onChanged: (newValue) {
                                             setState(() {
-                                              location = newValue!;
+                                              _locationController.text = newValue!;
                                             });
                                           },
                                           items: [
@@ -482,7 +486,7 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                                 value.isEmpty) {
                                               return 'Please enter the internship description';
                                             }
-                                            description = value;
+                                            _descriptionController.text = value;
                                             return null;
                                           },
                                         ),
@@ -497,25 +501,19 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                         ),
                                         ListView.builder(
                                           shrinkWrap: true,
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          itemCount:
-                                              _requiredSkillsControllers.length,
+                                          physics: NeverScrollableScrollPhysics(),
+                                          itemCount: _requiredSkillsControllers.length,
                                           itemBuilder: (context, index) {
                                             return Row(
                                               children: [
                                                 Expanded(
                                                   child: TextFormField(
-                                                    controller:
-                                                        _requiredSkillsControllers[
-                                                            index],
+                                                    controller: _requiredSkillsControllers[index],
                                                     decoration: InputDecoration(
-                                                        hintText:
-                                                            'Enter required skill ${index + 1}'),
+                                                        hintText: 'Enter required skill ${index + 1}'),
                                                     validator: (value) {
-                                                      if (value == null ||
-                                                          value.isEmpty) {
-                                                        return 'Please enter the required skil';
+                                                      if (value == null || value.isEmpty) {
+                                                        return 'Please enter the required skill';
                                                       }
                                                       return null;
                                                     },
@@ -523,9 +521,7 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                                 ),
                                                 IconButton(
                                                   icon: Icon(Icons.delete),
-                                                  onPressed: () =>
-                                                      _removeRequiredSkillField(
-                                                          index),
+                                                  onPressed: () => _removeRequiredSkillField(index),
                                                 ),
                                               ],
                                             );
@@ -537,17 +533,12 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                             ElevatedButton(
                                               onPressed: _addRequiredSkillField,
                                               style: ButtonStyle(
-                                                backgroundColor:
-                                                    WidgetStateProperty.all(
-                                                        Colors.green),
+                                                backgroundColor: WidgetStateProperty.all(Colors.green),
                                               ),
-                                              // icon: Icon(Icons.add),
                                               child: Text('Add Required Skill'),
                                             ),
                                             TextButton(
-                                              onPressed:
-                                                  _clearRequiredSkillFields,
-                                              // icon: Icon(Icons.clear),
+                                              onPressed: _clearRequiredSkillFields,
                                               child: Text('Clear'),
                                             ),
                                           ],
@@ -563,25 +554,19 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                         ),
                                         ListView.builder(
                                           shrinkWrap: true,
-                                          physics:
-                                              NeverScrollableScrollPhysics(),
-                                          itemCount:
-                                              _qualificationsControllers.length,
+                                          physics: NeverScrollableScrollPhysics(),
+                                          itemCount: _qualificationsControllers.length,
                                           itemBuilder: (context, index) {
                                             return Row(
                                               children: [
                                                 Expanded(
                                                   child: TextFormField(
-                                                    controller:
-                                                        _qualificationsControllers[
-                                                            index],
+                                                    controller: _qualificationsControllers[index],
                                                     decoration: InputDecoration(
-                                                        hintText:
-                                                            'Enter qualification ${index + 1}'),
+                                                        hintText: 'Enter qualification ${index + 1}'),
                                                     validator: (value) {
-                                                      if (value == null ||
-                                                          value.isEmpty) {
-                                                        return 'Please enter the quailification';
+                                                      if (value == null || value.isEmpty) {
+                                                        return 'Please enter the qualification';
                                                       }
                                                       return null;
                                                     },
@@ -589,9 +574,7 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                                 ),
                                                 IconButton(
                                                   icon: Icon(Icons.delete),
-                                                  onPressed: () =>
-                                                      _removeQualificationField(
-                                                          index),
+                                                  onPressed: () => _removeQualificationField(index),
                                                 ),
                                               ],
                                             );
@@ -603,17 +586,13 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                             ElevatedButton(
                                               onPressed: _addQualificationField,
                                               style: ButtonStyle(
-                                                backgroundColor:
-                                                    WidgetStateProperty.all(
-                                                        Colors.green),
+                                                backgroundColor: WidgetStateProperty.all(Colors.green),
                                               ),
                                               child: Text('Add Qualification'),
                                             ),
                                             TextButton(
-                                              onPressed:
-                                                  _clearQualificationFields,
-                                              child: Text(
-                                                  'Clear'), // icon: Icon(Icons.clear),
+                                              onPressed: _clearQualificationFields,
+                                              child: Text('Clear'),
                                             ),
                                           ],
                                         ),

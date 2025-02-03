@@ -492,7 +492,7 @@ class _InternshipDashboardPartnerState
                                                               MaterialPageRoute(
                                                                 builder: (context) =>
                                                                     InternshipDetailsPartner(
-                                                                  internship: data[index],
+                                                                  internshipWithPartner: data[index],
                                                                   employerPartnerAccount: widget
                                                                       .employerPartnerAccount,
                                                                 ),
