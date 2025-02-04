@@ -186,8 +186,7 @@ class _UpdateInternshipState extends State<UpdateInternship> {
         requiredSkills: _requiredSkillsController.text,
         qualifications: _qualificationsController.text,
         industryPartner: int.parse(_industryPartnerController.text),
-
-        partnerId: widget.internshipWithPartner.partnerId,
+        
         profilePic: widget.internshipWithPartner.profilePic,
         partnerName: widget.internshipWithPartner.partnerName,
         partnerLocation: widget.internshipWithPartner.partnerLocation,

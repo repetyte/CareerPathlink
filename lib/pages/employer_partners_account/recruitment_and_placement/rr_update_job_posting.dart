@@ -49,6 +49,9 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
   late TextEditingController _jobResponsibilitiesController;
   late TextEditingController _industryPartnerController;
 
+  final List<TextEditingController> _requirementsControllers = [];
+  final List<TextEditingController> _jobResponsibilitiesControllers = [];
+
   @override
   void initState() {
     debugPrint(
@@ -94,11 +97,24 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
       emailAdd: widget.jobPostingWithPartner.emailAdd,
     );
 
+    // Initialize required skills and qualifications fields
+    _initializeFields(_requirementsController.text, _requirementsControllers);
+    _initializeFields(
+        _jobResponsibilitiesController.text, _jobResponsibilitiesControllers);
+
     // Drag and drop event listeners
     final html.Element? body = html.document.body;
     if (body != null) {
       body.onDragOver.listen(_handleDragOver);
       body.onDrop.listen(_handleDrop);
+    }
+  }
+
+  void _initializeFields(String text, List<TextEditingController> controllers) {
+    final statements =
+        text.split('\n').map((s) => s.replaceFirst('• ', '')).toList();
+    for (var statement in statements) {
+      controllers.add(TextEditingController(text: statement));
     }
   }
 
@@ -136,6 +152,48 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
     }
   }
 
+  void _addRequirementField() {
+    setState(() {
+      _requirementsControllers.add(TextEditingController());
+    });
+  }
+
+  void _removeRequirementField(int index) {
+    setState(() {
+      _requirementsControllers.removeAt(index);
+    });
+  }
+
+  void _clearRequirementFields() {
+    setState(() {
+      _requirementsControllers.clear();
+      _addRequirementField();
+    });
+  }
+
+  void _addResponsibilityField() {
+    setState(() {
+      _jobResponsibilitiesControllers.add(TextEditingController());
+    });
+  }
+
+  void _removeResponsibilityField(int index) {
+    setState(() {
+      _jobResponsibilitiesControllers.removeAt(index);
+    });
+  }
+
+  void _clearResponsibilityFields() {
+    setState(() {
+      _jobResponsibilitiesControllers.clear();
+      _addResponsibilityField();
+    });
+  }
+
+  String _combineFields(List<TextEditingController> controllers) {
+    return controllers.map((controller) => '• ${controller.text}').join('\n');
+  }
+
   void _updateJobPosting() async {
     if (_formKey.currentState!.validate()) {
       if (_selectedPartner == null) {
@@ -143,6 +201,10 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
             content: Text('Please select an industry partner.')));
         return;
       }
+
+      _requirementsController.text = _combineFields(_requirementsControllers);
+      _jobResponsibilitiesController.text =
+          _combineFields(_jobResponsibilitiesControllers);
 
       final jobPostingData = JobPostingWithPartner(
         jobId: widget.jobPostingWithPartner.jobId,
@@ -220,7 +282,7 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
                     ),
                   if (coverPhotoBytes == null)
                     Container(
-                      height: 200,
+                      height: 400,
                       width: double.infinity,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
@@ -464,18 +526,49 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
                 'Requirements:',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              TextFormField(
-                // decoration: const InputDecoration(labelText: 'Requirements'),
-                controller: _requirementsController,
-                decoration: const InputDecoration(
-                    hintText: 'Enter the job requirements'),
-                maxLines: 3,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the job requirements';
-                  }
-                  return null;
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: _requirementsControllers.length,
+                itemBuilder: (context, index) {
+                  return Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: _requirementsControllers[index],
+                          decoration: InputDecoration(
+                              hintText: 'Enter required skill ${index + 1}'),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter the required skill';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () => _removeRequirementField(index),
+                      ),
+                    ],
+                  );
                 },
+              ),
+              const SizedBox(height: 8.0),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: _addRequirementField,
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(Colors.green),
+                    ),
+                    child: Text('Add Required Skill'),
+                  ),
+                  TextButton(
+                    onPressed: _clearRequirementFields,
+                    child: Text('Clear'),
+                  ),
+                ],
               ),
               const SizedBox(height: 16.0),
 
@@ -484,19 +577,49 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
                 'Job Responsibilities:',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
-              TextFormField(
-                // decoration:
-                //     const InputDecoration(labelText: 'Job Responsibilities'),
-                controller: _jobResponsibilitiesController,
-                decoration: const InputDecoration(
-                    hintText: 'Enter the job responsibilities'),
-                maxLines: 3,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter the job responsibilities';
-                  }
-                  return null;
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: _jobResponsibilitiesControllers.length,
+                itemBuilder: (context, index) {
+                  return Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: _jobResponsibilitiesControllers[index],
+                          decoration: InputDecoration(
+                              hintText: 'Enter qualification ${index + 1}'),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter the qualification';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () => _removeResponsibilityField(index),
+                      ),
+                    ],
+                  );
                 },
+              ),
+              const SizedBox(height: 8.0),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: _addResponsibilityField,
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(Colors.green),
+                    ),
+                    child: Text('Add Qualification'),
+                  ),
+                  TextButton(
+                    onPressed: _clearResponsibilityFields,
+                    child: Text('Clear'),
+                  ),
+                ],
               ),
               const SizedBox(height: 16.0),
 

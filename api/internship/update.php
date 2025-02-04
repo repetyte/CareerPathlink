@@ -25,8 +25,8 @@ $internship->qualifications = $data->qualifications;
 $internship->industry_partner = $data->industry_partner;
 
 // Partner details
-$internship->partner_name = $data->partner_name;
 $internship->profile_pic = $data->profile_pic;
+$internship->partner_name = $data->partner_name;
 $internship->partner_location = $data->partner_location;
 $internship->contact_no = $data->contact_no;
 $internship->email_add = $data->email_add;

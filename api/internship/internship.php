@@ -116,15 +116,14 @@ class InternshipWithPartner
                         i.description = :description,
                         i.required_skills = :required_skills,
                         i.qualifications = :qualifications,
-                        i.industry_partner = :industry_partner
+                        i.industry_partner = :industry_partner,
 
-                        p.partner_id = :partner_id,
                         p.profile_pic = :profile_pic,
                         p.partner_name = :partner_name,
                         p.partner_location = :partner_location,
                         p.contact_no = :contact_no,
                         p.email_add = :email_add
-                  WHERE i.job_id = :job_id";
+                  WHERE i.internship_id = :internship_id";
 
         // Prepare query
         $stmt = $this->conn->prepare($query);
@@ -140,7 +139,7 @@ class InternshipWithPartner
         $this->qualifications = htmlspecialchars(strip_tags($this->qualifications));
         $this->hours = htmlspecialchars(strip_tags($this->hours));
         $this->industry_partner = htmlspecialchars(strip_tags($this->industry_partner));
-        $this->partner_id = htmlspecialchars(strip_tags($this->partner_id));
+        // $this->partner_id = htmlspecialchars(strip_tags($this->partner_id));
         $this->profile_pic = htmlspecialchars(strip_tags($this->profile_pic));
         $this->partner_name = htmlspecialchars(strip_tags($this->partner_name));
         $this->partner_location = htmlspecialchars(strip_tags($this->partner_location));
@@ -158,7 +157,7 @@ class InternshipWithPartner
         $stmt->bindParam(":qualifications", $this->qualifications);
         $stmt->bindParam(":hours", $this->hours);
         $stmt->bindParam(":industry_partner", $this->industry_partner);
-        $stmt->bindParam(":partner_id", $this->partner_id);
+        // $stmt->bindParam(":partner_id", $this->partner_id);
         $stmt->bindParam(":profile_pic", $this->profile_pic);
         $stmt->bindParam(":partner_name", $this->partner_name);
         $stmt->bindParam(":partner_location", $this->partner_location);
