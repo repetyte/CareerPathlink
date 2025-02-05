@@ -64,7 +64,7 @@ class InternshipWithPartner extends Internship {
   final String emailAdd;
 
   InternshipWithPartner({
-    required super.internshipId,
+    super.internshipId,
     required super.displayPhoto,
     required super.internshipTitle,
     required super.takehomePay,

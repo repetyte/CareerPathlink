@@ -1,21 +1,32 @@
+import 'dart:convert';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/models/work_integrated_learning/internship.dart';
+import 'package:flutter_app/models/work_integrated_learning/internship_application.dart';
+import 'package:flutter_app/services/internship_application_api_service.dart';
+import 'package:intl/intl.dart';
 
 class InternshipApplicationScreen extends StatefulWidget {
   final StudentAccount studentAccount;
   final InternshipWithPartner internshipWithPartner;
 
-  const InternshipApplicationScreen({super.key, required this.internshipWithPartner, required this.studentAccount});
+  const InternshipApplicationScreen(
+      {super.key,
+      required this.internshipWithPartner,
+      required this.studentAccount});
 
   @override
-  _InternshipApplicationScreenState createState() => _InternshipApplicationScreenState();
+  _InternshipApplicationScreenState createState() =>
+      _InternshipApplicationScreenState();
 }
 
-class _InternshipApplicationScreenState extends State<InternshipApplicationScreen> {
+class _InternshipApplicationScreenState
+    extends State<InternshipApplicationScreen> {
+  final InternshipApplicationApiService internshipApplicationApiService =
+      InternshipApplicationApiService();
   final _formKey = GlobalKey<FormState>();
   int currentStep = 0;
 
@@ -29,8 +40,17 @@ class _InternshipApplicationScreenState extends State<InternshipApplicationScree
 
   // Controllers for form inputs
   final TextEditingController skillsController = TextEditingController();
-  final TextEditingController certificationsController = TextEditingController();
+  final TextEditingController certificationsController =
+      TextEditingController();
   final TextEditingController educationController = TextEditingController();
+
+  // Controllers for form inputs
+  final List<TextEditingController> _skillsControllers = [];
+  final List<TextEditingController> _certificationsControllers = [];
+
+  //Combined Strings
+  String skills = '';
+  String certifications = '';
 
   // Method to pick Resume
   void _pickResume() async {
@@ -62,11 +82,42 @@ class _InternshipApplicationScreenState extends State<InternshipApplicationScree
     }
   }
 
-  void _submitApplication() {
-    // TODO: Implement the submission logic
-    if (kDebugMode) {
-      debugPrint('Application submitted');
-    }
+  void _addSkillField() {
+    setState(() {
+      _skillsControllers.add(TextEditingController());
+    });
+  }
+
+  void _removeSkillField(int index) {
+    setState(() {
+      _skillsControllers.removeAt(index);
+    });
+  }
+
+  void _clearSkillFields() {
+    setState(() {
+      _skillsControllers.clear();
+      _addSkillField();
+    });
+  }
+
+  void _addCertificationField() {
+    setState(() {
+      _certificationsControllers.add(TextEditingController());
+    });
+  }
+
+  void _removeCertificationField(int index) {
+    setState(() {
+      _certificationsControllers.removeAt(index);
+    });
+  }
+
+  void _clearCertificationFields() {
+    setState(() {
+      _certificationsControllers.clear();
+      _addCertificationField();
+    });
   }
 
   void _showSubmissionDialog() {
@@ -98,6 +149,44 @@ class _InternshipApplicationScreenState extends State<InternshipApplicationScree
     );
   }
 
+  String _combineFields(List<TextEditingController> controllers) {
+    return controllers.map((controller) => '- ${controller.text}').join('\n');
+  }
+
+  void _submitApplication() async {
+    skills = _combineFields(_skillsControllers);
+    certifications = _combineFields(_certificationsControllers);
+
+    final internshipApplicationData = InternshipApplication(
+      applicant: widget.studentAccount.studentId.toString(),
+      internship: widget.internshipWithPartner.internshipId ?? 0,
+      resume: resumeSource,
+      coverLetter: coverLetterSource,
+      skills: skills,
+      certifications: certifications,
+      applicationStatus: 'Pending',
+      dateApplied: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+    );
+
+    // Debugging: Print the JSON data
+    if (kDebugMode) {
+      debugPrint(jsonEncode(internshipApplicationData.toJson()));
+    }
+
+    try {
+      // Send the internship application data to the API
+      await internshipApplicationApiService
+          .createInternshipApplication(internshipApplicationData);
+      // widget.onInternshipPostingAdded();
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Internship application submitted successfully')));
+      Navigator.pop(context, true);
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Failed to add internship application: $error')));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,41 +199,38 @@ class _InternshipApplicationScreenState extends State<InternshipApplicationScree
           child: Column(
             children: [
               // Internship Details Card
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Card(
-                  elevation: 10.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0),
-                  ),
-                  clipBehavior: Clip.antiAlias,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Image.asset(
-                        widget.internshipWithPartner.displayPhoto,
-                        width: double.infinity,
-                        height: 200,
-                        fit: BoxFit.cover,
+              Card(
+                elevation: 10.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40.0),
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Image.asset(
+                      widget.internshipWithPartner.displayPhoto,
+                      width: double.infinity,
+                      height: 200,
+                      fit: BoxFit.cover,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(widget.internshipWithPartner.internshipTitle,
+                              style: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          const SizedBox(height: 4),
+                          Text(widget.internshipWithPartner.partnerName,
+                              style: const TextStyle(
+                                fontSize: 16,
+                              )),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(widget.internshipWithPartner.internshipTitle,
-                                style: const TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold)),
-                            const SizedBox(height: 4),
-                            Text(widget.internshipWithPartner.partnerName,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                )),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 16),
@@ -170,7 +256,6 @@ class _InternshipApplicationScreenState extends State<InternshipApplicationScree
                   }
                 },
                 steps: [
-              
                   // Document Submission Step
                   Step(
                     title: const Text('Document Submission',
@@ -186,7 +271,7 @@ class _InternshipApplicationScreenState extends State<InternshipApplicationScree
                           ),
                         ),
                         const SizedBox(height: 8),
-              
+
                         // Resume
                         const Text(
                           'Resume: (PDF, DOCX, DOC)',
@@ -203,7 +288,7 @@ class _InternshipApplicationScreenState extends State<InternshipApplicationScree
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(40.0),
                                   ),
                                   child: Row(
                                     children: [
@@ -229,7 +314,7 @@ class _InternshipApplicationScreenState extends State<InternshipApplicationScree
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(40.0),
                                   ),
                                   child: const Text(
                                     "Click to upload your resume",
@@ -240,7 +325,7 @@ class _InternshipApplicationScreenState extends State<InternshipApplicationScree
                           ),
                         ),
                         const SizedBox(height: 16),
-              
+
                         // Cover Letter
                         const Text(
                           'Cover Letter: (PDF, DOCX, DOC)',
@@ -257,7 +342,7 @@ class _InternshipApplicationScreenState extends State<InternshipApplicationScree
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(40.0),
                                   ),
                                   child: Row(
                                     children: [
@@ -283,7 +368,7 @@ class _InternshipApplicationScreenState extends State<InternshipApplicationScree
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(40.0),
                                   ),
                                   child: const Text(
                                     "Click to upload your cover letter",
@@ -293,7 +378,6 @@ class _InternshipApplicationScreenState extends State<InternshipApplicationScree
                             ],
                           ),
                         ),
-                      
                       ],
                     ),
                     isActive: currentStep == 0,
@@ -301,37 +385,122 @@ class _InternshipApplicationScreenState extends State<InternshipApplicationScree
                         ? StepState.complete
                         : StepState.indexed,
                   ),
-                  
+
                   // Employer Questions Step
                   Step(
                     title: const Text('Employer Questions',
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     content: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: const Text(
-                            'Answer the following questions:',
-                            style: TextStyle(fontWeight: FontWeight.w500),
-                          ),
+                        const Text(
+                          'Answer the following questions:',
+                          style: TextStyle(fontWeight: FontWeight.w500),
                         ),
                         const SizedBox(height: 8),
-                        TextField(
-                          controller: skillsController,
-                          decoration:
-                              const InputDecoration(labelText: 'Skills'),
+                        // Skills
+                        const Text('Skills'),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: _skillsControllers.length,
+                          itemBuilder: (context, index) {
+                            return Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: _skillsControllers[index],
+                                    decoration: InputDecoration(
+                                        hintText: 'Enter skill ${index + 1}'),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter a skill';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.delete),
+                                  onPressed: () => _removeSkillField(index),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 4.0),
+                        Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: _addSkillField,
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    WidgetStateProperty.all(Colors.green),
+                              ),
+                              // icon: Icon(Icons.add),
+                              child: Text('Add your Skill'),
+                            ),
+                            TextButton(
+                              onPressed: _clearSkillFields,
+                              // icon: Icon(Icons.clear),
+                              child: Text('Clear'),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 8),
-                        TextField(
-                          controller: certificationsController,
-                          decoration: const InputDecoration(
-                              labelText: 'Certifications'),
+
+                        // Certifications
+                        const Text('Certifications'),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: _certificationsControllers.length,
+                          itemBuilder: (context, index) {
+                            return Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    controller:
+                                        _certificationsControllers[index],
+                                    decoration: InputDecoration(
+                                        hintText:
+                                            'Enter requirement ${index + 1}'),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter the requirement';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.delete),
+                                  onPressed: () =>
+                                      _removeCertificationField(index),
+                                ),
+                              ],
+                            );
+                          },
                         ),
-                        // TextField(
-                        //   controller: educationController,
-                        //   decoration: const InputDecoration(
-                        //       labelText: 'Educational Background'),
-                        // ),
+                        const SizedBox(height: 4.0),
+                        Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: _addCertificationField,
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    WidgetStateProperty.all(Colors.green),
+                              ),
+                              // icon: Icon(Icons.add),
+                              child: Text('Add your Certification'),
+                            ),
+                            TextButton(
+                              onPressed: _clearCertificationFields,
+                              // icon: Icon(Icons.clear),
+                              child: Text('Clear'),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                     isActive: currentStep == 1,
@@ -339,7 +508,7 @@ class _InternshipApplicationScreenState extends State<InternshipApplicationScree
                         ? StepState.complete
                         : StepState.indexed,
                   ),
-              
+
                   // Review and Submit Step
                   Step(
                     title: const Text('Review and Submit',
@@ -355,7 +524,8 @@ class _InternshipApplicationScreenState extends State<InternshipApplicationScree
                           ),
                         ),
                         const SizedBox(height: 8),
-              
+
+                        // Resume
                         const Text('Resume:'),
                         if (resumeBytes != null)
                           Container(
@@ -365,7 +535,7 @@ class _InternshipApplicationScreenState extends State<InternshipApplicationScree
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(10.0),
+                              borderRadius: BorderRadius.circular(40.0),
                             ),
                             child: Row(
                               children: [
@@ -384,7 +554,7 @@ class _InternshipApplicationScreenState extends State<InternshipApplicationScree
                             ),
                           ),
                         const SizedBox(height: 16),
-              
+
                         // Cover Letter
                         const Text('Cover Letter:'),
                         if (coverLetterBytes != null)
@@ -395,7 +565,7 @@ class _InternshipApplicationScreenState extends State<InternshipApplicationScree
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(10.0),
+                              borderRadius: BorderRadius.circular(40.0),
                             ),
                             child: Row(
                               children: [
@@ -415,13 +585,21 @@ class _InternshipApplicationScreenState extends State<InternshipApplicationScree
                           ),
                         const SizedBox(height: 16),
                         const Text('Skills:'),
-                        Text(skillsController.text),
+                        if (_skillsControllers.isNotEmpty)
+                          Text(skills = _combineFields(_skillsControllers))
+                        else
+                          const Text('No skills provided',
+                              style: TextStyle(color: Colors.grey)),
                         const SizedBox(height: 8),
                         const Text('Certifications:'),
-                        Text(certificationsController.text),
-                        // const SizedBox(height: 8),
-                        // const Text('Educational Background:'),
-                        // Text(educationController.text),
+                        if (_certificationsControllers.isNotEmpty)
+                          Text(
+                              certifications =
+                                  _combineFields(_certificationsControllers),
+                              style: TextStyle(color: Colors.black))
+                        else
+                          const Text('No certifications provided',
+                              style: TextStyle(color: Colors.grey)),
                       ],
                     ),
                     isActive: currentStep == 2,
@@ -430,7 +608,7 @@ class _InternshipApplicationScreenState extends State<InternshipApplicationScree
                         : StepState.indexed,
                   ),
                 ],
-              ),           
+              ),
             ],
           ),
         ),

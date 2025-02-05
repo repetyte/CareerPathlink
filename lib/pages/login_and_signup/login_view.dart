@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/career_center_director_account/career_coaching/coaching_home_screen.dart';
 import 'package:flutter_app/pages/career_center_director_account/director_home_screen.dart';
 import 'package:flutter_app/pages/coach_account/coach_home_screen.dart';
 import 'package:flutter_app/pages/dean_account/dean_home_screen.dart';
@@ -186,7 +185,7 @@ class _LoginViewState extends State<LoginView> {
         resizeToAvoidBottomInset: false,
         body: LayoutBuilder(
           builder: (context, constraints) {
-            if (constraints.maxWidth > 600) {
+            if (constraints.maxWidth > 700) {
               return _buildLargeScreen(size, simpleUIController);
             } else {
               return _buildSmallScreen(size, simpleUIController);
@@ -205,7 +204,7 @@ class _LoginViewState extends State<LoginView> {
     return Row(
       children: [
         Expanded(
-          flex: 4,
+          flex: 6,
           child: Container(
             height: size.height,
             color: Colors.grey,
@@ -213,44 +212,47 @@ class _LoginViewState extends State<LoginView> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'UNC',
-                          style: GoogleFonts.getFont(
-                            'Montserrat',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 48,
-                            color: Colors.black,
+                  Padding(
+                    padding: EdgeInsets.all(size.width * 0.03),
+                    child: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'UNC',
+                            style: GoogleFonts.getFont(
+                              'Montserrat',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 48,
+                              color: Colors.black,
+                            ),
                           ),
-                        ),
-                        TextSpan(
-                          text: ' Career',
-                          style: GoogleFonts.getFont(
-                            'Montserrat',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 48,
-                            color: Colors.white,
+                          TextSpan(
+                            text: ' Career',
+                            style: GoogleFonts.getFont(
+                              'Montserrat',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 48,
+                              color: Colors.white,
+                            ),
                           ),
-                        ),
-                        TextSpan(
-                          text: 'Pathlink',
-                          style: GoogleFonts.getFont(
-                            'Montserrat',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 48,
-                            color: Colors.red,
+                          TextSpan(
+                            text: 'Pathlink',
+                            style: GoogleFonts.getFont(
+                              'Montserrat',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 48,
+                              color: Colors.red,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ]),
           ),
         ),
-        SizedBox(width: size.width * 0.06),
+        SizedBox(width: size.width * 0.03),
         Expanded(
           flex: 5,
           child: _buildLoginForm(
@@ -258,7 +260,7 @@ class _LoginViewState extends State<LoginView> {
             simpleUIController,
           ),
         ),
-        SizedBox(width: size.width * 0.06),
+        SizedBox(width: size.width * 0.03),
       ],
     );
   }
@@ -286,11 +288,11 @@ class _LoginViewState extends State<LoginView> {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: size.width > 600
+        mainAxisAlignment: size.width > 700
             ? MainAxisAlignment.center
             : MainAxisAlignment.start,
         children: [
-          size.width > 600
+          size.width > 700
               ? Container()
               : Container(
                   width: size.width,
@@ -342,7 +344,7 @@ class _LoginViewState extends State<LoginView> {
             height: size.height * 0.03,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 20.0),
+            padding: const EdgeInsets.only(left: 16.0),
             child: Text(
               'Login',
               style: kLoginTitleStyle(size),
@@ -515,7 +517,9 @@ class _LoginViewState extends State<LoginView> {
       child: ElevatedButton(
         onPressed: _isLoading ? null : _login,
         child: _isLoading
-            ? const CircularProgressIndicator()
+            ? const CircularProgressIndicator(
+                color: Colors.white,
+            )
             : const Text('Login'),
       ),
     );

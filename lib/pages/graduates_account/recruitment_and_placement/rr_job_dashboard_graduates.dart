@@ -425,7 +425,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                                           elevation: 10.0,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(25.0),
+                                                BorderRadius.circular(40.0),
                                           ),
                                           clipBehavior: Clip.antiAlias,
                                           child: Column(

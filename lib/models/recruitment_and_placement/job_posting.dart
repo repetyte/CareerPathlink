@@ -38,7 +38,7 @@ class JobPosting {
   factory JobPosting.fromJson(Map<String, dynamic> json) {
     return JobPosting(
       jobId: json['job_id'] as int?,
-      coverPhoto: json['cover_photo'],
+      coverPhoto: json['cover_photo'] ?? '',
       jobTitle: json['job_title'] ?? '',
       status: json['status'] ?? '',
       fieldIndustry: json['field_industry'] ?? '',
@@ -112,7 +112,7 @@ class JobPostingWithPartner extends JobPosting {
   factory JobPostingWithPartner.fromJson(Map<String, dynamic> json) {
     return JobPostingWithPartner(
       jobId: json['job_id'] as int?,
-      coverPhoto: json['cover_photo'],
+      coverPhoto: json['cover_photo'] ?? '',
       jobTitle: json['job_title'] ?? '',
       status: json['status'] ?? '',
       fieldIndustry: json['field_industry'] ?? '',

@@ -33,11 +33,6 @@ class JobPostingWithPartner {
     }
 
     // CRUD Operations
-    /**
-     * Create a new job posting
-     *
-     * @return boolean true if the job posting was created, false otherwise
-     */
     function create() {
         $query = "INSERT INTO
                     " . $this->table_name . "
@@ -97,11 +92,6 @@ class JobPostingWithPartner {
         return false;
     }
 
-    /**
-     * Read all job postings
-     *
-     * @return PDOStatement
-     */
     function read(){
         $query = "SELECT
                       jp.job_id,
@@ -132,11 +122,6 @@ class JobPostingWithPartner {
         return $stmt;
     }
 
-    /**
-     * Update a job posting
-     *
-     * @return boolean true if the job posting was updated, false otherwise
-     */
     function update(){
         $query = "UPDATE " . $this->table_name . " jp
                   JOIN industry_partner_tb ip ON jp.industry_partner = ip.partner_id
@@ -179,6 +164,8 @@ class JobPostingWithPartner {
         $this->requirements=htmlspecialchars(strip_tags($this->requirements));
         $this->job_responsibilities=htmlspecialchars(strip_tags($this->job_responsibilities));
         $this->industry_partner=htmlspecialchars(strip_tags($this->industry_partner));
+
+        // Partner details
         $this->partner_name=htmlspecialchars(strip_tags($this->partner_name));
         $this->profile_pic=htmlspecialchars(strip_tags($this->profile_pic));
         $this->partner_location=htmlspecialchars(strip_tags($this->partner_location));
@@ -200,6 +187,8 @@ class JobPostingWithPartner {
         $stmt->bindParam(':requirements', $this->requirements);
         $stmt->bindParam(':job_responsibilities', $this->job_responsibilities);
         $stmt->bindParam(':industry_partner', $this->industry_partner);
+
+        // Partner details
         $stmt->bindParam(':partner_name', $this->partner_name);
         $stmt->bindParam(':profile_pic', $this->profile_pic);
         $stmt->bindParam(':partner_location', $this->partner_location);
@@ -213,11 +202,6 @@ class JobPostingWithPartner {
         return false;
     }
 
-    /**
-     * Delete a job posting given its id
-     *
-     * @return boolean true if the job posting was deleted, false otherwise
-     */
     function delete(){
         $query = "DELETE FROM " . $this->table_name . " WHERE job_id = :job_id";
         $stmt = $this->conn->prepare($query);

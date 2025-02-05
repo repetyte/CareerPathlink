@@ -1,4 +1,3 @@
-// ignore: file_names
 import 'package:flutter/material.dart';
 import 'package:flutter_app/services/user_api_service.dart';
 import 'package:get/get.dart';
@@ -50,7 +49,7 @@ class _SignUpViewState extends State<SignUpView> {
           resizeToAvoidBottomInset: false,
           body: LayoutBuilder(
             builder: (context, constraints) {
-              if (constraints.maxWidth > 600) {
+              if (constraints.maxWidth > 700) {
                 return _buildLargeScreen(size, simpleUIController, theme);
               } else {
                 return _buildSmallScreen(size, simpleUIController, theme);
@@ -66,7 +65,7 @@ class _SignUpViewState extends State<SignUpView> {
     return Row(
       children: [
         Expanded(
-          flex: 4,
+          flex: 6,
           child: Container(
             height: size.height,
             color: Colors.grey,
@@ -75,7 +74,7 @@ class _SignUpViewState extends State<SignUpView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: EdgeInsets.all(size.width * 0.02),
+                    padding: EdgeInsets.all(size.width * 0.03),
                     child: RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
@@ -114,12 +113,12 @@ class _SignUpViewState extends State<SignUpView> {
                 ]),
           ),
         ),
-        SizedBox(width: size.width * 0.06),
+        SizedBox(width: size.width * 0.03),
         Expanded(
           flex: 5,
           child: _buildMainBody(size, simpleUIController, theme),
         ),
-        SizedBox(width: size.width * 0.06),
+        SizedBox(width: size.width * 0.03),
       ],
     );
   }
@@ -141,11 +140,11 @@ class _SignUpViewState extends State<SignUpView> {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: size.width > 600
+        mainAxisAlignment: size.width > 700
             ? MainAxisAlignment.center
             : MainAxisAlignment.start,
         children: [
-          size.width > 600
+          size.width > 700
               ? Container()
               : Container(
                   width: size.width,
@@ -227,21 +226,13 @@ class _SignUpViewState extends State<SignUpView> {
                     decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.person),
                       hintText: 'Username',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                      ),
                     ),
 
                     controller: _usernameController,
                     // The validator receives the text that the user has entered.
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter username';
-                      } else if (value.length < 4) {
-                        return 'at least enter 4 characters';
-                      } else if (value.length > 13) {
-                        return 'maximum character is 13';
-                      }
+                      // return null;
+                      value == null || value.isEmpty ? 'Enter username' : null;
                       return null;
                     },
                   ),
@@ -274,13 +265,9 @@ class _SignUpViewState extends State<SignUpView> {
                       ),
                       // The validator receives the text that the user has entered.
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter some text';
-                        } else if (value.length < 7) {
-                          return 'at least enter 6 characters';
-                        } else if (value.length > 13) {
-                          return 'maximum character is 13';
-                        }
+                        value == null || value.isEmpty
+                            ? 'Enter password'
+                            : null;
                         return null;
                       },
                     ),
@@ -297,7 +284,14 @@ class _SignUpViewState extends State<SignUpView> {
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                       ),
                     ),
-                    items: ['Student', 'Graduate', 'Coach', 'Employer Partner', 'Career Center Director']
+                    items: [
+                      'Student',
+                      'Graduate',
+                      'College Dean',
+                      'Career Coach',
+                      'Employer Partner',
+                      'Career Center Director',
+                    ]
                         .map((type) => DropdownMenuItem(
                               value: type,
                               child: Text(type),
@@ -310,7 +304,7 @@ class _SignUpViewState extends State<SignUpView> {
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter user type';
+                        return 'Select user type';
                       }
                       return null;
                     },
@@ -369,16 +363,14 @@ class _SignUpViewState extends State<SignUpView> {
     return SizedBox(
       width: double.infinity,
       // height: 55,
-      child: _isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : ElevatedButton(
-              // onPressed: _signUp,
-              onPressed: () {
-                // Validate returns true if the form is valid, or false otherwise.
-                _signUp();
-              },
-              child: const Text('Sign Up'),
-            ),
+      child: ElevatedButton(
+        onPressed: _isLoading ? null : _signUp,
+        child: _isLoading
+            ? const CircularProgressIndicator(
+                color: Colors.white,
+            )
+            : const Text('Sign Up'),
+      ),
     );
   }
 }

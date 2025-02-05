@@ -21,20 +21,22 @@ $data = json_decode(file_get_contents("php://input"));
 if (
     !empty($data->display_photo) &&
     !empty($data->internship_title) &&
+    !empty($data->hours) &&
+    !empty($data->takehome_pay) &&
+    !empty($data->location) &&
     !empty($data->description) &&
     !empty($data->required_skills) &&
     !empty($data->qualifications) &&
-    !empty($data->hours) &&
     !empty($data->industry_partner)
 ) {
     $internship->display_photo = $data->display_photo;
     $internship->internship_title = $data->internship_title;
+    $internship->hours = $data->hours;
     $internship->takehome_pay = $data->takehome_pay;
     $internship->location = $data->location;
     $internship->description = $data->description;
     $internship->required_skills = $data->required_skills;
     $internship->qualifications = $data->qualifications;
-    $internship->hours = $data->hours;
     $internship->industry_partner = $data->industry_partner;
 
     if ($internship->create()) {

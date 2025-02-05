@@ -83,7 +83,7 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
           title: const Text('Delete Job Posting',
               style: TextStyle(fontWeight: FontWeight.bold)),
           content:
-              const Text('Are you sure you want to delete this job posting?'),
+              const Text('Are you sure you want to delete this job posting? All applications from this job posting will be deleted.'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -95,20 +95,20 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
               onPressed: () {
                 if (jobId != null) {
                   jobPostingApiService.deleteJobPosting(jobId).then((_) {
-                    _refreshJobPostings();
+                    Navigator.of(context).pop(); // Close the dialog
+                    Navigator.of(context).pop(true); // Navigate back and refresh
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Student deleted successfully.')),
+                      SnackBar(content: Text('Job Posting deleted successfully.')),
                     );
-                    Navigator.of(context).pop();
                   }).catchError((error) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                          content: Text('Failed to delete student: $error')),
+                          content: Text('Failed to delete job: $error')),
                     );
                   });
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Invalid student ID')),
+                    SnackBar(content: Text('Invalid Job ID')),
                   );
                 }
               },

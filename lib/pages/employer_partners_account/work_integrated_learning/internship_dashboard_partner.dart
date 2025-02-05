@@ -7,7 +7,6 @@ import 'package:flutter_app/pages/login_and_signup/login_view.dart';
 import 'package:flutter_app/services/internship_api_service.dart';
 import 'package:flutter_app/widgets/appbar/partner_header.dart';
 import 'package:flutter_app/widgets/drawer/drawer_partner.dart';
-import 'package:flutter_app/widgets/drawer/drawer_students.dart';
 import 'package:flutter_app/widgets/footer/footer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -37,7 +36,8 @@ class _InternshipDashboardPartnerState
     futureInternships = InternshipApiService().fetchInternships();
     futureInternships.then((data) {
       setState(() {
-        _filteredInternships = data;
+        _filteredInternships = data.where((internship) =>
+          internship.partnerId == widget.employerPartnerAccount.partnerId).toList();
       });
     });
     _searchController.addListener(_filterInternships);
@@ -102,7 +102,8 @@ class _InternshipDashboardPartnerState
       futureInternships = InternshipApiService().fetchInternships();
       futureInternships.then((data) {
         setState(() {
-          _filteredInternships = data;
+          _filteredInternships = data.where((internship) =>
+            internship.partnerId == widget.employerPartnerAccount.partnerId).toList();
         });
       });
     });
@@ -113,10 +114,11 @@ class _InternshipDashboardPartnerState
     futureInternships.then((data) {
       setState(() {
         _filteredInternships = data
-            .where((internship) =>
-                internship.internshipTitle.toLowerCase().contains(query) ||
-                internship.description.toLowerCase().contains(query))
-            .toList();
+          .where((internship) =>
+            internship.partnerId == widget.employerPartnerAccount.partnerId &&
+            (internship.internshipTitle.toLowerCase().contains(query) ||
+            internship.description.toLowerCase().contains(query)))
+          .toList();
       });
     });
   }
@@ -490,7 +492,7 @@ class _InternshipDashboardPartnerState
                                                               MaterialPageRoute(
                                                                 builder: (context) =>
                                                                     InternshipDetailsPartner(
-                                                                  internship: data[index],
+                                                                  internshipWithPartner: data[index],
                                                                   employerPartnerAccount: widget
                                                                       .employerPartnerAccount,
                                                                 ),

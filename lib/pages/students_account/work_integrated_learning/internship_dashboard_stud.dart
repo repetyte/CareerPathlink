@@ -5,7 +5,6 @@ import 'package:flutter_app/pages/login_and_signup/login_view.dart';
 import 'package:flutter_app/pages/students_account/work_integrated_learning/internship_details_stud.dart';
 import 'package:flutter_app/services/internship_api_service.dart';
 import 'package:flutter_app/widgets/appbar/graduates_header.dart';
-import 'package:flutter_app/widgets/appbar/student_header.dart';
 import 'package:flutter_app/widgets/drawer/drawer_students.dart';
 import 'package:flutter_app/widgets/footer/footer.dart';
 import 'package:flutter_svg/flutter_svg.dart';

@@ -189,8 +189,8 @@ class _GraduatesListsDepartmentDeanState extends State<GraduatesListsDepartmentD
                   DataCell(Text(graduate.lastName ?? 'N/A')),
                   DataCell(Text(graduate.firstName ?? 'N/A')),
                   DataCell(Text(graduate.middleName ?? 'N/A')),
-                  DataCell(Text(graduate.birthdate?.toIso8601String() ?? 'N/A')),
-                  DataCell(Text(graduate.age?.toString() ?? 'N/A')),
+                  DataCell(Text(graduate.birthdate.toIso8601String() ?? 'N/A')),
+                  DataCell(Text(graduate.age.toString() ?? 'N/A')),
                   DataCell(Text(graduate.homeAddress ?? 'N/A')),
                   DataCell(Text(graduate.uncEmail ?? 'N/A')),
                   DataCell(Text(graduate.personalEmail ?? 'N/A')),
@@ -199,7 +199,7 @@ class _GraduatesListsDepartmentDeanState extends State<GraduatesListsDepartmentD
                   DataCell(Text(graduate.firstTargetEmployer ?? 'N/A')),
                   DataCell(Text(graduate.secondTargetEmployer ?? 'N/A')),
                   DataCell(Text(graduate.thirdTargetEmployer ?? 'N/A')),
-                  DataCell(Text(graduate.graduationDate?.toIso8601String() ?? 'N/A')),
+                  DataCell(Text(graduate.graduationDate.toIso8601String() ?? 'N/A')),
                   DataCell(Row(
                     children: [
                       IconButton(

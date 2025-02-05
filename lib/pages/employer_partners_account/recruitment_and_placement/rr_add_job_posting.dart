@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:html' as html;
 
 import 'package:file_picker/file_picker.dart';
@@ -51,7 +52,8 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
   void initState() {
     debugPrint(
         'Employer Partner ID: ${widget.employerPartnerAccount.partnerName}');
-    debugPrint('Employer Partner Location: ${widget.employerPartnerAccount.partnerLocation}\n');
+    debugPrint(
+        'Employer Partner Location: ${widget.employerPartnerAccount.partnerLocation}\n');
     super.initState();
     futureIndustryPartners = industryPartnerApiService.fetchIndustryPartners();
 
@@ -138,7 +140,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
   }
 
   String _combineFields(List<TextEditingController> controllers) {
-    return controllers.map((controller) => '- ${controller.text}').join('\n');
+    return controllers.map((controller) => '• ${controller.text}').join('\n');
   }
 
   Future<void> _submitJobPosting() async {
@@ -168,8 +170,9 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
         industryPartner: widget.employerPartnerAccount.partnerId,
       );
 
+      // Debugging: Print the JSON data
       if (kDebugMode) {
-        debugPrint(jobPostingData.toJson() as String?);
+        debugPrint(jsonEncode(jobPostingData.toJson()));
       }
 
       try {
