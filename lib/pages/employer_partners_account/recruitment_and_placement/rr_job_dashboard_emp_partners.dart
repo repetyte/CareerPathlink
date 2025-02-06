@@ -33,7 +33,6 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
     debugPrint('Employer Partner Location: ${widget.employerPartnerAccount.partnerLocation}\n');
     super.initState();
     futureJobPostings = JobPostingApiService().fetchJobPostings();
-    _refreshJobPostings();
     futureJobPostings.then((data) {
       setState(() {
         _filteredJobPostings = data.where((job) => job.partnerId == widget.employerPartnerAccount.partnerId).toList();
@@ -519,8 +518,8 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
                                                         child: ElevatedButton.icon(
                                                           icon: const Icon(Icons
                                                               .arrow_forward),
-                                                          onPressed: () {
-                                                            Navigator.push(
+                                                          onPressed: () async {
+                                                            final result = await Navigator.push(
                                                               context,
                                                               MaterialPageRoute(
                                                                 builder: (context) =>
@@ -530,6 +529,9 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
                                                                                 index], employerPartnerAccount: widget.employerPartnerAccount,),
                                                               ),
                                                             );
+                                                            if (result == true) {
+                                                              _refreshJobPostings();
+                                                            }
                                                           },
                                                           label:
                                                               const Text('View More'),
