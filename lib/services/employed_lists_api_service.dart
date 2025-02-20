@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter_app/models/graduates_tracer_industry/EmployedLists.dart';
+import 'package:flutter_app/models/graduates_tracer_industry/employed_lists.dart';
 import 'package:http/http.dart' as http;
 
 class EmployedListsApiService {

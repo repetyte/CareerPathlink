@@ -1,8 +1,11 @@
 <?php
-class GraduatesLists
+class EmployedLists
 {
     private $conn;
-    private $table_name = "graduates_lists";
+    private $table_name = "employed_lists";
+
+    public $employed_grad_id;
+    public $graduate;
 
     // Graduate Properties
     public $student_no;
@@ -22,6 +25,13 @@ class GraduatesLists
     public $second_target_employer;
     public $third_target_employer;
 
+    // Employed Properties
+    public $job_title;
+    public $company_name;
+    public $company_address;
+    public $position;
+    public $start_date;
+    public $basic_salary;
 
     public function __construct($db)
     {
@@ -39,62 +49,38 @@ class GraduatesLists
         $query = "INSERT INTO
             " . $this->table_name . "
         SET
-            student_no = :student_no,
-            last_name = :last_name,
-            first_name = :first_name,
-            middle_name = :middle_name,
-            birthdate = :birthdate,
-            age = :age,
-            home_address = :home_address,
-            unc_email = :unc_email,
-            personal_email = :personal_email,
-            facebook_name = :facebook_name,
-            graduation_date = :graduation_date,
-            course = :course,
-            department = :department,
-            first_target_employer = :first_target_employer,
-            second_target_employer = :second_target_employer,
-            third_target_employer = :third_target_employer";
+            employed_grad_id = :employed_grad_id,
+            graduate = :graduate,
+            job_title = :job_title,
+            company_name = :company_name,
+            company_address = :company_address,
+            position = :position,
+            start_date = :start_date,
+            basic_salary = :basic_salary";
 
 
         // prepare query
         $stmt = $this->conn->prepare($query);
 
         // sanitize input
-        $this->student_no = htmlspecialchars(strip_tags($this->student_no));
-        $this->last_name = htmlspecialchars(strip_tags($this->last_name));
-        $this->first_name = htmlspecialchars(strip_tags($this->first_name));
-        $this->middle_name = htmlspecialchars(strip_tags($this->middle_name));
-        $this->birthdate = htmlspecialchars(strip_tags($this->birthdate));
-        $this->age = htmlspecialchars(strip_tags($this->age));
-        $this->home_address = htmlspecialchars(strip_tags($this->home_address));
-        $this->unc_email = htmlspecialchars(strip_tags($this->unc_email));
-        $this->personal_email = htmlspecialchars(strip_tags($this->personal_email));
-        $this->facebook_name = htmlspecialchars(strip_tags($this->facebook_name));
-        $this->graduation_date = htmlspecialchars(strip_tags($this->graduation_date));
-        $this->course = htmlspecialchars(strip_tags($this->course));
-        $this->department = htmlspecialchars(strip_tags($this->department));
-        $this->first_target_employer = htmlspecialchars(strip_tags($this->first_target_employer));
-        $this->second_target_employer = htmlspecialchars(strip_tags($this->second_target_employer));
-        $this->third_target_employer = htmlspecialchars(strip_tags($this->third_target_employer));
+        $this->employed_grad_id = htmlspecialchars(strip_tags($this->employed_grad_id));
+        $this->graduate = htmlspecialchars(strip_tags($this->graduate));
+        $this->job_title = htmlspecialchars(strip_tags($this->job_title));
+        $this->company_name = htmlspecialchars(strip_tags($this->company_name));
+        $this->company_address = htmlspecialchars(strip_tags($this->company_address));
+        $this->position = htmlspecialchars(strip_tags($this->position));
+        $this->start_date = htmlspecialchars(strip_tags($this->start_date));
+        $this->basic_salary = htmlspecialchars(strip_tags($this->basic_salary));
 
         // bind values
-        $stmt->bindParam(":student_no", $this->student_no);
-        $stmt->bindParam(":last_name", $this->last_name);
-        $stmt->bindParam(":first_name", $this->first_name);
-        $stmt->bindParam(":middle_name", $this->middle_name);
-        $stmt->bindParam(":birthdate", $this->birthdate);
-        $stmt->bindParam(":age", $this->age);
-        $stmt->bindParam(":home_address", $this->home_address);
-        $stmt->bindParam(":unc_email", $this->unc_email);
-        $stmt->bindParam(":personal_email", $this->personal_email);
-        $stmt->bindParam(":facebook_name", $this->facebook_name);
-        $stmt->bindParam(":graduation_date", $this->graduation_date);
-        $stmt->bindParam(":course", $this->course);
-        $stmt->bindParam(":department", $this->department);
-        $stmt->bindParam(":first_target_employer", $this->first_target_employer);
-        $stmt->bindParam(":second_target_employer", $this->second_target_employer);
-        $stmt->bindParam(":third_target_employer", $this->third_target_employer);
+        $stmt->bindParam(':employed_grad_id', $this->employed_grad_id);
+        $stmt->bindParam(':graduate', $this->graduate);
+        $stmt->bindParam(':job_title', $this->job_title);
+        $stmt->bindParam(':company_name', $this->company_name);
+        $stmt->bindParam(':company_address', $this->company_address);
+        $stmt->bindParam(':position', $this->position);
+        $stmt->bindParam(':start_date', $this->start_date);
+        $stmt->bindParam(':basic_salary', $this->basic_salary);
 
         // execute query
         if ($stmt->execute()) {
@@ -114,7 +100,11 @@ class GraduatesLists
      */
     function read()
     {
-        $query = "SELECT * FROM graduates_lists;";
+        $query = "SELECT
+                      el.*,
+                      gr.* 
+                  FROM " . $this->table_name . " el
+                  JOIN graduates_lists gr ON el.graduate = gr.student_no";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;

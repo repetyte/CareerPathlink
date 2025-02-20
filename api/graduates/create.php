@@ -32,6 +32,7 @@ if (
     !empty($data->facebook_name) &&
     !empty($data->graduation_date) &&
     !empty($data->course) &&
+    !empty($data->department) &&
     !empty($data->first_target_employer) &&
     !empty($data->second_target_employer) &&
     !empty($data->third_target_employer)
@@ -48,6 +49,7 @@ if (
     $job->facebook_name = $data->facebook_name;
     $job->graduation_date = $data->graduation_date;
     $job->course = $data->course;
+    $job->department = $data->department;
     $job->first_target_employer = $data->first_target_employer;
     $job->second_target_employer = $data->second_target_employer;
     $job->third_target_employer = $data->third_target_employer;

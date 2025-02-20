@@ -51,10 +51,10 @@ class _HomeScreenState extends State<HomeScreenGraduate> {
                   ),
                   const Divider(),
                   ListTile(
-                    leading: const Icon(Icons.settings),
-                    title: const Text('Settings'),
+                    leading: const Icon(Icons.account_box),
+                    title: const Text('Profile'),
                     onTap: () {
-                      // Navigate to settings
+                      // Navigate to profile
                     },
                   ),
                   ListTile(
