@@ -69,10 +69,10 @@ class _InternshipDashboardPartnerState
                   ),
                   const Divider(),
                   ListTile(
-                    leading: const Icon(Icons.settings),
-                    title: const Text('Settings'),
+                    leading: const Icon(Icons.account_box),
+                    title: const Text('Profile'),
                     onTap: () {
-                      // Navigate to settings
+                      // Navigate to profile
                     },
                   ),
                   ListTile(
@@ -486,8 +486,8 @@ class _InternshipDashboardPartnerState
                                                         padding: const EdgeInsets.all(16.0),
                                                         child: ElevatedButton.icon(
                                                           icon: const Icon(Icons.arrow_forward),
-                                                          onPressed: () {
-                                                            Navigator.push(
+                                                          onPressed: () async {
+                                                            final result = await Navigator.push(
                                                               context,
                                                               MaterialPageRoute(
                                                                 builder: (context) =>
@@ -498,6 +498,9 @@ class _InternshipDashboardPartnerState
                                                                 ),
                                                               ),
                                                             );
+                                                            if (result == true) {
+                                                              _refreshInternships();
+                                                            }
                                                           },
                                                           label: const Text('View More'),
                                                         ),

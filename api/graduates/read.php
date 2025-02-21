@@ -33,6 +33,7 @@ if($num > 0){
             "facebook_name" => $facebook_name,
             "graduation_date" => $graduation_date,
             "course" => $course,
+            "department" => $department,
             "first_target_employer" => $first_target_employer,
             "second_target_employer" => $second_target_employer,
             "third_target_employer" => $third_target_employer,

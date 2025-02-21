@@ -8,10 +8,10 @@ import 'package:flutter_app/models/recruitment_and_placement/job_posting.dart';
 import 'package:flutter_app/services/job_posting_api_service.dart';
 
 class RrJobDetailsCCD extends StatefulWidget {
-  final JobPostingWithPartner jobPostingWithPartner;
+  JobPostingWithPartner jobPostingWithPartner;
   final IndustryPartnerAccount employerPartnerAccount;
 
-  const RrJobDetailsCCD(
+  RrJobDetailsCCD(
       {super.key,
       required this.jobPostingWithPartner,
       required this.employerPartnerAccount});
@@ -44,14 +44,15 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
   void initState() {
     debugPrint(
         'Employer Partner ID: ${widget.employerPartnerAccount.partnerName}');
-    debugPrint('Employer Partner Location: ${widget.employerPartnerAccount.partnerLocation}\n');
+    debugPrint(
+        'Employer Partner Location: ${widget.employerPartnerAccount.partnerLocation}\n');
     super.initState();
-    futureJobPostings = JobPostingApiService().fetchJobPostings();
+    futureJobPostings = jobPostingApiService.fetchJobPostings();
   }
 
   void _refreshJobPostings() {
     setState(() {
-      futureJobPostings = JobPostingApiService().fetchJobPostings();
+      futureJobPostings = jobPostingApiService.fetchJobPostings();
     });
   }
 
@@ -65,11 +66,12 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
           employerPartnerAccount: widget.employerPartnerAccount,
         ),
       ),
-    ).then((updated) {
-      if (updated == true) {
+    ).then((updatedJobPosting) {
+      if (updatedJobPosting != null) {
         setState(() {
+          widget.jobPostingWithPartner = updatedJobPosting;
           futureJobPostings =
-              JobPostingApiService().fetchJobPostings(); // Refresh job postings
+              jobPostingApiService.fetchJobPostings(); // Refresh job postings
         });
       }
     });
@@ -82,8 +84,8 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
         return AlertDialog(
           title: const Text('Delete Job Posting',
               style: TextStyle(fontWeight: FontWeight.bold)),
-          content:
-              const Text('Are you sure you want to delete this job posting? All applications from this job posting will be deleted.'),
+          content: const Text(
+              'Are you sure you want to delete this job posting? All applications from this job posting will be deleted.'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -96,14 +98,15 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
                 if (jobId != null) {
                   jobPostingApiService.deleteJobPosting(jobId).then((_) {
                     Navigator.of(context).pop(); // Close the dialog
-                    Navigator.of(context).pop(true); // Navigate back and refresh
+                    Navigator.of(context)
+                        .pop(true); // Navigate back and refresh
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Job Posting deleted successfully.')),
+                      SnackBar(
+                          content: Text('Job Posting deleted successfully.')),
                     );
                   }).catchError((error) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                          content: Text('Failed to delete job: $error')),
+                      SnackBar(content: Text('Failed to delete job: $error')),
                     );
                   });
                 } else {
@@ -204,9 +207,11 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
                                           ),
                                         ),
                                         ElevatedButton(
-                                          onPressed: () {// Call the API to apply for the internship
+                                          onPressed: () {
+                                            // Call the API to apply for the internship
                                           },
-                                          child: const Text('Internship Applications'),
+                                          child: const Text(
+                                              'Internship Applications'),
                                         ),
                                       ],
                                     ),

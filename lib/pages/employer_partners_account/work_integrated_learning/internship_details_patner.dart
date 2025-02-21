@@ -6,10 +6,10 @@ import 'package:flutter_app/services/internship_api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class InternshipDetailsPartner extends StatefulWidget {
-  final InternshipWithPartner internshipWithPartner;
+  InternshipWithPartner internshipWithPartner; // Remove final keyword
   final IndustryPartnerAccount employerPartnerAccount;
 
-  const InternshipDetailsPartner({super.key, required this.internshipWithPartner, required this.employerPartnerAccount});
+  InternshipDetailsPartner({super.key, required this.internshipWithPartner, required this.employerPartnerAccount});
 
   @override
   _InternshipDetailsPartnerState createState() => _InternshipDetailsPartnerState();
@@ -25,6 +25,8 @@ class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
         'Employer Partner ID: ${widget.employerPartnerAccount.partnerName}');
     debugPrint('Employer Partner Location: ${widget.employerPartnerAccount.partnerLocation}\n');
     super.initState();
+
+    futureInternships = internshipApiService.fetchInternships();
   }
 
   void _refreshInternships() {
@@ -40,11 +42,11 @@ class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
         onInternshipUpdated: _refreshInternships,
         employerPartnerAccount: widget.employerPartnerAccount,
       );
-    })).then((updated) {
-      if (updated == true) {
+    })).then((updatedInternship) {
+      if (updatedInternship != null) {
         setState(() {
-          futureInternships =
-              InternshipApiService().fetchInternships(); // Refresh internship postings
+          widget.internshipWithPartner = updatedInternship; // Update the internship details
+          futureInternships = internshipApiService.fetchInternships(); // Refresh internship postings
         });
       }
     });
