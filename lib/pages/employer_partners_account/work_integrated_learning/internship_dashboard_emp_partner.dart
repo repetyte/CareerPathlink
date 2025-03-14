@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/industry_partner.dart';
 import 'package:flutter_app/models/work_integrated_learning/internship.dart';
 import 'package:flutter_app/pages/employer_partners_account/work_integrated_learning/add_internship.dart';
-import 'package:flutter_app/pages/employer_partners_account/work_integrated_learning/internship_details_patner.dart';
+import 'package:flutter_app/pages/employer_partners_account/work_integrated_learning/internship_details_emp_partner.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
 import 'package:flutter_app/services/internship_api_service.dart';
 import 'package:flutter_app/widgets/appbar/partner_header.dart';
@@ -11,27 +11,29 @@ import 'package:flutter_app/widgets/footer/footer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class InternshipDashboardPartner extends StatefulWidget {
+class InternshipDashboardDean extends StatefulWidget {
   final IndustryPartnerAccount employerPartnerAccount;
-  const InternshipDashboardPartner(
-      {super.key, required this.employerPartnerAccount});
+  // final CollegeDeanAccount collegeDeanAccount;
+  const InternshipDashboardDean(
+      {super.key,required this.employerPartnerAccount});
 
   @override
-  _InternshipDashboardPartnerState createState() =>
-      _InternshipDashboardPartnerState();
+  _InternshipDashboardDeanState createState() =>
+      _InternshipDashboardDeanState();
 }
 
-class _InternshipDashboardPartnerState
-    extends State<InternshipDashboardPartner> {
+class _InternshipDashboardDeanState
+    extends State<InternshipDashboardDean> {
   late Future<List<InternshipWithPartner>> futureInternships;
   final TextEditingController _searchController = TextEditingController();
   List<InternshipWithPartner> _filteredInternships = [];
 
   @override
   void initState() {
-    debugPrint(
-        'Employer Partner ID: ${widget.employerPartnerAccount.partnerName}');
-    debugPrint('Employer Partner Location: ${widget.employerPartnerAccount.partnerLocation}\n');
+    // debugPrint(
+    //     'Dean Name: ${widget.collegeDeanAccount.firstName} ${widget.collegeDeanAccount.middleName} ${widget.collegeDeanAccount.lastName}\n');
+    // debugPrint('Department: ${widget.collegeDeanAccount.department}\n');
+    // debugPrint('Employer Partner Location: ${widget.employerPartnerAccount.partnerLocation}\n');
     super.initState();
     futureInternships = InternshipApiService().fetchInternships();
     futureInternships.then((data) {
@@ -63,6 +65,7 @@ class _InternshipDashboardPartnerState
                     leading: const Icon(Icons.person),
                     title: Text(
                       widget.employerPartnerAccount.partnerName,
+                      // widget.collegeDeanAccount.firstName,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     subtitle: Text('Employer Partner'),
@@ -100,12 +103,12 @@ class _InternshipDashboardPartnerState
   void _refreshInternships() async {
     setState(() {
       futureInternships = InternshipApiService().fetchInternships();
-      futureInternships.then((data) {
-        setState(() {
-          _filteredInternships = data.where((internship) =>
-            internship.partnerId == widget.employerPartnerAccount.partnerId).toList();
-        });
-      });
+      // futureInternships.then((data) {
+      //   setState(() {
+      //     _filteredInternships = data.where((internship) =>
+      //       internship.partnerId == widget.employerPartnerAccount.partnerId).toList();
+      //   });
+      // });
     });
   }
 

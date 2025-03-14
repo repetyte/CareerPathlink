@@ -217,7 +217,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Image.asset(
-                      widget.jobPostingWithPartner.coverPhoto,
+                      'assets/images/${widget.jobPostingWithPartner.coverPhoto}',
                       width: double.infinity,
                       height: 200,
                       fit: BoxFit.cover,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/industry_partner.dart';
 import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_job_dashboard_emp_partners.dart';
-import 'package:flutter_app/pages/employer_partners_account/work_integrated_learning/internship_dashboard_partner.dart';
+import 'package:flutter_app/pages/employer_partners_account/work_integrated_learning/internship_dashboard_emp_partner.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyDrawerPartner extends StatelessWidget {
@@ -118,7 +118,7 @@ class MyDrawerPartner extends StatelessWidget {
               Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => InternshipDashboardPartner(employerPartnerAccount: employerPartnerAccount,),
+                builder: (context) => InternshipDashboardDean(employerPartnerAccount: employerPartnerAccount,),
               ),
             );
             },

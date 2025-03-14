@@ -208,7 +208,7 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
 
       final jobPostingData = JobPostingWithPartner(
         jobId: widget.jobPostingWithPartner.jobId,
-        coverPhoto: 'assets/images/$coverPhotoSource', // Use appropriate source
+        coverPhoto: coverPhotoSource, // Use appropriate source
         jobTitle: _titleController.text,
         status: _statusController.text,
         fieldIndustry: _fieldIndustryController.text,
@@ -240,7 +240,8 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
         widget.onStudentUpdated();
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Job updated successfully')));
-        Navigator.pop(context, jobPostingData); // Pass true to indicate update success
+        Navigator.pop(
+            context, jobPostingData); // Pass true to indicate update success
       } catch (error) {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Failed to update job: $error')));
@@ -364,9 +365,7 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
                                                               .coverPhoto
                                                               .isNotEmpty
                                                           ? Image.network(
-                                                              widget
-                                                                  .jobPostingWithPartner
-                                                                  .coverPhoto,
+                                                              'assets/images/${widget.jobPostingWithPartner.coverPhoto}',
                                                               fit: BoxFit
                                                                   .contain,
                                                             )
@@ -815,7 +814,8 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
                                                     WidgetStateProperty.all(
                                                         Colors.green),
                                               ),
-                                              child: Text('Add Job Responsibility'),
+                                              child: Text(
+                                                  'Add Job Responsibility'),
                                             ),
                                             TextButton(
                                               onPressed:

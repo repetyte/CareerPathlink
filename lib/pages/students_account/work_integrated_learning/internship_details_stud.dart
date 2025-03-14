@@ -7,9 +7,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 class InternshipDetailsStud extends StatefulWidget {
   final StudentAccount studentAccount;
-  final InternshipWithPartner internship;
+  final InternshipWithPartner internshipWithPartner;
 
-  const InternshipDetailsStud({super.key, required this.internship, required this.studentAccount});
+  const InternshipDetailsStud({super.key, required this.internshipWithPartner, required this.studentAccount});
 
   @override
   _InternshipDetailsStudState createState() => _InternshipDetailsStudState();
@@ -50,7 +50,7 @@ class _InternshipDetailsStudState extends State<InternshipDetailsStud> {
                         image: DecorationImage(
                           fit: BoxFit.cover,
                           image: AssetImage(
-                            widget.internship.displayPhoto,
+                            'assets/images/${widget.internshipWithPartner.displayPhoto}',
                           ),
                         ),
                         borderRadius: const BorderRadius.only(
@@ -96,7 +96,7 @@ class _InternshipDetailsStudState extends State<InternshipDetailsStud> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            widget.internship.internshipTitle,
+                                            widget.internshipWithPartner.internshipTitle,
                                             style: GoogleFonts.getFont(
                                               'Montserrat',
                                               fontWeight: FontWeight.w700,
@@ -112,7 +112,7 @@ class _InternshipDetailsStudState extends State<InternshipDetailsStud> {
                                 Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    widget.internship.hours,
+                                    widget.internshipWithPartner.hours,
                                     style: GoogleFonts.getFont(
                                       'Montserrat',
                                       fontWeight: FontWeight.w400,
@@ -137,7 +137,7 @@ class _InternshipDetailsStudState extends State<InternshipDetailsStud> {
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.internship.takehomePay,
+                        Text(widget.internshipWithPartner.takehomePay,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
 
@@ -145,7 +145,7 @@ class _InternshipDetailsStudState extends State<InternshipDetailsStud> {
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.internship.location,
+                        Text(widget.internshipWithPartner.location,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
 
@@ -153,7 +153,7 @@ class _InternshipDetailsStudState extends State<InternshipDetailsStud> {
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.internship.requiredSkills,
+                        Text(widget.internshipWithPartner.requiredSkills,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
 
@@ -161,7 +161,7 @@ class _InternshipDetailsStudState extends State<InternshipDetailsStud> {
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.internship.qualifications,
+                        Text(widget.internshipWithPartner.qualifications,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
 
@@ -169,7 +169,7 @@ class _InternshipDetailsStudState extends State<InternshipDetailsStud> {
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.internship.description,
+                        Text(widget.internshipWithPartner.description,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
 
@@ -177,12 +177,12 @@ class _InternshipDetailsStudState extends State<InternshipDetailsStud> {
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.internship.partnerName.toString(),
+                        Text(widget.internshipWithPartner.partnerName.toString(),
                             style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold
                             )),
                             const SizedBox(height: 4),
-                        Text(widget.internship.partnerLocation.toString(),
+                        Text(widget.internshipWithPartner.partnerLocation.toString(),
                             style: const TextStyle(
                               fontSize: 16,
                             )),
@@ -201,7 +201,7 @@ class _InternshipDetailsStudState extends State<InternshipDetailsStud> {
                             MaterialPageRoute(
                               builder: (context) => InternshipApplicationScreen(
                                   internshipWithPartner: widget
-                                      .internship, studentAccount: widget.studentAccount,), // Fixed the error here
+                                      .internshipWithPartner, studentAccount: widget.studentAccount,), // Fixed the error here
                             ),
                           );
                         },

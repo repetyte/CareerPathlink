@@ -483,7 +483,7 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
                                                                 builder:
                                                                     (context) =>
                                                                         InternshipDetailsStud(
-                                                                  internship:
+                                                                  internshipWithPartner:
                                                                       data[
                                                                           index],
                                                                   studentAccount:

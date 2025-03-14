@@ -155,7 +155,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
       jobResponsibilities = _combineFields(_responsibilitiesControllers);
 
       final jobPostingData = JobPosting(
-        coverPhoto: 'assets/images/$coverPhotoSource', // Use appropriate source
+        coverPhoto: coverPhotoSource, // Use appropriate source
         jobTitle: jobTitle,
         status: status,
         fieldIndustry: fieldIndustry,

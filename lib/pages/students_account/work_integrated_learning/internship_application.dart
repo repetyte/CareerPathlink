@@ -209,7 +209,7 @@ class _InternshipApplicationScreenState
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Image.asset(
-                      widget.internshipWithPartner.displayPhoto,
+                      'assets/images/${widget.internshipWithPartner.displayPhoto}',
                       width: double.infinity,
                       height: 200,
                       fit: BoxFit.cover,

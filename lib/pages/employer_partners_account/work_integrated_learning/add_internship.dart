@@ -152,8 +152,7 @@ class _AddInternshipState extends State<AddInternship> {
       qualifications = _combineFields(_qualificationsControllers);
 
       final internshipData = Internship(
-        displayPhoto:
-            'assets/images/$displayPhotoSource', // Use appropriate source
+        displayPhoto: displayPhotoSource, // Use appropriate source
         internshipTitle: internshipTitle,
         hours: hours.toString(),
         takehomePay: takehomePay,

@@ -150,7 +150,7 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
                         image: DecorationImage(
                           fit: BoxFit.cover,
                           image: AssetImage(
-                            widget.jobPostingWithPartner.coverPhoto,
+                            'assets/images/${widget.jobPostingWithPartner.coverPhoto}',
                           ),
                         ),
                         borderRadius: const BorderRadius.only(

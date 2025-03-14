@@ -190,8 +190,7 @@ class _UpdateInternshipState extends State<UpdateInternship> {
 
       final internshipData = InternshipWithPartner(
         internshipId: widget.internshipWithPartner.internshipId,
-        displayPhoto:
-            'assets/images/$displayPhotoSource', // Use appropriate source
+        displayPhoto: displayPhotoSource, // Use appropriate source
         internshipTitle: _titleController.text,
         hours: _hoursController.text,
         takehomePay: _takehomePayController.text,
@@ -343,9 +342,7 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                                               .displayPhoto
                                                               .isNotEmpty
                                                           ? Image.network(
-                                                              widget
-                                                                  .internshipWithPartner
-                                                                  .displayPhoto,
+                                                              'assets/images/${widget.internshipWithPartner.displayPhoto}',
                                                               fit: BoxFit
                                                                   .contain,
                                                             )

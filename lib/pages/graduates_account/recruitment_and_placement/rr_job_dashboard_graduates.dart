@@ -433,7 +433,7 @@ class _RrJobDashboardUserState extends State<RrJobDashboardUser> {
                                                 CrossAxisAlignment.start,
                                             children: <Widget>[
                                               Image.asset(
-                                                data[index].coverPhoto,
+                                                'assets/images/${data[index].coverPhoto}',
                                                 width: double.infinity,
                                                 height: 100,
                                                 fit: BoxFit.cover,

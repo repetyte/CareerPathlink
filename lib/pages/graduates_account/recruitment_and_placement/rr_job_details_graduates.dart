@@ -54,7 +54,7 @@ class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
                         image: DecorationImage(
                           fit: BoxFit.cover,
                           image: AssetImage(
-                            widget.jobPostingWithPartner.coverPhoto,
+                            'assets/images/${widget.jobPostingWithPartner.coverPhoto}',
                           ),
                         ),
                         borderRadius: const BorderRadius.only(

@@ -124,7 +124,7 @@ class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
                         image: DecorationImage(
                           fit: BoxFit.cover,
                           image: AssetImage(
-                            widget.internshipWithPartner.displayPhoto,
+                            'assets/images/${widget.internshipWithPartner.displayPhoto}',
                           ),
                         ),
                         borderRadius: const BorderRadius.only(
