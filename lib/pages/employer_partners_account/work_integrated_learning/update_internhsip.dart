@@ -217,8 +217,9 @@ class _UpdateInternshipState extends State<UpdateInternship> {
         await internshipApiService.updateInternship(internshipData);
         widget.onInternshipUpdated();
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Internship updated successfully')));
-        Navigator.pop(context, internshipData); // Pass the updated internship data
+            const SnackBar(content: Text('WIL Opportunity updated successfully')));
+        Navigator.pop(
+            context, internshipData); // Pass the updated internship data
       } catch (error) {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Failed to update internship: $error')));
@@ -230,7 +231,7 @@ class _UpdateInternshipState extends State<UpdateInternship> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Update Internship Posting'),
+        title: const Text('Update WIL Opportunity Posting'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -357,9 +358,9 @@ class _UpdateInternshipState extends State<UpdateInternship> {
 
                                               const SizedBox(height: 16.0),
 
-                                              // Internship Title
+                                              // WIL Opportunity Title
                                               const Text(
-                                                'Internship Title:',
+                                                'WIL Opportunity Title:',
                                                 style: TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
@@ -367,16 +368,46 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                               ),
                                               TextFormField(
                                                 controller: _titleController,
-                                                // decoration: const InputDecoration(labelText: 'Internship Title'),
+                                                // decoration: const InputDecoration(labelText: 'WIL Opportunity Title'),
                                                 decoration: const InputDecoration(
                                                     hintText:
-                                                        'Enter Internship Title'),
+                                                        'Enter WIL Opportunity Title'),
                                                 validator: (value) {
                                                   if (value == null ||
                                                       value.isEmpty) {
                                                     return 'Please enter the internship title';
                                                   }
                                                   _titleController.text = value;
+                                                  return null;
+                                                },
+                                              ),
+
+                                              const SizedBox(height: 16.0),
+
+                                              // WIL Opportunity Description
+                                              const Text(
+                                                'WIL Opportunity Description:',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              TextFormField(
+                                                // decoration: const InputDecoration(labelText: 'WIL Opportunity Description'),
+                                                controller:
+                                                    _descriptionController,
+                                                decoration: const InputDecoration(
+                                                    hintText:
+                                                        'Enter the internship description'),
+                                                maxLines: 5,
+                                                validator: (value) {
+                                                  if (value == null ||
+                                                      value.isEmpty) {
+                                                    return 'Please enter the internship description';
+                                                  }
+                                                  _descriptionController.text =
+                                                      value;
                                                   return null;
                                                 },
                                               ),
@@ -398,73 +429,15 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        // Internship Hours
+                                        // WIL Opportunity Location
                                         const Text(
-                                          'Internship Hours:',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 16.0),
-                                        Slider(
-                                          min: 20,
-                                          max: 100,
-                                          divisions: 80,
-                                          label: _hoursController.text,
-                                          value:
-                                              int.parse(_hoursController.text)
-                                                  .toDouble(),
-                                          onChanged: (value) {
-                                            setState(() {
-                                              _hoursController.text =
-                                                  value.round().toString();
-                                            });
-                                          },
-                                        ),
-
-                                        // Takehome Pay
-                                        const Text(
-                                          'Takehome Pay:',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        DropdownButtonFormField<String>(
-                                          // decoration: const InputDecoration(labelText: 'Status', hintText: 'Internship Status'),
-                                          value: _takehomePayController.text,
-                                          hint: Text('Select an option'),
-                                          onChanged: (newValue) {
-                                            setState(() {
-                                              _takehomePayController.text =
-                                                  newValue!;
-                                            });
-                                          },
-                                          items: [
-                                            'Below PHP 10,000',
-                                            'PHP 10,000 - PHP 15,000',
-                                            'PHP 15,000 - PHP 20,000',
-                                            'PHP 20,000 - PHP 25,000',
-                                            'Above PHP 25,000'
-                                          ].map((String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(value),
-                                            );
-                                          }).toList(),
-                                        ),
-                                        const SizedBox(height: 16.0),
-
-                                        // Internship Location
-                                        const Text(
-                                          'Internship Location:',
+                                          'WIL Opportunity Location:',
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold),
                                         ),
                                         DropdownButtonFormField<String>(
-                                          // decoration: const InputDecoration(labelText: 'Internship Location'),
+                                          // decoration: const InputDecoration(labelText: 'WIL Opportunity Location'),
                                           value: _locationController.text,
                                           hint: Text('Select an option'),
                                           onChanged: (newValue) {
@@ -486,31 +459,6 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                               child: Text(value),
                                             );
                                           }).toList(),
-                                        ),
-                                        const SizedBox(height: 16.0),
-
-                                        // Internship Description
-                                        const Text(
-                                          'Internship Description:',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        TextFormField(
-                                          // decoration: const InputDecoration(labelText: 'Internship Description'),
-                                          controller: _descriptionController,
-                                          decoration: const InputDecoration(
-                                              hintText:
-                                                  'Enter the internship description'),
-                                          maxLines: 5,
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return 'Please enter the internship description';
-                                            }
-                                            _descriptionController.text = value;
-                                            return null;
-                                          },
                                         ),
                                         const SizedBox(height: 16.0),
 
@@ -560,14 +508,10 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                         const SizedBox(height: 8.0),
                                         Row(
                                           children: [
-                                            ElevatedButton(
+                                            ElevatedButton.icon(
                                               onPressed: _addRequiredSkillField,
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    WidgetStateProperty.all(
-                                                        Colors.green),
-                                              ),
-                                              child: Text('Add Required Skill'),
+                                              icon: Icon(Icons.add),
+                                              label: Text('Add'),
                                             ),
                                             TextButton(
                                               onPressed:
@@ -578,9 +522,9 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                         ),
                                         const SizedBox(height: 16.0),
 
-                                        // Internship Qualifications
+                                        // WIL Opportunity Qualifications
                                         const Text(
-                                          'Internship Qualifications:',
+                                          'WIL Opportunity Qualifications:',
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold),
@@ -624,14 +568,10 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                         const SizedBox(height: 8.0),
                                         Row(
                                           children: [
-                                            ElevatedButton(
+                                            ElevatedButton.icon(
                                               onPressed: _addQualificationField,
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    WidgetStateProperty.all(
-                                                        Colors.green),
-                                              ),
-                                              child: Text('Add Qualification'),
+                                              icon: Icon(Icons.add),
+                                              label: Text('Add'),
                                             ),
                                             TextButton(
                                               onPressed:
@@ -639,6 +579,64 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                               child: Text('Clear'),
                                             ),
                                           ],
+                                        ),
+                                        const SizedBox(height: 16.0),
+
+                                        // WIL Opportunity Hours
+                                        const Text(
+                                          'WIL Opportunity Hours:',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 16.0),
+                                        Slider(
+                                          min: 20,
+                                          max: 100,
+                                          divisions: 80,
+                                          label: _hoursController.text,
+                                          value:
+                                              int.parse(_hoursController.text)
+                                                  .toDouble(),
+                                          onChanged: (value) {
+                                            setState(() {
+                                              _hoursController.text =
+                                                  value.round().toString();
+                                            });
+                                          },
+                                        ),
+
+                                        // Takehome Pay
+                                        const Text(
+                                          'Takehome Pay:',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        DropdownButtonFormField<String>(
+                                          // decoration: const InputDecoration(labelText: 'Status', hintText: 'WIL Opportunity Status'),
+                                          value: _takehomePayController.text,
+                                          hint: Text('Select an option'),
+                                          onChanged: (newValue) {
+                                            setState(() {
+                                              _takehomePayController.text =
+                                                  newValue!;
+                                            });
+                                          },
+                                          items: [
+                                            'Below PHP 10,000',
+                                            'PHP 10,000 - PHP 15,000',
+                                            'PHP 15,000 - PHP 20,000',
+                                            'PHP 20,000 - PHP 25,000',
+                                            'Above PHP 25,000'
+                                          ].map((String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value),
+                                            );
+                                          }).toList(),
                                         ),
                                         const SizedBox(height: 16.0),
 
@@ -715,15 +713,12 @@ class _UpdateInternshipState extends State<UpdateInternship> {
 
                                         // Save Changes Button
                                         const SizedBox(height: 16),
-                                        Center(
+                                        Align(
+                                          alignment: Alignment.centerRight,
                                           child: ElevatedButton.icon(
                                             icon: const Icon(Icons.save),
                                             onPressed: _updateInternship,
                                             label: const Text('Save Changes'),
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  const Color(0xFF008000),
-                                            ),
                                           ),
                                         ),
                                       ],

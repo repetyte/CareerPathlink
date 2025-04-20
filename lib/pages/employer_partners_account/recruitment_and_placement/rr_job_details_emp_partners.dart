@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_job_application_list.dart';
 import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_update_job_posting.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -206,12 +207,30 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
                                             ),
                                           ),
                                         ),
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            // Call the API to apply for the internship
-                                          },
-                                          child: const Text(
-                                              'Internship Applications'),
+                                        Column(
+                                          children: [
+                                            ElevatedButton.icon(
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        RrJobApplications(
+                                                      jobId: widget
+                                                          .jobPostingWithPartner
+                                                          .jobId!,
+                                                      jobPostingWithPartner: widget
+                                                          .jobPostingWithPartner, // Pass this
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              icon: const Icon(
+                                                  Icons.person_search),
+                                              label: const Text(
+                                                  'Job Applications'),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
@@ -255,7 +274,7 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
                         Text(widget.jobPostingWithPartner.yrsOfExperienceNeeded,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
-                        const Text('Contractual Status: ',
+                        const Text('Employment Status: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
@@ -324,14 +343,14 @@ class _RrJobDetailsCCDState extends State<RrJobDetailsCCD> {
                             onPressed: () => _deleteJobPosting(
                                 widget.jobPostingWithPartner.jobId),
                             icon: const Icon(Icons.delete),
-                            label: const Text('Delete Job'),
+                            label: const Text('Delete'),
                           ),
                           const SizedBox(width: 8),
                           ElevatedButton.icon(
                             onPressed: () =>
                                 _updateJobPosting(widget.jobPostingWithPartner),
                             icon: const Icon(Icons.update),
-                            label: const Text('Update Job'),
+                            label: const Text('Update'),
                           ),
                         ],
                       ),

@@ -4,7 +4,7 @@ class InternshipWithPartner
     private $conn;
     private $table_name = "internship_tb";
 
-    // Internship details
+    // WIL Opportunity details
     public $internship_id;
     public $display_photo;
     public $internship_title;

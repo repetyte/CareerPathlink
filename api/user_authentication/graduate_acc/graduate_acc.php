@@ -25,7 +25,9 @@ class GraduateAccount
     public $account_id;
     public $username;
     public $password;
-
+    public $resume;
+    public $skills;
+    public $certifications;
 
     public function __construct($db)
     {
@@ -129,7 +131,10 @@ class GraduateAccount
 
                         ac.account_id,
                         ac.username,
-                        ac.password
+                        ac.password,
+                        ac.resume,
+                        ac.skills,
+                        ac.certifications
                     FROM " . $this->table_name . " gd
                     JOIN acc_graduates_tb ac
                     ON gd.user_account = ac.account_id;";

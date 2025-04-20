@@ -148,7 +148,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
   }
 
   String _combineFields(List<TextEditingController> controllers) {
-    return controllers.map((controller) => '- ${controller.text}').join('\n');
+    return controllers.map((controller) => '• ${controller.text}').join('\n');
   }
 
   void _submitApplication() async {
@@ -160,8 +160,12 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
     // final DateTime dateApplied = dateFormat.parse(formattedDate);
 
     final jobApplicationData = JobApplication(
-      applicant: widget.graduateAccount.graduateId.toString(),
       job: widget.jobPostingWithPartner.jobId ?? 0,
+      applicantFirstName: widget.graduateAccount.firstName,
+      applicantLastName: widget.graduateAccount.lastName,
+      applicantLocation: widget.graduateAccount.address,
+      applicantContactNo: widget.graduateAccount.contactNo,
+      applicantEmail: widget.graduateAccount.email,
       resume: resumeSource,
       coverLetter: coverLetterSource,
       skills: skills,
@@ -190,9 +194,39 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
 
   @override
   void initState() {
-    debugPrint('Graduatesssss ID: ${widget.graduateAccount.graduateId}');
-    debugPrint('Department: ${widget.graduateAccount.department}');
     super.initState();
+
+    // Populate resume
+    resumeSource = widget.graduateAccount.resume!;
+    debugPrint('Resume: $resumeSource');
+
+    // Populate skills
+    if (widget.graduateAccount.skills!.isNotEmpty) {
+      final skillLines = widget.graduateAccount.skills!.split('\n');
+      for (var line in skillLines) {
+        final skill = line.replaceFirst('• ', '').trim();
+        if (skill.isNotEmpty) {
+          _skillsControllers.add(TextEditingController(text: skill));
+        }
+      }
+    } else {
+      _addSkillField();
+    }
+
+    // Populate certifications
+    if (widget.graduateAccount.certifications!.isNotEmpty) {
+      final certificationLines =
+          widget.graduateAccount.certifications!.split('\n');
+      for (var line in certificationLines) {
+        final certification = line.replaceFirst('• ', '').trim();
+        if (certification.isNotEmpty) {
+          _certificationsControllers
+              .add(TextEditingController(text: certification));
+        }
+      }
+    } else {
+      _addCertificationField();
+    }
   }
 
   @override
@@ -227,19 +261,99 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Text("Applying for",
+                              style: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold)),
+                          const SizedBox(height: 4),
                           Text(widget.jobPostingWithPartner.jobTitle,
                               style: const TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
                           const SizedBox(height: 4),
-                          Text(widget.jobPostingWithPartner.salary,
+                          Text(widget.jobPostingWithPartner.partnerName,
                               style: const TextStyle(
                                 fontSize: 16,
                               )),
                           const SizedBox(height: 4),
-                          Text(widget.jobPostingWithPartner.fieldIndustry,
+                          Text(widget.jobPostingWithPartner.salary,
                               style: const TextStyle(
                                 fontSize: 14,
                               )),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              Card(
+                color: Colors.grey,
+                elevation: 10.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40.0),
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    // Image.asset(
+                    //   'assets/images/${widget.jobPostingWithPartner.coverPhoto}',
+                    //   width: double.infinity,
+                    //   height: 200,
+                    //   fit: BoxFit.cover,
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Text("Applying for",
+                          //     style: const TextStyle(
+                          //         fontSize: 16, fontWeight: FontWeight.bold)),
+                          // const SizedBox(height: 4),
+                          Text(
+                              '${widget.graduateAccount.firstName} ${widget.graduateAccount.lastName}',
+                              style: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.location_city,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(widget.graduateAccount.address,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                  )),
+                            ],
+                          ),
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.contact_mail,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(widget.graduateAccount.contactNo,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                  )),
+                            ],
+                          ),
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.email,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(widget.graduateAccount.email,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                  )),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -321,15 +435,34 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                                   height: 100,
                                   width: double.infinity,
                                   alignment: Alignment.center,
+                                  padding: const EdgeInsets.all(8.0),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     border: Border.all(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(40.0),
                                   ),
-                                  child: const Text(
-                                    "Click to upload your resume",
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
+                                  child: widget
+                                          .graduateAccount.resume!.isNotEmpty
+                                      ? Row(
+                                          children: [
+                                            const Icon(Icons.description,
+                                                color: Colors.blue),
+                                            const SizedBox(width: 10),
+                                            Expanded(
+                                              child: Text(
+                                                widget.graduateAccount.resume
+                                                    .toString(),
+                                                style: const TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      : const Text(
+                                          "Drag and drop an image or click to select",
+                                          style: TextStyle(color: Colors.grey)),
                                 ),
                             ],
                           ),
@@ -555,22 +688,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                               ],
                             ),
                           ),
-                        if (resumeBytes == null)
-                          Container(
-                            height: 100,
-                            width: double.infinity,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(40.0),
-                            ),
-                            child: const Text(
-                              "No resume uploaded",
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 8),
 
                         // Cover Letter
                         const Text('Cover Letter:'),
@@ -600,22 +718,9 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                               ],
                             ),
                           ),
-                        if (coverLetterBytes == null)
-                          Container(
-                            height: 100,
-                            width: double.infinity,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(40.0),
-                            ),
-                            child: const Text(
-                              "No cover letter uploaded",
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 8),
+
+                        // Skills
                         const Text('Skills:'),
                         if (_skillsControllers.isNotEmpty)
                           Text(skills = _combineFields(_skillsControllers))
@@ -623,6 +728,8 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                           const Text('No skills provided',
                               style: TextStyle(color: Colors.grey)),
                         const SizedBox(height: 8),
+
+                        // Certifications
                         const Text('Certifications:'),
                         if (_certificationsControllers.isNotEmpty)
                           Text(

@@ -52,6 +52,43 @@ class _InternshipApplicationScreenState
   String skills = '';
   String certifications = '';
 
+  @override
+  void initState() {
+    super.initState();
+
+    // Populate resume
+    resumeSource = widget.studentAccount.resume!;
+    debugPrint('Resume: $resumeSource');
+
+    // Populate skills
+    if (widget.studentAccount.skills!.isNotEmpty) {
+      final skillLines = widget.studentAccount.skills!.split('\n');
+      for (var line in skillLines) {
+        final skill = line.replaceFirst('• ', '').trim();
+        if (skill.isNotEmpty) {
+          _skillsControllers.add(TextEditingController(text: skill));
+        }
+      }
+    } else {
+      _addSkillField();
+    }
+
+    // Populate certifications
+    if (widget.studentAccount.certifications!.isNotEmpty) {
+      final certificationLines =
+          widget.studentAccount.certifications!.split('\n');
+      for (var line in certificationLines) {
+        final certification = line.replaceFirst('• ', '').trim();
+        if (certification.isNotEmpty) {
+          _certificationsControllers
+              .add(TextEditingController(text: certification));
+        }
+      }
+    } else {
+      _addCertificationField();
+    }
+  }
+
   // Method to pick Resume
   void _pickResume() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -150,7 +187,7 @@ class _InternshipApplicationScreenState
   }
 
   String _combineFields(List<TextEditingController> controllers) {
-    return controllers.map((controller) => '- ${controller.text}').join('\n');
+    return controllers.map((controller) => '• ${controller.text}').join('\n');
   }
 
   void _submitApplication() async {
@@ -158,8 +195,12 @@ class _InternshipApplicationScreenState
     certifications = _combineFields(_certificationsControllers);
 
     final internshipApplicationData = InternshipApplication(
-      applicant: widget.studentAccount.studentId.toString(),
       internship: widget.internshipWithPartner.internshipId ?? 0,
+      applicantFirstName: widget.studentAccount.firstName,
+      applicantLastName: widget.studentAccount.lastName,
+      applicantLocation: widget.studentAccount.address,
+      applicantContactNo: widget.studentAccount.contactNo,
+      applicantEmail: widget.studentAccount.email,
       resume: resumeSource,
       coverLetter: coverLetterSource,
       skills: skills,
@@ -179,7 +220,7 @@ class _InternshipApplicationScreenState
           .createInternshipApplication(internshipApplicationData);
       // widget.onInternshipPostingAdded();
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Internship application submitted successfully')));
+          content: Text('WIL Opportunity application submitted successfully')));
       Navigator.pop(context, true);
     } catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -198,7 +239,7 @@ class _InternshipApplicationScreenState
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
-              // Internship Details Card
+              // WIL Opportunity Details Card
               Card(
                 elevation: 10.0,
                 shape: RoundedRectangleBorder(
@@ -219,6 +260,10 @@ class _InternshipApplicationScreenState
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Text("Applying for",
+                              style: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold)),
+                          const SizedBox(height: 4),
                           Text(widget.internshipWithPartner.internshipTitle,
                               style: const TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
@@ -227,6 +272,87 @@ class _InternshipApplicationScreenState
                               style: const TextStyle(
                                 fontSize: 16,
                               )),
+                          const SizedBox(height: 4),
+                          Text(widget.internshipWithPartner.location,
+                              style: const TextStyle(
+                                fontSize: 16,
+                              )),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              Card(
+                color: Colors.grey,
+                elevation: 10.0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40.0),
+                ),
+                clipBehavior: Clip.antiAlias,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    // Image.asset(
+                    //   'assets/images/${widget.jobPostingWithPartner.coverPhoto}',
+                    //   width: double.infinity,
+                    //   height: 200,
+                    //   fit: BoxFit.cover,
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Text("Applying for",
+                          //     style: const TextStyle(
+                          //         fontSize: 16, fontWeight: FontWeight.bold)),
+                          // const SizedBox(height: 4),
+                          Text(
+                              '${widget.studentAccount.firstName} ${widget.studentAccount.lastName}',
+                              style: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.location_city,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(widget.studentAccount.address,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                  )),
+                            ],
+                          ),
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.contact_mail,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(widget.studentAccount.contactNo,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                  )),
+                            ],
+                          ),
+                          const SizedBox(height: 4),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.email,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(widget.studentAccount.email,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                  )),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -310,16 +436,34 @@ class _InternshipApplicationScreenState
                                 Container(
                                   height: 100,
                                   width: double.infinity,
+                                  padding: const EdgeInsets.all(8.0),
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     border: Border.all(color: Colors.grey),
                                     borderRadius: BorderRadius.circular(40.0),
                                   ),
-                                  child: const Text(
-                                    "Click to upload your resume",
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
+                                  child: widget
+                                          .studentAccount.resume!.isNotEmpty
+                                      ? Row(
+                                          children: [
+                                            const Icon(Icons.description,
+                                                color: Colors.blue),
+                                            const SizedBox(width: 10),
+                                            Expanded(
+                                              child: Text(
+                                                widget.studentAccount.resume.toString(),
+                                                style: const TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      : const Text(
+                                          "Drag and drop an image or click to select",
+                                          style: TextStyle(color: Colors.grey)),
                                 ),
                             ],
                           ),
@@ -431,14 +575,14 @@ class _InternshipApplicationScreenState
                         const SizedBox(height: 4.0),
                         Row(
                           children: [
-                            ElevatedButton(
+                            ElevatedButton.icon(
                               onPressed: _addSkillField,
                               style: ButtonStyle(
                                 backgroundColor:
                                     WidgetStateProperty.all(Colors.green),
                               ),
-                              // icon: Icon(Icons.add),
-                              child: Text('Add your Skill'),
+                              icon: Icon(Icons.add),
+                              label: Text('Add'),
                             ),
                             TextButton(
                               onPressed: _clearSkillFields,
@@ -485,14 +629,14 @@ class _InternshipApplicationScreenState
                         const SizedBox(height: 4.0),
                         Row(
                           children: [
-                            ElevatedButton(
+                            ElevatedButton.icon(
                               onPressed: _addCertificationField,
                               style: ButtonStyle(
                                 backgroundColor:
                                     WidgetStateProperty.all(Colors.green),
                               ),
-                              // icon: Icon(Icons.add),
-                              child: Text('Add your Certification'),
+                              icon: Icon(Icons.add),
+                              label: Text('Add'),
                             ),
                             TextButton(
                               onPressed: _clearCertificationFields,
@@ -520,7 +664,7 @@ class _InternshipApplicationScreenState
                           alignment: Alignment.centerLeft,
                           child: const Text(
                             'Review your application:',
-                            style: TextStyle(fontWeight: FontWeight.w500),
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
                         const SizedBox(height: 8),
@@ -553,7 +697,7 @@ class _InternshipApplicationScreenState
                               ],
                             ),
                           ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 8),
 
                         // Cover Letter
                         const Text('Cover Letter:'),
@@ -583,7 +727,9 @@ class _InternshipApplicationScreenState
                               ],
                             ),
                           ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 8),
+
+                        // Skills
                         const Text('Skills:'),
                         if (_skillsControllers.isNotEmpty)
                           Text(skills = _combineFields(_skillsControllers))
@@ -591,6 +737,8 @@ class _InternshipApplicationScreenState
                           const Text('No skills provided',
                               style: TextStyle(color: Colors.grey)),
                         const SizedBox(height: 8),
+
+                        // Certifications
                         const Text('Certifications:'),
                         if (_certificationsControllers.isNotEmpty)
                           Text(

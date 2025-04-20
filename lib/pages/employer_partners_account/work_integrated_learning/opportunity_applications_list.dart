@@ -1,39 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/recruitment_and_placement/job_application.dart';
-import 'package:flutter_app/models/recruitment_and_placement/job_posting.dart';
-import 'package:flutter_app/services/job_application_api_service.dart';
+import 'package:flutter_app/models/work_integrated_learning/internship.dart';
+import 'package:flutter_app/models/work_integrated_learning/internship_application.dart';
+import 'package:flutter_app/services/internship_application_api_service.dart';
 
-class RrJobApplications extends StatefulWidget {
-  final int jobId;
-  final JobPostingWithPartner jobPostingWithPartner; // Add this parameter
+class OpportunityApplications extends StatefulWidget {
+  final int internshipId;
+  final InternshipWithPartner internshipWithPartner; // Add this parameter
 
-  const RrJobApplications({
+  const OpportunityApplications({
     super.key,
-    required this.jobId,
-    required this.jobPostingWithPartner, // Initialize it here
+    required this.internshipId,
+    required this.internshipWithPartner, // Initialize it here
   });
 
   @override
-  _RrJobApplicationsState createState() => _RrJobApplicationsState();
+  _OpportunityApplicationsState createState() => _OpportunityApplicationsState();
 }
 
-class _RrJobApplicationsState extends State<RrJobApplications> {
-  final JobApplicationApiService jobApplicationApiService =
-      JobApplicationApiService();
-  late Future<List<JobApplicationComplete>> futureApplications;
+class _OpportunityApplicationsState extends State<OpportunityApplications> {
+  final InternshipApplicationApiService internshipApplicationApiService =
+      InternshipApplicationApiService();
+  late Future<List<InternshipApplicationComplete>> futureApplications;
   String filterStatus = 'Pending';
 
   @override
   void initState() {
     super.initState();
-    futureApplications = jobApplicationApiService.fetchJobApplications();
+    futureApplications = internshipApplicationApiService.fetchInternshipApplications();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Job Applications'),
+        title: const Text('WIL Opportunity Applications'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -50,7 +50,7 @@ class _RrJobApplicationsState extends State<RrJobApplications> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Image.asset(
-                      'assets/images/${widget.jobPostingWithPartner.coverPhoto}',
+                      'assets/images/${widget.internshipWithPartner.displayPhoto}',
                       width: double.infinity,
                       height: 200,
                       fit: BoxFit.cover,
@@ -60,20 +60,20 @@ class _RrJobApplicationsState extends State<RrJobApplications> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Job Applications for",
+                          Text("Opportunity Applications for",
                               style: const TextStyle(
                                   fontSize: 16, fontWeight: FontWeight.bold)),
                           const SizedBox(height: 4),
-                          Text(widget.jobPostingWithPartner.jobTitle,
+                          Text(widget.internshipWithPartner.internshipTitle,
                               style: const TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
                           const SizedBox(height: 4),
-                          Text(widget.jobPostingWithPartner.partnerName,
+                          Text(widget.internshipWithPartner.partnerName,
                               style: const TextStyle(
                                 fontSize: 16,
                               )),
                           const SizedBox(height: 4),
-                          Text(widget.jobPostingWithPartner.salary,
+                          Text(widget.internshipWithPartner.takehomePay,
                               style: const TextStyle(
                                 fontSize: 14,
                               )),
@@ -133,7 +133,7 @@ class _RrJobApplicationsState extends State<RrJobApplications> {
                 constraints: const BoxConstraints(
                   minHeight: 300, // Set the minimum height to 300
                 ),
-                child: FutureBuilder<List<JobApplicationComplete>>(
+                child: FutureBuilder<List<InternshipApplicationComplete>>(
                   future: futureApplications,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -143,20 +143,20 @@ class _RrJobApplicationsState extends State<RrJobApplications> {
                     } else if (!snapshot.hasData ||
                         snapshot.data!.isEmpty ||
                         snapshot.data!
-                            .every((app) => app.job != widget.jobId)) {
+                            .every((app) => app.internship != widget.internshipId)) {
                       return Center(
                         child: Text(
                           filterStatus == 'Pending'
-                              ? 'No pending job applications found.'
-                              : 'No validated job applications found.',
+                              ? 'No pending opportunity applications found.'
+                              : 'No validated opportunity applications found.',
                         ),
                       );
                     }
 
-                    // Filter applications based on jobId and filterStatus
+                    // Filter applications based on internshipId and filterStatus
                     final filteredApplications = snapshot.data!
                         .where((app) =>
-                            app.job == widget.jobId &&
+                            app.internship == widget.internshipId &&
                             app.applicationStatus == filterStatus)
                         .toList();
 
@@ -164,8 +164,8 @@ class _RrJobApplicationsState extends State<RrJobApplications> {
                       return Center(
                         child: Text(
                           filterStatus == 'Pending'
-                              ? 'No pending job applications found.'
-                              : 'No validated job applications found.',
+                              ? 'No pending opportunity applications found.'
+                              : 'No validated opportunity applications found.',
                         ),
                       );
                     }
@@ -237,16 +237,14 @@ class _RrJobApplicationsState extends State<RrJobApplications> {
                                         const SizedBox(height: 8.0),
                                         Text('Resume: ${application.resume}'),
                                         Text('Cover Letter: ${application.coverLetter}'),
-                                        application.skills == '' || application.skills.isEmpty
+                                        application.skills == '' || application.skills!.isEmpty
                                             ? Text('Skills: ')
                                             : Text('Skills: \n${application.skills}'),
-                                        application.certifications == '' || application.certifications.isEmpty
+                                        application.certifications == '' || application.certifications!.isEmpty
                                             ? Text('Certifications: ')
                                             : Text('Certifications: \n${application.certifications}'),
-                                        Text(
-                                            'Status: ${application.applicationStatus}'),
-                                        Text(
-                                            'Date Applied: ${application.dateApplied}'),
+                                        Text('Status: ${application.applicationStatus}'),
+                                        Text('Date Applied: ${application.dateApplied}'),
                                       ],
                                     ),
                                   ),

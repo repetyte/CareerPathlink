@@ -336,31 +336,31 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                                               const SizedBox(height: 16.0),
 
                                               // Status
-                                              const Text(
-                                                'Status:',
-                                                style: TextStyle(
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white),
-                                              ),
-                                              DropdownButtonFormField<String>(
-                                                // decoration: const InputDecoration(labelText: 'Status', hintText: 'Job Status'),
-                                                // value: status,
-                                                hint: Text('Select an option'),
-                                                onChanged: (newValue) {
-                                                  setState(() {
-                                                    status = newValue!;
-                                                  });
-                                                },
-                                                items: ['Open', 'Closed']
-                                                    .map((String value) {
-                                                  return DropdownMenuItem<
-                                                      String>(
-                                                    value: value,
-                                                    child: Text(value),
-                                                  );
-                                                }).toList(),
-                                              ),
+                                              // const Text(
+                                              //   'Status:',
+                                              //   style: TextStyle(
+                                              //       fontSize: 16,
+                                              //       fontWeight: FontWeight.bold,
+                                              //       color: Colors.white),
+                                              // ),
+                                              // DropdownButtonFormField<String>(
+                                              //   // decoration: const InputDecoration(labelText: 'Status', hintText: 'Job Status'),
+                                              //   // value: status,
+                                              //   hint: Text('Select an option'),
+                                              //   onChanged: (newValue) {
+                                              //     setState(() {
+                                              //       status = newValue!;
+                                              //     });
+                                              //   },
+                                              //   items: ['Open', 'Closed']
+                                              //       .map((String value) {
+                                              //     return DropdownMenuItem<
+                                              //         String>(
+                                              //       value: value,
+                                              //       child: Text(value),
+                                              //     );
+                                              //   }).toList(),
+                                              // ),
                                             ],
                                           ),
                                         ),
@@ -473,16 +473,16 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                                         ),
                                         const SizedBox(height: 16.0),
 
-                                        // Contractual Status
+                                        // Employment Status
                                         const Text(
-                                          'Contractual Status:',
+                                          'Employment Status:',
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold),
                                         ),
                                         DropdownButtonFormField<String>(
                                           // decoration:
-                                          //     const InputDecoration(labelText: 'Contractual Status'),
+                                          //     const InputDecoration(labelText: 'Employment Status'),
                                           // value: contractualStatus,
                                           hint: Text('Select an option'),
                                           onChanged: (newValue) {

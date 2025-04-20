@@ -38,6 +38,9 @@ if($num > 0){
             "account_id" => $account_id,
             "username" => $username,
             "password" => $password,
+            "resume" => $resume,
+            "skills" => $skills,
+            "certifications" => $certifications,
         );
 
         array_push($students_arr["records"], $student_item);

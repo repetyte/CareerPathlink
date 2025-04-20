@@ -41,7 +41,10 @@ if($num > 0){
             "user_account" => $user_account,
             "account_id" => $account_id,
             "username" => $username,
-            "password" => $password
+            "password" => $password,
+            "resume" => $resume,
+            "skills" => $skills,
+            "certifications" => $certifications,
         );
 
         array_push($accounts_arr["records"], $account_item);

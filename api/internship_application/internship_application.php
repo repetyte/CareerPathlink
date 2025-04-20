@@ -6,29 +6,18 @@ class InternshipApplication
     private $table_name = "internship_application_tb";
 
     public $application_id;
-    public $applicant;
     public $internship;
+    public $applicant_first_name;
+    public $applicant_last_name;
+    public $applicant_location;
+    public $applicant_contact_no;
+    public $applicant_email;
     public $resume;
     public $cover_letter;
     public $skills;
     public $certifications;
     public $application_status;
     public $date_applied;
-
-    // applicant_id refereces student_tb fields where the applicant_id is the student_id
-    public $student_id;
-    public $first_name;
-    public $middle_name;
-    public $last_name;
-    public $email;
-    public $course;
-    public $department;
-    public $contact_no;
-    public $bday;
-    public $gender;
-    public $age;
-    public $address;
-    public $user_account;
 
     // internship references internship_tb fields where the internship is the internship_id
     public $internship_id;
@@ -50,15 +39,19 @@ class InternshipApplication
 
     public function create()
     {
-        $query = "INSERT INTO " . $this->table_name . " (applicant, internship, resume, cover_letter, skills, certifications, application_status, date_applied) 
-                  VALUES (:applicant, :internship, :resume, :cover_letter, :skills, :certifications, :application_status, :date_applied)";
+        $query = "INSERT INTO " . $this->table_name . " (internship, applicant_first_name, applicant_last_name, applicant_location, applicant_contact_no, applicant_email, resume, cover_letter, skills, certifications, application_status, date_applied) 
+                  VALUES (:internship, :applicant_first_name, :applicant_last_name, :applicant_location, :applicant_contact_no, :applicant_email, :resume, :cover_letter, :skills, :certifications, :application_status, :date_applied)";
 
         // Prepare query
         $stmt = $this->conn->prepare($query);
 
         // Sanitize input
-        $this->applicant = htmlspecialchars(strip_tags($this->applicant));
         $this->internship = htmlspecialchars(strip_tags($this->internship));
+        $this->applicant_first_name = htmlspecialchars(strip_tags($this->applicant_first_name));
+        $this->applicant_last_name = htmlspecialchars(strip_tags($this->applicant_last_name));
+        $this->applicant_location = htmlspecialchars(strip_tags($this->applicant_location));
+        $this->applicant_contact_no = htmlspecialchars(strip_tags($this->applicant_contact_no));
+        $this->applicant_email = htmlspecialchars(strip_tags($this->applicant_email));
         $this->resume = htmlspecialchars(strip_tags($this->resume));
         $this->cover_letter = htmlspecialchars(strip_tags($this->cover_letter));
         $this->skills = htmlspecialchars(strip_tags($this->skills));
@@ -67,8 +60,12 @@ class InternshipApplication
         $this->date_applied = htmlspecialchars(strip_tags($this->date_applied));
 
         // Bind parameters
-        $stmt->bindParam(":applicant", $this->applicant);
         $stmt->bindParam(":internship", $this->internship);
+        $stmt->bindParam(":applicant_first_name", $this->applicant_first_name);
+        $stmt->bindParam(":applicant_last_name", $this->applicant_last_name);
+        $stmt->bindParam(":applicant_location", $this->applicant_location);
+        $stmt->bindParam(":applicant_contact_no", $this->applicant_contact_no);
+        $stmt->bindParam(":applicant_email", $this->applicant_email);
         $stmt->bindParam(":resume", $this->resume);
         $stmt->bindParam(":cover_letter", $this->cover_letter);
         $stmt->bindParam(":skills", $this->skills);
@@ -86,10 +83,8 @@ class InternshipApplication
     {
         $query = "SELECT
                       ia.*,
-                      st.*,
                       ip.*
                   FROM " . $this->table_name . " ia
-                  JOIN student_tb st ON ia.applicant = st.student_id
                   JOIN internship_tb ip ON ia.internship = ip.internship_id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();

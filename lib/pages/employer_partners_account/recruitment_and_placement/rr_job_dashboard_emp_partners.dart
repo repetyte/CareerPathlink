@@ -50,8 +50,10 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(40),
           ),
-          child: SizedBox(
-            width: screenSize.width * 0.8,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: 600, // Set the maximum width for the dialog
+            ),
             // height: screenSize.height * 0.5,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -200,9 +202,11 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
                 ],
               ),
             ),
-            GestureDetector(
-              onTap: () => _showProfileDialog(context),
-              child: Container(
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () => _showProfileDialog(context),
+                child: Container(
                 decoration: BoxDecoration(
                   color: const Color(0xFFD9D9D9),
                   borderRadius: BorderRadius.circular(50),
@@ -246,14 +250,15 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
                           width: 12,
                           height: 7.4,
                           child: SizedBox(
-                            width: 12,
-                            height: 7.4,
-                            child: SvgPicture.asset(
-                              'assets/vectors/vector_331_x2.svg',
+                              width: 12,
+                              height: 7.4,
+                              child: SvgPicture.asset(
+                                'assets/vectors/vector_331_x2.svg',
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -496,14 +501,14 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
                                                                       FontWeight
                                                                           .bold)),
                                                           const SizedBox(height: 4),
-                                                          Text(data[index].salary,
+                                                          Text(data[index].partnerName,
                                                               style: const TextStyle(
                                                                 fontSize: 16,
                                                               )),
                                                           const SizedBox(height: 4),
                                                           Text(
                                                               data[index]
-                                                                  .fieldIndustry,
+                                                                  .salary,
                                                               style: const TextStyle(
                                                                 fontSize: 14,
                                                               )),
@@ -512,7 +517,7 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
                                                     ),
                                                     const Spacer(),
                                                     Align(
-                                                      alignment: Alignment.bottomLeft,
+                                                      alignment: Alignment.centerRight,
                                                       child: Padding(
                                                         padding: const EdgeInsets.all(
                                                             16.0),

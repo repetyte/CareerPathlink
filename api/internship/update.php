@@ -33,7 +33,7 @@ $internship->email_add = $data->email_add;
 
 if ($internship->update()) {
     http_response_code(200);
-    echo json_encode(array("message" => "Internship was updated."));
+    echo json_encode(array("message" => "WIL Opportunity was updated."));
 } else {
     http_response_code(503);
     echo json_encode(array("message" => "Unable to update internship."));

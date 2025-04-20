@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/models/work_integrated_learning/internship.dart';
-import 'package:flutter_app/pages/students_account/work_integrated_learning/internship_application.dart';
+import 'package:flutter_app/pages/students_account/work_integrated_learning/internship_student_application.dart';
 import 'package:flutter_app/services/internship_api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -27,7 +27,7 @@ class _InternshipDetailsStudState extends State<InternshipDetailsStud> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Job Details'),
+        title: const Text('WIL Opportunity Details'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -112,7 +112,7 @@ class _InternshipDetailsStudState extends State<InternshipDetailsStud> {
                                 Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    widget.internshipWithPartner.hours,
+                                    widget.internshipWithPartner.description,
                                     style: GoogleFonts.getFont(
                                       'Montserrat',
                                       fontWeight: FontWeight.w400,
@@ -133,13 +133,7 @@ class _InternshipDetailsStudState extends State<InternshipDetailsStud> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        const Text('TakeHome Pay: ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 4),
-                        Text(widget.internshipWithPartner.takehomePay,
-                            style: const TextStyle(fontSize: 16)),
-                        const SizedBox(height: 24),
+                        
 
                         const Text('Location: ',
                             style: TextStyle(
@@ -165,11 +159,19 @@ class _InternshipDetailsStudState extends State<InternshipDetailsStud> {
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
 
-                        const Text('Description: ',
+                        const Text('Hours: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.internshipWithPartner.description,
+                        Text(widget.internshipWithPartner.hours,
+                            style: const TextStyle(fontSize: 16)),
+                        const SizedBox(height: 24),
+
+                        const Text('WIL Allowance: ',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 4),
+                        Text(widget.internshipWithPartner.takehomePay,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
 

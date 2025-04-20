@@ -1,37 +1,48 @@
 
 // Define the InternshipApplication class with internship posting properties only
-import 'package:intl/intl.dart';
 
 class InternshipApplication {
-  final int? applicationId;
-  final String applicant;
+  int? applicationId;
   final int internship;
-  final String resume;
-  final String coverLetter;
-  final String skills;
-  final String certifications;
+  final String applicantFirstName;
+  final String applicantLastName;
+  final String applicantLocation;
+  final String applicantContactNo;
+  final String applicantEmail;
+  String? resume;
+  String? coverLetter;
+  String? skills;
+  String? certifications;
   final String applicationStatus;
   final String dateApplied;
 
   // Constructor for internship posting properties only
   InternshipApplication({
     this.applicationId,
-    required this.applicant,
     required this.internship,
-    required this.resume,
-    required this.coverLetter,
-    required this.skills,
-    required this.certifications,
+    required this.applicantFirstName,
+    required this.applicantLastName,
+    required this.applicantLocation,
+    required this.applicantContactNo,
+    required this.applicantEmail,
+    this.resume,
+    this.coverLetter,
+    this.skills,
+    this.certifications,
     this.applicationStatus = 'Pending',
     required this.dateApplied,
   });
 
-  // Factory method for creating a Internship Application from JSON
+  // Factory method for creating a WIL Opportunity Application from JSON
   factory InternshipApplication.fromJson(Map<String, dynamic> json) {
     return InternshipApplication(
       applicationId: json['application_id'] as int?,
-      applicant: json['applicant'] ?? '',
       internship: json['internship'] as int? ?? 0,
+      applicantFirstName: json['applicant_first_name'] ?? '',
+      applicantLastName: json['applicant_last_name'] ?? '',
+      applicantLocation: json['applicant_location'] ?? '',
+      applicantContactNo: json['applicant_contact_no'] ?? '',
+      applicantEmail: json['applicant_email'] ?? '',
       resume: json['resume'] ?? '',
       coverLetter: json['cover_letter'] ?? '',
       skills: json['skills'] ?? '',
@@ -45,8 +56,12 @@ class InternshipApplication {
   Map<String, dynamic> toJson() {
     return {
       'application_id': applicationId,
-      'applicant': applicant,
       'internship': internship,
+      'applicant_first_name': applicantFirstName,
+      'applicant_last_name': applicantLastName,
+      'applicant_location': applicantLocation,
+      'applicant_contact_no': applicantContactNo,
+      'applicant_email': applicantEmail,
       'resume': resume,
       'cover_letter': coverLetter,
       'skills': skills,
@@ -59,21 +74,6 @@ class InternshipApplication {
 
 // Define InternshipApplicationComplete class, extending InternshipApplication
 class InternshipApplicationComplete extends InternshipApplication {
-  // Properties for graduates_tb
-  final String? studentId;
-  final String firstName;
-  final String middleName;
-  final String lastName;
-  final String email;
-  final String course;
-  final String department;
-  final String contactNo;
-  final DateTime bday;
-  final String gender;
-  final String age;
-  final String address;
-  final String userAccount;
-
   // Properties for internship_posting_tb
   final int? internshipId;
   final String displayPhoto;
@@ -89,29 +89,18 @@ class InternshipApplicationComplete extends InternshipApplication {
   // Constructor for internship posting with industry partner properties
   InternshipApplicationComplete({
     super.applicationId,
-    required super.applicant,
     required super.internship,
+    required super.applicantFirstName,
+    required super.applicantLastName,
+    required super.applicantLocation,
+    required super.applicantContactNo,
+    required super.applicantEmail,
     required super.resume,
     required super.coverLetter,
     required super.skills,
     required super.certifications,
     required super.applicationStatus,
     required super.dateApplied,
-
-    // Graduates_tb properties
-    this.studentId,
-    required this.firstName,
-    required this.middleName,
-    required this.lastName,
-    required this.email,
-    required this.course,
-    required this.department,
-    required this.contactNo,
-    required this.bday,
-    required this.gender,
-    required this.age,
-    required this.address,
-    required this.userAccount,
 
     //Internship_posting_tb properties
     this.internshipId,
@@ -130,29 +119,18 @@ class InternshipApplicationComplete extends InternshipApplication {
   factory InternshipApplicationComplete.fromJson(Map<String, dynamic> json) {
     return InternshipApplicationComplete(
       applicationId: json['application_id'] as int?,
-      applicant: json['applicant'] ?? '',
       internship: json['internship'] ?? 0,
+      applicantFirstName: json['applicant_first_name'] ?? '',
+      applicantLastName: json['applicant_last_name'] ?? '',
+      applicantLocation: json['applicant_location'] ?? '',
+      applicantContactNo: json['applicant_contact_no'] ?? '',
+      applicantEmail: json['applicant_email'] ?? '',
       resume: json['resume'] ?? '',
       coverLetter: json['cover_letter'] ?? '',
       skills: json['skills'] ?? '',
       certifications: json['certifications'] ?? '',
       applicationStatus: json['application_status'] ?? '',
       dateApplied: json['date_applied'] ?? '',
-
-      // Graduates_tb properties
-      studentId: json['student_id'] as String?,
-      firstName: json['first_name'] ?? '',
-      middleName: json['middle_name'] ?? '',
-      lastName: json['last_name'] ?? '',
-      email: json['email'] ?? '',
-      course: json['course'] ?? '',
-      department: json['department'] ?? '',
-      contactNo: json['contact_no'] ?? '',
-      bday: json['bday'] != null ? DateFormat('yyyy-MM-dd').parse(json['bday']) : DateFormat('yyyy-MM-dd').parse('2000-01-01'),
-      gender: json['gender'],
-      age: json['age'],
-      address: json['address'],
-      userAccount: json['user_account'],
 
       // Internship_posting_tb properties
       internshipId: json['internship_id'] as int?,
@@ -173,21 +151,6 @@ class InternshipApplicationComplete extends InternshipApplication {
   Map<String, dynamic> toJson() {
     final json = super.toJson();
     json.addAll({
-      // Graduates_tb properties
-      'student_id': studentId,
-      'first_name': firstName,
-      'middle_name': middleName,
-      'last_name': lastName,
-      'email': email,
-      'course': course,
-      'department': department,
-      'contact_no': contactNo,
-      'bday': bday,
-      'gender': gender,
-      'age': age,
-      'address': address,
-      'user_account': userAccount,
-
       // Internship_posting_tb properties
       'internship_id': internshipId,
       'display_photo': displayPhoto,

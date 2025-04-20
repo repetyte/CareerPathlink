@@ -6,32 +6,19 @@ class JobApplication
     private $table_name = "job_application_tb";
 
     public $application_id;
-    public $applicant;
     public $job;
+    public $applicant_first_name;
+    public $applicant_last_name;
+    public $applicant_location;
+    public $applicant_contact_no;
+    public $applicant_email;
     public $resume;
     public $cover_letter;
     public $skills;
     public $certifications;
     public $application_status;
     public $date_applied;
-
-    // applicant_id refereces graduates_tb fields where the applicant_id is the student_no
-    public $graduate_id;
-    public $email;
-    public $first_name;
-    public $middle_name;
-    public $last_name;
-    public $course;
-    public $department;
-    public $bday;
-    public $gender;
-    public $age;
-    public $address;
-    public $contact_no;
-    public $date_grad;
-    public $emp_stat;
-    public $user_account;
-
+    
     // job references job_posting_tb fields where the job is the job_id
     public $job_id;
     public $cover_photo;
@@ -56,27 +43,19 @@ class JobApplication
 
     public function create()
     {
-        // $query = "INSERT INTO
-        //             " . $this->table_name . "
-        //         SET
-        //             applicant=:applicant,
-        //             job=:job,
-        //             resume=:resume,
-        //             cover_letter=:cover_letter,
-        //             skills=:skills,
-        //             certifications=:certifications,
-        //             application_status=:application_status
-        //             date_applied=:date_applied";
-
-        $query = "INSERT INTO " . $this->table_name . " (applicant, job, resume, cover_letter, skills, certifications, application_status, date_applied) 
-                  VALUES (:applicant, :job, :resume, :cover_letter, :skills, :certifications, :application_status, :date_applied)";
+        $query = "INSERT INTO " . $this->table_name . " (job, applicant_first_name, applicant_last_name, applicant_location, appicant_contact_no, applicant_email, resume, cover_letter, skills, certifications, application_status, date_applied) 
+                  VALUES (:job, :applicant_first_name, :applicant_last_name, :applicant_location, :appicant_contact_no, :applicant_email, :resume, :cover_letter, :skills, :certifications, :application_status, :date_applied)";
 
         // Prepare query
         $stmt = $this->conn->prepare($query);
 
         // Sanitize input
-        $this->applicant = htmlspecialchars(strip_tags($this->applicant));
         $this->job = htmlspecialchars(strip_tags($this->job));
+        $this->applicant_first_name = htmlspecialchars(strip_tags($this->applicant_first_name));
+        $this->applicant_last_name = htmlspecialchars(strip_tags($this->applicant_last_name));
+        $this->applicant_location = htmlspecialchars(strip_tags($this->applicant_location));
+        $this->applicant_contact_no = htmlspecialchars(strip_tags($this->applicant_contact_no));
+        $this->applicant_email = htmlspecialchars(strip_tags($this->applicant_email));
         $this->resume = htmlspecialchars(strip_tags($this->resume));
         $this->cover_letter = htmlspecialchars(strip_tags($this->cover_letter));
         $this->skills = htmlspecialchars(strip_tags($this->skills));
@@ -85,8 +64,12 @@ class JobApplication
         $this->date_applied = htmlspecialchars(strip_tags($this->date_applied));
 
         // Bind parameters
-        $stmt->bindParam(":applicant", $this->applicant);
         $stmt->bindParam(":job", $this->job);
+        $stmt->bindParam(":applicant_first_name", $this->applicant_first_name);
+        $stmt->bindParam(":applicant_last_name", $this->applicant_last_name);
+        $stmt->bindParam(":applicant_location", $this->applicant_location);
+        $stmt->bindParam(":applicant_contact_no", $this->applicant_contact_no);
+        $stmt->bindParam(":applicant_email", $this->applicant_email);
         $stmt->bindParam(":resume", $this->resume);
         $stmt->bindParam(":cover_letter", $this->cover_letter);
         $stmt->bindParam(":skills", $this->skills);
@@ -104,11 +87,9 @@ class JobApplication
     {
         $query = "SELECT
                       ja.*,
-                      gr.*,
                       jp.*
                   FROM " . $this->table_name . " ja
-                  JOIN graduates_tb gr ON ja.applicant = gr.graduate_id
-                  JOIN job_posting_tb jp ON ja.job = jp.job_id";
+                  JOIN job_posting_tb jp ON ja.job = jp.job_id;";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;

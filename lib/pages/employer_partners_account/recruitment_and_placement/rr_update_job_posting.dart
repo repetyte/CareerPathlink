@@ -585,16 +585,16 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
                                         ),
                                         const SizedBox(height: 16.0),
 
-                                        // Contractual Status
+                                        // Employment Status
                                         const Text(
-                                          'Contractual Status:',
+                                          'Employment Status:',
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold),
                                         ),
                                         DropdownButtonFormField<String>(
                                           // decoration:
-                                          //     const InputDecoration(labelText: 'Contractual Status'),
+                                          //     const InputDecoration(labelText: 'Employment Status'),
                                           value:
                                               _contractualStatusController.text,
                                           hint: Text('Select an option'),
@@ -743,11 +743,6 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
                                           children: [
                                             ElevatedButton(
                                               onPressed: _addRequirementField,
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    WidgetStateProperty.all(
-                                                        Colors.green),
-                                              ),
                                               child: Text('Add Requirement'),
                                             ),
                                             TextButton(
@@ -809,11 +804,7 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
                                             ElevatedButton(
                                               onPressed:
                                                   _addResponsibilityField,
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    WidgetStateProperty.all(
-                                                        Colors.green),
-                                              ),
+                                              
                                               child: Text(
                                                   'Add Job Responsibility'),
                                             ),

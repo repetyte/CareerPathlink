@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/industry_partner.dart';
 import 'package:flutter_app/models/work_integrated_learning/internship.dart';
+import 'package:flutter_app/pages/employer_partners_account/work_integrated_learning/opportunity_applications_list.dart';
 import 'package:flutter_app/pages/employer_partners_account/work_integrated_learning/update_internhsip.dart';
 import 'package:flutter_app/services/internship_api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,10 +10,14 @@ class InternshipDetailsPartner extends StatefulWidget {
   InternshipWithPartner internshipWithPartner; // Remove final keyword
   final IndustryPartnerAccount employerPartnerAccount;
 
-  InternshipDetailsPartner({super.key, required this.internshipWithPartner, required this.employerPartnerAccount});
+  InternshipDetailsPartner(
+      {super.key,
+      required this.internshipWithPartner,
+      required this.employerPartnerAccount});
 
   @override
-  _InternshipDetailsPartnerState createState() => _InternshipDetailsPartnerState();
+  _InternshipDetailsPartnerState createState() =>
+      _InternshipDetailsPartnerState();
 }
 
 class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
@@ -22,8 +27,9 @@ class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
   @override
   void initState() {
     debugPrint(
-        'Employer Partner ID: ${widget.employerPartnerAccount.partnerName}');
-    debugPrint('Employer Partner Location: ${widget.employerPartnerAccount.partnerLocation}\n');
+        'Employer Partner Name: ${widget.employerPartnerAccount.partnerName}');
+    debugPrint(
+        'Employer Partner Location: ${widget.employerPartnerAccount.partnerLocation}\n');
     super.initState();
 
     futureInternships = internshipApiService.fetchInternships();
@@ -45,8 +51,10 @@ class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
     })).then((updatedInternship) {
       if (updatedInternship != null) {
         setState(() {
-          widget.internshipWithPartner = updatedInternship; // Update the internship details
-          futureInternships = internshipApiService.fetchInternships(); // Refresh internship postings
+          widget.internshipWithPartner =
+              updatedInternship; // Update the internship details
+          futureInternships = internshipApiService
+              .fetchInternships(); // Refresh internship postings
         });
       }
     });
@@ -57,10 +65,10 @@ class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Delete Internship',
+          title: Text('Delete WIL Opportunity',
               style: TextStyle(fontWeight: FontWeight.bold)),
-          content:
-              const Text('Are you sure you want to delete this internship? All applications from this internship will be deleted.'),
+          content: const Text(
+              'Are you sure you want to delete this internship? All applications from this internship will be deleted.'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -73,9 +81,12 @@ class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
                 if (internshipId != null) {
                   internshipApiService.deleteInternship(internshipId).then((_) {
                     Navigator.of(context).pop(); // Close the dialog
-                    Navigator.of(context).pop(true); // Navigate back and refresh
+                    Navigator.of(context)
+                        .pop(true); // Navigate back and refresh
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Internship deleted successfully.')),
+                      SnackBar(
+                          content:
+                              Text('WIL Opportunity deleted successfully.')),
                     );
                   }).catchError((error) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -85,7 +96,7 @@ class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
                   });
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Invalid Internship ID')),
+                    SnackBar(content: Text('Invalid WIL Opportunity ID')),
                   );
                 }
               },
@@ -101,7 +112,7 @@ class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Internship Details'),
+        title: const Text('WIL Opportunity Details'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -170,7 +181,8 @@ class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            widget.internshipWithPartner.internshipTitle,
+                                            widget.internshipWithPartner
+                                                .internshipTitle,
                                             style: GoogleFonts.getFont(
                                               'Montserrat',
                                               fontWeight: FontWeight.w700,
@@ -179,10 +191,24 @@ class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
                                             ),
                                           ),
                                         ),
-                                        ElevatedButton(
-                                          onPressed: () {// Call the API to apply for the internship
+                                        ElevatedButton.icon(
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    OpportunityApplications(
+                                                  internshipId: widget
+                                                      .internshipWithPartner
+                                                      .internshipId!,
+                                                  internshipWithPartner: widget
+                                                      .internshipWithPartner, // Pass this
+                                                ),
+                                              ),
+                                            );
                                           },
-                                          child: const Text('Internship Applications'),
+                                          icon: const Icon(Icons.person_search),
+                                          label: const Text('WIL Applications'),
                                         ),
                                       ],
                                     ),
@@ -191,7 +217,7 @@ class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
                                 Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    widget.internshipWithPartner.hours,
+                                    widget.internshipWithPartner.description,
                                     style: GoogleFonts.getFont(
                                       'Montserrat',
                                       fontWeight: FontWeight.w400,
@@ -212,14 +238,6 @@ class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        const Text('TakeHome Pay: ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 4),
-                        Text(widget.internshipWithPartner.takehomePay,
-                            style: const TextStyle(fontSize: 16)),
-                        const SizedBox(height: 24),
-
                         const Text('Location: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
@@ -227,7 +245,6 @@ class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
                         Text(widget.internshipWithPartner.location,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
-
                         const Text('Required Skills: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
@@ -235,7 +252,6 @@ class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
                         Text(widget.internshipWithPartner.requiredSkills,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
-
                         const Text('Qualifications: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
@@ -243,25 +259,32 @@ class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
                         Text(widget.internshipWithPartner.qualifications,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
-
-                        const Text('Description: ',
+                        const Text('Hours: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.internshipWithPartner.description,
+                        Text(widget.internshipWithPartner.hours,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
-
+                        const Text('WIL Allowance: ',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 4),
+                        Text(widget.internshipWithPartner.takehomePay,
+                            style: const TextStyle(fontSize: 16)),
+                        const SizedBox(height: 24),
                         const Text('About Employer: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.internshipWithPartner.partnerName.toString(),
+                        Text(
+                            widget.internshipWithPartner.partnerName.toString(),
                             style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold
-                            )),
-                            const SizedBox(height: 4),
-                        Text(widget.internshipWithPartner.partnerLocation.toString(),
+                                fontSize: 16, fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 4),
+                        Text(
+                            widget.internshipWithPartner.partnerLocation
+                                .toString(),
                             style: const TextStyle(
                               fontSize: 16,
                             )),
@@ -277,17 +300,17 @@ class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           TextButton.icon(
-                            onPressed: () =>
-                                _deleteInternship(widget.internshipWithPartner.internshipId),
+                            onPressed: () => _deleteInternship(
+                                widget.internshipWithPartner.internshipId),
                             icon: const Icon(Icons.delete),
-                            label: const Text('Delete Internship'),
+                            label: const Text('Delete'),
                           ),
                           const SizedBox(width: 8),
                           ElevatedButton.icon(
-                            onPressed: () =>
-                                _updateInternship(widget.employerPartnerAccount),
+                            onPressed: () => _updateInternship(
+                                widget.employerPartnerAccount),
                             icon: const Icon(Icons.update),
-                            label: const Text('Update Internship'),
+                            label: const Text('Update'),
                           ),
                         ],
                       ),

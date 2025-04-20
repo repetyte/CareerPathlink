@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static const Color whiteColor = Color(0xFFFFFFFF); // White
@@ -27,7 +26,7 @@ class AppTheme {
       800: Color(0xFF000000),
       900: Color(0xFF000000),
     }), // Gray primary color
-    fontFamily: GoogleFonts.montserrat().fontFamily, // Font family
+    fontFamily: 'Montserrat',
     primaryColor: whiteColor,
     hintColor: greyColor,
     scaffoldBackgroundColor: whiteColor,
@@ -115,7 +114,6 @@ class AppTheme {
           borderRadius: BorderRadius.circular(40.0),
         ),
       ),
-      
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(

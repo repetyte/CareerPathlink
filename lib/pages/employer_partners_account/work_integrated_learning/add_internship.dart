@@ -171,8 +171,8 @@ class _AddInternshipState extends State<AddInternship> {
       try {
         await internshipApiService.createInternship(internshipData);
         widget.onInternshipAdded();
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Internship added successfully')));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('WIL Opportunity added successfully')));
         Navigator.pop(context, true);
       } catch (error) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -185,7 +185,7 @@ class _AddInternshipState extends State<AddInternship> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Internship Posting'),
+        title: const Text('Add WIL Opportunity Posting'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -303,25 +303,52 @@ class _AddInternshipState extends State<AddInternship> {
 
                                               const SizedBox(height: 16.0),
 
-                                              // Internship Title
+                                              // WIL Opportunity Title
                                               const Text(
-                                                'Internship Title:',
+                                                'WIL Opportunity Title:',
                                                 style: TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.white),
                                               ),
                                               TextFormField(
-                                                // decoration: const InputDecoration(labelText: 'Internship Title'),
+                                                // decoration: const InputDecoration(labelText: 'WIL Opportunity Title'),
                                                 decoration: const InputDecoration(
                                                     hintText:
-                                                        'Enter Internship Title'),
+                                                        'Enter WIL Opportunity Title'),
                                                 validator: (value) {
                                                   if (value == null ||
                                                       value.isEmpty) {
                                                     return 'Please enter the internship title';
                                                   }
                                                   internshipTitle = value;
+                                                  return null;
+                                                },
+                                              ),
+
+                                              const SizedBox(height: 16.0),
+
+                                              // WIL Opportunity Description
+                                              const Text(
+                                                'WIL Opportunity Description:',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              TextFormField(
+                                                // decoration: const InputDecoration(labelText: 'WIL Opportunity Description'),
+                                                decoration: const InputDecoration(
+                                                    hintText:
+                                                        'Enter the internship description'),
+                                                maxLines: 5,
+                                                validator: (value) {
+                                                  if (value == null ||
+                                                      value.isEmpty) {
+                                                    return 'Please enter the internship description';
+                                                  }
+                                                  description = value;
                                                   return null;
                                                 },
                                               ),
@@ -343,69 +370,15 @@ class _AddInternshipState extends State<AddInternship> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        // Internship Hours
+                                        // WIL Opportunity Location
                                         const Text(
-                                          'Internship Hours:',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 16.0),
-                                        Slider(
-                                          min: 20,
-                                          max: 100,
-                                          divisions: 80,
-                                          label: hours.toString(),
-                                          value: hours.toDouble(),
-                                          onChanged: (value) {
-                                            setState(() {
-                                              hours = value.round();
-                                            });
-                                          },
-                                        ),
-
-                                        // Takehome Pay
-                                        const Text(
-                                          'Takehome Pay:',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        DropdownButtonFormField<String>(
-                                          // decoration: const InputDecoration(labelText: 'Status', hintText: 'Internship Status'),
-                                          // value: status,
-                                          hint: Text('Select an option'),
-                                          onChanged: (newValue) {
-                                            setState(() {
-                                              takehomePay = newValue!;
-                                            });
-                                          },
-                                          items: [
-                                            'Below PHP 10,000',
-                                            'PHP 10,000 - PHP 15,000',
-                                            'PHP 15,000 - PHP 20,000',
-                                            'PHP 20,000 - PHP 25,000',
-                                            'Above PHP 25,000'
-                                          ].map((String value) {
-                                            return DropdownMenuItem<String>(
-                                              value: value,
-                                              child: Text(value),
-                                            );
-                                          }).toList(),
-                                        ),
-                                        const SizedBox(height: 16.0),
-
-                                        // Internship Location
-                                        const Text(
-                                          'Internship Location:',
+                                          'WIL Opportunity Location:',
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold),
                                         ),
                                         DropdownButtonFormField<String>(
-                                          // decoration: const InputDecoration(labelText: 'Internship Location'),
+                                          // decoration: const InputDecoration(labelText: 'WIL Opportunity Location'),
                                           // value: jobLocation,
                                           hint: Text('Select an option'),
                                           onChanged: (newValue) {
@@ -426,30 +399,6 @@ class _AddInternshipState extends State<AddInternship> {
                                               child: Text(value),
                                             );
                                           }).toList(),
-                                        ),
-                                        const SizedBox(height: 16.0),
-
-                                        // Internship Description
-                                        const Text(
-                                          'Internship Description:',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        TextFormField(
-                                          // decoration: const InputDecoration(labelText: 'Internship Description'),
-                                          decoration: const InputDecoration(
-                                              hintText:
-                                                  'Enter the internship description'),
-                                          maxLines: 5,
-                                          validator: (value) {
-                                            if (value == null ||
-                                                value.isEmpty) {
-                                              return 'Please enter the internship description';
-                                            }
-                                            description = value;
-                                            return null;
-                                          },
                                         ),
                                         const SizedBox(height: 16.0),
 
@@ -499,15 +448,10 @@ class _AddInternshipState extends State<AddInternship> {
                                         const SizedBox(height: 8.0),
                                         Row(
                                           children: [
-                                            ElevatedButton(
+                                            ElevatedButton.icon(
                                               onPressed: _addRequiredSkillField,
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    WidgetStateProperty.all(
-                                                        Colors.green),
-                                              ),
-                                              // icon: Icon(Icons.add),
-                                              child: Text('Add Required Skill'),
+                                              icon: Icon(Icons.add),
+                                              label: Text('Add'),
                                             ),
                                             TextButton(
                                               onPressed:
@@ -519,9 +463,9 @@ class _AddInternshipState extends State<AddInternship> {
                                         ),
                                         const SizedBox(height: 16.0),
 
-                                        // Internship Qualifications
+                                        // WIL Opportunity Qualifications
                                         const Text(
-                                          'Internship Qualifications:',
+                                          'WIL Opportunity Qualifications:',
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold),
@@ -565,14 +509,10 @@ class _AddInternshipState extends State<AddInternship> {
                                         const SizedBox(height: 8.0),
                                         Row(
                                           children: [
-                                            ElevatedButton(
+                                            ElevatedButton.icon(
                                               onPressed: _addQualificationField,
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    WidgetStateProperty.all(
-                                                        Colors.green),
-                                              ),
-                                              child: Text('Add Qualification'),
+                                              icon: Icon(Icons.add),
+                                              label: Text('Add'),
                                             ),
                                             TextButton(
                                               onPressed:
@@ -583,6 +523,59 @@ class _AddInternshipState extends State<AddInternship> {
                                           ],
                                         ),
                                         const SizedBox(height: 16.0),
+
+                                        // WIL Opportunity Hours
+                                        const Text(
+                                          'WIL Opportunity Hours:',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 16.0),
+                                        Slider(
+                                          min: 20,
+                                          max: 100,
+                                          divisions: 80,
+                                          label: hours.toString(),
+                                          value: hours.toDouble(),
+                                          onChanged: (value) {
+                                            setState(() {
+                                              hours = value.round();
+                                            });
+                                          },
+                                        ),
+
+                                        // Takehome Pay
+                                        const Text(
+                                          'Takehome Pay:',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        DropdownButtonFormField<String>(
+                                          // decoration: const InputDecoration(labelText: 'Status', hintText: 'WIL Opportunity Status'),
+                                          // value: status,
+                                          hint: Text('Select an option'),
+                                          onChanged: (newValue) {
+                                            setState(() {
+                                              takehomePay = newValue!;
+                                            });
+                                          },
+                                          items: [
+                                            'Below PHP 10,000',
+                                            'PHP 10,000 - PHP 15,000',
+                                            'PHP 15,000 - PHP 20,000',
+                                            'PHP 20,000 - PHP 25,000',
+                                            'Above PHP 25,000'
+                                          ].map((String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value),
+                                            );
+                                          }).toList(),
+                                        ),
 
                                         // About Employer
                                         const Text(
@@ -668,8 +661,8 @@ class _AddInternshipState extends State<AddInternship> {
                                                 await _submitInternship();
                                               }
                                             },
-                                            label:
-                                                const Text('Post Internship'),
+                                            label: const Text(
+                                                'Post WIL Opportunity'),
                                           ),
                                         ),
                                       ],

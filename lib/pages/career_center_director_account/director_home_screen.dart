@@ -34,8 +34,10 @@ class _HomeScreenState extends State<HomeScreenDirector> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           ),
-          child: SizedBox(
-            width: screenSize.width * 0.8,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: 600, // Set the maximum width for the dialog
+            ),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(

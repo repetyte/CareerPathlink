@@ -1106,7 +1106,7 @@ class HendrixonJobDetailsAdmin extends StatelessWidget {
                                   child: Align(
                                     alignment: Alignment.topLeft,
                                     child: Text(
-                                      'Contractual Status',
+                                      'Employment Status',
                                       style: GoogleFonts.getFont(
                                         'Montserrat',
                                         fontWeight: FontWeight.w700,

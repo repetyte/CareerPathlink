@@ -126,13 +126,13 @@
 //               TextFormField(
 //                 initialValue: contractualStatus,
 //                 decoration:
-//                     const InputDecoration(labelText: 'Contractual Status'),
+//                     const InputDecoration(labelText: 'Employment Status'),
 //                 onSaved: (value) {
 //                   contractualStatus = value!;
 //                 },
 //                 validator: (value) {
 //                   if (value == null || value.isEmpty) {
-//                     return 'Please enter contractual status';
+//                     return 'Please enter Employment Status';
 //                   }
 //                   return null;
 //                 },

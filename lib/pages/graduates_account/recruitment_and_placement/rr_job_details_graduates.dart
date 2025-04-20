@@ -171,7 +171,7 @@ class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
                         Text(widget.jobPostingWithPartner.yrsOfExperienceNeeded,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
-                        const Text('Contractual Status: ',
+                        const Text('Employment Status: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),

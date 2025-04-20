@@ -1,11 +1,14 @@
 
 // Define the JobApplication class with job posting properties only
-import 'package:intl/intl.dart';
 
 class JobApplication {
   final int? applicationId;
-  final String applicant;
   final int job;
+  final String applicantFirstName;
+  final String applicantLastName;
+  final String applicantLocation;
+  final String applicantContactNo;
+  final String applicantEmail;
   final String resume;
   final String coverLetter;
   final String skills;
@@ -16,8 +19,12 @@ class JobApplication {
   // Constructor for job posting properties only
   JobApplication({
     this.applicationId,
-    required this.applicant,
     required this.job,
+    required this.applicantFirstName,
+    required this.applicantLastName,
+    required this.applicantLocation,
+    required this.applicantContactNo,
+    required this.applicantEmail,
     required this.resume,
     required this.coverLetter,
     required this.skills,
@@ -30,8 +37,12 @@ class JobApplication {
   factory JobApplication.fromJson(Map<String, dynamic> json) {
     return JobApplication(
       applicationId: json['application_id'] as int?,
-      applicant: json['applicant'] ?? '',
       job: json['job'] as int? ?? 0,
+      applicantFirstName: json['applicant_first_name'] ?? '',
+      applicantLastName: json['applicant_last_name'] ?? '',
+      applicantLocation: json['applicant_location'] ?? '',
+      applicantContactNo: json['applicant_contact_no'] ?? '',
+      applicantEmail: json['applicant_email'] ?? '',
       resume: json['resume'] ?? '',
       coverLetter: json['cover_letter'] ?? '',
       skills: json['skills'] ?? '',
@@ -45,8 +56,12 @@ class JobApplication {
   Map<String, dynamic> toJson() {
     return {
       'application_id': applicationId,
-      'applicant': applicant,
       'job': job,
+      'applicant_first_name': applicantFirstName,
+      'applicant_last_name': applicantLastName,
+      'applicant_location': applicantLocation,
+      'applicant_contact_no': applicantContactNo,
+      'applicant_email': applicantEmail,
       'resume': resume,
       'cover_letter': coverLetter,
       'skills': skills,
@@ -59,22 +74,6 @@ class JobApplication {
 
 // Define JobApplicationComplete class, extending JobApplication
 class JobApplicationComplete extends JobApplication {
-  // Properties for graduates_tb
-  final String? graduateId;
-  final String email;
-  final String firstName;
-  final String middleName;
-  final String lastName;
-  final String course;
-  final String department;
-  final DateTime bday;
-  final String gender;
-  final String age;
-  final String address;
-  final String contactNo;
-  final DateTime dateGrad;
-  final String empStat;
-  final String userAccount;
 
   // Properties for job_posting_tb
   final int? jobId;
@@ -96,31 +95,18 @@ class JobApplicationComplete extends JobApplication {
   JobApplicationComplete({
     // JobApplication properties
     super.applicationId,
-    required super.applicant,
     required super.job,
+    required super.applicantFirstName,
+    required super.applicantLastName,
+    required super.applicantLocation,
+    required super.applicantContactNo,
+    required super.applicantEmail,
     required super.resume,
     required super.coverLetter,
     required super.skills,
     required super.certifications,
     required super.applicationStatus,
     required super.dateApplied,
-
-    // Graduates_tb properties
-    this.graduateId,
-    required this.email,
-    required this.firstName,
-    required this.middleName,
-    required this.lastName,
-    required this.course,
-    required this.department,
-    required this.bday,
-    required this.gender,
-    required this.age,
-    required this.address,
-    required this.contactNo,
-    required this.dateGrad,
-    required this.empStat,
-    required this.userAccount,
 
     // Job_posting_tb properties
     this.jobId,
@@ -144,31 +130,18 @@ class JobApplicationComplete extends JobApplication {
     return JobApplicationComplete(
       // JobApplication properties
       applicationId: json['application_id'] as int?,
-      applicant: json['applicant'] ?? '',
       job: json['job'] ?? 0,
+      applicantFirstName: json['applicant_first_name'] ?? '',
+      applicantLastName: json['applicant_last_name'] ?? '',
+      applicantLocation: json['applicant_location'] ?? '',
+      applicantContactNo: json['applicant_contact_no'] ?? '',
+      applicantEmail: json['applicant_email'] ?? '',
       resume: json['resume'] ?? '',
       coverLetter: json['cover_letter'] ?? '',
       skills: json['skills'] ?? '',
       certifications: json['certifications'] ?? '',
       applicationStatus: json['application_status'] ?? '',
       dateApplied: json['date_applied'] ?? '',
-
-      // Graduates_tb properties
-      graduateId: json['graduate_id'] ?? '',
-      email: json['email'] ?? '',
-      firstName: json['first_name'] ?? '',
-      middleName: json['middle_name'] ?? '',
-      lastName: json['last_name'] ?? '',
-      course: json['course'] ?? '',
-      department: json['department'] ?? '',
-      bday: json['bday'] != null ? DateFormat('yyyy-MM-dd').parse(json['bday']) : DateFormat('yyyy-MM-dd').parse('2000-01-01'),
-      gender: json['gender'] ?? '',
-      age: json['age'] ?? '',
-      address: json['address'] ?? '',
-      contactNo: json['contact_no'] ?? '',
-      dateGrad: json['graduation_date'] != null ? DateTime.parse(json['graduation_date']) : DateTime.parse('2000-01-01'),
-      empStat: json['employment_status'] ?? '',
-      userAccount: json['user_account'] ?? '',
 
       // Job_posting_tb properties
       jobId: json['job_id'] as int? ?? 0,
@@ -193,23 +166,6 @@ class JobApplicationComplete extends JobApplication {
   Map<String, dynamic> toJson() {
     final json = super.toJson();
     json.addAll({
-      // Graduates_tb properties
-      'graduate_id': graduateId,
-      'email': email,
-      'first_name': firstName,
-      'middle_name': middleName,
-      'last_name': lastName,
-      'course': course,
-      'department': department,
-      'bday': bday,
-      'gender': gender,
-      'age': age,
-      'address': address,
-      'contact_no': contactNo,
-      'date_grad': dateGrad,
-      'emp_stat': empStat,
-      'user_account': userAccount,
-
       // Job_posting_tb properties
       'job_id': jobId,
       'cover_photo': coverPhoto,

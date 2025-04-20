@@ -37,8 +37,10 @@ class EngagementDashboardState extends State<EngagementDashboard> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           ),
-          child: SizedBox(
-            width: screenSize.width * 0.8,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: 600, // Set the maximum width for the dialog
+            ),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -153,42 +155,45 @@ class EngagementDashboardState extends State<EngagementDashboard> {
                 ],
               ),
             ),
-            GestureDetector(
-              onTap: () => _showProfileDialog(context),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xFFD9D9D9),
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: SizedBox(
-                  child: Container(
-                    padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          backgroundImage: const AssetImage(
-                              'assets/images/image_12.png'), // Add the path to your profile image
-                          radius: 24,
-                        ),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
-                          width: 12,
-                          height: 7.4,
-                          child: SizedBox(
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () => _showProfileDialog(context),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFD9D9D9),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: SizedBox(
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: const AssetImage(
+                                'assets/images/image_12.png'), // Add the path to your profile image
+                            radius: 24,
+                          ),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
                             width: 12,
                             height: 7.4,
-                            child: SvgPicture.asset(
-                              'assets/vectors/vector_331_x2.svg',
+                            child: SizedBox(
+                              width: 12,
+                              height: 7.4,
+                              child: SvgPicture.asset(
+                                'assets/vectors/vector_331_x2.svg',
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

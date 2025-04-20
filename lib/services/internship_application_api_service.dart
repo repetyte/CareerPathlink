@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 class InternshipApplicationApiService {
   final String apiUrl = "http://localhost/UNC-CareerPathlink/api";
 
-  // Create Internship Application
+  // Create WIL Opportunity Application
   Future<void> createInternshipApplication(InternshipApplication internshipApplication) async {
     try {
       final response = await http.post(
@@ -22,7 +22,7 @@ class InternshipApplicationApiService {
           debugPrint('Response status: ${response.statusCode}');
           debugPrint('Response body: ${response.body}');
         }
-        throw Exception('Failed to create Internship Application.');
+        throw Exception('Failed to create WIL Opportunity Application.');
       }
     } catch (e) {
       if (kDebugMode) {
@@ -61,7 +61,7 @@ class InternshipApplicationApiService {
     //       debugPrint('Response status: ${response.statusCode}');
     //       debugPrint('Response body: ${response.body}');
     //     }
-    //     throw Exception('Failed to update Internship Posting.');
+    //     throw Exception('Failed to update WIL Opportunity Posting.');
     //   }
     // } catch (e) {
     //   if (kDebugMode) {

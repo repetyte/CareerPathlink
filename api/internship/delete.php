@@ -17,7 +17,7 @@ $internship->internship_id = $data->internship_id;
 
 if($internship->delete()){
     http_response_code(200);
-    echo json_encode(array("message" => "Internship was deleted."));
+    echo json_encode(array("message" => "WIL Opportunity was deleted."));
 } else {
     http_response_code(503);
     echo json_encode(array("message" => "Unable to delete internship."));

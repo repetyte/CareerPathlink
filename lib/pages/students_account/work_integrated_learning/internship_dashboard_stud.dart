@@ -40,13 +40,14 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        var screenSize = MediaQuery.of(context).size;
         return Dialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           ),
-          child: SizedBox(
-            width: screenSize.width * 0.8,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: 600, // Set the maximum width for the dialog
+            ),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -183,42 +184,45 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
                 ],
               ),
             ),
-            GestureDetector(
-              onTap: () => _showProfileDialog(context),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xFFD9D9D9),
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: SizedBox(
-                  child: Container(
-                    padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          backgroundImage: const AssetImage(
-                              'assets/images/image_12.png'), // Add the path to your profile image
-                          radius: 24,
-                        ),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
-                          width: 12,
-                          height: 7.4,
-                          child: SizedBox(
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () => _showProfileDialog(context),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFD9D9D9),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: SizedBox(
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: const AssetImage(
+                                'assets/images/image_12.png'), // Add the path to your profile image
+                            radius: 24,
+                          ),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
                             width: 12,
                             height: 7.4,
-                            child: SvgPicture.asset(
-                              'assets/vectors/vector_331_x2.svg',
+                            child: SizedBox(
+                              width: 12,
+                              height: 7.4,
+                              child: SvgPicture.asset(
+                                'assets/vectors/vector_331_x2.svg',
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -297,7 +301,7 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
                                 child: Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    'Available Opportunities',
+                                    'Seek WIL Opportunities',
                                     style: GoogleFonts.getFont(
                                       'Montserrat',
                                       fontWeight: FontWeight.w700,
@@ -393,11 +397,7 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
                                               _filteredInternships;
                                           // Determine the number of columns based on screen width
                                           int crossAxisCount =
-                                              (MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      400)
-                                                  .floor();
+                                              (MediaQuery.of(context).size.width / 300).floor();
                                           // Return GridView
                                           return GridView.builder(
                                             shrinkWrap: true,
@@ -408,7 +408,7 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
                                               crossAxisCount: crossAxisCount,
                                               mainAxisSpacing: 10.0,
                                               crossAxisSpacing: 10.0,
-                                              childAspectRatio: 2.5,
+                                              childAspectRatio: 0.80,
                                             ),
                                             itemCount: data.length,
                                             itemBuilder: (BuildContext context,
@@ -425,12 +425,12 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: <Widget>[
-                                                    // Image.asset(
-                                                    //   data[index].coverPhoto,
-                                                    //   width: double.infinity,
-                                                    //   height: 100,
-                                                    //   fit: BoxFit.cover,
-                                                    // ),
+                                                    Image.asset(
+                                                      'assets/images/${data[index].displayPhoto}',
+                                                      width: double.infinity,
+                                                      height: 100,
+                                                      fit: BoxFit.cover,
+                                                    ),
                                                     Padding(
                                                       padding:
                                                           const EdgeInsets.all(
@@ -450,17 +450,17 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
                                                                           .bold)),
                                                           const SizedBox(
                                                               height: 4),
-                                                          // Text(data[index].salary,
-                                                          //     style: const TextStyle(
-                                                          //       fontSize: 16,
-                                                          //     )),
-                                                          // const SizedBox(height: 4),
-                                                          // Text(
-                                                          //     data[index]
-                                                          //         .fieldIndustry,
-                                                          //     style: const TextStyle(
-                                                          //       fontSize: 14,
-                                                          //     )),
+                                                          Text(data[index].partnerName,
+                                                              style: const TextStyle(
+                                                                fontSize: 16,
+                                                              )),
+                                                          const SizedBox(height: 4),
+                                                          Text(
+                                                              data[index]
+                                                                  .location,
+                                                              style: const TextStyle(
+                                                                fontSize: 14,
+                                                              )),
                                                         ],
                                                       ),
                                                     ),

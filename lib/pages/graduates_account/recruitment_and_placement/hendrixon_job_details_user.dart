@@ -317,7 +317,7 @@ class HendrixonJobDetailsUser extends StatelessWidget {
                                 Container(
                                   margin: const EdgeInsets.fromLTRB(0, 0, 0, 4),
                                   child: Text(
-                                    'Contractual Status',
+                                    'Employment Status',
                                     style: GoogleFonts.getFont(
                                       'Montserrat',
                                       fontWeight: FontWeight.w700,

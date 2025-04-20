@@ -22,31 +22,18 @@ if($num > 0){
 
         $job_application_item = array(
             "application_id" => $application_id,
-            "applicant" => $applicant,
             "job" => $job,
+            "applicant_first_name" => $applicant_first_name,
+            "applicant_last_name" => $applicant_last_name,
+            "applicant_location" => $applicant_location,
+            "applicant_contact_no" => $applicant_contact_no,
+            "applicant_email" => $applicant_email,
             "resume" => $resume,
             "cover_letter" => $cover_letter,
             "skills" => $skills,
             "certifications" => $certifications,
             "application_status" => $application_status,
             "date_applied" => $date_applied,
-
-            // from graduates_tb
-            "graduate_id" => $graduate_id,
-            "email" => $email,
-            "first_name" => $first_name,
-            "middle_name" => $middle_name,
-            "last_name" => $last_name,
-            "course" => $course,
-            "department" => $department,
-            "bday" => $bday,
-            "gender" => $gender,
-            "age" => $age,
-            "address" => $address,
-            "contact_no" => $contact_no,
-            "date_grad" => $date_grad,
-            "emp_stat" => $emp_stat,
-            "user_account" => $user_account,
 
             // from job_posting_tb
             "job_id" => $job_id,

@@ -45,6 +45,7 @@ flutter:
     - assets/logo/
     - assets/vectors/
     - assets/career_coaching/
+    - assets/files/
     
   fonts:
     - family: Montserrat

@@ -11,29 +11,24 @@ import 'package:flutter_app/widgets/footer/footer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class InternshipDashboardDean extends StatefulWidget {
+class InternshipDashboardPartner extends StatefulWidget {
   final IndustryPartnerAccount employerPartnerAccount;
-  // final CollegeDeanAccount collegeDeanAccount;
-  const InternshipDashboardDean(
+  const InternshipDashboardPartner(
       {super.key,required this.employerPartnerAccount});
 
   @override
-  _InternshipDashboardDeanState createState() =>
-      _InternshipDashboardDeanState();
+  _InternshipDashboardPartnerState createState() =>
+      _InternshipDashboardPartnerState();
 }
 
-class _InternshipDashboardDeanState
-    extends State<InternshipDashboardDean> {
+class _InternshipDashboardPartnerState
+    extends State<InternshipDashboardPartner> {
   late Future<List<InternshipWithPartner>> futureInternships;
   final TextEditingController _searchController = TextEditingController();
   List<InternshipWithPartner> _filteredInternships = [];
 
   @override
   void initState() {
-    // debugPrint(
-    //     'Dean Name: ${widget.collegeDeanAccount.firstName} ${widget.collegeDeanAccount.middleName} ${widget.collegeDeanAccount.lastName}\n');
-    // debugPrint('Department: ${widget.collegeDeanAccount.department}\n');
-    // debugPrint('Employer Partner Location: ${widget.employerPartnerAccount.partnerLocation}\n');
     super.initState();
     futureInternships = InternshipApiService().fetchInternships();
     futureInternships.then((data) {
@@ -49,13 +44,14 @@ class _InternshipDashboardDeanState
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        var screenSize = MediaQuery.of(context).size;
         return Dialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
           ),
-          child: SizedBox(
-            width: screenSize.width * 0.8,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: 600, // Set the maximum width for the dialog
+            ),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -65,7 +61,6 @@ class _InternshipDashboardDeanState
                     leading: const Icon(Icons.person),
                     title: Text(
                       widget.employerPartnerAccount.partnerName,
-                      // widget.collegeDeanAccount.firstName,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     subtitle: Text('Employer Partner'),
@@ -203,60 +198,63 @@ class _InternshipDashboardDeanState
                 ],
               ),
             ),
-            GestureDetector(
-              onTap: () => _showProfileDialog(context),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xFFD9D9D9),
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: SizedBox(
-                  child: Container(
-                    padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          backgroundImage: const AssetImage(
-                              'assets/images/image_12.png'), // Add the path to your profile image
-                          radius: 24,
-                        ),
-                        // Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     children: [
-                        //       Text('Jennica Mae Ortiz',
-                        //           style: GoogleFonts.getFont(
-                        //             'Montserrat',
-                        //             fontWeight: FontWeight.bold,
-                        //             fontSize: 14,
-                        //             color: const Color(0xFF000000),
-                        //           )),
-                        //       Text('Graduate',
-                        //           style: GoogleFonts.getFont(
-                        //             'Montserrat',
-                        //             fontWeight: FontWeight.normal,
-                        //             fontSize: 12,
-                        //             color: const Color(0xFF000000),
-                        //           )),
-                        //     ]),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
-                          width: 12,
-                          height: 7.4,
-                          child: SizedBox(
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () => _showProfileDialog(context),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFD9D9D9),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: SizedBox(
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: const AssetImage(
+                                'assets/images/image_12.png'), // Add the path to your profile image
+                            radius: 24,
+                          ),
+                          // Column(
+                          //     crossAxisAlignment: CrossAxisAlignment.start,
+                          //     children: [
+                          //       Text('Jennica Mae Ortiz',
+                          //           style: GoogleFonts.getFont(
+                          //             'Montserrat',
+                          //             fontWeight: FontWeight.bold,
+                          //             fontSize: 14,
+                          //             color: const Color(0xFF000000),
+                          //           )),
+                          //       Text('Graduate',
+                          //           style: GoogleFonts.getFont(
+                          //             'Montserrat',
+                          //             fontWeight: FontWeight.normal,
+                          //             fontSize: 12,
+                          //             color: const Color(0xFF000000),
+                          //           )),
+                          //     ]),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
                             width: 12,
                             height: 7.4,
-                            child: SvgPicture.asset(
-                              'assets/vectors/vector_331_x2.svg',
+                            child: SizedBox(
+                              width: 12,
+                              height: 7.4,
+                              child: SvgPicture.asset(
+                                'assets/vectors/vector_331_x2.svg',
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -335,7 +333,7 @@ class _InternshipDashboardDeanState
                                 child: Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    'Manage Internship Opportunities',
+                                    'Manage WIL Opportunities',
                                     style: GoogleFonts.getFont(
                                       'Montserrat',
                                       fontWeight: FontWeight.w700,
@@ -428,7 +426,7 @@ class _InternshipDashboardDeanState
                                           List<InternshipWithPartner> data = _filteredInternships;
                                           // Determine the number of columns based on screen width
                                           int crossAxisCount =
-                                              (MediaQuery.of(context).size.width / 400).floor();
+                                              (MediaQuery.of(context).size.width / 300).floor();
                                           // Return GridView
                                           return GridView.builder(
                                             shrinkWrap: true,
@@ -438,7 +436,7 @@ class _InternshipDashboardDeanState
                                               crossAxisCount: crossAxisCount,
                                               mainAxisSpacing: 10.0,
                                               crossAxisSpacing: 10.0,
-                                              childAspectRatio: 2.5,
+                                              childAspectRatio: 0.80,
                                             ),
                                             itemCount: data.length,
                                             itemBuilder: (BuildContext context, int index) {
@@ -451,12 +449,12 @@ class _InternshipDashboardDeanState
                                                 child: Column(
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: <Widget>[
-                                                    // Image.asset(
-                                                    //   data[index].coverPhoto,
-                                                    //   width: double.infinity,
-                                                    //   height: 100,
-                                                    //   fit: BoxFit.cover,
-                                                    // ),
+                                                    Image.asset(
+                                                      'assets/images/${data[index].displayPhoto}',
+                                                      width: double.infinity,
+                                                      height: 100,
+                                                      fit: BoxFit.cover,
+                                                    ),
                                                     Padding(
                                                       padding: const EdgeInsets.all(16.0),
                                                       child: Column(
@@ -468,17 +466,17 @@ class _InternshipDashboardDeanState
                                                                   fontSize: 20,
                                                                   fontWeight: FontWeight.bold)),
                                                           const SizedBox(height: 4),
-                                                          // Text(data[index].salary,
-                                                          //     style: const TextStyle(
-                                                          //       fontSize: 16,
-                                                          //     )),
-                                                          // const SizedBox(height: 4),
-                                                          // Text(
-                                                          //     data[index]
-                                                          //         .fieldIndustry,
-                                                          //     style: const TextStyle(
-                                                          //       fontSize: 14,
-                                                          //     )),
+                                                          Text(data[index].partnerName,
+                                                              style: const TextStyle(
+                                                                fontSize: 16,
+                                                              )),
+                                                          const SizedBox(height: 4),
+                                                          Text(
+                                                              data[index]
+                                                                  .location,
+                                                              style: const TextStyle(
+                                                                fontSize: 14,
+                                                              )),
                                                         ],
                                                       ),
                                                     ),
@@ -536,7 +534,7 @@ class _InternshipDashboardDeanState
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _addInternship(),
         icon: const Icon(Icons.add),
-        label: const Text("Add Internship",
+        label: const Text("Add WIL Opportunity",
             style: TextStyle(
                 fontWeight: FontWeight.bold, fontFamily: 'Montserrat')),
       ),

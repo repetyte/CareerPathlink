@@ -79,6 +79,9 @@ class GraduateAccount extends Graduate {
   String? accountId;
   final String username;
   final String password;
+  final String? resume;
+  final String? skills;
+  final String? certifications;
   
   GraduateAccount({
     super.graduateId,
@@ -99,6 +102,9 @@ class GraduateAccount extends Graduate {
     required this.accountId,
     required this.username,
     required this.password,
+    this.resume,
+    this.skills,
+    this.certifications,
   });
 
   factory GraduateAccount.fromJson(Map<String, dynamic> json) {
@@ -121,6 +127,9 @@ class GraduateAccount extends Graduate {
       accountId: json['account_id'],
       username: json['username'],
       password: json['password'],
+      resume: json['resume'],
+      skills: json['skills'],
+      certifications: json['certifications'],
       );
   }
 
@@ -131,6 +140,9 @@ class GraduateAccount extends Graduate {
       'account_id': accountId,
       'username': username,
       'password': password,
+      'resume': resume,
+      'skills': skills,
+      'certifications': certifications,
     });
     return json;
   }

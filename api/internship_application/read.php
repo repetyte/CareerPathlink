@@ -22,29 +22,18 @@ if($num > 0){
 
         $internship_application_item = array(
             "application_id" => $application_id,
-            "applicant" => $applicant,
             "internship" => $internship,
+            "applicant_first_name" => $applicant_first_name,
+            "applicant_last_name" => $applicant_last_name,
+            "applicant_location" => $applicant_location,
+            "applicant_contact_no" => $applicant_contact_no,
+            "applicant_email" => $applicant_email,
             "resume" => $resume,
             "cover_letter" => $cover_letter,
             "skills" => $skills,
             "certifications" => $certifications,
             "application_status" => $application_status,
             "date_applied" => $date_applied,
-
-            // from student_tb
-            "student_id" => $student_id,
-            "first_name" => $first_name,
-            "middle_name" => $middle_name,
-            "last_name" => $last_name,
-            "email" => $email,
-            "course" => $course,
-            "department" => $department,
-            "contact_no" => $contact_no,
-            "bday" => $bday,
-            "gender" => $gender,
-            "age" => $age,
-            "address" => $address,
-            "user_account" => $user_account,
 
             // from internship_tb
             "internship_id" => $internship_id,

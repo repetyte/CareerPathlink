@@ -116,7 +116,10 @@ class StudentAccount {
                       
                       ip.account_id,
                       ip.username,
-                      ip.password
+                      ip.password,
+                      ip.resume,
+                      ip.skills,
+                      ip.certifications
                   FROM " . $this->table_name . " jp
                   JOIN acc_student_tb ip ON jp.user_account = ip.account_id;";
         $stmt = $this->conn->prepare($query);
