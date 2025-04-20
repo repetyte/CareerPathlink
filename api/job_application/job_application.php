@@ -18,7 +18,7 @@ class JobApplication
     public $certifications;
     public $application_status;
     public $date_applied;
-    
+
     // job references job_posting_tb fields where the job is the job_id
     public $job_id;
     public $cover_photo;
@@ -43,8 +43,8 @@ class JobApplication
 
     public function create()
     {
-        $query = "INSERT INTO " . $this->table_name . " (job, applicant_first_name, applicant_last_name, applicant_location, appicant_contact_no, applicant_email, resume, cover_letter, skills, certifications, application_status, date_applied) 
-                  VALUES (:job, :applicant_first_name, :applicant_last_name, :applicant_location, :appicant_contact_no, :applicant_email, :resume, :cover_letter, :skills, :certifications, :application_status, :date_applied)";
+        $query = "INSERT INTO " . $this->table_name . " (job, applicant_first_name, applicant_last_name, applicant_location, applicant_contact_no, applicant_email, resume, cover_letter, skills, certifications, application_status, date_applied) 
+              VALUES (:job, :applicant_first_name, :applicant_last_name, :applicant_location, :applicant_contact_no, :applicant_email, :resume, :cover_letter, :skills, :certifications, :application_status, :date_applied)";
 
         // Prepare query
         $stmt = $this->conn->prepare($query);
@@ -81,6 +81,7 @@ class JobApplication
         if ($stmt->execute()) {
             return true;
         }
+        return false;
     }
 
     public function read()

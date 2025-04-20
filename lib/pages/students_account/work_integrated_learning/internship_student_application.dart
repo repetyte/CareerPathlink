@@ -32,7 +32,7 @@ class _InternshipApplicationScreenState
 
   // Resume variables
   Uint8List? resumeBytes;
-  String resumeSource = '';
+  late String resumeSource;
 
   // Cover Letter variables
   Uint8List? coverLetterBytes;
@@ -57,7 +57,7 @@ class _InternshipApplicationScreenState
     super.initState();
 
     // Populate resume
-    resumeSource = widget.studentAccount.resume!;
+    resumeSource = widget.studentAccount.resume?.toString() ?? '';
     debugPrint('Resume: $resumeSource');
 
     // Populate skills
@@ -163,7 +163,7 @@ class _InternshipApplicationScreenState
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Confirm Submission',
-              style: TextStyle(fontWeight: FontWeight.w900)),
+              style: TextStyle(fontWeight: FontWeight.bold)),
           content:
               const Text('Are you sure you want to submit your application?'),
           actions: <Widget>[
@@ -452,7 +452,8 @@ class _InternshipApplicationScreenState
                                             const SizedBox(width: 10),
                                             Expanded(
                                               child: Text(
-                                                widget.studentAccount.resume.toString(),
+                                                widget.studentAccount.resume
+                                                    .toString(),
                                                 style: const TextStyle(
                                                     fontWeight:
                                                         FontWeight.w500),
@@ -671,61 +672,50 @@ class _InternshipApplicationScreenState
 
                         // Resume
                         const Text('Resume:'),
-                        if (resumeBytes != null)
-                          Container(
-                            height: 100,
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(40.0),
-                            ),
-                            child: Row(
-                              children: [
-                                const Icon(Icons.description,
-                                    color: Colors.blue),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Text(
-                                    resumeSource,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w500),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                        if (resumeSource.isNotEmpty)
+                          Row(
+                            children: [
+                              const Icon(Icons.description, color: Colors.blue),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Text(
+                                  resumeSource,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
+                          )
+                        else
+                          const Text(
+                            'No resume provided',
+                            style: TextStyle(color: Colors.grey),
                           ),
                         const SizedBox(height: 8),
 
                         // Cover Letter
                         const Text('Cover Letter:'),
                         if (coverLetterBytes != null)
-                          Container(
-                            height: 100,
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(40.0),
-                            ),
-                            child: Row(
-                              children: [
-                                const Icon(Icons.description,
-                                    color: Colors.green),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Text(
-                                    coverLetterSource,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w500),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                          Row(
+                            children: [
+                              const Icon(Icons.description,
+                                  color: Colors.green),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Text(
+                                  coverLetterSource,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
+                          )
+                        else
+                          const Text(
+                            'No cover letter provided',
+                            style: TextStyle(color: Colors.grey),
                           ),
                         const SizedBox(height: 8),
 

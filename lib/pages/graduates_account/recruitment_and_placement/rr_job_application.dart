@@ -31,7 +31,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
 
   // Resume variables
   Uint8List? resumeBytes;
-  String resumeSource = '';
+  late String resumeSource;
 
   // Cover Letter variables
   Uint8List? coverLetterBytes;
@@ -120,10 +120,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
         return AlertDialog(
           title: Text(
             'Confirm Submission',
-            style: GoogleFonts.getFont(
-              'Montserrat',
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontWeight: FontWeight.bold),
           ),
           content:
               const Text('Are you sure you want to submit your application?'),
@@ -197,7 +194,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
     super.initState();
 
     // Populate resume
-    resumeSource = widget.graduateAccount.resume!;
+    resumeSource = widget.graduateAccount.resume?.toString() ?? '';
     debugPrint('Resume: $resumeSource');
 
     // Populate skills
@@ -383,6 +380,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                   }
                 },
                 steps: [
+                  // Document Submission Step
                   Step(
                     title: const Text('Document Submission',
                         style: TextStyle(fontWeight: FontWeight.bold)),
@@ -526,6 +524,8 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                         ? StepState.complete
                         : StepState.indexed,
                   ),
+              
+                  // Employer Questions Step
                   Step(
                     title: const Text('Employer Questions',
                         style: TextStyle(fontWeight: FontWeight.bold)),
@@ -537,7 +537,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 16),
-
+              
                         // Skills
                         const Text('Skills'),
                         ListView.builder(
@@ -571,14 +571,14 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                         const SizedBox(height: 4.0),
                         Row(
                           children: [
-                            ElevatedButton(
+                            ElevatedButton.icon(
                               onPressed: _addSkillField,
                               style: ButtonStyle(
                                 backgroundColor:
                                     WidgetStateProperty.all(Colors.green),
                               ),
-                              // icon: Icon(Icons.add),
-                              child: Text('Add your Skill'),
+                              icon: Icon(Icons.add),
+                              label: Text('Add'),
                             ),
                             TextButton(
                               onPressed: _clearSkillFields,
@@ -588,7 +588,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                           ],
                         ),
                         const SizedBox(height: 8),
-
+              
                         // Certifications
                         const Text('Certifications'),
                         ListView.builder(
@@ -625,14 +625,14 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                         const SizedBox(height: 4.0),
                         Row(
                           children: [
-                            ElevatedButton(
+                            ElevatedButton.icon(
                               onPressed: _addCertificationField,
                               style: ButtonStyle(
                                 backgroundColor:
                                     WidgetStateProperty.all(Colors.green),
                               ),
-                              // icon: Icon(Icons.add),
-                              child: Text('Add your Certification'),
+                              icon: Icon(Icons.add),
+                              label: Text('Add'),
                             ),
                             TextButton(
                               onPressed: _clearCertificationFields,
@@ -648,78 +648,73 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                         ? StepState.complete
                         : StepState.indexed,
                   ),
+              
+                  // Review and Submit Step
                   Step(
                     title: const Text('Review and Submit',
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     content: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Review your application:',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: const Text(
+                            'Review your application:',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ),
                         const SizedBox(height: 16),
-
+              
                         // Resume
                         const Text('Resume:'),
-                        if (resumeBytes != null)
-                          Container(
-                            height: 100,
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(40.0),
-                            ),
-                            child: Row(
-                              children: [
-                                const Icon(Icons.description,
-                                    color: Colors.blue),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Text(
-                                    resumeSource,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w500),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                        if (resumeSource.isNotEmpty)
+                          Row(
+                            children: [
+                              const Icon(Icons.description,
+                                  color: Colors.blue),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Text(
+                                  resumeSource,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
+                          )
+                        else
+                          const Text(
+                            'No resume provided',
+                            style: TextStyle(color: Colors.grey),
                           ),
                         const SizedBox(height: 8),
-
+              
                         // Cover Letter
                         const Text('Cover Letter:'),
                         if (coverLetterBytes != null)
-                          Container(
-                            height: 100,
-                            width: double.infinity,
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(40.0),
-                            ),
-                            child: Row(
-                              children: [
-                                const Icon(Icons.description,
-                                    color: Colors.green),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Text(
-                                    coverLetterSource,
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.w500),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                          Row(
+                            children: [
+                              const Icon(Icons.description,
+                                  color: Colors.green),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Text(
+                                  coverLetterSource,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500),
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
+                          )
+                        else
+                          const Text(
+                            'No cover letter provided',
+                            style: TextStyle(color: Colors.grey),
                           ),
                         const SizedBox(height: 8),
-
+              
                         // Skills
                         const Text('Skills:'),
                         if (_skillsControllers.isNotEmpty)
@@ -728,7 +723,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
                           const Text('No skills provided',
                               style: TextStyle(color: Colors.grey)),
                         const SizedBox(height: 8),
-
+              
                         // Certifications
                         const Text('Certifications:'),
                         if (_certificationsControllers.isNotEmpty)
