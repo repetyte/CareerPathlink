@@ -139,7 +139,7 @@ class _LoginViewState extends State<LoginView> {
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    HomeScreenDirector(careerCenterDirectorAccount: directorAccount),
+                    HomeScreenDirector(directorAccount: directorAccount),
               ),
             );
           } else {

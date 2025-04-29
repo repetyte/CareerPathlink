@@ -1,30 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/career_center_director.dart';
+import 'package:flutter_app/models/user_role/student.dart';
+import 'package:flutter_app/models/work_integrated_learning/internship.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
-import 'package:flutter_app/widgets/appbar/dean_header.dart';
+import 'package:flutter_app/pages/students_account/work_integrated_learning/internship_details_stud.dart';
+import 'package:flutter_app/services/internship_api_service.dart';
+import 'package:flutter_app/widgets/appbar/director_header.dart';
+import 'package:flutter_app/widgets/appbar/graduates_header.dart';
 import 'package:flutter_app/widgets/drawer/drawer_director.dart';
+import 'package:flutter_app/widgets/drawer/drawer_students.dart';
 import 'package:flutter_app/widgets/footer/footer.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'graduates_lists.dart'; // Import the GraduatesLists screen
-import 'employed_lists.dart'; // Import the EmployedLists screen
-import 'unemployed_lists.dart'; // Import the UnemployedLists screen
-import 'graduates_tracker.dart'; // Import the GraduatesTracker screen
 
-class TracerDashboardPartner extends StatefulWidget {
+class InternshipDashboardDirector extends StatefulWidget {
   final CareerCenterDirectorAccount directorAccount;
-  const TracerDashboardPartner({super.key, required this.directorAccount});
+  const InternshipDashboardDirector({super.key, required this.directorAccount,});
 
   @override
-  State<TracerDashboardPartner> createState() => _TracerDashboardPartnerState();
+  _InternshipDashboardDirectorState createState() =>
+      _InternshipDashboardDirectorState();
 }
 
-class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
+class _InternshipDashboardDirectorState extends State<InternshipDashboardDirector> {
+  late Future<List<InternshipWithPartner>> futureInternships;
+  final TextEditingController _searchController = TextEditingController();
+  List<InternshipWithPartner> _filteredInternships = [];
+
+  @override
+  void initState() {
+    super.initState();
+    futureInternships = InternshipApiService().fetchInternships();
+    futureInternships.then((data) {
+      setState(() {
+        _filteredInternships = data;
+      });
+    });
+    _searchController.addListener(_filterInternships);
+  }
+
   void _showProfileDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        var screenSize = MediaQuery.of(context).size;
         return Dialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
@@ -42,10 +60,9 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
                     leading: Icon(Icons.person),
                     title: Text(
                       '${widget.directorAccount.firstName} ${widget.directorAccount.lastName}',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    subtitle: Text(
-                        'Career Center Director'),
+                    subtitle: Text('Career Center Director'),
                   ),
                   const Divider(),
                   ListTile(
@@ -77,55 +94,34 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
     );
   }
 
-  Widget hoverableCategoryContainer(BuildContext context, String title,
-      String imagePath, Widget? targetScreen) {
-    return Expanded(
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: GestureDetector(
-          onTap: () {
-            if (targetScreen != null) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => targetScreen),
-              );
-            }
-          },
-          child: Container(
-            height: 150,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40),
-              image: DecorationImage(
-                image: AssetImage(imagePath),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Stack(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40),
-                    color: Colors.black.withOpacity(0.5),
-                  ),
-                ),
-                Center(
-                  child: Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Montserrat',
-                      color: Colors.white,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+  void _refreshInternships() async {
+    setState(() {
+      futureInternships = InternshipApiService().fetchInternships();
+      futureInternships.then((data) {
+        setState(() {
+          _filteredInternships = data;
+        });
+      });
+    });
+  }
+
+  void _filterInternships() {
+    String query = _searchController.text.toLowerCase();
+    futureInternships.then((data) {
+      setState(() {
+        _filteredInternships = data
+            .where((internship) =>
+                internship.internshipTitle.toLowerCase().contains(query) ||
+                internship.description.toLowerCase().contains(query))
+            .toList();
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -249,21 +245,19 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
             child: Material(
               elevation: 4.0,
               shadowColor: Colors.black.withOpacity(0.3),
-              child: const HeaderDean(),
+              child: const HeaderDirector(),
             ),
           ),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 children: [
-            
-                  // Header Section: Graduates Tracer Industry
                   Container(
                     margin: const EdgeInsets.fromLTRB(16, 24, 16, 24),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Graduates Tracer Industry',
+                        'Work Integrated Learning',
                         style: GoogleFonts.getFont(
                           'Montserrat',
                           fontWeight: FontWeight.w700,
@@ -273,8 +267,6 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
                       ),
                     ),
                   ),
-                  
-                  // Header Section: Graduates Tracer Industry
                   Container(
                     margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                     height: 300,
@@ -283,7 +275,7 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
                       image: const DecorationImage(
                         fit: BoxFit.cover,
                         image: AssetImage(
-                          'assets/images/career_guidance_bg.jpg',
+                          'assets/images/rectangle_223.jpeg',
                         ),
                       ),
                     ),
@@ -312,7 +304,7 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
                                 child: Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    'Career Counseling Guidance',
+                                    'Analyze Student Work Integrated Learning Metrics',
                                     style: GoogleFonts.getFont(
                                       'Montserrat',
                                       fontWeight: FontWeight.w700,
@@ -325,80 +317,13 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                    'Discover your true potential and navigate your career path with confidence through our Career Counselling web application.',
+                                    'Oversight of students work integrated learning engagement activities.',
                                     style: TextStyle(color: Colors.white)),
                               ),
                             ],
                           ),
                         ),
                       ],
-                    ),
-                  ),
-            
-                  // Three Categories Section
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        hoverableCategoryContainer(context, 'Graduates List',
-                            'assets/images/graduates_list_bg.jpg', GraduatesListsDirector()),
-                            const SizedBox(width: 16),
-                        hoverableCategoryContainer(context, 'Employed Lists',
-                            'assets/images/employed_list_bg.jpg', EmployedListsDirector()),
-                            const SizedBox(width: 16),
-                        hoverableCategoryContainer(context, 'Unemployed Lists',
-                            'assets/images/unemployed_list_bg.jpg', UnemployedListsDirector()),
-                      ],
-                    ),
-                  ),
-                  // Graduates Tracker Section (Clickable)
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => GraduatesTrackerDirector()),
-                          );
-                        },
-                        child: Container(
-                          height: 150,
-                          margin: const EdgeInsets.symmetric(vertical: 16),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(40),
-                            image: const DecorationImage(
-                              image:
-                                  AssetImage('assets/images/graduates_tracker_bg.jpg'),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          child: Stack(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(40),
-                                  color: Colors.black.withOpacity(0.5),
-                                ),
-                              ),
-                              const Center(
-                                child: Text(
-                                  'Graduates Tracker',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat',
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
                     ),
                   ),
                   const Footer(),

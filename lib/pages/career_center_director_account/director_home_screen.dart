@@ -8,8 +8,8 @@ import '../../widgets/footer/footer.dart';
 import '../../widgets/appbar/student_header.dart';
 
 class HomeScreenDirector extends StatefulWidget {
-  final CareerCenterDirectorAccount careerCenterDirectorAccount;
-  const HomeScreenDirector({super.key, required this.careerCenterDirectorAccount,});
+  final CareerCenterDirectorAccount directorAccount;
+  const HomeScreenDirector({super.key, required this.directorAccount,});
 
   @override
   State<HomeScreenDirector> createState() => _HomeScreenState();
@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreenDirector> {
                   ListTile(
                     leading: Icon(Icons.person),
                     title: Text(
-                      '${widget.careerCenterDirectorAccount.firstName} ${widget.careerCenterDirectorAccount.lastName}',
+                      '${widget.directorAccount.firstName} ${widget.directorAccount.lastName}',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     subtitle: Text('Career Center Director'),
@@ -194,7 +194,7 @@ class _HomeScreenState extends State<HomeScreenDirector> {
         toolbarHeight: 92,
       ),
       drawer: MyDrawerDirector(
-        careerCenterDirectorAccount: widget.careerCenterDirectorAccount,
+        directorAccount: widget.directorAccount,
       ),
       body: Column(
         children: [

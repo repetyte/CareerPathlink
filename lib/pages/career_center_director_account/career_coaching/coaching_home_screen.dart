@@ -12,9 +12,9 @@ import '../../../widgets/footer/footer.dart';
 import 'service.dart'; // Import your service widget
 
 class EngagementDashboard extends StatefulWidget {
-  final CareerCenterDirectorAccount careerCenterDirectorAccount;
+  final CareerCenterDirectorAccount directorAccount;
   const EngagementDashboard(
-      {super.key, required this.careerCenterDirectorAccount});
+      {super.key, required this.directorAccount});
 
   @override
   EngagementDashboardState createState() => EngagementDashboardState();
@@ -49,7 +49,7 @@ class EngagementDashboardState extends State<EngagementDashboard> {
                   ListTile(
                     leading: Icon(Icons.person),
                     title: Text(
-                      '${widget.careerCenterDirectorAccount.firstName} ${widget.careerCenterDirectorAccount.lastName}',
+                      '${widget.directorAccount.firstName} ${widget.directorAccount.lastName}',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     subtitle: Text('Career Center Director'),
@@ -204,7 +204,7 @@ class EngagementDashboardState extends State<EngagementDashboard> {
         toolbarHeight: 92,
       ),
       drawer: MyDrawerDirector(
-        careerCenterDirectorAccount: widget.careerCenterDirectorAccount,
+        directorAccount: widget.directorAccount,
       ),
       body: Column(
         children: [

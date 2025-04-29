@@ -3,11 +3,13 @@ import 'package:flutter_app/models/user_role/career_center_director.dart';
 import 'package:flutter_app/pages/career_center_director_account/career_coaching/coaching_home_screen.dart';
 import 'package:flutter_app/pages/career_center_director_account/director_home_screen.dart';
 import 'package:flutter_app/pages/career_center_director_account/graduates_tracer_industry/graduates_tracer.dart';
+import 'package:flutter_app/pages/career_center_director_account/recruitment_and_placement/rr_job_dashboard_director.dart';
+import 'package:flutter_app/pages/career_center_director_account/work_integrated_learning/internship_dashboard_director.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyDrawerDirector extends StatelessWidget {
-  final CareerCenterDirectorAccount careerCenterDirectorAccount;
-  const MyDrawerDirector({super.key, required this.careerCenterDirectorAccount});
+  final CareerCenterDirectorAccount directorAccount;
+  const MyDrawerDirector({super.key, required this.directorAccount});
 
   navigateTo(String route, BuildContext context) {
     Navigator.of(context).pushReplacementNamed(route);
@@ -88,7 +90,7 @@ class MyDrawerDirector extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    HomeScreenDirector(careerCenterDirectorAccount: careerCenterDirectorAccount,),
+                    HomeScreenDirector(directorAccount: directorAccount,),
               ),
             );
             },
@@ -100,12 +102,12 @@ class MyDrawerDirector extends StatelessWidget {
               style: TextStyle(),
             ),
             onTap: () {
-            //   Navigator.pushReplacement(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => RrJobDashboardUser(graduateAccount: graduateAccount),
-            //   ),
-            // );
+              Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RrJobDashboardDirector(directorAccount: directorAccount,),
+              ),
+            );
             },
           ),
           ListTile(
@@ -121,7 +123,7 @@ class MyDrawerDirector extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    EngagementDashboard(careerCenterDirectorAccount: careerCenterDirectorAccount,),
+                    EngagementDashboard(directorAccount: directorAccount,),
               ),
             );
             },
@@ -135,8 +137,12 @@ class MyDrawerDirector extends StatelessWidget {
               ),
             ),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InternshipDashboardDirector(directorAccount: directorAccount,),
+              ),
+            );
             },
           ),
           ListTile(
@@ -152,7 +158,7 @@ class MyDrawerDirector extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    TracerDashboardPartner(careerCenterDirectorAccount: careerCenterDirectorAccount,),
+                    TracerDashboardPartner(directorAccount: directorAccount,),
               ),
             );
             },

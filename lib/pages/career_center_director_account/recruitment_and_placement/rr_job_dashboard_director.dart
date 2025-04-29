@@ -1,30 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/career_center_director.dart';
+import 'package:flutter_app/models/user_role/graduate.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
-import 'package:flutter_app/widgets/appbar/dean_header.dart';
+import 'package:flutter_app/widgets/appbar/director_header.dart';
+import 'package:flutter_app/widgets/appbar/graduates_header.dart';
 import 'package:flutter_app/widgets/drawer/drawer_director.dart';
+import 'package:flutter_app/widgets/drawer/drawer_graduates.dart';
+import 'package:flutter_app/models/recruitment_and_placement/job_posting.dart';
+import 'package:flutter_app/pages/graduates_account/recruitment_and_placement/rr_job_details_graduates.dart';
+import 'package:flutter_app/services/job_posting_api_service.dart';
 import 'package:flutter_app/widgets/footer/footer.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'graduates_lists.dart'; // Import the GraduatesLists screen
-import 'employed_lists.dart'; // Import the EmployedLists screen
-import 'unemployed_lists.dart'; // Import the UnemployedLists screen
-import 'graduates_tracker.dart'; // Import the GraduatesTracker screen
 
-class TracerDashboardPartner extends StatefulWidget {
+class RrJobDashboardDirector extends StatefulWidget {
   final CareerCenterDirectorAccount directorAccount;
-  const TracerDashboardPartner({super.key, required this.directorAccount});
+  const RrJobDashboardDirector({super.key, required this.directorAccount});
 
   @override
-  State<TracerDashboardPartner> createState() => _TracerDashboardPartnerState();
+  _RrJobDashboardDirectorState createState() => _RrJobDashboardDirectorState();
 }
 
-class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
+class _RrJobDashboardDirectorState extends State<RrJobDashboardDirector> {
+  late Future<List<JobPostingWithPartner>> futureJobPostings;
+  final TextEditingController _searchController = TextEditingController();
+  List<JobPostingWithPartner> _filteredJobPostings = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // Print graduate details for testing
+    debugPrint('Graduatesssss ID: ${widget.directorAccount.directorId}');
+    debugPrint('Email: ${widget.directorAccount.uncEmail}');
+    futureJobPostings = JobPostingApiService().fetchJobPostings();
+    futureJobPostings.then((data) {
+      setState(() {
+        _filteredJobPostings = data;
+      });
+    });
+    _searchController.addListener(_filterJobPostings);
+  }
+
   void _showProfileDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        var screenSize = MediaQuery.of(context).size;
         return Dialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
@@ -39,7 +59,7 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ListTile(
-                    leading: Icon(Icons.person),
+                    leading: const Icon(Icons.person),
                     title: Text(
                       '${widget.directorAccount.firstName} ${widget.directorAccount.lastName}',
                       style: const TextStyle(fontWeight: FontWeight.bold),
@@ -59,7 +79,6 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
                     leading: const Icon(Icons.logout),
                     title: const Text('Logout'),
                     onTap: () {
-                      // Handle logout
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -77,55 +96,34 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
     );
   }
 
-  Widget hoverableCategoryContainer(BuildContext context, String title,
-      String imagePath, Widget? targetScreen) {
-    return Expanded(
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: GestureDetector(
-          onTap: () {
-            if (targetScreen != null) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => targetScreen),
-              );
-            }
-          },
-          child: Container(
-            height: 150,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40),
-              image: DecorationImage(
-                image: AssetImage(imagePath),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Stack(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40),
-                    color: Colors.black.withOpacity(0.5),
-                  ),
-                ),
-                Center(
-                  child: Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'Montserrat',
-                      color: Colors.white,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+  void _refreshJobPostings() async {
+    setState(() {
+      futureJobPostings = JobPostingApiService().fetchJobPostings();
+      futureJobPostings.then((data) {
+        setState(() {
+          _filteredJobPostings = data;
+        });
+      });
+    });
+  }
+
+  void _filterJobPostings() {
+    String query = _searchController.text.toLowerCase();
+    futureJobPostings.then((data) {
+      setState(() {
+        _filteredJobPostings = data
+            .where((job) =>
+                job.jobTitle.toLowerCase().contains(query) ||
+                job.fieldIndustry.toLowerCase().contains(query))
+            .toList();
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -196,31 +194,49 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
               child: GestureDetector(
                 onTap: () => _showProfileDialog(context),
                 child: Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFD9D9D9),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: SizedBox(
-                    child: Container(
-                      padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.transparent,
-                            backgroundImage: const AssetImage(
-                                'assets/images/image_12.png'), // Add the path to your profile image
-                            radius: 24,
-                          ),
-                          SizedBox(
-                            width: 4,
-                          ),
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
-                            width: 12,
-                            height: 7.4,
-                            child: SizedBox(
+                decoration: BoxDecoration(
+                  color: const Color(0xFFD9D9D9),
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: SizedBox(
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          backgroundImage: const AssetImage(
+                              'assets/images/image_12.png'), // Add the path to your profile image
+                          radius: 24,
+                        ),
+                        // Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     children: [
+                        //       Text('Hendrixon Moldes',
+                        //           style: GoogleFonts.getFont(
+                        //             'Montserrat',
+                        //             fontWeight: FontWeight.bold,
+                        //             fontSize: 14,
+                        //             color: const Color(0xFF000000),
+                        //           )),
+                        //       Text('Graduate',
+                        //           style: GoogleFonts.getFont(
+                        //             'Montserrat',
+                        //             fontWeight: FontWeight.normal,
+                        //             fontSize: 12,
+                        //             color: const Color(0xFF000000),
+                        //           )),
+                        //     ]),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
+                          width: 12,
+                          height: 7.4,
+                          child: SizedBox(
                               width: 12,
                               height: 7.4,
                               child: SvgPicture.asset(
@@ -239,9 +255,7 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
         ),
         toolbarHeight: 92,
       ),
-      drawer: MyDrawerDirector(
-        directorAccount: widget.directorAccount,
-      ),
+      drawer: MyDrawerDirector(directorAccount: widget.directorAccount),
       body: Column(
         children: [
           SizedBox(
@@ -249,21 +263,19 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
             child: Material(
               elevation: 4.0,
               shadowColor: Colors.black.withOpacity(0.3),
-              child: const HeaderDean(),
+              child: const HeaderDirector(),
             ),
           ),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 children: [
-            
-                  // Header Section: Graduates Tracer Industry
                   Container(
                     margin: const EdgeInsets.fromLTRB(16, 24, 16, 24),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Graduates Tracer Industry',
+                        'Recruitment and Placement',
                         style: GoogleFonts.getFont(
                           'Montserrat',
                           fontWeight: FontWeight.w700,
@@ -274,16 +286,15 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
                     ),
                   ),
                   
-                  // Header Section: Graduates Tracer Industry
                   Container(
-                    margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                    margin: const EdgeInsets.fromLTRB(16, 0, 16, 24),
                     height: 300,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
                       image: const DecorationImage(
                         fit: BoxFit.cover,
                         image: AssetImage(
-                          'assets/images/career_guidance_bg.jpg',
+                          'assets/images/rectangle_223.jpeg',
                         ),
                       ),
                     ),
@@ -312,7 +323,7 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
                                 child: Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    'Career Counseling Guidance',
+                                    'Monitor Graduates Job Metrics',
                                     style: GoogleFonts.getFont(
                                       'Montserrat',
                                       fontWeight: FontWeight.w700,
@@ -325,7 +336,7 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: Text(
-                                    'Discover your true potential and navigate your career path with confidence through our Career Counselling web application.',
+                                    'Oversight graduates job engagement activities.',
                                     style: TextStyle(color: Colors.white)),
                               ),
                             ],
@@ -334,73 +345,7 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
                       ],
                     ),
                   ),
-            
-                  // Three Categories Section
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        hoverableCategoryContainer(context, 'Graduates List',
-                            'assets/images/graduates_list_bg.jpg', GraduatesListsDirector()),
-                            const SizedBox(width: 16),
-                        hoverableCategoryContainer(context, 'Employed Lists',
-                            'assets/images/employed_list_bg.jpg', EmployedListsDirector()),
-                            const SizedBox(width: 16),
-                        hoverableCategoryContainer(context, 'Unemployed Lists',
-                            'assets/images/unemployed_list_bg.jpg', UnemployedListsDirector()),
-                      ],
-                    ),
-                  ),
-                  // Graduates Tracker Section (Clickable)
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => GraduatesTrackerDirector()),
-                          );
-                        },
-                        child: Container(
-                          height: 150,
-                          margin: const EdgeInsets.symmetric(vertical: 16),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(40),
-                            image: const DecorationImage(
-                              image:
-                                  AssetImage('assets/images/graduates_tracker_bg.jpg'),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          child: Stack(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(40),
-                                  color: Colors.black.withOpacity(0.5),
-                                ),
-                              ),
-                              const Center(
-                                child: Text(
-                                  'Graduates Tracker',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat',
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  
                   const Footer(),
                 ],
               ),

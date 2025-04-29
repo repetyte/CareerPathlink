@@ -7,7 +7,6 @@ import 'package:flutter_app/models/recruitment_and_placement/job_application.dar
 import 'package:flutter_app/models/user_role/graduate.dart';
 import 'package:flutter_app/models/recruitment_and_placement/job_posting.dart';
 import 'package:flutter_app/services/job_application_api_service.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class JobApplicationScreen extends StatefulWidget {
