@@ -1,4 +1,13 @@
 <?php
+// header("Content-Type: application/json; charset=UTF-8");
+// header("Access-Control-Allow-Methods: POST");
+// header("Access-Control-Allow-Origin: *");
+// header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+// header('Access-Control-Allow-Methods: GET, POST');
+// header("Access-Control-Allow-Headers: X-Requested-With");
+// header("Access-Control-Allow-Origin: *");
+// header("Content-Type: application/json; charset=UTF-8");
+// header("Access-Control-Allow-Methods: PUT");
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: PUT");
@@ -13,7 +22,7 @@ $job = new JobPostingWithPartner($db);
 
 $data = json_decode(file_get_contents("php://input"));
 
-$job->job_id = $data->job_id;
+$job->job_id = $data->job_id; // Set job_id
 $job->cover_photo = $data->cover_photo;
 $job->job_title = $data->job_title;
 $job->status = $data->status;
@@ -27,12 +36,16 @@ $job->job_description = $data->job_description;
 $job->requirements = $data->requirements;
 $job->job_responsibilities = $data->job_responsibilities;
 $job->industry_partner = $data->industry_partner;
+$job->partner_name = $data->partner_name;
+$job->profile_pic = $data->profile_pic;
+$job->partner_location = $data->partner_location;
+$job->contact_no = $data->contact_no;
+$job->email_add = $data->email_add;
 
-if($job->update()){
+if ($job->update()) {
     http_response_code(200);
     echo json_encode(array("message" => "Job was updated."));
 } else {
     http_response_code(503);
     echo json_encode(array("message" => "Unable to update job."));
 }
-?>
