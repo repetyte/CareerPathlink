@@ -116,11 +116,9 @@ class _GraduatesListsDepartmentDirectorState extends State<GraduatesListsDepartm
                       firstDate: DateTime(1950),
                       lastDate: DateTime.now(),
                     );
-                    if (pickedDate != null) {
-                      controllers['birthdate']!.text =
-                          "${pickedDate.toLocal()}".split(' ')[0];
-                    }
-                  },
+                    controllers['birthdate']!.text =
+                        "${pickedDate?.toLocal()}".split(' ')[0];
+                                    },
                 ),
 
                 // Age input (numeric only)
@@ -142,11 +140,9 @@ class _GraduatesListsDepartmentDirectorState extends State<GraduatesListsDepartm
                       firstDate: DateTime(1950),
                       lastDate: DateTime(2050),
                     );
-                    if (pickedDate != null) {
-                      controllers['graduation_date']!.text =
-                          "${pickedDate.toLocal()}".split(' ')[0];
-                    }
-                  },
+                    controllers['graduation_date']!.text =
+                        "${pickedDate?.toLocal()}".split(' ')[0];
+                                    },
                 ),
               ],
             ),
