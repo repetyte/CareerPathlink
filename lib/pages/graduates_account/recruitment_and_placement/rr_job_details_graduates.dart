@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/job_posting.dart';
-import 'package:flutter_app/pages/graduates_account/recruitment_and_placement/rr_document_submission.dart';
-import 'package:flutter_app/services/api_service.dart';
+import 'package:flutter_app/models/user_role/graduate.dart';
+import 'package:flutter_app/models/recruitment_and_placement/job_posting.dart';
+import 'package:flutter_app/pages/graduates_account/recruitment_and_placement/rr_job_application.dart';
+import 'package:flutter_app/services/job_posting_api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class RrJobDetailsGraduates extends StatefulWidget {
-  final JobPostingWithPartner jobPosting;
+  final JobPostingWithPartner jobPostingWithPartner;
+  final GraduateAccount graduateAccount;
 
-  const RrJobDetailsGraduates({super.key, required this.jobPosting});
+  const RrJobDetailsGraduates({super.key, required this.jobPostingWithPartner, required this.graduateAccount});
 
   @override
   _RrJobDetailsGraduatesState createState() => _RrJobDetailsGraduatesState();
@@ -15,11 +17,13 @@ class RrJobDetailsGraduates extends StatefulWidget {
 
 class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
   // String? industryPartnerName;
-  // late final JobPostingWithPartner jobPosting;
-  final ApiService apiService = ApiService();
+  // late final JobPostingWithPartner jobPostingWithPartner;
+  final JobPostingApiService jobPostingApiService = JobPostingApiService();
 
   @override
   void initState() {
+    debugPrint('Graduatesssss ID: ${widget.graduateAccount.graduateId}');
+    debugPrint('Department: ${widget.graduateAccount.department}');
     super.initState();
   }
 
@@ -46,14 +50,14 @@ class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
                   Container(
                     margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                     child: Container(
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         image: DecorationImage(
                           fit: BoxFit.cover,
                           image: AssetImage(
-                            'assets/images/rectangle_351.jpeg',
+                            'assets/images/${widget.jobPostingWithPartner.coverPhoto}',
                           ),
                         ),
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(50),
                           topRight: Radius.circular(50),
                         ),
@@ -80,7 +84,7 @@ class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
                             ),
                           ),
                           Container(
-                            padding: const EdgeInsets.fromLTRB(16, 49, 16, 59),
+                            padding: const EdgeInsets.fromLTRB(16, 64, 16, 64),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,11 +100,11 @@ class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            widget.jobPosting.jobTitle,
+                                            widget.jobPostingWithPartner.jobTitle,
                                             style: GoogleFonts.getFont(
                                               'Montserrat',
                                               fontWeight: FontWeight.w700,
-                                              fontSize: 28,
+                                              fontSize: 32,
                                               color: const Color(0xFFFFFFFF),
                                             ),
                                           ),
@@ -115,7 +119,7 @@ class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
                                             padding: const EdgeInsets.fromLTRB(
                                                 20, 10, 20, 10),
                                             child: Text(
-                                              widget.jobPosting.status,
+                                              widget.jobPostingWithPartner.status,
                                               style: GoogleFonts.getFont(
                                                 'Montserrat',
                                                 fontWeight: FontWeight.w700,
@@ -132,7 +136,7 @@ class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
                                 Align(
                                   alignment: Alignment.topLeft,
                                   child: Text(
-                                    widget.jobPosting.fieldIndustry,
+                                    widget.jobPostingWithPartner.fieldIndustry,
                                     style: GoogleFonts.getFont(
                                       'Montserrat',
                                       fontWeight: FontWeight.w400,
@@ -157,91 +161,92 @@ class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPosting.jobLevel,
+                        Text(widget.jobPostingWithPartner.jobLevel,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('Min. Years of Experience Needed: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPosting.yrsOfExperienceNeeded,
+                        Text(widget.jobPostingWithPartner.yrsOfExperienceNeeded,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
-                        const Text('Contractual Status: ',
+                        const Text('Employment Status: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPosting.contractualStatus,
+                        Text(widget.jobPostingWithPartner.contractualStatus,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('Salary Range: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPosting.salary,
+                        Text(widget.jobPostingWithPartner.salary,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('Location: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPosting.jobLocation,
+                        Text(widget.jobPostingWithPartner.jobLocation,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('Job Description: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPosting.jobDescription,
+                        Text(widget.jobPostingWithPartner.jobDescription,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('Requirements: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPosting.requirements,
+                        Text(widget.jobPostingWithPartner.requirements,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('Job Responsibilities: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPosting.jobResponsibilities,
+                        Text(widget.jobPostingWithPartner.jobResponsibilities,
                             style: const TextStyle(fontSize: 16)),
                         const SizedBox(height: 24),
                         const Text('About Employer: ',
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                         const SizedBox(height: 4),
-                        Text(widget.jobPosting.partnerName.toString(),
+                        Text(widget.jobPostingWithPartner.partnerName.toString(),
                             style: const TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold
                             )),
                             const SizedBox(height: 4),
-                        Text(widget.jobPosting.partnerLocation.toString(),
+                        Text(widget.jobPostingWithPartner.partnerLocation.toString(),
                             style: const TextStyle(
                               fontSize: 16,
                             )),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 16),
                       ],
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.fromLTRB(24.1, 0, 24.1, 0),
+                    margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                     child: Align(
                       alignment: Alignment.topRight,
-                      child: ElevatedButton(
+                      child: ElevatedButton.icon(
                         onPressed: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DocumentSubmissionScreen(
+                              builder: (context) => JobApplicationScreen(
                                   jobPostingWithPartner: widget
-                                      .jobPosting), // Fixed the error here
+                                      .jobPostingWithPartner, graduateAccount: widget.graduateAccount,), // Fixed the error here
                             ),
                           );
                         },
-                        child: const Text('Submit Application'),
+                        icon: const Icon(Icons.send),
+                        label: const Text('Submit Application'),
                       ),
                     ),
                   ),
