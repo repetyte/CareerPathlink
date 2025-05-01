@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:flutter_app/models/user_role/graduate.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
 import 'package:flutter_app/widgets/appbar/graduates_header.dart';
 import 'package:flutter_app/widgets/drawer/drawer_graduates.dart';
 import 'package:flutter_app/models/recruitment_and_placement/job_posting.dart';
-=======
-import 'package:flutter_app/widgets/drawer/drawer_graduates.dart';
-import 'package:flutter_app/models/job_posting.dart';
->>>>>>> 2b286650dd93c4f00f37a894a3d7a86db3622b65
 import 'package:flutter_app/pages/graduates_account/recruitment_and_placement/rr_job_details_graduates.dart';
 import 'package:flutter_app/services/job_posting_api_service.dart';
 import 'package:flutter_app/widgets/footer/footer.dart';

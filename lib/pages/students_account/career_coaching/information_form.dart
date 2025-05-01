@@ -473,12 +473,10 @@ class _StudentInformationScreenState extends State<StudentInformationScreen> {
                 firstDate: DateTime(1900),
                 lastDate: DateTime.now(),
               );
-              if (selectedDate != null) {
-                setState(() {
-                  controller!.text = "${selectedDate.toLocal()}".split(' ')[0];
-                });
-              }
-            },
+              setState(() {
+                controller!.text = "${selectedDate?.toLocal()}".split(' ')[0];
+              });
+                        },
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please select $label';
