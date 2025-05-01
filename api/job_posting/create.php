@@ -59,8 +59,7 @@ if (
     echo json_encode(array("message" => "Unable to create job. Data is incomplete."));
 }
 
-function cors()
-{
+function cors(){
     // Allow from any origin
     if (isset($_SERVER['HTTP_ORIGIN'])) {
         // Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one
