@@ -9,6 +9,7 @@ class InternshipApplication
     public $internship;
     public $applicant_first_name;
     public $applicant_last_name;
+    public $course;
     public $applicant_location;
     public $applicant_contact_no;
     public $applicant_email;
@@ -39,8 +40,8 @@ class InternshipApplication
 
     public function create()
     {
-        $query = "INSERT INTO " . $this->table_name . " (internship, applicant_first_name, applicant_last_name, applicant_location, applicant_contact_no, applicant_email, resume, cover_letter, skills, certifications, application_status, date_applied) 
-                  VALUES (:internship, :applicant_first_name, :applicant_last_name, :applicant_location, :applicant_contact_no, :applicant_email, :resume, :cover_letter, :skills, :certifications, :application_status, :date_applied)";
+        $query = "INSERT INTO " . $this->table_name . " (internship, applicant_first_name, applicant_last_name, course, applicant_location, applicant_contact_no, applicant_email, resume, cover_letter, skills, certifications, application_status, date_applied) 
+                  VALUES (:internship, :applicant_first_name, :applicant_last_name, :course, :applicant_location, :applicant_contact_no, :applicant_email, :resume, :cover_letter, :skills, :certifications, :application_status, :date_applied)";
 
         // Prepare query
         $stmt = $this->conn->prepare($query);
@@ -49,6 +50,7 @@ class InternshipApplication
         $this->internship = htmlspecialchars(strip_tags($this->internship));
         $this->applicant_first_name = htmlspecialchars(strip_tags($this->applicant_first_name));
         $this->applicant_last_name = htmlspecialchars(strip_tags($this->applicant_last_name));
+        $this->course = htmlspecialchars(strip_tags($this->course));
         $this->applicant_location = htmlspecialchars(strip_tags($this->applicant_location));
         $this->applicant_contact_no = htmlspecialchars(strip_tags($this->applicant_contact_no));
         $this->applicant_email = htmlspecialchars(strip_tags($this->applicant_email));

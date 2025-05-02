@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/recruitment_and_placement/job_application.dart';
 import 'package:flutter_app/models/user_role/career_center_director.dart';
+import 'package:flutter_app/models/user_role/industry_partner.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
+import 'package:flutter_app/services/industry_partner_api_service.dart';
+import 'package:flutter_app/services/job_application_api_service.dart';
 import 'package:flutter_app/widgets/appbar/director_header.dart';
 import 'package:flutter_app/widgets/drawer/drawer_director.dart';
 import 'package:flutter_app/models/recruitment_and_placement/job_posting.dart';
@@ -18,6 +22,7 @@ class RrJobDashboardDirector extends StatefulWidget {
 }
 
 class _RrJobDashboardDirectorState extends State<RrJobDashboardDirector> {
+  late Future<List<JobApplicationComplete>> futureJobApplications;
   late Future<List<JobPostingWithPartner>> futureJobPostings;
   final TextEditingController _searchController = TextEditingController();
   List<JobPostingWithPartner> _filteredJobPostings = [];
@@ -28,6 +33,7 @@ class _RrJobDashboardDirectorState extends State<RrJobDashboardDirector> {
     // Print graduate details for testing
     debugPrint('Graduatesssss ID: ${widget.directorAccount.directorId}');
     debugPrint('Email: ${widget.directorAccount.uncEmail}');
+    futureJobApplications = JobApplicationApiService().fetchJobApplications();
     futureJobPostings = JobPostingApiService().fetchJobPostings();
     futureJobPostings.then((data) {
       setState(() {
@@ -60,8 +66,7 @@ class _RrJobDashboardDirectorState extends State<RrJobDashboardDirector> {
                       '${widget.directorAccount.firstName} ${widget.directorAccount.lastName}',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    subtitle: Text(
-                        'Career Center Director'),
+                    subtitle: Text('Career Center Director'),
                   ),
                   const Divider(),
                   ListTile(
@@ -113,6 +118,75 @@ class _RrJobDashboardDirectorState extends State<RrJobDashboardDirector> {
                 job.fieldIndustry.toLowerCase().contains(query))
             .toList();
       });
+    });
+  }
+
+  // Function to show job application details in a dialog
+  void _showJobApplicationDetails(
+      BuildContext context, JobApplicationComplete application) {
+    // Fetch the list of industry partners
+    Future<List<IndustryPartner>> futureIndustryPartners =
+        IndustryPartnerApiService().fetchIndustryPartners();
+
+    futureIndustryPartners.then((partners) {
+      // Find the matching industry partner
+      IndustryPartner? matchedPartner = partners.firstWhere(
+        (partner) => partner.partnerId == application.industryPartner,
+        orElse: () => IndustryPartner(
+          partnerId: null,
+          partnerName: 'Unknown Employer',
+          partnerLocation: '',
+          contactNo: '',
+          emailAdd: '',
+        ),
+      );
+
+      // Show the dialog with the matched partner's name
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              '${application.applicantFirstName} ${application.applicantLastName}',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            content: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.school),
+                      const SizedBox(width: 4.0),
+                      Text(application.degree),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.work),
+                      const SizedBox(width: 4.0),
+                      Text(application.jobTitle),
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
+                  Text('Employer Applied To: ${matchedPartner.partnerName}'),
+                  Text('Application Status: ${application.applicationStatus}'),
+                  Text('Engagement Date: ${application.dateApplied}'),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Close'),
+              ),
+            ],
+          );
+        },
+      );
+    }).catchError((error) {
+      // Handle errors if fetching industry partners fails
+      debugPrint('Error fetching industry partners: $error');
     });
   }
 
@@ -190,49 +264,49 @@ class _RrJobDashboardDirectorState extends State<RrJobDashboardDirector> {
               child: GestureDetector(
                 onTap: () => _showProfileDialog(context),
                 child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xFFD9D9D9),
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: SizedBox(
-                  child: Container(
-                    padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          backgroundImage: const AssetImage(
-                              'assets/images/image_12.png'), // Add the path to your profile image
-                          radius: 24,
-                        ),
-                        // Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     children: [
-                        //       Text('Hendrixon Moldes',
-                        //           style: GoogleFonts.getFont(
-                        //             'Montserrat',
-                        //             fontWeight: FontWeight.bold,
-                        //             fontSize: 14,
-                        //             color: const Color(0xFF000000),
-                        //           )),
-                        //       Text('Graduate',
-                        //           style: GoogleFonts.getFont(
-                        //             'Montserrat',
-                        //             fontWeight: FontWeight.normal,
-                        //             fontSize: 12,
-                        //             color: const Color(0xFF000000),
-                        //           )),
-                        //     ]),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
-                          width: 12,
-                          height: 7.4,
-                          child: SizedBox(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFD9D9D9),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: SizedBox(
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: const AssetImage(
+                                'assets/images/image_12.png'), // Add the path to your profile image
+                            radius: 24,
+                          ),
+                          // Column(
+                          //     crossAxisAlignment: CrossAxisAlignment.start,
+                          //     children: [
+                          //       Text('Hendrixon Moldes',
+                          //           style: GoogleFonts.getFont(
+                          //             'Montserrat',
+                          //             fontWeight: FontWeight.bold,
+                          //             fontSize: 14,
+                          //             color: const Color(0xFF000000),
+                          //           )),
+                          //       Text('Graduate',
+                          //           style: GoogleFonts.getFont(
+                          //             'Montserrat',
+                          //             fontWeight: FontWeight.normal,
+                          //             fontSize: 12,
+                          //             color: const Color(0xFF000000),
+                          //           )),
+                          //     ]),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
+                            width: 12,
+                            height: 7.4,
+                            child: SizedBox(
                               width: 12,
                               height: 7.4,
                               child: SvgPicture.asset(
@@ -281,7 +355,6 @@ class _RrJobDashboardDirectorState extends State<RrJobDashboardDirector> {
                       ),
                     ),
                   ),
-                  
                   Container(
                     margin: const EdgeInsets.fromLTRB(16, 0, 16, 24),
                     height: 300,
@@ -336,6 +409,96 @@ class _RrJobDashboardDirectorState extends State<RrJobDashboardDirector> {
                                     style: TextStyle(color: Colors.white)),
                               ),
                             ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Graduates Job Engagement Data',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFD9D9D9),
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                          constraints: const BoxConstraints(
+                            minHeight: 300, // Set the minimum height to 300
+                          ),
+                          child: FutureBuilder<List<JobApplicationComplete>>(
+                            future: futureJobApplications,
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else if (!snapshot.hasData ||
+                                  snapshot.data!.isEmpty) {
+                                return const Text('No job applications found.');
+                              } else {
+                                final applications = snapshot.data!;
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: applications.length,
+                                  itemBuilder: (context, index) {
+                                    final application = applications[index];
+                                    return ListTile(
+                                      title: Text(
+                                          '${application.applicantFirstName} ${application.applicantLastName}',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      subtitle: Row(
+                                        children: [
+                                          Icon(Icons.work),
+                                          const SizedBox(width: 4.0),
+                                          Text(application.jobTitle),
+                                        ],
+                                      ),
+                                      trailing: Text(
+                                          'Enagagement Date: ${application.dateApplied}'),
+                                      onTap: () => _showJobApplicationDetails(
+                                          context, application),
+                                    );
+                                  },
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        const Text(
+                          'Reporting Metrics',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        const Text(
+                          'Employer Engagement Monitoring',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ],

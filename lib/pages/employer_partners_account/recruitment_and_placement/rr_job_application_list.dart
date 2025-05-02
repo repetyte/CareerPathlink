@@ -214,6 +214,13 @@ class _RrJobApplicationsState extends State<RrJobApplications> {
                                       children: [
                                         Row(
                                           children: [
+                                            Icon(Icons.school),
+                                            const SizedBox(width: 4.0),
+                                            Text(application.degree),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
                                             Icon(Icons.email),
                                             const SizedBox(width: 4.0),
                                             Text(application.applicantEmail),

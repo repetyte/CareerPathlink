@@ -17,7 +17,8 @@ if($num > 0){
     $internship_applications_arr = array();
     $internship_applications_arr["records"] = array();
 
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        error_log(print_r($row, true)); // Log the row data for debugging
         extract($row);
 
         $internship_application_item = array(
@@ -25,6 +26,7 @@ if($num > 0){
             "internship" => $internship,
             "applicant_first_name" => $applicant_first_name,
             "applicant_last_name" => $applicant_last_name,
+            "course" => $course,
             "applicant_location" => $applicant_location,
             "applicant_contact_no" => $applicant_contact_no,
             "applicant_email" => $applicant_email,

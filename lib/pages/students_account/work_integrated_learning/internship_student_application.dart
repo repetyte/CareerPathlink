@@ -198,6 +198,7 @@ class _InternshipApplicationScreenState
       internship: widget.internshipWithPartner.internshipId ?? 0,
       applicantFirstName: widget.studentAccount.firstName,
       applicantLastName: widget.studentAccount.lastName,
+      course: widget.studentAccount.course,
       applicantLocation: widget.studentAccount.address,
       applicantContactNo: widget.studentAccount.contactNo,
       applicantEmail: widget.studentAccount.email,

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/career_center_director.dart';
+import 'package:flutter_app/models/user_role/industry_partner.dart';
 import 'package:flutter_app/models/work_integrated_learning/internship.dart';
+import 'package:flutter_app/models/work_integrated_learning/internship_application.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
+import 'package:flutter_app/services/industry_partner_api_service.dart';
 import 'package:flutter_app/services/internship_api_service.dart';
+import 'package:flutter_app/services/internship_application_api_service.dart';
 import 'package:flutter_app/widgets/appbar/director_header.dart';
 import 'package:flutter_app/widgets/drawer/drawer_director.dart';
 import 'package:flutter_app/widgets/footer/footer.dart';
@@ -20,6 +24,7 @@ class InternshipDashboardDirector extends StatefulWidget {
 
 class _InternshipDashboardDirectorState extends State<InternshipDashboardDirector> {
   late Future<List<InternshipWithPartner>> futureInternships;
+  late Future<List<InternshipApplicationComplete>> futureInternshipApplications;
   final TextEditingController _searchController = TextEditingController();
   List<InternshipWithPartner> _filteredInternships = [];
 
@@ -27,6 +32,8 @@ class _InternshipDashboardDirectorState extends State<InternshipDashboardDirecto
   void initState() {
     super.initState();
     futureInternships = InternshipApiService().fetchInternships();
+    futureInternshipApplications =
+        InternshipApplicationApiService().fetchInternshipApplications();
     futureInternships.then((data) {
       setState(() {
         _filteredInternships = data;
@@ -111,6 +118,75 @@ class _InternshipDashboardDirectorState extends State<InternshipDashboardDirecto
                 internship.description.toLowerCase().contains(query))
             .toList();
       });
+    });
+  }
+
+  // Function to show job application details in a dialog
+  void _showJobApplicationDetails(
+      BuildContext context, InternshipApplicationComplete application) {
+    // Fetch the list of industry partners
+    Future<List<IndustryPartner>> futureIndustryPartners =
+        IndustryPartnerApiService().fetchIndustryPartners();
+
+    futureIndustryPartners.then((partners) {
+      // Find the matching industry partner
+      IndustryPartner? matchedPartner = partners.firstWhere(
+        (partner) => partner.partnerId == application.industryPartner,
+        orElse: () => IndustryPartner(
+          partnerId: null,
+          partnerName: 'Unknown Employer',
+          partnerLocation: '',
+          contactNo: '',
+          emailAdd: '',
+        ),
+      );
+
+      // Show the dialog with the matched partner's name
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              '${application.applicantFirstName} ${application.applicantLastName}',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            content: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.perm_identity),
+                      const SizedBox(width: 4.0),
+                      Text(application.course),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.menu_book),
+                      const SizedBox(width: 4.0),
+                      Text(application.internshipTitle),
+                    ],
+                  ),
+                  const SizedBox(height: 8.0),
+                  Text('Employer Applied To: ${matchedPartner.partnerName}'),
+                  Text('Application Status: ${application.applicationStatus}'),
+                  Text('Engagement Date: ${application.dateApplied}'),
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Close'),
+              ),
+            ],
+          );
+        },
+      );
+    }).catchError((error) {
+      // Handle errors if fetching industry partners fails
+      debugPrint('Error fetching industry partners: $error');
     });
   }
 
@@ -322,6 +398,97 @@ class _InternshipDashboardDirectorState extends State<InternshipDashboardDirecto
                       ],
                     ),
                   ),
+                  
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Students WIL Engagement Data',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 8,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFD9D9D9),
+                            borderRadius: BorderRadius.circular(40),
+                          ),
+                          constraints: const BoxConstraints(
+                            minHeight: 300, // Set the minimum height to 300
+                          ),
+                          child: FutureBuilder<List<InternshipApplicationComplete>>(
+                            future: futureInternshipApplications,
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else if (!snapshot.hasData ||
+                                  snapshot.data!.isEmpty) {
+                                return const Text('No job applications found.');
+                              } else {
+                                final applications = snapshot.data!;
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: applications.length,
+                                  itemBuilder: (context, index) {
+                                    final application = applications[index];
+                                    return ListTile(
+                                      title: Text(
+                                          '${application.applicantFirstName} ${application.applicantLastName}',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      subtitle: Row(
+                                        children: [
+                                          Icon(Icons.menu_book),
+                                          const SizedBox(width: 4.0),
+                                          Text(application.internshipTitle),
+                                        ],
+                                      ),
+                                      trailing: Text(
+                                          'Enagagement Date: ${application.dateApplied}'),
+                                      onTap: () => _showJobApplicationDetails(
+                                          context, application),
+                                    );
+                                  },
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        const Text(
+                          'Reporting Metrics',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        const Text(
+                          'Employer Engagement Monitoring',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  
                   const Footer(),
                 ],
               ),

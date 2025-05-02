@@ -159,6 +159,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
       job: widget.jobPostingWithPartner.jobId ?? 0,
       applicantFirstName: widget.graduateAccount.firstName,
       applicantLastName: widget.graduateAccount.lastName,
+      degree: widget.graduateAccount.course,
       applicantLocation: widget.graduateAccount.address,
       applicantContactNo: widget.graduateAccount.contactNo,
       applicantEmail: widget.graduateAccount.email,

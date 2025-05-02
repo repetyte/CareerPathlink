@@ -6,6 +6,7 @@ class InternshipApplication {
   final int internship;
   final String applicantFirstName;
   final String applicantLastName;
+  final String course;
   final String applicantLocation;
   final String applicantContactNo;
   final String applicantEmail;
@@ -22,6 +23,7 @@ class InternshipApplication {
     required this.internship,
     required this.applicantFirstName,
     required this.applicantLastName,
+    required this.course,
     required this.applicantLocation,
     required this.applicantContactNo,
     required this.applicantEmail,
@@ -40,6 +42,7 @@ class InternshipApplication {
       internship: json['internship'] as int? ?? 0,
       applicantFirstName: json['applicant_first_name'] ?? '',
       applicantLastName: json['applicant_last_name'] ?? '',
+      course: json['course'] ?? '',
       applicantLocation: json['applicant_location'] ?? '',
       applicantContactNo: json['applicant_contact_no'] ?? '',
       applicantEmail: json['applicant_email'] ?? '',
@@ -59,6 +62,7 @@ class InternshipApplication {
       'internship': internship,
       'applicant_first_name': applicantFirstName,
       'applicant_last_name': applicantLastName,
+      'course': course,
       'applicant_location': applicantLocation,
       'applicant_contact_no': applicantContactNo,
       'applicant_email': applicantEmail,
@@ -92,6 +96,7 @@ class InternshipApplicationComplete extends InternshipApplication {
     required super.internship,
     required super.applicantFirstName,
     required super.applicantLastName,
+    required super.course,
     required super.applicantLocation,
     required super.applicantContactNo,
     required super.applicantEmail,
@@ -122,6 +127,7 @@ class InternshipApplicationComplete extends InternshipApplication {
       internship: json['internship'] ?? 0,
       applicantFirstName: json['applicant_first_name'] ?? '',
       applicantLastName: json['applicant_last_name'] ?? '',
+      course: json['course'] ?? '',
       applicantLocation: json['applicant_location'] ?? '',
       applicantContactNo: json['applicant_contact_no'] ?? '',
       applicantEmail: json['applicant_email'] ?? '',

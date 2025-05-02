@@ -6,6 +6,7 @@ class JobApplication {
   final int job;
   final String applicantFirstName;
   final String applicantLastName;
+  final String degree;
   final String applicantLocation;
   final String applicantContactNo;
   final String applicantEmail;
@@ -22,6 +23,7 @@ class JobApplication {
     required this.job,
     required this.applicantFirstName,
     required this.applicantLastName,
+    required this.degree,
     required this.applicantLocation,
     required this.applicantContactNo,
     required this.applicantEmail,
@@ -40,6 +42,7 @@ class JobApplication {
       job: json['job'] as int? ?? 0,
       applicantFirstName: json['applicant_first_name'] ?? '',
       applicantLastName: json['applicant_last_name'] ?? '',
+      degree: json['degree'] ?? '',
       applicantLocation: json['applicant_location'] ?? '',
       applicantContactNo: json['applicant_contact_no'] ?? '',
       applicantEmail: json['applicant_email'] ?? '',
@@ -59,6 +62,7 @@ class JobApplication {
       'job': job,
       'applicant_first_name': applicantFirstName,
       'applicant_last_name': applicantLastName,
+      'degree': degree,
       'applicant_location': applicantLocation,
       'applicant_contact_no': applicantContactNo,
       'applicant_email': applicantEmail,
@@ -98,6 +102,7 @@ class JobApplicationComplete extends JobApplication {
     required super.job,
     required super.applicantFirstName,
     required super.applicantLastName,
+    required super.degree,
     required super.applicantLocation,
     required super.applicantContactNo,
     required super.applicantEmail,
@@ -133,6 +138,7 @@ class JobApplicationComplete extends JobApplication {
       job: json['job'] ?? 0,
       applicantFirstName: json['applicant_first_name'] ?? '',
       applicantLastName: json['applicant_last_name'] ?? '',
+      degree: json['degree'] ?? '',
       applicantLocation: json['applicant_location'] ?? '',
       applicantContactNo: json['applicant_contact_no'] ?? '',
       applicantEmail: json['applicant_email'] ?? '',

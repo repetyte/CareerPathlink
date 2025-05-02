@@ -9,6 +9,7 @@ class JobApplication
     public $job;
     public $applicant_first_name;
     public $applicant_last_name;
+    public $degree;
     public $applicant_location;
     public $applicant_contact_no;
     public $applicant_email;
@@ -43,8 +44,8 @@ class JobApplication
 
     public function create()
     {
-        $query = "INSERT INTO " . $this->table_name . " (job, applicant_first_name, applicant_last_name, applicant_location, applicant_contact_no, applicant_email, resume, cover_letter, skills, certifications, application_status, date_applied) 
-              VALUES (:job, :applicant_first_name, :applicant_last_name, :applicant_location, :applicant_contact_no, :applicant_email, :resume, :cover_letter, :skills, :certifications, :application_status, :date_applied)";
+        $query = "INSERT INTO " . $this->table_name . " (job, applicant_first_name, applicant_last_name, degree, applicant_location, applicant_contact_no, applicant_email, resume, cover_letter, skills, certifications, application_status, date_applied) 
+              VALUES (:job, :applicant_first_name, :applicant_last_name, :degree, :applicant_location, :applicant_contact_no, :applicant_email, :resume, :cover_letter, :skills, :certifications, :application_status, :date_applied)";
 
         // Prepare query
         $stmt = $this->conn->prepare($query);
@@ -53,6 +54,7 @@ class JobApplication
         $this->job = htmlspecialchars(strip_tags($this->job));
         $this->applicant_first_name = htmlspecialchars(strip_tags($this->applicant_first_name));
         $this->applicant_last_name = htmlspecialchars(strip_tags($this->applicant_last_name));
+        $this->degree = htmlspecialchars(strip_tags($this->degree));
         $this->applicant_location = htmlspecialchars(strip_tags($this->applicant_location));
         $this->applicant_contact_no = htmlspecialchars(strip_tags($this->applicant_contact_no));
         $this->applicant_email = htmlspecialchars(strip_tags($this->applicant_email));
@@ -67,6 +69,7 @@ class JobApplication
         $stmt->bindParam(":job", $this->job);
         $stmt->bindParam(":applicant_first_name", $this->applicant_first_name);
         $stmt->bindParam(":applicant_last_name", $this->applicant_last_name);
+        $stmt->bindParam(":degree", $this->degree);
         $stmt->bindParam(":applicant_location", $this->applicant_location);
         $stmt->bindParam(":applicant_contact_no", $this->applicant_contact_no);
         $stmt->bindParam(":applicant_email", $this->applicant_email);

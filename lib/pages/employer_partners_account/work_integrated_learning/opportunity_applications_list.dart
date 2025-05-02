@@ -235,6 +235,7 @@ class _OpportunityApplicationsState extends State<OpportunityApplications> {
                                           ],
                                         ),
                                         const SizedBox(height: 8.0),
+                                        Text('Course: ${application.course}'),
                                         Text('Resume: ${application.resume}'),
                                         Text('Cover Letter: ${application.coverLetter}'),
                                         application.skills == '' || application.skills!.isEmpty

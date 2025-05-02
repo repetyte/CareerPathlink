@@ -22,6 +22,7 @@ if (
     !empty($data->job) &&
     !empty($data->applicant_first_name) &&
     !empty($data->applicant_last_name) &&
+    !empty($data->degree) &&
     !empty($data->applicant_location) &&
     !empty($data->applicant_contact_no) &&
     !empty($data->applicant_email) &&
@@ -35,6 +36,7 @@ if (
     $application->job = $data->job;
     $application->applicant_first_name = $data->applicant_first_name;
     $application->applicant_last_name = $data->applicant_last_name;
+    $application->degree = $data->degree;
     $application->applicant_location = $data->applicant_location;
     $application->applicant_contact_no = $data->applicant_contact_no;
     $application->applicant_email = $data->applicant_email;

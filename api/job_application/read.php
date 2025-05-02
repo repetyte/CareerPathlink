@@ -25,6 +25,7 @@ if($num > 0){
             "job" => $job,
             "applicant_first_name" => $applicant_first_name,
             "applicant_last_name" => $applicant_last_name,
+            "degree" => $degree,
             "applicant_location" => $applicant_location,
             "applicant_contact_no" => $applicant_contact_no,
             "applicant_email" => $applicant_email,
