@@ -450,6 +450,11 @@ class _AddInternshipState extends State<AddInternship> {
                                           children: [
                                             ElevatedButton.icon(
                                               onPressed: _addRequiredSkillField,
+                                              style: ButtonStyle(
+                                                backgroundColor:
+                                                    WidgetStateProperty.all(
+                                                        Colors.green),
+                                              ),
                                               icon: Icon(Icons.add),
                                               label: Text('Add'),
                                             ),
@@ -511,6 +516,11 @@ class _AddInternshipState extends State<AddInternship> {
                                           children: [
                                             ElevatedButton.icon(
                                               onPressed: _addQualificationField,
+                                              style: ButtonStyle(
+                                                backgroundColor:
+                                                    WidgetStateProperty.all(
+                                                        Colors.green),
+                                              ),
                                               icon: Icon(Icons.add),
                                               label: Text('Add'),
                                             ),

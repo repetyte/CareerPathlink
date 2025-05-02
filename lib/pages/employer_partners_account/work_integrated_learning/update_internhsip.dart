@@ -216,8 +216,8 @@ class _UpdateInternshipState extends State<UpdateInternship> {
       try {
         await internshipApiService.updateInternship(internshipData);
         widget.onInternshipUpdated();
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('WIL Opportunity updated successfully')));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            content: Text('WIL Opportunity updated successfully')));
         Navigator.pop(
             context, internshipData); // Pass the updated internship data
       } catch (error) {
@@ -510,6 +510,11 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                           children: [
                                             ElevatedButton.icon(
                                               onPressed: _addRequiredSkillField,
+                                              style: ButtonStyle(
+                                                backgroundColor:
+                                                    WidgetStateProperty.all(
+                                                        Colors.green),
+                                              ),
                                               icon: Icon(Icons.add),
                                               label: Text('Add'),
                                             ),
@@ -570,6 +575,11 @@ class _UpdateInternshipState extends State<UpdateInternship> {
                                           children: [
                                             ElevatedButton.icon(
                                               onPressed: _addQualificationField,
+                                              style: ButtonStyle(
+                                                backgroundColor:
+                                                    WidgetStateProperty.all(
+                                                        Colors.green),
+                                              ),
                                               icon: Icon(Icons.add),
                                               label: Text('Add'),
                                             ),

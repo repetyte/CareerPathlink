@@ -225,6 +225,7 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
       _addCertificationField();
     }
   }
+// (imports and class declarations unchanged)
 
   @override
   Widget build(BuildContext context) {
@@ -235,518 +236,502 @@ class _JobApplicationScreenState extends State<JobApplicationScreen> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              bool isDesktop = constraints.maxWidth >= 800;
+              if (isDesktop) {
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Column(
+                        children: [
+                          _buildJobDetailsCard(),
+                          const SizedBox(height: 16),
+                          _buildGraduateDetailsCard(),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 24),
+                    Expanded(
+                      flex: 1,
+                      child: _buildStepper(),
+                    ),
+                  ],
+                );
+              } else {
+                return Column(
+                  children: [
+                    _buildJobDetailsCard(),
+                    const SizedBox(height: 16),
+                    _buildGraduateDetailsCard(),
+                    const SizedBox(height: 16),
+                    _buildStepper(),
+                  ],
+                );
+              }
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildJobDetailsCard() {
+    return Card(
+      elevation: 10.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(40.0),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Image.asset(
+            'assets/images/${widget.jobPostingWithPartner.coverPhoto}',
+            width: double.infinity,
+            height: 200,
+            fit: BoxFit.cover,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Applying for",
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 4),
+                Text(widget.jobPostingWithPartner.jobTitle,
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 4),
+                Text(widget.jobPostingWithPartner.partnerName,
+                    style: const TextStyle(fontSize: 16)),
+                const SizedBox(height: 4),
+                Text(widget.jobPostingWithPartner.salary,
+                    style: const TextStyle(fontSize: 14)),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGraduateDetailsCard() {
+    return Card(
+      color: Colors.grey,
+      elevation: 10.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(40.0),
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+                '${widget.graduateAccount.firstName} ${widget.graduateAccount.lastName}',
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 4),
+            Row(
+              children: [
+                const Icon(Icons.location_city),
+                const SizedBox(width: 4),
+                Text(widget.graduateAccount.address,
+                    style: const TextStyle(fontSize: 16)),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Row(
+              children: [
+                const Icon(Icons.contact_mail),
+                const SizedBox(width: 4),
+                Text(widget.graduateAccount.contactNo,
+                    style: const TextStyle(fontSize: 16)),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Row(
+              children: [
+                const Icon(Icons.email),
+                const SizedBox(width: 4),
+                Text(widget.graduateAccount.email,
+                    style: const TextStyle(fontSize: 16)),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStepper() {
+    return Stepper(
+      currentStep: currentStep,
+      onStepContinue: () {
+        if (currentStep < 2) {
+          setState(() {
+            currentStep++;
+          });
+        } else {
+          _showSubmissionDialog();
+        }
+      },
+      onStepCancel: () {
+        if (currentStep > 0) {
+          setState(() {
+            currentStep--;
+          });
+        }
+      },
+
+      steps: [
+        // Document Submission Step
+        Step(
+          title: const Text('Document Submission',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Job Details Card
-              Card(
-                elevation: 10.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(40.0),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: const Text(
+                  'Please upload your resume and cover letter:',
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                clipBehavior: Clip.antiAlias,
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'Resume: (PDF, DOCX, DOC)',
+              ),
+              GestureDetector(
+                onTap: _pickResume,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Image.asset(
-                      'assets/images/${widget.jobPostingWithPartner.coverPhoto}',
-                      width: double.infinity,
-                      height: 200,
-                      fit: BoxFit.cover,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Applying for",
-                              style: const TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold)),
-                          const SizedBox(height: 4),
-                          Text(widget.jobPostingWithPartner.jobTitle,
-                              style: const TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold)),
-                          const SizedBox(height: 4),
-                          Text(widget.jobPostingWithPartner.partnerName,
-                              style: const TextStyle(
-                                fontSize: 16,
-                              )),
-                          const SizedBox(height: 4),
-                          Text(widget.jobPostingWithPartner.salary,
-                              style: const TextStyle(
-                                fontSize: 14,
-                              )),
-                        ],
+                  children: [
+                    if (resumeBytes != null)
+                      Container(
+                        height: 100,
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.description, color: Colors.blue),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                resumeSource,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
+                    if (resumeBytes == null)
+                      Container(
+                        height: 100,
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                        child: widget.graduateAccount.resume!.isNotEmpty
+                            ? Row(
+                                children: [
+                                  const Icon(Icons.description,
+                                      color: Colors.blue),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Text(
+                                      widget.graduateAccount.resume.toString(),
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w500),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : const Text(
+                                "Drag and drop an image or click to select",
+                                style: TextStyle(color: Colors.grey)),
+                      ),
                   ],
                 ),
               ),
               const SizedBox(height: 16),
-
-              Card(
-                color: Colors.grey,
-                elevation: 10.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(40.0),
-                ),
-                clipBehavior: Clip.antiAlias,
+              const Text(
+                'Cover Letter: (PDF, DOCX, DOC)',
+              ),
+              GestureDetector(
+                onTap: _pickCoverLetter,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    // Image.asset(
-                    //   'assets/images/${widget.jobPostingWithPartner.coverPhoto}',
-                    //   width: double.infinity,
-                    //   height: 200,
-                    //   fit: BoxFit.cover,
-                    // ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Text("Applying for",
-                          //     style: const TextStyle(
-                          //         fontSize: 16, fontWeight: FontWeight.bold)),
-                          // const SizedBox(height: 4),
-                          Text(
-                              '${widget.graduateAccount.firstName} ${widget.graduateAccount.lastName}',
-                              style: const TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold)),
-                          const SizedBox(height: 4),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.location_city,
+                  children: [
+                    if (coverLetterBytes != null)
+                      Container(
+                        height: 100,
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.description, color: Colors.green),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                coverLetterSource,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500),
+                                overflow: TextOverflow.ellipsis,
                               ),
-                              const SizedBox(width: 4),
-                              Text(widget.graduateAccount.address,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                  )),
-                            ],
-                          ),
-                          const SizedBox(height: 4),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.contact_mail,
-                              ),
-                              const SizedBox(width: 4),
-                              Text(widget.graduateAccount.contactNo,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                  )),
-                            ],
-                          ),
-                          const SizedBox(height: 4),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.email,
-                              ),
-                              const SizedBox(width: 4),
-                              Text(widget.graduateAccount.email,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                  )),
-                            ],
-                          ),
-                        ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
+                    if (coverLetterBytes == null)
+                      Container(
+                        height: 100,
+                        width: double.infinity,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                        child: const Text(
+                          "Click to upload your cover letter",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ),
                   ],
                 ),
               ),
+            ],
+          ),
+          isActive: currentStep == 0,
+          state: currentStep > 0 ? StepState.complete : StepState.indexed,
+        ),
+
+        // Employer Questions Step
+        Step(
+          title: const Text('Employer Questions',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Answer the following questions:',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 16),
 
-              // Stepper for application process
-              Stepper(
-                currentStep: currentStep,
-                onStepContinue: () {
-                  if (currentStep < 2) {
-                    setState(() {
-                      currentStep++;
-                    });
-                  } else {
-                    // Implement the submission logic
-                    _showSubmissionDialog();
-                  }
-                },
-                onStepCancel: () {
-                  if (currentStep > 0) {
-                    setState(() {
-                      currentStep--;
-                    });
-                  }
-                },
-                steps: [
-                  // Document Submission Step
-                  Step(
-                    title: const Text('Document Submission',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    content: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: const Text(
-                            'Please upload your resume and cover letter:',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        const Text(
-                          'Resume: (PDF, DOCX, DOC)',
-                        ),
-                        GestureDetector(
-                          onTap: _pickResume,
-                          child: Column(
-                            children: [
-                              if (resumeBytes != null)
-                                Container(
-                                  height: 100,
-                                  width: double.infinity,
-                                  padding: const EdgeInsets.all(8.0),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(40.0),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      const Icon(Icons.description,
-                                          color: Colors.blue),
-                                      const SizedBox(width: 10),
-                                      Expanded(
-                                        child: Text(
-                                          resumeSource,
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.w500),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              if (resumeBytes == null)
-                                Container(
-                                  height: 100,
-                                  width: double.infinity,
-                                  alignment: Alignment.center,
-                                  padding: const EdgeInsets.all(8.0),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(40.0),
-                                  ),
-                                  child: widget
-                                          .graduateAccount.resume!.isNotEmpty
-                                      ? Row(
-                                          children: [
-                                            const Icon(Icons.description,
-                                                color: Colors.blue),
-                                            const SizedBox(width: 10),
-                                            Expanded(
-                                              child: Text(
-                                                widget.graduateAccount.resume
-                                                    .toString(),
-                                                style: const TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      : const Text(
-                                          "Drag and drop an image or click to select",
-                                          style: TextStyle(color: Colors.grey)),
-                                ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        const Text(
-                          'Cover Letter: (PDF, DOCX, DOC)',
-                        ),
-                        GestureDetector(
-                          onTap: _pickCoverLetter,
-                          child: Column(
-                            children: [
-                              if (coverLetterBytes != null)
-                                Container(
-                                  height: 100,
-                                  width: double.infinity,
-                                  padding: const EdgeInsets.all(8.0),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(40.0),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      const Icon(Icons.description,
-                                          color: Colors.green),
-                                      const SizedBox(width: 10),
-                                      Expanded(
-                                        child: Text(
-                                          coverLetterSource,
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.w500),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              if (coverLetterBytes == null)
-                                Container(
-                                  height: 100,
-                                  width: double.infinity,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(40.0),
-                                  ),
-                                  child: const Text(
-                                    "Click to upload your cover letter",
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                                ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    isActive: currentStep == 0,
-                    state: currentStep > 0
-                        ? StepState.complete
-                        : StepState.indexed,
-                  ),
-              
-                  // Employer Questions Step
-                  Step(
-                    title: const Text('Employer Questions',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    content: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Answer the following questions:',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 16),
-              
-                        // Skills
-                        const Text('Skills'),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: _skillsControllers.length,
-                          itemBuilder: (context, index) {
-                            return Row(
-                              children: [
-                                Expanded(
-                                  child: TextFormField(
-                                    controller: _skillsControllers[index],
-                                    decoration: InputDecoration(
-                                        hintText: 'Enter skill ${index + 1}'),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter a skill';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                ),
-                                IconButton(
-                                  icon: Icon(Icons.delete),
-                                  onPressed: () => _removeSkillField(index),
-                                ),
-                              ],
-                            );
+              // Skills
+              const Text('Skills'),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: _skillsControllers.length,
+                itemBuilder: (context, index) {
+                  return Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: _skillsControllers[index],
+                          decoration: InputDecoration(
+                              hintText: 'Enter skill ${index + 1}'),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a skill';
+                            }
+                            return null;
                           },
                         ),
-                        const SizedBox(height: 4.0),
-                        Row(
-                          children: [
-                            ElevatedButton.icon(
-                              onPressed: _addSkillField,
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    WidgetStateProperty.all(Colors.green),
-                              ),
-                              icon: Icon(Icons.add),
-                              label: Text('Add'),
-                            ),
-                            TextButton(
-                              onPressed: _clearSkillFields,
-                              // icon: Icon(Icons.clear),
-                              child: Text('Clear'),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-              
-                        // Certifications
-                        const Text('Certifications'),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: _certificationsControllers.length,
-                          itemBuilder: (context, index) {
-                            return Row(
-                              children: [
-                                Expanded(
-                                  child: TextFormField(
-                                    controller:
-                                        _certificationsControllers[index],
-                                    decoration: InputDecoration(
-                                        hintText:
-                                            'Enter requirement ${index + 1}'),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Please enter the requirement';
-                                      }
-                                      return null;
-                                    },
-                                  ),
-                                ),
-                                IconButton(
-                                  icon: Icon(Icons.delete),
-                                  onPressed: () =>
-                                      _removeCertificationField(index),
-                                ),
-                              ],
-                            );
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () => _removeSkillField(index),
+                      ),
+                    ],
+                  );
+                },
+              ),
+              const SizedBox(height: 4.0),
+              Row(
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: _addSkillField,
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(Colors.green),
+                    ),
+                    icon: Icon(Icons.add),
+                    label: Text('Add'),
+                  ),
+                  TextButton(
+                    onPressed: _clearSkillFields,
+                    // icon: Icon(Icons.clear),
+                    child: Text('Clear'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+
+              // Certifications
+              const Text('Certifications'),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: _certificationsControllers.length,
+                itemBuilder: (context, index) {
+                  return Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: _certificationsControllers[index],
+                          decoration: InputDecoration(
+                              hintText: 'Enter requirement ${index + 1}'),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter the requirement';
+                            }
+                            return null;
                           },
                         ),
-                        const SizedBox(height: 4.0),
-                        Row(
-                          children: [
-                            ElevatedButton.icon(
-                              onPressed: _addCertificationField,
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    WidgetStateProperty.all(Colors.green),
-                              ),
-                              icon: Icon(Icons.add),
-                              label: Text('Add'),
-                            ),
-                            TextButton(
-                              onPressed: _clearCertificationFields,
-                              // icon: Icon(Icons.clear),
-                              child: Text('Clear'),
-                            ),
-                          ],
-                        ),
-                      ],
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () => _removeCertificationField(index),
+                      ),
+                    ],
+                  );
+                },
+              ),
+              const SizedBox(height: 4.0),
+              Row(
+                children: [
+                  ElevatedButton.icon(
+                    onPressed: _addCertificationField,
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(Colors.green),
                     ),
-                    isActive: currentStep == 1,
-                    state: currentStep > 1
-                        ? StepState.complete
-                        : StepState.indexed,
+                    icon: Icon(Icons.add),
+                    label: Text('Add'),
                   ),
-              
-                  // Review and Submit Step
-                  Step(
-                    title: const Text('Review and Submit',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    content: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: const Text(
-                            'Review your application:',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-              
-                        // Resume
-                        const Text('Resume:'),
-                        if (resumeSource.isNotEmpty)
-                          Row(
-                            children: [
-                              const Icon(Icons.description,
-                                  color: Colors.blue),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: Text(
-                                  resumeSource,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w500),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
-                          )
-                        else
-                          const Text(
-                            'No resume provided',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        const SizedBox(height: 8),
-              
-                        // Cover Letter
-                        const Text('Cover Letter:'),
-                        if (coverLetterBytes != null)
-                          Row(
-                            children: [
-                              const Icon(Icons.description,
-                                  color: Colors.green),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: Text(
-                                  coverLetterSource,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.w500),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
-                          )
-                        else
-                          const Text(
-                            'No cover letter provided',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        const SizedBox(height: 8),
-              
-                        // Skills
-                        const Text('Skills:'),
-                        if (_skillsControllers.isNotEmpty)
-                          Text(skills = _combineFields(_skillsControllers))
-                        else
-                          const Text('No skills provided',
-                              style: TextStyle(color: Colors.grey)),
-                        const SizedBox(height: 8),
-              
-                        // Certifications
-                        const Text('Certifications:'),
-                        if (_certificationsControllers.isNotEmpty)
-                          Text(
-                              certifications =
-                                  _combineFields(_certificationsControllers),
-                              style: TextStyle(color: Colors.black))
-                        else
-                          const Text('No certifications provided',
-                              style: TextStyle(color: Colors.grey)),
-                      ],
-                    ),
-                    isActive: currentStep == 2,
-                    state: currentStep == 2
-                        ? StepState.complete
-                        : StepState.indexed,
+                  TextButton(
+                    onPressed: _clearCertificationFields,
+                    // icon: Icon(Icons.clear),
+                    child: Text('Clear'),
                   ),
                 ],
               ),
             ],
           ),
+          isActive: currentStep == 1,
+          state: currentStep > 1 ? StepState.complete : StepState.indexed,
         ),
-      ),
+
+        // Review and Submit Step
+        Step(
+          title: const Text('Review and Submit',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: const Text(
+                  'Review your application:',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Resume
+              const Text('Resume:'),
+              if (resumeSource.isNotEmpty)
+                Row(
+                  children: [
+                    const Icon(Icons.description, color: Colors.blue),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        resumeSource,
+                        style: const TextStyle(fontWeight: FontWeight.w500),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                )
+              else
+                const Text(
+                  'No resume provided',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              const SizedBox(height: 8),
+
+              // Cover Letter
+              const Text('Cover Letter:'),
+              if (coverLetterBytes != null)
+                Row(
+                  children: [
+                    const Icon(Icons.description, color: Colors.green),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        coverLetterSource,
+                        style: const TextStyle(fontWeight: FontWeight.w500),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                )
+              else
+                const Text(
+                  'No cover letter provided',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              const SizedBox(height: 8),
+
+              // Skills
+              const Text('Skills:'),
+              if (_skillsControllers.isNotEmpty)
+                Text(skills = _combineFields(_skillsControllers))
+              else
+                const Text('No skills provided',
+                    style: TextStyle(color: Colors.grey)),
+              const SizedBox(height: 8),
+
+              // Certifications
+              const Text('Certifications:'),
+              if (_certificationsControllers.isNotEmpty)
+                Text(
+                    certifications = _combineFields(_certificationsControllers),
+                    style: TextStyle(color: Colors.black))
+              else
+                const Text('No certifications provided',
+                    style: TextStyle(color: Colors.grey)),
+            ],
+          ),
+          isActive: currentStep == 2,
+          state: currentStep == 2 ? StepState.complete : StepState.indexed,
+        ),
+      ],
     );
   }
 }

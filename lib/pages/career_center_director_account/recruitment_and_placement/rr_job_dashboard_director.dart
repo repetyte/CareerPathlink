@@ -435,20 +435,27 @@ class _RrJobDashboardDirectorState extends State<RrJobDashboardDirector> {
               itemCount: applications.length,
               itemBuilder: (context, index) {
                 final application = applications[index];
-                return ListTile(
-                  title: Text(
-                    '${application.applicantFirstName} ${application.applicantLastName}',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                return Card(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
                   ),
-                  subtitle: Row(
-                    children: [
-                      Icon(Icons.work),
-                      const SizedBox(width: 4.0),
-                      Text(application.jobTitle),
-                    ],
+                  child: ListTile(
+                    title: Text(
+                      '${application.applicantFirstName} ${application.applicantLastName}',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Row(
+                      children: [
+                        Icon(Icons.work),
+                        const SizedBox(width: 4.0),
+                        Text(application.jobTitle),
+                      ],
+                    ),
+                    trailing: Text('${application.dateApplied}'),
+                    onTap: () =>
+                        _showJobApplicationDetails(context, application),
                   ),
-                  trailing: Text('${application.dateApplied}'),
-                  onTap: () => _showJobApplicationDetails(context, application),
                 );
               },
             );
@@ -676,7 +683,7 @@ class _RrJobDashboardDirectorState extends State<RrJobDashboardDirector> {
                       ],
                     ),
                   ),
-
+                  const SizedBox(height: 16),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                     child: LayoutBuilder(
@@ -700,7 +707,7 @@ class _RrJobDashboardDirectorState extends State<RrJobDashboardDirector> {
                                     ),
                                     const SizedBox(height: 16),
                                     _buildReportingMetrics(),
-                                    const SizedBox(height: 16),
+                                    const SizedBox(height: 32),
                                     const Text(
                                       'Employer Engagement Monitoring',
                                       style: TextStyle(
@@ -742,7 +749,7 @@ class _RrJobDashboardDirectorState extends State<RrJobDashboardDirector> {
                               ),
                               const SizedBox(height: 16),
                               _buildReportingMetrics(),
-                              const SizedBox(height: 16),
+                              const SizedBox(height: 32),
                               const Text(
                                 'Employer Engagement Monitoring',
                                 style: TextStyle(
@@ -750,7 +757,7 @@ class _RrJobDashboardDirectorState extends State<RrJobDashboardDirector> {
                               ),
                               const SizedBox(height: 16),
                               _buildEmployerEngagementCard(),
-                              const SizedBox(height: 16),
+                              const SizedBox(height: 32),
                               const Text(
                                 'Graduates Job Engagement Data',
                                 style: TextStyle(
@@ -764,7 +771,6 @@ class _RrJobDashboardDirectorState extends State<RrJobDashboardDirector> {
                       },
                     ),
                   ),
-                  
                   const Footer(),
                 ],
               ),

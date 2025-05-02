@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreenCoach> {
                       widget.coachAccount.name,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    subtitle: Text('Career Coach'),
+                    subtitle: Text('Workforce Development Trainer'),
                   ),
                   const Divider(),
                   ListTile(

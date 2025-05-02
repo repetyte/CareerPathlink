@@ -16,8 +16,6 @@ class RrJobDetailsGraduates extends StatefulWidget {
 }
 
 class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
-  // String? industryPartnerName;
-  // late final JobPostingWithPartner jobPostingWithPartner;
   final JobPostingApiService jobPostingApiService = JobPostingApiService();
 
   @override
@@ -41,220 +39,169 @@ class _RrJobDetailsGraduatesState extends State<RrJobDetailsGraduates> {
               color: const Color(0xFFD9D9D9),
               borderRadius: BorderRadius.circular(50),
             ),
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 24),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage(
-                            'assets/images/${widget.jobPostingWithPartner.coverPhoto}',
-                          ),
-                        ),
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(50),
-                          topRight: Radius.circular(50),
-                        ),
-                      ),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 0,
-                            right: 0,
-                            top: 0,
-                            bottom: 0,
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                color: Color(0x80000000),
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(50),
-                                  topRight: Radius.circular(50),
-                                ),
-                              ),
-                              child: const SizedBox(
-                                width: 380,
-                                height: 188,
-                              ),
+            child: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage('assets/images/${widget.jobPostingWithPartner.coverPhoto}'),
+                    ),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(50),
+                      topRight: Radius.circular(50),
+                    ),
+                  ),
+                  child: Stack(
+                    children: [
+                      Positioned.fill(
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            color: Color(0x80000000),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(50),
+                              topRight: Radius.circular(50),
                             ),
                           ),
-                          Container(
-                            padding: const EdgeInsets.fromLTRB(16, 64, 16, 64),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                          child: const SizedBox(height: 188),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(16, 64, 16, 64),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: SizedBox(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            widget.jobPostingWithPartner.jobTitle,
-                                            style: GoogleFonts.getFont(
-                                              'Montserrat',
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 32,
-                                              color: const Color(0xFFFFFFFF),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            color: const Color(0xFFFFFFFF),
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                          child: Container(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                20, 10, 20, 10),
-                                            child: Text(
-                                              widget.jobPostingWithPartner.status,
-                                              style: GoogleFonts.getFont(
-                                                'Montserrat',
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 14,
-                                                color: const Color(0xFF008000),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                Expanded(
+                                  child: Text(
+                                    widget.jobPostingWithPartner.jobTitle,
+                                    style: GoogleFonts.getFont('Montserrat', fontWeight: FontWeight.w700, fontSize: 32, color: Colors.white),
                                   ),
                                 ),
-                                Align(
-                                  alignment: Alignment.topLeft,
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                                   child: Text(
-                                    widget.jobPostingWithPartner.fieldIndustry,
-                                    style: GoogleFonts.getFont(
-                                      'Montserrat',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14,
-                                      color: const Color(0xFFFFFFFF),
-                                    ),
+                                    widget.jobPostingWithPartner.status,
+                                    style: GoogleFonts.getFont('Montserrat', fontWeight: FontWeight.w700, fontSize: 14, color: Colors.green),
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        const Text('Job Level: ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.jobLevel,
-                            style: const TextStyle(fontSize: 16)),
-                        const SizedBox(height: 24),
-                        const Text('Min. Years of Experience Needed: ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.yrsOfExperienceNeeded,
-                            style: const TextStyle(fontSize: 16)),
-                        const SizedBox(height: 24),
-                        const Text('Employment Status: ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.contractualStatus,
-                            style: const TextStyle(fontSize: 16)),
-                        const SizedBox(height: 24),
-                        const Text('Salary Range: ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.salary,
-                            style: const TextStyle(fontSize: 16)),
-                        const SizedBox(height: 24),
-                        const Text('Location: ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.jobLocation,
-                            style: const TextStyle(fontSize: 16)),
-                        const SizedBox(height: 24),
-                        const Text('Job Description: ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.jobDescription,
-                            style: const TextStyle(fontSize: 16)),
-                        const SizedBox(height: 24),
-                        const Text('Requirements: ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.requirements,
-                            style: const TextStyle(fontSize: 16)),
-                        const SizedBox(height: 24),
-                        const Text('Job Responsibilities: ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.jobResponsibilities,
-                            style: const TextStyle(fontSize: 16)),
-                        const SizedBox(height: 24),
-                        const Text('About Employer: ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.partnerName.toString(),
-                            style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold
-                            )),
-                            const SizedBox(height: 4),
-                        Text(widget.jobPostingWithPartner.partnerLocation.toString(),
-                            style: const TextStyle(
-                              fontSize: 16,
-                            )),
-                        const SizedBox(height: 16),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-                    child: Align(
-                      alignment: Alignment.topRight,
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => JobApplicationScreen(
-                                  jobPostingWithPartner: widget
-                                      .jobPostingWithPartner, graduateAccount: widget.graduateAccount,), // Fixed the error here
+                            Text(
+                              widget.jobPostingWithPartner.fieldIndustry,
+                              style: GoogleFonts.getFont('Montserrat', fontWeight: FontWeight.w400, fontSize: 14, color: Colors.white),
                             ),
-                          );
-                        },
-                        icon: const Icon(Icons.send),
-                        label: const Text('Submit Application'),
+                          ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      bool isDesktop = constraints.maxWidth >= 800;
+                      if (isDesktop) {
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  _buildDetail('Job Description', widget.jobPostingWithPartner.jobDescription),
+                                  _buildDetail('Job Level', widget.jobPostingWithPartner.jobLevel),
+                                  _buildDetail('Min. Years of Experience Needed', widget.jobPostingWithPartner.yrsOfExperienceNeeded),
+                                  _buildDetail('Employment Status', widget.jobPostingWithPartner.contractualStatus),
+                                  _buildDetail('Salary Range', widget.jobPostingWithPartner.salary),
+                                  _buildDetail('Location', widget.jobPostingWithPartner.jobLocation),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 24),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  _buildDetail('Requirements', widget.jobPostingWithPartner.requirements),
+                                  _buildDetail('Job Responsibilities', widget.jobPostingWithPartner.jobResponsibilities),
+                                  const Text('About Employer:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                                  const SizedBox(height: 4),
+                                  Text(widget.jobPostingWithPartner.partnerName.toString(), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                  const SizedBox(height: 4),
+                                  Text(widget.jobPostingWithPartner.partnerLocation.toString(), style: const TextStyle(fontSize: 16)),
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+                      } else {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildDetail('Job Description', widget.jobPostingWithPartner.jobDescription),
+                            _buildDetail('Job Level', widget.jobPostingWithPartner.jobLevel),
+                            _buildDetail('Min. Years of Experience Needed', widget.jobPostingWithPartner.yrsOfExperienceNeeded),
+                            _buildDetail('Employment Status', widget.jobPostingWithPartner.contractualStatus),
+                            _buildDetail('Salary Range', widget.jobPostingWithPartner.salary),
+                            _buildDetail('Location', widget.jobPostingWithPartner.jobLocation),
+                            _buildDetail('Requirements', widget.jobPostingWithPartner.requirements),
+                            _buildDetail('Job Responsibilities', widget.jobPostingWithPartner.jobResponsibilities),
+                            const Text('About Employer:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                            const SizedBox(height: 4),
+                            Text(widget.jobPostingWithPartner.partnerName.toString(), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                            const SizedBox(height: 4),
+                            Text(widget.jobPostingWithPartner.partnerLocation.toString(), style: const TextStyle(fontSize: 16)),
+                          ],
+                        );
+                      }
+                    },
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                  alignment: Alignment.topRight,
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => JobApplicationScreen(
+                            jobPostingWithPartner: widget.jobPostingWithPartner,
+                            graduateAccount: widget.graduateAccount,
+                          ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.send),
+                    label: const Text('Submit Application'),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildDetail(String title, String content) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 4),
+          Text(content, style: const TextStyle(fontSize: 16)),
+        ],
       ),
     );
   }
