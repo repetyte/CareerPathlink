@@ -33,6 +33,20 @@ class UserApiService {
     }
   }
 
+   // Read/Fetch total student accounts
+  Future<List<StudentAccount>> fetchTotalStudentAccounts() async {
+    // Add your API call here to fetch total student accounts
+    final response = await http.get(Uri.parse('$apiUrl/student_acc/read.php'));
+
+    // Verifies if successfully fetched total student accounts
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+      return data.map((json) => StudentAccount.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load job postings');
+    }
+  }
+
   // Fetch graduate accounts and match user
   Future<GraduateAccount?> fetchGraduateAccount(
       String username, String password) async {
@@ -52,6 +66,20 @@ class UserApiService {
       }
     } else {
       throw Exception('Failed to load graduate accounts');
+    }
+  }
+
+  // Read/Fetch total graduate accounts
+  Future<List<GraduateAccount>> fetchTotalGraduateAccounts() async {
+    // Add your API call here to fetch total graduate accounts
+    final response = await http.get(Uri.parse('$apiUrl/graduate_acc/read.php'));
+
+    // Verifies if successfully fetched total graduate accounts
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+      return data.map((json) => GraduateAccount.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load job postings');
     }
   }
 

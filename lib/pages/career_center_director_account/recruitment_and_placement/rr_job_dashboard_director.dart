@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/recruitment_and_placement/job_application.dart';
 import 'package:flutter_app/models/user_role/career_center_director.dart';
+import 'package:flutter_app/models/user_role/graduate.dart';
 import 'package:flutter_app/models/user_role/industry_partner.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
 import 'package:flutter_app/services/industry_partner_api_service.dart';
 import 'package:flutter_app/services/job_application_api_service.dart';
+import 'package:flutter_app/services/user_api_service.dart';
 import 'package:flutter_app/widgets/appbar/director_header.dart';
 import 'package:flutter_app/widgets/drawer/drawer_director.dart';
 import 'package:flutter_app/models/recruitment_and_placement/job_posting.dart';
@@ -12,6 +14,7 @@ import 'package:flutter_app/services/job_posting_api_service.dart';
 import 'package:flutter_app/widgets/footer/footer.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pie_chart/pie_chart.dart';
 
 class RrJobDashboardDirector extends StatefulWidget {
   final CareerCenterDirectorAccount directorAccount;
@@ -194,6 +197,265 @@ class _RrJobDashboardDirectorState extends State<RrJobDashboardDirector> {
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  Widget _buildReportingMetrics() {
+    return Column(
+      children: [
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: FutureBuilder<List<GraduateAccount>>(
+                  future: UserApiService().fetchTotalGraduateAccounts(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return const Text('Error fetching graduates');
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Text('No graduates found.');
+                    } else {
+                      final totalGraduates = snapshot.data!.length;
+                      return Card(
+                        elevation: 4,
+                        color: const Color(0xFFD9D9D9),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Total Graduates Engaged',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                '$totalGraduates',
+                                style: const TextStyle(
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: FutureBuilder<List<JobApplicationComplete>>(
+                  future: JobApplicationApiService().fetchJobApplications(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return const Text('Error fetching job applications');
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Text('No job applications found.');
+                    } else {
+                      final totalApplications = snapshot.data!.length;
+                      return Card(
+                        elevation: 4,
+                        color: const Color(0xFFD9D9D9),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Total Applications Submitted',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                '$totalApplications',
+                                style: const TextStyle(
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.green,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 8),
+        FutureBuilder<List<JobApplicationComplete>>(
+          future: JobApplicationApiService().fetchJobApplications(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return const Text('Error fetching job applications');
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return const Text('No job applications found.');
+            } else {
+              final applications = snapshot.data!;
+              final pendingCount = applications
+                  .where((a) => a.applicationStatus == 'Pending')
+                  .length;
+              final validatedCount = applications
+                  .where((a) => a.applicationStatus == 'Validated')
+                  .length;
+              return Card(
+                elevation: 4,
+                color: const Color(0xFFD9D9D9),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(40)),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Job Applications Status',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 16),
+                      SizedBox(
+                        height: 200,
+                        child: PieChart(
+                          dataMap: {
+                            "Pending ($pendingCount)": pendingCount.toDouble(),
+                            "Validated ($validatedCount)":
+                                validatedCount.toDouble(),
+                          },
+                          chartType: ChartType.disc,
+                          colorList: [Colors.orange, Colors.green],
+                          chartValuesOptions: const ChartValuesOptions(
+                            showChartValuesInPercentage: true,
+                            showChartValuesOutside: false,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEmployerEngagementCard() {
+    return SizedBox(
+      width: double.infinity,
+      child: FutureBuilder<List<JobPostingWithPartner>>(
+        future: JobPostingApiService().fetchJobPostings(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return const Text('Error fetching job postings');
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Text('No job postings found.');
+          } else {
+            final totalJobPostings = snapshot.data!.length;
+            return Card(
+              elevation: 4,
+              color: const Color(0xFFD9D9D9),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(40),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Total Jobs Posted',
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '$totalJobPostings',
+                      style: const TextStyle(
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildGraduatesEngagementList() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color(0xFFD9D9D9),
+        borderRadius: BorderRadius.circular(40),
+      ),
+      constraints: const BoxConstraints(minHeight: 300),
+      child: FutureBuilder<List<JobApplicationComplete>>(
+        future: futureJobApplications,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Text('No job applications found.');
+          } else {
+            final applications = snapshot.data!;
+            return ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: applications.length,
+              itemBuilder: (context, index) {
+                final application = applications[index];
+                return ListTile(
+                  title: Text(
+                    '${application.applicantFirstName} ${application.applicantLastName}',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Row(
+                    children: [
+                      Icon(Icons.work),
+                      const SizedBox(width: 4.0),
+                      Text(application.jobTitle),
+                    ],
+                  ),
+                  trailing: Text('${application.dateApplied}'),
+                  onTap: () => _showJobApplicationDetails(context, application),
+                );
+              },
+            );
+          }
+        },
+      ),
+    );
   }
 
   @override
@@ -417,91 +679,89 @@ class _RrJobDashboardDirectorState extends State<RrJobDashboardDirector> {
 
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Graduates Job Engagement Data',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFD9D9D9),
-                            borderRadius: BorderRadius.circular(40),
-                          ),
-                          constraints: const BoxConstraints(
-                            minHeight: 300, // Set the minimum height to 300
-                          ),
-                          child: FutureBuilder<List<JobApplicationComplete>>(
-                            future: futureJobApplications,
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return const CircularProgressIndicator();
-                              } else if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              } else if (!snapshot.hasData ||
-                                  snapshot.data!.isEmpty) {
-                                return const Text('No job applications found.');
-                              } else {
-                                final applications = snapshot.data!;
-                                return ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemCount: applications.length,
-                                  itemBuilder: (context, index) {
-                                    final application = applications[index];
-                                    return ListTile(
-                                      title: Text(
-                                          '${application.applicantFirstName} ${application.applicantLastName}',
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                      subtitle: Row(
-                                        children: [
-                                          Icon(Icons.work),
-                                          const SizedBox(width: 4.0),
-                                          Text(application.jobTitle),
-                                        ],
-                                      ),
-                                      trailing: Text(
-                                          'Enagagement Date: ${application.dateApplied}'),
-                                      onTap: () => _showJobApplicationDetails(
-                                          context, application),
-                                    );
-                                  },
-                                );
-                              }
-                            },
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        const Text(
-                          'Reporting Metrics',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        const Text(
-                          'Employer Engagement Monitoring',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        bool isDesktop = constraints.maxWidth >= 800;
+
+                        if (isDesktop) {
+                          return Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      'Reporting Metrics',
+                                      style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    const SizedBox(height: 16),
+                                    _buildReportingMetrics(),
+                                    const SizedBox(height: 16),
+                                    const Text(
+                                      'Employer Engagement Monitoring',
+                                      style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    const SizedBox(height: 16),
+                                    _buildEmployerEngagementCard(),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                flex: 1,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      'Graduates Job Engagement Data',
+                                      style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    const SizedBox(height: 16),
+                                    _buildGraduatesEngagementList(),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          );
+                        } else {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Reporting Metrics',
+                                style: TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 16),
+                              _buildReportingMetrics(),
+                              const SizedBox(height: 16),
+                              const Text(
+                                'Employer Engagement Monitoring',
+                                style: TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 16),
+                              _buildEmployerEngagementCard(),
+                              const SizedBox(height: 16),
+                              const Text(
+                                'Graduates Job Engagement Data',
+                                style: TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 16),
+                              _buildGraduatesEngagementList(),
+                            ],
+                          );
+                        }
+                      },
                     ),
                   ),
                   
