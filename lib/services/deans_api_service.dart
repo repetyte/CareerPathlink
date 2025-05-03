@@ -3,7 +3,7 @@ import 'package:flutter_app/models/user_role/industry_partner.dart';
 import 'package:http/http.dart' as http;
 
 class IndustryPartnerApiService {
-  final String apiUrl = "http://localhost/UNC-CareerPathlink/api";
+  final String apiUrl = "http://localhost/CareerPathlink/api";
 
   // Create Industry Partner
   Future<void> createIndustryPartner(IndustryPartner industryPartner) async {

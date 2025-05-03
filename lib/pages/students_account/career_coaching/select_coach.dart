@@ -29,7 +29,7 @@ class _SelectCoachScreenState extends State<SelectCoachScreen> {
 
   Future<void> fetchCoaches() async {
     const url =
-        'http://localhost/UNC-CareerPathlink/api/career_coaching/get_coaches.php'; // Replace with your server address
+        'http://localhost/CareerPathlink/api/career_coaching/get_coaches.php'; // Replace with your server address
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {

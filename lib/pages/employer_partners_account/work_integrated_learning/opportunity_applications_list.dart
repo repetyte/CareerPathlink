@@ -316,6 +316,82 @@ class _OpportunityApplicationsState extends State<OpportunityApplications> {
                               },
                               child: const Text('Close'),
                             ),
+                            if (application.applicationStatus != 'Validated')
+                              ElevatedButton(
+                                onPressed: () async {
+                                  try {
+                                    final updatedApplication =
+                                        InternshipApplicationComplete(
+                                      // JobApplication fields
+                                      applicationId: application.applicationId,
+                                      internship: application.internship,
+                                      applicantFirstName:
+                                          application.applicantFirstName,
+                                      applicantLastName:
+                                          application.applicantLastName,
+                                      course: application.course,
+                                      applicantLocation:
+                                          application.applicantLocation,
+                                      applicantContactNo:
+                                          application.applicantContactNo,
+                                      applicantEmail:
+                                          application.applicantEmail,
+                                      resume: application.resume,
+                                      coverLetter: application.coverLetter,
+                                      skills: application.skills,
+                                      certifications:
+                                          application.certifications,
+                                      applicationStatus: 'Validated',
+                                      dateApplied: application.dateApplied,
+
+                                      // Internship posting fields
+                                      internshipId:
+                                          application.internshipId,
+                                      displayPhoto:
+                                          application.displayPhoto,
+                                      internshipTitle:
+                                          application.internshipTitle,
+                                      hours: application.hours,
+                                      takehomePay: 
+                                          application.takehomePay,
+                                      location:
+                                          application.location,
+                                      description:
+                                          application.description,
+                                      requiredSkills:
+                                          application.requiredSkills,
+                                      qualifications:
+                                          application.qualifications,
+                                      industryPartner:
+                                          application.industryPartner,
+                                    );
+
+                                    await internshipApplicationApiService
+                                        .updateInternshipApplication(
+                                            updatedApplication);
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text(
+                                                'Application validated successfully')));
+
+                                    // Close dialog and refresh data
+                                    Navigator.of(context).pop();
+                                    await Future.delayed(const Duration(milliseconds: 300));
+                                    setState(() {
+                                      futureApplications =
+                                          internshipApplicationApiService
+                                              .fetchInternshipApplications();
+                                    });
+                                  } catch (error) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                'Failed to update job application: $error')));
+                                  }
+                                },
+                                child: const Text('Validate'),
+                              ),
                           ],
                         );
                       },

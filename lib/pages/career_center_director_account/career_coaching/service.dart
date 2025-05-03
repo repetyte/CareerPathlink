@@ -24,7 +24,7 @@ class _ServiceState extends State<Service> {
 
   Future<Map<String, double>> fetchProgramPercentages() async {
     final response = await http.get(
-      Uri.parse('http://localhost/UNC-CareerPathlink/api/career_coaching/read_service_details.php'),
+      Uri.parse('http://localhost/CareerPathlink/api/career_coaching/read_service_details.php'),
     );
 
     if (response.statusCode == 200) {

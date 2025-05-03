@@ -4,7 +4,7 @@ import 'package:flutter_app/models/work_integrated_learning/internship_applicati
 import 'package:http/http.dart' as http;
 
 class InternshipApplicationApiService {
-  final String apiUrl = "http://localhost/UNC-CareerPathlink/api";
+  final String apiUrl = "http://localhost/CareerPathlink/api";
 
   // Create WIL Opportunity Application
   Future<void> createInternshipApplication(InternshipApplication internshipApplication) async {
@@ -46,29 +46,29 @@ class InternshipApplicationApiService {
     }
   }
 
-  Future<void> updateInternshipApplication(InternshipApplication internshipApplication) async {
-    // try{
-    //   final response = await http.put(
-    //     Uri.parse('$apiUrl/internship_application/update.php'),
-    //     headers: <String, String>{
-    //       'Content-Type': 'application/json; charset=UTF-8',
-    //     },
-    //     body: jsonEncode(internshipApplication.toJson()),
-    //   );
+  Future<void> updateInternshipApplication(InternshipApplicationComplete internshipApplicationComplete) async {
+    try{
+      final response = await http.put(
+        Uri.parse('$apiUrl/internship_application/update.php'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(internshipApplicationComplete.toJson()),
+      );
 
-    //   if (response.statusCode != 200) {
-    //     if (kDebugMode) {
-    //       debugPrint('Response status: ${response.statusCode}');
-    //       debugPrint('Response body: ${response.body}');
-    //     }
-    //     throw Exception('Failed to update WIL Opportunity Posting.');
-    //   }
-    // } catch (e) {
-    //   if (kDebugMode) {
-    //     debugPrint('Exception: $e');
-    //   }
-    //   throw Exception('Failed to connect to the server');
-    // }
+      if (response.statusCode != 200) {
+        if (kDebugMode) {
+          debugPrint('Response status: ${response.statusCode}');
+          debugPrint('Response body: ${response.body}');
+        }
+        throw Exception('Failed to update WIL Opportunity Application.');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        debugPrint('Exception: $e');
+      }
+      throw Exception('Failed to connect to the server');
+    }
   }
 
   Future<void> deleteInternshipApplication(int internshipId) async {

@@ -4,7 +4,7 @@ import 'package:flutter_app/models/recruitment_and_placement/job_application.dar
 import 'package:http/http.dart' as http;
 
 class JobApplicationApiService {
-  final String apiUrl = "http://localhost/UNC-CareerPathlink/api";
+  final String apiUrl = "http://localhost/CareerPathlink/api";
 
   // Create Job Application
   Future<void> createJobApplication(JobApplication jobApplication) async {
@@ -46,40 +46,28 @@ class JobApplicationApiService {
     }
   }
 
-  Future<void> updateJobApplication(JobApplication jobApplication) async {
-    // try{
-    //   final response = await http.put(
-    //     Uri.parse('$apiUrl/job_application/update.php'),
-    //     headers: <String, String>{
-    //       'Content-Type': 'application/json; charset=UTF-8',
-    //     },
-    //     body: jsonEncode(jobApplication.toJson()),
-    //   );
+  Future<void> updateJobApplication(JobApplicationComplete jobApplicationComplete) async {
+    try{
+      final response = await http.put(
+        Uri.parse('$apiUrl/job_application/update.php'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(jobApplicationComplete.toJson()),
+      );
 
-    //   if (response.statusCode != 200) {
-    //     if (kDebugMode) {
-    //       debugPrint('Response status: ${response.statusCode}');
-    //       debugPrint('Response body: ${response.body}');
-    //     }
-    //     throw Exception('Failed to update Job Posting.');
-    //   }
-    // } catch (e) {
-    //   if (kDebugMode) {
-    //     debugPrint('Exception: $e');
-    //   }
-    //   throw Exception('Failed to connect to the server');
-    // }
-  }
-
-  Future<void> deleteJobApplication(int jobId) async {
-    // final response = await http.delete(
-    //   // Uri.parse('$apiUrl/delete.php?job_id=$jobId'),
-    //   Uri.parse('$apiUrl/job_application/delete.php'),
-    //   headers: <String, String>{'Content-Type': 'application/json; charset=UTF-8'},
-    //   body: jsonEncode({'job_id': jobId}),
-    // );
-    // if (response.statusCode != 200) {
-    //   throw Exception('Failed to delete job posting');
-    // }
+      if (response.statusCode != 200) {
+        if (kDebugMode) {
+          debugPrint('Response status: ${response.statusCode}');
+          debugPrint('Response body: ${response.body}');
+        }
+        throw Exception('Failed to update Job Application.');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        debugPrint('Exception: $e');
+      }
+      throw Exception('Failed to connect to the server');
+    }
   }
 }

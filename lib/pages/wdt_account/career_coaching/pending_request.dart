@@ -10,7 +10,7 @@ class PendingSection extends StatelessWidget {
   const PendingSection({super.key, required this.screenWidth});
 
   Future<List<Map<String, String>>> fetchPendingRequests() async {
-    const url = 'http://localhost/UNC-CareerPathlink/api/career_coaching/read_pending.php';
+    const url = 'http://localhost/CareerPathlink/api/career_coaching/read_pending.php';
 
     try {
       final response = await http.get(Uri.parse(url));

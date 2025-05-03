@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 
 class UserApiService {
   final String apiUrl =
-      'http://localhost/UNC-CareerPathlink/api/user_authentication';
+      'http://localhost/CareerPathlink/api/user_authentication';
 
   // Fetch student accounts and match user
   Future<StudentAccount?> fetchStudentAccount(

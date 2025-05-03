@@ -10,11 +10,11 @@ import 'package:http/http.dart' as http;
 
 
 class ApiService {
-  static const String baseUrl = 'http://localhost/UNC-CareerPathlink/api/api';
+  static const String baseUrl = 'http://localhost/CareerPathlink/api/api';
 
   static Future<List<Coach>> fetchCoaches() async {
     final response = await http
-        .get(Uri.parse('http://localhost/UNC-CareerPathlink/api/career_coaching/get_coaches.php'));
+        .get(Uri.parse('http://localhost/CareerPathlink/api/career_coaching/get_coaches.php'));
     if (response.statusCode == 200) {
       List<dynamic> data = jsonDecode(response.body);
       return data.map((json) => Coach.fromJson(json)).toList();
@@ -27,7 +27,7 @@ class ApiService {
   static Future<bool> uploadCV(
       String studentNo, List<int> fileBytes, String fileName) async {
     try {
-      var uri = Uri.parse('http://localhost/UNC-CareerPathlink/api/career_coaching/upload_cv.php');
+      var uri = Uri.parse('http://localhost/CareerPathlink/api/career_coaching/upload_cv.php');
       var request = http.MultipartRequest('POST', uri);
 
       // Add fields
@@ -81,7 +81,7 @@ class ApiService {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://localhost/UNC-CareerPathlink/api/career_coaching/get_slots.php?coach_id=$coachId'),
+            'http://localhost/CareerPathlink/api/career_coaching/get_slots.php?coach_id=$coachId'),
       );
 
       if (response.statusCode == 200) {
@@ -100,7 +100,7 @@ class ApiService {
   static Future<void> addAppointment(
       Map<String, dynamic> appointmentData) async {
     final response = await http.post(
-      Uri.parse('http://localhost/UNC-CareerPathlink/api/career_coaching/add_appointment.php'),
+      Uri.parse('http://localhost/CareerPathlink/api/career_coaching/add_appointment.php'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(appointmentData),
     );
@@ -170,7 +170,7 @@ class ApiService {
   static Future<Student> fetchStudent(String studentNo) async {
     final response = await http.get(
       Uri.parse(
-          'http://localhost/UNC-CareerPathlink/api/career_coaching/get_student_profile.php?student_no=$studentNo'),
+          'http://localhost/CareerPathlink/api/career_coaching/get_student_profile.php?student_no=$studentNo'),
     );
 
     if (response.statusCode == 200) {
@@ -183,7 +183,7 @@ class ApiService {
   //Update student Profile
   static Future<void> updateStudent(Student student) async {
     final response = await http.post(
-      Uri.parse('http://localhost/UNC-CareerPathlink/api/career_coaching/update_student_profile.php'),
+      Uri.parse('http://localhost/CareerPathlink/api/career_coaching/update_student_profile.php'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(student.toJson()), // Send student data in JSON format
     );
@@ -198,7 +198,7 @@ class ApiService {
     try {
       final response = await http
           .get(Uri.parse(
-              'http://localhost/UNC-CareerPathlink/api/career_coaching/read_student_insight.php'))
+              'http://localhost/CareerPathlink/api/career_coaching/read_student_insight.php'))
           .timeout(const Duration(seconds: 10), onTimeout: () {
         throw Exception('Request timeout');
       });
@@ -226,7 +226,7 @@ class ApiService {
   static Future<List<Map<String, dynamic>>> fetchYearLevelInsights() async {
     try {
       final response = await http.get(
-          Uri.parse('http://localhost/UNC-CareerPathlink/api/career_coaching/read_year_levels.php'));
+          Uri.parse('http://localhost/CareerPathlink/api/career_coaching/read_year_levels.php'));
 
       if (response.statusCode == 200) {
         debugPrint('Year Levels Response: ${response.body}'); // Debugging log
@@ -253,7 +253,7 @@ class ApiService {
   Future<List<Map<String, dynamic>>> fetchServiceDetails() async {
     final response = await http.get(
       Uri.parse(
-          'http://localhost/UNC-CareerPathlink/api/career_coaching/read_service_details.php'), // Correct URL here
+          'http://localhost/CareerPathlink/api/career_coaching/read_service_details.php'), // Correct URL here
     );
 
     if (response.statusCode == 200) {
@@ -273,7 +273,7 @@ class ApiService {
   static Future<List<Map<String, dynamic>>> fetchDepartmentData() async {
     try {
       final response = await http.get(
-          Uri.parse('http://localhost/UNC-CareerPathlink/api/career_coaching/read_department.php'));
+          Uri.parse('http://localhost/CareerPathlink/api/career_coaching/read_department.php'));
 
       if (response.statusCode == 200) {
         var decodedResponse = jsonDecode(response.body);
@@ -300,7 +300,7 @@ class ApiService {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://localhost/UNC-CareerPathlink/api/career_coaching/read_pending.php'), // Make sure this URL is correct
+            'http://localhost/CareerPathlink/api/career_coaching/read_pending.php'), // Make sure this URL is correct
       );
 
       debugPrint('Response Status: ${response.statusCode}');
@@ -332,7 +332,7 @@ class ApiService {
   static Future<List<InProcessAppointment>> fetchInProcessAppointments() async {
     try {
       final response = await http.get(
-        Uri.parse('http://localhost/UNC-CareerPathlink/api/career_coaching/read_in_process.php'),
+        Uri.parse('http://localhost/CareerPathlink/api/career_coaching/read_in_process.php'),
       );
 
       if (response.statusCode == 200) {
@@ -359,7 +359,7 @@ class ApiService {
   static Future<bool> updateStatus(int id, String status) async {
     try {
       final response = await http.post(
-        Uri.parse('http://localhost/UNC-CareerPathlink/api/career_coaching/update_status.php'),
+        Uri.parse('http://localhost/CareerPathlink/api/career_coaching/update_status.php'),
         body: {'id': id.toString(), 'status': status},
       );
 
@@ -379,7 +379,7 @@ class ApiService {
   static Future<List<Map<String, dynamic>>> fetchCompletedAppointments() async {
     try {
       final response = await http.get(
-        Uri.parse('http://localhost/UNC-CareerPathlink/api/career_coaching/read_completed.php'),
+        Uri.parse('http://localhost/CareerPathlink/api/career_coaching/read_completed.php'),
       );
 
       if (response.statusCode == 200) {

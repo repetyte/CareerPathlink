@@ -196,7 +196,8 @@ class _RrJobApplicationsState extends State<RrJobApplications> {
                         return AlertDialog(
                           title: Text(
                               '${application.applicantFirstName} ${application.applicantLastName}',
-                              style: const TextStyle(fontWeight: FontWeight.bold)),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
                           content: SingleChildScrollView(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -231,15 +232,21 @@ class _RrJobApplicationsState extends State<RrJobApplications> {
                                 ),
                                 const SizedBox(height: 8.0),
                                 Text('Resume: ${application.resume}'),
-                                Text('Cover Letter: ${application.coverLetter}'),
-                                application.skills == '' || application.skills.isEmpty
+                                Text(
+                                    'Cover Letter: ${application.coverLetter}'),
+                                application.skills == '' ||
+                                        application.skills.isEmpty
                                     ? Text('Skills: ')
                                     : Text('Skills: \n${application.skills}'),
-                                application.certifications == '' || application.certifications.isEmpty
+                                application.certifications == '' ||
+                                        application.certifications.isEmpty
                                     ? Text('Certifications: ')
-                                    : Text('Certifications: \n${application.certifications}'),
-                                Text('Status: ${application.applicationStatus}'),
-                                Text('Date Applied: ${application.dateApplied}'),
+                                    : Text(
+                                        'Certifications: \n${application.certifications}'),
+                                Text(
+                                    'Status: ${application.applicationStatus}'),
+                                Text(
+                                    'Date Applied: ${application.dateApplied}'),
                               ],
                             ),
                           ),
@@ -250,6 +257,82 @@ class _RrJobApplicationsState extends State<RrJobApplications> {
                               },
                               child: const Text('Close'),
                             ),
+                            if (application.applicationStatus != 'Validated')
+                              ElevatedButton(
+                                onPressed: () async {
+                                  try {
+                                    final updatedApplication =
+                                        JobApplicationComplete(
+                                      // JobApplication fields
+                                      applicationId: application.applicationId,
+                                      job: application.job,
+                                      applicantFirstName:
+                                          application.applicantFirstName,
+                                      applicantLastName:
+                                          application.applicantLastName,
+                                      degree: application.degree,
+                                      applicantLocation:
+                                          application.applicantLocation,
+                                      applicantContactNo:
+                                          application.applicantContactNo,
+                                      applicantEmail:
+                                          application.applicantEmail,
+                                      resume: application.resume,
+                                      coverLetter: application.coverLetter,
+                                      skills: application.skills,
+                                      certifications:
+                                          application.certifications,
+                                      applicationStatus: 'Validated',
+                                      dateApplied: application.dateApplied,
+
+                                      // Job posting fields
+                                      jobId: application.jobId,
+                                      coverPhoto: application.coverPhoto,
+                                      jobTitle: application.jobTitle,
+                                      status: application.status,
+                                      fieldIndustry: application.fieldIndustry,
+                                      jobLevel: application.jobLevel,
+                                      yrsOfExperienceNeeded:
+                                          application.yrsOfExperienceNeeded,
+                                      contractualStatus:
+                                          application.contractualStatus,
+                                      salary: application.salary,
+                                      jobLocation: application.jobLocation,
+                                      jobDescription:
+                                          application.jobDescription,
+                                      requirements: application.requirements,
+                                      jobResponsibilities:
+                                          application.jobResponsibilities,
+                                      industryPartner:
+                                          application.industryPartner,
+                                    );
+
+                                    await jobApplicationApiService
+                                        .updateJobApplication(
+                                            updatedApplication);
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text(
+                                                'Application validated successfully')));
+
+                                    // Close dialog and refresh data
+                                    Navigator.of(context).pop();
+                                    await Future.delayed(const Duration(milliseconds: 300));
+                                    setState(() {
+                                      futureApplications =
+                                          jobApplicationApiService
+                                              .fetchJobApplications();
+                                    });
+                                  } catch (error) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                'Failed to update job application: $error')));
+                                  }
+                                },
+                                child: const Text('Validate'),
+                              ),
                           ],
                         );
                       },

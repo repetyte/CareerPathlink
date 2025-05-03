@@ -25,7 +25,7 @@ class _DepartmentState extends State<Department> {
   Future<List<Map<String, dynamic>>> fetchDepartmentData() async {
     try {
       final response = await http.get(
-          Uri.parse('http://localhost/UNC-CareerPathlink/api/career_coaching/read_department.php'));
+          Uri.parse('http://localhost/CareerPathlink/api/career_coaching/read_department.php'));
 
       if (response.statusCode == 200) {
         var decodedResponse = jsonDecode(response.body);

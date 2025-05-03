@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_app/models/recruitment_and_placement/job_posting.dart';
 
 class JobPostingApiService {
-  final String apiUrl = "http://localhost/UNC-CareerPathlink/api";
+  final String apiUrl = "http://localhost/CareerPathlink/api";
 
   // Create Job Posting
   Future<void> createJobPosting(JobPosting jobPosting) async {

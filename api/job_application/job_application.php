@@ -101,23 +101,60 @@ class JobApplication
 
     public function update()
     {
-        // $query = "UPDATE " . $this->table_name . " SET
-        //     profile_pic = :profile_pic,
-        //     partner_name = :partner_name,
-        //     partner_location = :partner_location,
-        //     contact_no = :contact_no,
-        //     email_add = :email_add";
+        $query = "UPDATE " . $this->table_name . " 
+        SET
+            job = :job,
+            applicant_first_name = :applicant_first_name,
+            applicant_last_name = :applicant_last_name,
+            degree = :degree,
+            applicant_location = :applicant_location,
+            applicant_contact_no = :applicant_contact_no,
+            applicant_email = :applicant_email,
+            resume = :resume,
+            cover_letter = :cover_letter,
+            skills = :skills,
+            certifications = :certifications,
+            application_status = :application_status,
+            date_applied = :date_applied
+        WHERE application_id = :application_id";
 
-        // $stmt = $this->conn->prepare($query);
+        // Prepare query
+        $stmt = $this->conn->prepare($query);
 
-        // // Bind parameters
-        // $stmt->bindParam(":profile_pic", $this->profile_pic);
-        // $stmt->bindParam(":partner_name", $this->partner_name);
-        // $stmt->bindParam(":partner_location", $this->partner_location);
-        // $stmt->bindParam(":contact_no", $this->contact_no);
-        // $stmt->bindParam(":email_add", $this->email_add);
+        // Sanitize input
+        $this->application_id = htmlspecialchars(strip_tags($this->application_id));
+        $this->job = htmlspecialchars(strip_tags($this->job));
+        $this->applicant_first_name = htmlspecialchars(strip_tags($this->applicant_first_name));
+        $this->applicant_last_name = htmlspecialchars(strip_tags($this->applicant_last_name));
+        $this->degree = htmlspecialchars(strip_tags($this->degree));
+        $this->applicant_location = htmlspecialchars(strip_tags($this->applicant_location));
+        $this->applicant_contact_no = htmlspecialchars(strip_tags($this->applicant_contact_no));
+        $this->applicant_email = htmlspecialchars(strip_tags($this->applicant_email));
+        $this->resume = htmlspecialchars(strip_tags($this->resume));
+        $this->cover_letter = htmlspecialchars(strip_tags($this->cover_letter));
+        $this->skills = htmlspecialchars(strip_tags($this->skills));
+        $this->certifications = htmlspecialchars(strip_tags($this->certifications));
+        $this->application_status = htmlspecialchars(strip_tags($this->application_status));
+        $this->date_applied = htmlspecialchars(strip_tags($this->date_applied));
 
-        // return $stmt->execute();
+        // Bind parameters
+        $stmt->bindParam(":application_id", $this->application_id);
+        $stmt->bindParam(":job", $this->job);
+        $stmt->bindParam(":applicant_first_name", $this->applicant_first_name);
+        $stmt->bindParam(":applicant_last_name", $this->applicant_last_name);
+        $stmt->bindParam(":degree", $this->degree);
+        $stmt->bindParam(":applicant_location", $this->applicant_location);
+        $stmt->bindParam(":applicant_contact_no", $this->applicant_contact_no);
+        $stmt->bindParam(":applicant_email", $this->applicant_email);
+        $stmt->bindParam(":resume", $this->resume);
+        $stmt->bindParam(":cover_letter", $this->cover_letter);
+        $stmt->bindParam(":skills", $this->skills);
+        $stmt->bindParam(":certifications", $this->certifications);
+        $stmt->bindParam(":application_status", $this->application_status);
+        $stmt->bindParam(":date_applied", $this->date_applied);
+        
+        // Execute query
+        return $stmt->execute();
     }
 
     public function delete()

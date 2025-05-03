@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_app/models/work_integrated_learning/internship.dart';
 
 class InternshipApiService {
-  final String apiUrl = "http://localhost/UNC-CareerPathlink/api";
+  final String apiUrl = "http://localhost/CareerPathlink/api";
 
   // Read all internships
   Future<List<InternshipWithPartner>> fetchInternships() async {
