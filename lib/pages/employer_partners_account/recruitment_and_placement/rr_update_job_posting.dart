@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:html' as html;
 
 import 'package:file_picker/file_picker.dart';
@@ -245,7 +244,7 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
             if (coverPhotoBytes != null)
               Container(
                 padding: const EdgeInsets.all(16.0),
-                height: 200,
+                height: 400,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -257,7 +256,7 @@ class _RrUpdateJobPostingState extends State<RrUpdateJobPosting> {
             if (coverPhotoBytes == null)
               Container(
                 padding: const EdgeInsets.all(16.0),
-                height: 200,
+                height: 400,
                 width: double.infinity,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(

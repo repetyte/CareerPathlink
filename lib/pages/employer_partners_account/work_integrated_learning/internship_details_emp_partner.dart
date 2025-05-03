@@ -110,6 +110,8 @@ class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isDesktop = MediaQuery.of(context).size.width >= 768;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('WIL Opportunity Details'),
@@ -166,68 +168,9 @@ class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
                           ),
                           Container(
                             padding: const EdgeInsets.fromLTRB(16, 64, 16, 64),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: SizedBox(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            widget.internshipWithPartner
-                                                .internshipTitle,
-                                            style: GoogleFonts.getFont(
-                                              'Montserrat',
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 32,
-                                              color: const Color(0xFFFFFFFF),
-                                            ),
-                                          ),
-                                        ),
-                                        ElevatedButton.icon(
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    OpportunityApplications(
-                                                  internshipId: widget
-                                                      .internshipWithPartner
-                                                      .internshipId!,
-                                                  internshipWithPartner: widget
-                                                      .internshipWithPartner, // Pass this
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          icon: const Icon(Icons.person_search),
-                                          label: const Text('WIL Applications'),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    widget.internshipWithPartner.description,
-                                    style: GoogleFonts.getFont(
-                                      'Montserrat',
-                                      fontWeight: FontWeight.w400,
-                                      // fontSize: 14,
-                                      color: const Color(0xFFFFFFFF),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                            child: isDesktop
+                                ? _buildDesktopHeader()
+                                : _buildMobileHeader(),
                           ),
                         ],
                       ),
@@ -235,62 +178,9 @@ class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        const Text('Location: ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 4),
-                        Text(widget.internshipWithPartner.location,
-                            style: const TextStyle(fontSize: 16)),
-                        const SizedBox(height: 24),
-                        const Text('Required Skills: ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 4),
-                        Text(widget.internshipWithPartner.requiredSkills,
-                            style: const TextStyle(fontSize: 16)),
-                        const SizedBox(height: 24),
-                        const Text('Qualifications: ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 4),
-                        Text(widget.internshipWithPartner.qualifications,
-                            style: const TextStyle(fontSize: 16)),
-                        const SizedBox(height: 24),
-                        const Text('Hours: ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 4),
-                        Text(widget.internshipWithPartner.hours,
-                            style: const TextStyle(fontSize: 16)),
-                        const SizedBox(height: 24),
-                        const Text('WIL Allowance: ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 4),
-                        Text(widget.internshipWithPartner.takehomePay,
-                            style: const TextStyle(fontSize: 16)),
-                        const SizedBox(height: 24),
-                        const Text('About Employer: ',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 4),
-                        Text(
-                            widget.internshipWithPartner.partnerName.toString(),
-                            style: const TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 4),
-                        Text(
-                            widget.internshipWithPartner.partnerLocation
-                                .toString(),
-                            style: const TextStyle(
-                              fontSize: 16,
-                            )),
-                        const SizedBox(height: 24),
-                      ],
-                    ),
+                    child: isDesktop
+                        ? _buildDesktopDetails()
+                        : _buildMobileDetails(),
                   ),
                   Container(
                     margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
@@ -322,6 +212,253 @@ class _InternshipDetailsPartnerState extends State<InternshipDetailsPartner> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildMobileHeader() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        
+        // Internship title
+        Text(
+          widget.internshipWithPartner.internshipTitle,
+          style: GoogleFonts.getFont(
+            'Montserrat',
+            fontWeight: FontWeight.w700,
+            fontSize: 32,
+            color: const Color(0xFFFFFFFF),
+          ),
+        ),
+        const SizedBox(height: 8),
+
+        // Internship description
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            widget.internshipWithPartner.description,
+            style: GoogleFonts.getFont(
+              'Montserrat',
+              fontWeight: FontWeight.w400,
+              color: const Color(0xFFFFFFFF),
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        // WIL Applications button
+        Align(
+          alignment: Alignment.centerRight,
+          child: ElevatedButton.icon(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => OpportunityApplications(
+                    internshipId: widget.internshipWithPartner.internshipId!,
+                    internshipWithPartner: widget.internshipWithPartner,
+                  ),
+                ),
+              );
+            },
+            icon: const Icon(Icons.person_search),
+            label: const Text('WIL Applications'),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDesktopHeader() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Left column - Title
+        Expanded(
+          flex: 1,
+          child: Text(
+            widget.internshipWithPartner.internshipTitle,
+            style: GoogleFonts.getFont(
+              'Montserrat',
+              fontWeight: FontWeight.w700,
+              fontSize: 32,
+              color: const Color(0xFFFFFFFF),
+            ),
+          ),
+        ),
+        // Right column - Description and button
+        Expanded(
+          flex: 1,
+          child: Column(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  widget.internshipWithPartner.description,
+                  style: GoogleFonts.getFont(
+                    'Montserrat',
+                    fontWeight: FontWeight.w400,
+                    color: const Color(0xFFFFFFFF),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Align(
+                alignment: Alignment.centerRight,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => OpportunityApplications(
+                          internshipId: widget.internshipWithPartner.internshipId!,
+                          internshipWithPartner: widget.internshipWithPartner,
+                        ),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.person_search),
+                  label: const Text('WIL Applications'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildMobileDetails() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        // Location
+        const Text('Location: ',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 4),
+        Text(widget.internshipWithPartner.location,
+            style: const TextStyle(fontSize: 16)),
+        const SizedBox(height: 24),
+
+        // Required Skills
+        const Text('Required Skills: ',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 4),
+        Text(widget.internshipWithPartner.requiredSkills,
+            style: const TextStyle(fontSize: 16)),
+        const SizedBox(height: 24),
+
+        // Qualifications
+        const Text('Qualifications: ',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 4),
+        Text(widget.internshipWithPartner.qualifications,
+            style: const TextStyle(fontSize: 16)),
+        const SizedBox(height: 24),
+
+        // Hours
+        const Text('Hours: ',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 4),
+        Text(widget.internshipWithPartner.hours,
+            style: const TextStyle(fontSize: 16)),
+        const SizedBox(height: 24),
+
+        // WIL Allowance
+        const Text('WIL Allowance: ',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 4),
+        Text(widget.internshipWithPartner.takehomePay,
+            style: const TextStyle(fontSize: 16)),
+        const SizedBox(height: 24),
+
+        // About Employer
+        const Text('About Employer: ',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 4),
+        Text(widget.internshipWithPartner.partnerName.toString(),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 4),
+        Text(widget.internshipWithPartner.partnerLocation.toString(),
+            style: const TextStyle(fontSize: 16)),
+        const SizedBox(height: 24),
+      ],
+    );
+  }
+
+  Widget _buildDesktopDetails() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Left column - Location to Qualifications
+        Expanded(
+          flex: 1,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Location
+              const Text('Location: ',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 4),
+              Text(widget.internshipWithPartner.location,
+                  style: const TextStyle(fontSize: 16)),
+              const SizedBox(height: 24),
+
+              // Required Skills
+              const Text('Required Skills: ',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 4),
+              Text(widget.internshipWithPartner.requiredSkills,
+                  style: const TextStyle(fontSize: 16)),
+              const SizedBox(height: 24),
+
+              // Qualifications
+              const Text('Qualifications: ',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 4),
+              Text(widget.internshipWithPartner.qualifications,
+                  style: const TextStyle(fontSize: 16)),
+              const SizedBox(height: 24),
+            ],
+          ),
+        ),
+        // Right column - Hours to About Employer
+        Expanded(
+          flex: 1,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Hours
+              const Text('Hours: ',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 4),
+              Text(widget.internshipWithPartner.hours,
+                  style: const TextStyle(fontSize: 16)),
+              const SizedBox(height: 24),
+
+              // WIL Allowance
+              const Text('WIL Allowance: ',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 4),
+              Text(widget.internshipWithPartner.takehomePay,
+                  style: const TextStyle(fontSize: 16)),
+              const SizedBox(height: 24),
+
+              // About Employer
+              const Text('About Employer: ',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 4),
+              Text(widget.internshipWithPartner.partnerName.toString(),
+                  style:
+                      const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 4),
+              Text(widget.internshipWithPartner.partnerLocation.toString(),
+                  style: const TextStyle(fontSize: 16)),
+              const SizedBox(height: 24),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

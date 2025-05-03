@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/pages/career_center_director_account/director_home_screen.dart';
-import 'package:flutter_app/pages/wdt_account/coach_home_screen.dart';
+import 'package:flutter_app/pages/wdt_account/wdt_home_screen.dart';
 import 'package:flutter_app/pages/dean_account/dean_home_screen.dart';
 import 'package:flutter_app/pages/employer_partners_account/partner_home_screen.dart';
 import 'package:flutter_app/pages/graduates_account/graduate_home_screen.dart';

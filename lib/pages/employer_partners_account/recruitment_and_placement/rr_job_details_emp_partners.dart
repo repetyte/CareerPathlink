@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_job_application_list.dart';
 import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_update_job_posting.dart';
 import 'package:google_fonts/google_fonts.dart';

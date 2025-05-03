@@ -452,7 +452,7 @@ class _RrJobDashboardDirectorState extends State<RrJobDashboardDirector> {
                         Text(application.jobTitle),
                       ],
                     ),
-                    trailing: Text('${application.dateApplied}'),
+                    trailing: Text(application.dateApplied),
                     onTap: () =>
                         _showJobApplicationDetails(context, application),
                   ),

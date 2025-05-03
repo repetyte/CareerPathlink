@@ -458,7 +458,7 @@ class _InternshipDashboardDirectorState
                         Text(application.internshipTitle),
                       ],
                     ),
-                    trailing: Text('${application.dateApplied}'),
+                    trailing: Text(application.dateApplied),
                     onTap: () => _showOpportunityApplicationDetails(
                         context, application),
                   ),

@@ -304,7 +304,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                   if (coverPhotoBytes != null)
                     Container(
                       padding: const EdgeInsets.all(16),
-                      height: 300,
+                      height: 400,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -317,7 +317,7 @@ class _RrAddJobPostingState extends State<RrAddJobPosting> {
                   if (coverPhotoBytes == null)
                     Container(
                       padding: const EdgeInsets.all(16),
-                      height: 300,
+                      height: 400,
                       width: double.infinity,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
