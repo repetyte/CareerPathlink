@@ -101,13 +101,13 @@ class MyDrawerCoach extends StatelessWidget {
               ),
             ),
             onTap: () {
-              Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    CoachScreen(coachAccount: coachAccount, screenWidth: screenWidth,),
-              ),
-            );
+            //   Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) =>
+            //         CoachScreen(coachAccount: coachAccount, screenWidth: screenWidth,),
+            //   ),
+            // );
             },
           ),
         ],

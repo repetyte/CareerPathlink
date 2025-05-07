@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -31,11 +32,15 @@ class _UnemployedListsDepartmentDeanState
           unemployedLists = json.decode(response.body);
         });
       } else {
-        print(
+        if (kDebugMode) {
+          print(
             'Failed to fetch unemployed lists. Status code: ${response.statusCode}');
+        }
       }
     } catch (e) {
-      print('Error fetching unemployed lists: $e');
+      if (kDebugMode) {
+        print('Error fetching unemployed lists: $e');
+      }
     }
   }
 

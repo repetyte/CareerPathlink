@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/student.dart';
-import 'package:flutter_app/pages/students_account/career_coaching/appointment_booking.dart';
 import 'package:flutter_app/pages/students_account/student_home_screen.dart';
 import 'package:flutter_app/pages/students_account/work_integrated_learning/internship_dashboard_stud.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../pages/students_account/career_coaching/terms_conditions_screen.dart';
 
 class MyDrawerStudents extends StatelessWidget {
   final StudentAccount studentAccount;

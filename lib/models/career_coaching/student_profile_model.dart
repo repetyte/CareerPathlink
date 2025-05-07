@@ -1,51 +1,52 @@
-class Student1 {
-  final String studentNo;
-  final String name;
-  final String department;
-  final String course;
-  final String level;
-  final String address;
-  final String contact;
-  final String email;
-  late final String password;
+class StudentProfile {
+  String studentNo;
+  String studentName;
+  String department;
+  String course;
+  String level;
+  String address;
+  String contact;
+  String email;
+  String? profileImage; // Add this as nullable
 
-  Student1({
+  StudentProfile({
     required this.studentNo,
-    required this.name,
+    required this.studentName,
     required this.department,
     required this.course,
     required this.level,
     required this.address,
     required this.contact,
     required this.email,
-    required this.password,
+    this.profileImage, // Add this
   });
 
-  factory Student1.fromJson(Map<String, dynamic> json) {
-    return Student1(
-      studentNo: json['student_no'],
-      name: json['name'],
-      department: json['department'],
-      course: json['course'],
-      level: json['level'],
-      address: json['address'],
-      contact: json['contact'],
-      email: json['email'],
-      password: json['password'],
+  factory StudentProfile.fromJson(Map<String, dynamic> json) {
+    return StudentProfile(
+      studentNo: json['user_id'] ?? '',
+      studentName: json['student_name'] ?? '',
+      department: json['department'] ?? '',
+      course: json['course'] ?? '',
+      level: json['level'] ?? '',
+      address: json['address'] ?? '',
+      contact: json['contact'] ?? '',
+      email: json['email'] ?? '',
+      profileImage:
+          json['profile_image'] ?? json['avatar_url'], // Add this
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'student_no': studentNo,
-      'name': name,
+      'student_name': studentName,
       'department': department,
       'course': course,
       'level': level,
       'address': address,
       'contact': contact,
       'email': email,
-      'password': password,
+      'profile_image': profileImage, // Add this
     };
   }
 }
