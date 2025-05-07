@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_app/models/user_role/career_center_director.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
 import 'package:flutter_app/widgets/appbar/dean_header.dart';
@@ -9,7 +10,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'graduates_lists.dart'; // Import the GraduatesLists screen
 import 'employed_lists.dart'; // Import the EmployedLists screen
 import 'unemployed_lists.dart'; // Import the UnemployedLists screen
-import 'graduates_tracker.dart'; // Import the GraduatesTracker screen
 
 class TracerDashboardPartner extends StatefulWidget {
   final CareerCenterDirectorAccount directorAccount;
@@ -44,8 +44,7 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
                       '${widget.directorAccount.firstName} ${widget.directorAccount.lastName}',
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    subtitle: Text(
-                        'Career Center Director'),
+                    subtitle: Text('Career Center Director'),
                   ),
                   const Divider(),
                   ListTile(
@@ -125,6 +124,174 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildStatsRow() {
+    return Row(
+      children: [
+        _buildStatCard(
+            "Total Graduates", "3,154", Colors.blue, GraduatesListsDirector()),
+        const SizedBox(width: 16),
+        _buildStatCard(
+            "Employed", "1,546", Colors.green, EmployedListsDirector()),
+        const SizedBox(width: 16),
+        _buildStatCard(
+            "Unemployed", "912", Colors.orange, UnemployedListsDirector()),
+      ],
+    );
+  }
+
+  Widget _buildStatCard(
+      String title, String value, Color color, Widget targetScreen) {
+    return Expanded(
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => targetScreen),
+            );
+          },
+          child: Card(
+            color: const Color(0xFFD9D9D9),
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(40),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    value,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: color,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildChartsSection() {
+    return Column(
+      children: [
+        // Bar Chart
+        Card(
+          elevation: 4,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(40),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: SizedBox(
+              height: 300,
+              child: BarChart(
+                BarChartData(
+                  alignment: BarChartAlignment.spaceAround,
+                  maxY: 3500,
+                  barTouchData: BarTouchData(enabled: false),
+                  titlesData: FlTitlesData(
+                    bottomTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        getTitlesWidget: (value, meta) {
+                          const styles = TextStyle(fontSize: 12);
+                          switch (value.toInt()) {
+                            case 0:
+                              return const Text('Graduates', style: styles);
+                            case 1:
+                              return const Text('Employed', style: styles);
+                            case 2:
+                              return const Text('Unemployed', style: styles);
+                            default:
+                              return const Text('');
+                          }
+                        },
+                      ),
+                    ),
+                    leftTitles: AxisTitles(
+                      sideTitles: SideTitles(
+                        showTitles: true,
+                        reservedSize: 40,
+                      ),
+                    ),
+                  ),
+                  borderData: FlBorderData(show: false),
+                  barGroups: [
+                    BarChartGroupData(
+                      x: 0,
+                      barRods: [
+                        BarChartRodData(
+                          toY: 3154,
+                          color: Colors.blue,
+                          width: 30,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ],
+                    ),
+                    BarChartGroupData(
+                      x: 1,
+                      barRods: [
+                        BarChartRodData(
+                          toY: 1546,
+                          color: Colors.green,
+                          width: 30,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ],
+                    ),
+                    BarChartGroupData(
+                      x: 2,
+                      barRods: [
+                        BarChartRodData(
+                          toY: 912,
+                          color: Colors.orange,
+                          width: 30,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 20),
+
+        // Pie Chart (example)
+        // Card(
+        //   elevation: 4,
+        //   shape: RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.circular(40),
+        //   ),
+        //   child: const Padding(
+        //     padding: EdgeInsets.all(16),
+        //     child: SizedBox(
+        //       height: 300,
+        //       child: Center(child: Text('Employment Rate Pie Chart')),
+        //     ),
+        //   ),
+        // ),
+      ],
     );
   }
 
@@ -256,7 +423,6 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-            
                   // Header Section: Graduates Tracer Industry
                   Container(
                     margin: const EdgeInsets.fromLTRB(16, 24, 16, 24),
@@ -273,7 +439,7 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
                       ),
                     ),
                   ),
-                  
+
                   // Header Section: Graduates Tracer Industry
                   Container(
                     margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
@@ -334,73 +500,39 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
                       ],
                     ),
                   ),
-            
-                  // Three Categories Section
+
+                  // Stats Cards
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
                       children: [
-                        hoverableCategoryContainer(context, 'Graduates List',
-                            'assets/images/graduates_list_bg.jpg', GraduatesListsDirector()),
-                            const SizedBox(width: 16),
-                        hoverableCategoryContainer(context, 'Employed Lists',
-                            'assets/images/employed_list_bg.jpg', EmployedListsDirector()),
-                            const SizedBox(width: 16),
-                        hoverableCategoryContainer(context, 'Unemployed Lists',
-                            'assets/images/unemployed_list_bg.jpg', UnemployedListsDirector()),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: const Text(
+                            'Graduates Employment Stats',
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        _buildStatsRow(),
+                        const SizedBox(height: 32),
+
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: const Text(
+                            'Employment Rate Chart',
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        // Charts Section
+                        _buildChartsSection(),
                       ],
                     ),
                   ),
-                  // Graduates Tracker Section (Clickable)
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => GraduatesTrackerDirector()),
-                          );
-                        },
-                        child: Container(
-                          height: 150,
-                          margin: const EdgeInsets.symmetric(vertical: 16),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(40),
-                            image: const DecorationImage(
-                              image:
-                                  AssetImage('assets/images/graduates_tracker_bg.jpg'),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          child: Stack(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(40),
-                                  color: Colors.black.withOpacity(0.5),
-                                ),
-                              ),
-                              const Center(
-                                child: Text(
-                                  'Graduates Tracker',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'Montserrat',
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+
                   const Footer(),
                 ],
               ),

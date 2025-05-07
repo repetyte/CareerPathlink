@@ -25,7 +25,7 @@ class _EmployedListsDepartmentDeanState extends State<EmployedListsDepartmentDea
   Future<void> fetchEmployed() async {
     try {
       final response =
-          await http.get(Uri.parse('http://127.0.0.1/read_employed.php'));
+          await http.get(Uri.parse('http://localhost/CareerPathlink/api/employed/read_employed.php'));
       if (response.statusCode == 200) {
         setState(() {
           employed = json.decode(response.body);
@@ -235,27 +235,27 @@ class _EmployedListsDepartmentDeanState extends State<EmployedListsDepartmentDea
                     DataCell(Text(employee['employer_name'])),
                     DataCell(Text(employee['position'])),
                     DataCell(Text(employee['start_date'] ?? 'N/A')),
-                    DataCell(Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.edit),
-                          onPressed: () => showUpdateDialog(employee),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.delete),
-                          onPressed: () =>
-                              deleteEmployed(employee['student_no']),
-                        ),
-                      ],
-                    )),
+                    // DataCell(Row(
+                    //   children: [
+                    //     IconButton(
+                    //       icon: const Icon(Icons.edit),
+                    //       onPressed: () => showUpdateDialog(employee),
+                    //     ),
+                    //     IconButton(
+                    //       icon: const Icon(Icons.delete),
+                    //       onPressed: () =>
+                    //           deleteEmployed(employee['student_no']),
+                    //     ),
+                    //   ],
+                    // )),
                   ]);
                 }).toList(),
               ),
             ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: showCreateDialog,
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: showCreateDialog,
+      //   child: const Icon(Icons.add),
+      // ),
     );
   }
 }

@@ -12,17 +12,17 @@ class EmployedListsDirector extends StatelessWidget {
       ),
       body: Column(
         children: [
+          const SizedBox(height: 16),
           // Separator bar
-          Container(
-            color: Colors.grey[300],
+          Padding(
             padding: const EdgeInsets.all(16.0),
-            child: const Center(
+            child: const Align(
+              alignment: Alignment.centerLeft,
               child: Text(
                 'Employed Lists',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
                   fontFamily: 'Montserrat',
                 ),
               ),

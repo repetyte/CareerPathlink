@@ -25,7 +25,7 @@ class _EmployedListsDepartmentDirectorState extends State<EmployedListsDepartmen
   Future<void> fetchEmployed() async {
     try {
       final response =
-          await http.get(Uri.parse('http://127.0.0.1/read_employed.php'));
+          await http.get(Uri.parse('http://localhost/CareerPathlink/api/employed/read_employed.php'));
       if (response.statusCode == 200) {
         setState(() {
           employed = json.decode(response.body);

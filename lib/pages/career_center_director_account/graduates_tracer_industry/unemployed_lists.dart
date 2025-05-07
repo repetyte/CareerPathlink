@@ -12,14 +12,16 @@ class UnemployedListsDirector extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Container(
-            color: Colors.grey[300],
+          const SizedBox(height: 16),
+          // Separator bar
+          Padding(
             padding: const EdgeInsets.all(16.0),
-            child: const Center(
+            child: const Align(
+              alignment: Alignment.centerLeft,
               child: Text(
                 'Unemployed Lists',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 24,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                   fontFamily: 'Montserrat',

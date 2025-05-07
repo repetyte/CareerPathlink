@@ -106,22 +106,22 @@ class _GraduatesListsDepartmentDeanState extends State<GraduatesListsDepartmentD
                     DataCell(Text(graduate.facebookName)),
                     DataCell(Text(graduate.course)),
                     DataCell(Text(graduate.graduationDate)),
-                    DataCell(Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.edit),
-                          onPressed: () {
-                            // Implement update logic here
-                          },
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.delete),
-                          onPressed: () {
-                            // Implement delete logic here
-                          },
-                        ),
-                      ],
-                    )),
+                    // DataCell(Row(
+                    //   children: [
+                    //     IconButton(
+                    //       icon: const Icon(Icons.edit),
+                    //       onPressed: () {
+                    //         // Implement update logic here
+                    //       },
+                    //     ),
+                    //     IconButton(
+                    //       icon: const Icon(Icons.delete),
+                    //       onPressed: () {
+                    //         // Implement delete logic here
+                    //       },
+                    //     ),
+                    //   ],
+                    // )),
                   ]);
                 }).toList(),
               ),
@@ -129,10 +129,10 @@ class _GraduatesListsDepartmentDeanState extends State<GraduatesListsDepartmentD
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {}, // Implement create logic here
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {}, // Implement create logic here
+      //   child: const Icon(Icons.add),
+      // ),
     );
   }
 }

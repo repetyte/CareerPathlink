@@ -243,27 +243,27 @@ class _UnemployedListsDepartmentDeanState
                         '${unemployed['first_name']} ${unemployed['last_name']}')),
                     DataCell(Text(unemployed['course'] ?? 'N/A')),
                     DataCell(Text(unemployed['graduation_date'] ?? 'N/A')),
-                    DataCell(Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.edit),
-                          onPressed: () => showUpdateDialog(unemployed),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.delete),
-                          onPressed: () =>
-                              deleteUnemployed(unemployed['student_no'] ?? ''),
-                        ),
-                      ],
-                    )),
+                    // DataCell(Row(
+                    //   children: [
+                    //     IconButton(
+                    //       icon: const Icon(Icons.edit),
+                    //       onPressed: () => showUpdateDialog(unemployed),
+                    //     ),
+                    //     IconButton(
+                    //       icon: const Icon(Icons.delete),
+                    //       onPressed: () =>
+                    //           deleteUnemployed(unemployed['student_no'] ?? ''),
+                    //     ),
+                    //   ],
+                    // )),
                   ]);
                 }).toList(),
               ),
             ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: showCreateDialog,
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: showCreateDialog,
+      //   child: const Icon(Icons.add),
+      // ),
     );
   }
 }
