@@ -6,6 +6,8 @@ import 'package:flutter_app/pages/career_center_director_account/recruitment_and
 import 'package:flutter_app/pages/career_center_director_account/work_integrated_learning/internship_dashboard_director.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../pages/career_center_director_account/career_coaching/career_center_screen.dart';
+
 class MyDrawerDirector extends StatelessWidget {
   final CareerCenterDirectorAccount directorAccount;
   const MyDrawerDirector({super.key, required this.directorAccount});
@@ -118,13 +120,13 @@ class MyDrawerDirector extends StatelessWidget {
               ),
             ),
             onTap: () {
-            //   Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) =>
-            //         EngagementDashboard(directorAccount: directorAccount,),
-            //   ),
-            // );
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    CareerCenterScreen(directorAccount: directorAccount,),
+              ),
+            );
             },
           ),
           ListTile(

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:async';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+// import 'package:final_career_coaching/model/service_analytics_model.dart';
+// import 'package:final_career_coaching/services/career_center_services.dart';
+
+import '../../../models/career_coaching/service_analytics_model.dart';
+import '../../../services/career_coaching/career_center_services.dart';
 
 class Service extends StatefulWidget {
   final double screenWidth;
@@ -14,169 +16,273 @@ class Service extends StatefulWidget {
 }
 
 class _ServiceState extends State<Service> {
-  late Future<Map<String, double>> _programPercentages;
+  late Future<List<ServiceAnalytics>> _serviceAnalytics;
+  final Color gridLineColor = Colors.grey.withOpacity(0.3);
+  
+  final List<Color> barColors = [
+    const Color(0xFFEC1D25),
+    const Color(0xFF2A9D8F),
+    const Color(0xFFE9C46A),
+  ];
+
+  final List<String> allServiceTypes = [
+    'Career Coaching',
+    'Mock Interview',
+    'CV Review'
+  ];
 
   @override
   void initState() {
     super.initState();
-    _programPercentages = fetchProgramPercentages();
-  }
-
-  Future<Map<String, double>> fetchProgramPercentages() async {
-    final response = await http.get(
-      Uri.parse('http://localhost/CareerPathlink/api/career_coaching/read_service_details.php'),
-    );
-
-    if (response.statusCode == 200) {
-      var decodedResponse = jsonDecode(response.body);
-
-      if (decodedResponse is Map && decodedResponse.containsKey('data')) {
-        List<Map<String, dynamic>> serviceDetails =
-            List<Map<String, dynamic>>.from(decodedResponse['data']);
-
-        // Group the data by program_name and calculate the sum of the percentages
-        Map<String, double> programPercentages = {};
-
-        for (var service in serviceDetails) {
-          String programName = service['program_name'];
-          double percentage = 0.0;
-
-          try {
-            var percentageValue = service['percentage'];
-            if (percentageValue != null) {
-              // Safely handle the percentage field to ensure it's a number
-              if (percentageValue is String) {
-                percentage = double.tryParse(percentageValue) ?? 0.0;
-              } else if (percentageValue is num) {
-                percentage = percentageValue.toDouble();
-              }
-            }
-          } catch (e) {
-            debugPrint('Error parsing percentage: ${service['percentage']}');
-          }
-
-          // Add the percentage to the program's total (or initialize if it's the first time)
-          if (programPercentages.containsKey(programName)) {
-            programPercentages[programName] =
-                programPercentages[programName]! + percentage;
-          } else {
-            programPercentages[programName] = percentage;
-          }
-        }
-
-        return programPercentages;
-      } else {
-        throw Exception('Unexpected response format: Missing data key');
-      }
-    } else {
-      throw Exception(
-          'Failed to load service details. Status code: ${response.statusCode}');
-    }
+    _serviceAnalytics = EngagementService.getServiceAnalytics();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Map<String, double>>(
-      future: _programPercentages,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else if (snapshot.hasData) {
-          final programPercentages = snapshot.data!;
-
-          return Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: widget.screenWidth > 600 ? 50 : 20,
-              vertical: 10,
+    return Container(
+      constraints: BoxConstraints(
+        minHeight: 400,
+        maxHeight: MediaQuery.of(context).size.height * 0.7,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(18),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Colors.white.withOpacity(0.9),
+            Colors.white.withOpacity(0.7),
+          ],
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 20,
+            spreadRadius: 2,
+            offset: const Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Service Details',
+                  style: GoogleFonts.inter(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: const Color(0xFF2C3E50),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.blue[50],
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    'Completion %',
+                    style: GoogleFonts.inter(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.blue[800],
+                    ),
+                  ),
+                ),
+              ],
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: programPercentages.entries.map((entry) {
-                String programName = entry.key;
-                double totalPercentage = entry.value;
-
-                return _buildProgressBar(
-                  title: programName,
-                  progress: (totalPercentage /
-                      100.0), // Convert to percentage progress
-                  screenWidth: widget.screenWidth,
-                );
-              }).toList(),
+            const SizedBox(height: 12),
+            Expanded(
+              child: FutureBuilder<List<ServiceAnalytics>>(
+                future: _serviceAnalytics,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  
+                  if (snapshot.hasError) {
+                    return const Center(child: Text('Error loading analytics'));
+                  }
+                  
+                  final analytics = snapshot.data ?? [];
+                  
+                  return _buildHistogramContent(analytics);
+                },
+              ),
             ),
-          );
-        } else {
-          return Center(child: Text('No data available'));
-        }
-      },
+          ],
+        ),
+      ),
     );
   }
 
-  Widget _buildProgressBar({
-    required String title,
-    required double progress,
-    required double screenWidth,
-  }) {
-    String percentageText = "${(progress * 100).toInt()}%";
+  Widget _buildHistogramContent(List<ServiceAnalytics> analytics) {
+    // Sort analytics to maintain consistent order
+    analytics.sort((a, b) => allServiceTypes.indexOf(a.serviceType)
+        .compareTo(allServiceTypes.indexOf(b.serviceType)));
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Title Text
-          Text(
-            title,
-            style: GoogleFonts.inter(
-              fontWeight: FontWeight.bold,
-              fontSize: 15,
-              color: Colors.black,
-            ),
-          ),
+    // Calculate max percentage for scaling
+    final maxPercentage = analytics.isNotEmpty 
+        ? (analytics.map((a) => a.completionRate).reduce((a, b) => a > b ? a : b) / 10).ceil() * 10
+        : 20;
+    final gridLineCount = (maxPercentage / 20).ceil() + 1;
 
-          // Horizontal Bar Chart with Progress
-          const SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              // Bar chart
-              Container(
-                width: screenWidth * 0.7, // Adjust width based on screen size
-                height: 10, // Height of the bar
+    return Stack(
+      children: [
+        // Grid lines
+        Column(
+          children: List.generate(gridLineCount, (index) {
+            final percentage = maxPercentage - (index * 20);
+            return Expanded(
+              child: Container(
+                margin: const EdgeInsets.only(left: 8.0),
                 decoration: BoxDecoration(
-                  color: Colors.grey[300], // Background color of the bar
-                  borderRadius: BorderRadius.circular(8), // Rounded corners
+                  border: Border(
+                    bottom: BorderSide(
+                      color: gridLineColor,
+                      width: 1.0,
+                    ),
+                  ),
                 ),
-                child: FractionallySizedBox(
+                child: Align(
                   alignment: Alignment.centerLeft,
-                  widthFactor: progress, // Represents the progress value
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xFFEC1D25), // Color of the bar
-                      borderRadius: BorderRadius.circular(8),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      '$percentage%',
+                      style: GoogleFonts.inter(
+                        fontSize: 10,
+                        color: Colors.grey,
+                      ),
                     ),
                   ),
                 ),
               ),
+            );
+          }),
+        ),
+        
+        // Bars and labels
+        Padding(
+          padding: const EdgeInsets.only(left: 60.0),
+          child: Column(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: analytics.length,
+                    itemBuilder: (context, index) {
+                      final service = analytics[index];
+                      final percentage = service.completionRate;
+                      final barHeight = percentage * 2.0;
+                      final barColor = barColors[index % barColors.length];
 
-              // Space between bar and percentage text
-              const SizedBox(width: 8),
-
-              // Percentage Text at the upper right of the bar
-              Text(
-                percentageText,
-                style: GoogleFonts.inter(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15,
-                  color: Colors.black,
+                      return Tooltip(
+                        message: '${service.serviceType}\n'
+                                'Total: ${service.totalAppointments}\n'
+                                'Completed: ${service.completedAppointments}\n'
+                                'Cancelled: ${service.cancelledAppointments}\n'
+                                'Pending: ${service.pendingAppointments}',
+                        child: Container(
+                          width: 70,
+                          margin: const EdgeInsets.symmetric(horizontal: 6),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.only(bottom: 8),
+                                child: Text(
+                                  '${percentage.toInt()}%',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: barHeight > 0 ? barHeight : 2,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                  color: barColor.withOpacity(service.totalAppointments > 0 ? 1.0 : 0.5),
+                                  borderRadius: const BorderRadius.vertical(
+                                    top: Radius.circular(4),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+              
+              // Service labels
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+                margin: const EdgeInsets.only(top: 8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(analytics.length, (index) {
+                      final service = analytics[index];
+                      return Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 6),
+                        constraints: BoxConstraints(
+                          maxWidth: widget.screenWidth * 0.25,
+                        ),
+                        child: Tooltip(
+                          message: '${service.serviceType}\n'
+                                  'Total: ${service.totalAppointments}',
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                width: 10,
+                                height: 10,
+                                decoration: BoxDecoration(
+                                  color: barColors[index % barColors.length]
+                                      .withOpacity(service.totalAppointments > 0 ? 1.0 : 0.5),
+                                  shape: BoxShape.circle,
+                                ),
+                              ),
+                              const SizedBox(width: 4),
+                              Flexible(
+                                child: Text(
+                                  service.serviceType,
+                                  style: GoogleFonts.inter(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w500,
+                                    color: service.totalAppointments > 0 ? Colors.black : Colors.grey,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
                 ),
               ),
             ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
