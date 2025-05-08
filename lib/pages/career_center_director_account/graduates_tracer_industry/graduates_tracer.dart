@@ -423,13 +423,13 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  // Header Section: Graduates Tracer Industry
+                  // Header Section: Employment Tracking
                   Container(
                     margin: const EdgeInsets.fromLTRB(16, 24, 16, 24),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Graduates Tracer Industry',
+                        'Employment Tracking',
                         style: GoogleFonts.getFont(
                           'Montserrat',
                           fontWeight: FontWeight.w700,
@@ -440,7 +440,7 @@ class _TracerDashboardPartnerState extends State<TracerDashboardPartner> {
                     ),
                   ),
 
-                  // Header Section: Graduates Tracer Industry
+                  // Header Section: Employment Tracking
                   Container(
                     margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                     height: 300,

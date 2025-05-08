@@ -2,9 +2,9 @@
 
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -13,7 +13,6 @@ import '../../../models/user_role/student.dart';
 import '../../../services/career_coaching/api_services.dart';
 import '../student_home_screen.dart';
 import 'book_confirmation.dart';
-import 'student_header.dart';
 
 class CalendarScreen extends StatefulWidget {
   final StudentAccount studentAccount;
@@ -365,8 +364,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text("Failed to book appointment.",
-                                  style: GoogleFonts.inter()),
+                              content: Text("Failed to book appointment.",),
                               behavior: SnackBarBehavior.floating,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -896,7 +894,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   Future<bool> _bookAppointment() async {
     if (_selectedSlot == null) {
-      print("Error: No time slot selected.");
+      debugPrint("Error: No time slot selected.");
       return false;
     }
 
@@ -911,7 +909,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
     String? userId = await ApiService.getUserId();
 
     if (userId == null) {
-      print("Error: No user ID found.");
+      if (kDebugMode) {
+        debugPrint("Error: No user ID found.");
+      }
       return false;
     }
 
@@ -925,7 +925,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
       "service_type": widget.selectedService,
     };
 
-    print("Sending Data to API: ${jsonEncode(requestData)}");
+    debugPrint("Sending Data to API: ${jsonEncode(requestData)}");
 
     return await ApiService.createAppointment(requestData);
   }

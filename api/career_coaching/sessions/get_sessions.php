@@ -6,7 +6,7 @@ header("Access-Control-Allow-Methods: GET");
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "final_careercoaching";
+$database = "ccms_db";
 
 // Connect to MySQL
 $conn = new mysqli($servername, $username, $password, $database);

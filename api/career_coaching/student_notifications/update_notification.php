@@ -8,7 +8,7 @@ header('Content-Type: application/json');
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "final_careercoaching";
+$database = "ccms_db";
 
 $conn = new mysqli($servername, $username, $password, $database);
 

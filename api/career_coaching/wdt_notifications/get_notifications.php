@@ -17,7 +17,7 @@ ini_set('log_errors', 1);
 ini_set('error_log', 'error_log.txt');
 
 // 5. Then your database connection and logic
-$conn = new mysqli("localhost", "root", "", "final_careercoaching");
+$conn = new mysqli("localhost", "root", "", "ccms_db");
 
 if ($conn->connect_error) {
     error_log("Connection failed: " . $conn->connect_error);

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../models/career_coaching/wdt_notifications_model.dart';
@@ -30,7 +31,7 @@ class NotificationApiService {
         throw Exception('Failed to load notifications: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error in fetchForUser: $e');
+      debugPrint('Error in fetchForUser: $e');
       rethrow;
     }
   }
@@ -59,7 +60,7 @@ class NotificationApiService {
         throw Exception('Failed to load notifications: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error in fetchForStudent: $e');
+      debugPrint('Error in fetchForStudent: $e');
       rethrow;
     }
   }
@@ -84,7 +85,7 @@ class NotificationApiService {
         throw Exception('Failed to get unread count: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error in getUnreadCountForUser: $e');
+      debugPrint('Error in getUnreadCountForUser: $e');
       rethrow;
     }
   }
@@ -109,7 +110,7 @@ class NotificationApiService {
         throw Exception('Failed to get unread count: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error in getUnreadCountForStudent: $e');
+      debugPrint('Error in getUnreadCountForStudent: $e');
       rethrow;
     }
   }
@@ -167,7 +168,7 @@ class NotificationApiService {
             'Failed to create notification: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error in createNotification: $e');
+      debugPrint('Error in createNotification: $e');
       rethrow;
     }
   }
@@ -191,7 +192,7 @@ class NotificationApiService {
             responseData['error'] ?? 'Failed to update notification status');
       }
     } catch (e) {
-      print('Error in updateStatus: $e');
+      debugPrint('Error in updateStatus: $e');
       rethrow;
     }
   }
@@ -212,7 +213,7 @@ class NotificationApiService {
             responseData['error'] ?? 'Failed to delete notification');
       }
     } catch (e) {
-      print('Error in deleteNotification: $e');
+      debugPrint('Error in deleteNotification: $e');
       rethrow;
     }
   }

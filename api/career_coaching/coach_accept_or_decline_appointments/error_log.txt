@@ -67,19 +67,19 @@
 [31-Mar-2025 03:22:25 UTC] Received JSON: {"id":2,"action":"decline"}
 [31-Mar-2025 03:22:33 UTC] Received JSON: {"appointment_id":1,"request_id":1,"student_name":"Cassiopeia Obelidor","message":"kdsgkaj"}
 [31-Mar-2025 03:37:51 UTC] Received JSON: {"id":1,"action":"accept"}
-[31-Mar-2025 03:37:51 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`final_careercoaching`.`request_appointments`, CONSTRAINT `fk_request_appointments_status` FOREIGN KEY (`appointment_id`, `status`) REFERENCES `appointments` (`id`, `status`) ON DELETE CASCADE) in D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\accept_appointment.php:76
+[31-Mar-2025 03:37:51 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`ccms_db`.`request_appointments`, CONSTRAINT `fk_request_appointments_status` FOREIGN KEY (`appointment_id`, `status`) REFERENCES `appointments` (`id`, `status`) ON DELETE CASCADE) in D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\accept_appointment.php:76
 Stack trace:
 #0 D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\accept_appointment.php(76): mysqli_stmt->execute()
 #1 {main}
   thrown in D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\accept_appointment.php on line 76
 [31-Mar-2025 03:37:58 UTC] Received JSON: {"id":1,"action":"decline"}
-[31-Mar-2025 03:37:58 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`final_careercoaching`.`request_appointments`, CONSTRAINT `fk_request_appointments_status` FOREIGN KEY (`appointment_id`, `status`) REFERENCES `appointments` (`id`, `status`) ON DELETE CASCADE) in D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\coach_decline_appointment.php:77
+[31-Mar-2025 03:37:58 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`ccms_db`.`request_appointments`, CONSTRAINT `fk_request_appointments_status` FOREIGN KEY (`appointment_id`, `status`) REFERENCES `appointments` (`id`, `status`) ON DELETE CASCADE) in D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\coach_decline_appointment.php:77
 Stack trace:
 #0 D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\coach_decline_appointment.php(77): mysqli_stmt->execute()
 #1 {main}
   thrown in D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\coach_decline_appointment.php on line 77
 [31-Mar-2025 03:38:01 UTC] Received JSON: {"id":1,"action":"accept"}
-[31-Mar-2025 03:38:02 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`final_careercoaching`.`request_appointments`, CONSTRAINT `fk_request_appointments_status` FOREIGN KEY (`appointment_id`, `status`) REFERENCES `appointments` (`id`, `status`) ON DELETE CASCADE) in D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\accept_appointment.php:76
+[31-Mar-2025 03:38:02 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`ccms_db`.`request_appointments`, CONSTRAINT `fk_request_appointments_status` FOREIGN KEY (`appointment_id`, `status`) REFERENCES `appointments` (`id`, `status`) ON DELETE CASCADE) in D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\accept_appointment.php:76
 Stack trace:
 #0 D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\accept_appointment.php(76): mysqli_stmt->execute()
 #1 {main}
@@ -149,19 +149,19 @@ Stack trace:
 #1 {main}
   thrown in D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\coach_decline_appointment.php on line 77
 [01-Apr-2025 18:52:34 UTC] Received JSON: {"id":1,"action":"decline"}
-[01-Apr-2025 18:52:34 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`final_careercoaching`.`coach_sent_notification`, CONSTRAINT `fk_notification_sender_coach` FOREIGN KEY (`sender_id`) REFERENCES `coaches` (`user_id`)) in D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\coach_decline_appointment.php:77
+[01-Apr-2025 18:52:34 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`ccms_db`.`coach_sent_notification`, CONSTRAINT `fk_notification_sender_coach` FOREIGN KEY (`sender_id`) REFERENCES `coaches` (`user_id`)) in D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\coach_decline_appointment.php:77
 Stack trace:
 #0 D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\coach_decline_appointment.php(77): mysqli_stmt->execute()
 #1 {main}
   thrown in D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\coach_decline_appointment.php on line 77
 [01-Apr-2025 18:55:59 UTC] Received JSON: {"id":1,"action":"decline"}
-[01-Apr-2025 18:55:59 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`final_careercoaching`.`coach_sent_notification`, CONSTRAINT `fk_notification_sender_coach` FOREIGN KEY (`sender_id`) REFERENCES `coaches` (`user_id`)) in D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\coach_decline_appointment.php:77
+[01-Apr-2025 18:55:59 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`ccms_db`.`coach_sent_notification`, CONSTRAINT `fk_notification_sender_coach` FOREIGN KEY (`sender_id`) REFERENCES `coaches` (`user_id`)) in D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\coach_decline_appointment.php:77
 Stack trace:
 #0 D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\coach_decline_appointment.php(77): mysqli_stmt->execute()
 #1 {main}
   thrown in D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\coach_decline_appointment.php on line 77
 [01-Apr-2025 18:56:29 UTC] Received JSON: {"id":1,"action":"decline"}
-[01-Apr-2025 18:56:29 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`final_careercoaching`.`coach_sent_notification`, CONSTRAINT `fk_notification_sender_coach` FOREIGN KEY (`sender_id`) REFERENCES `coaches` (`user_id`)) in D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\coach_decline_appointment.php:77
+[01-Apr-2025 18:56:29 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`ccms_db`.`coach_sent_notification`, CONSTRAINT `fk_notification_sender_coach` FOREIGN KEY (`sender_id`) REFERENCES `coaches` (`user_id`)) in D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\coach_decline_appointment.php:77
 Stack trace:
 #0 D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\coach_decline_appointment.php(77): mysqli_stmt->execute()
 #1 {main}
@@ -174,7 +174,7 @@ Stack trace:
 [01-Apr-2025 19:31:56 UTC] Received JSON: {"appointment_id":1,"request_id":1,"student_name":"Cassiopeia Obelidor","message":"nkk"}
 [02-Apr-2025 00:35:01 UTC] Received JSON: {"appointment_id":1,"request_id":1,"student_name":"Cassiopeia Obelidor","message":"nkbkg"}
 [02-Apr-2025 03:44:39 UTC] Received JSON: {"id":2,"action":"decline"}
-[02-Apr-2025 03:44:39 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'final_careercoaching.appointment_status_tracking' doesn't exist in D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\coach_decline_appointment.php:77
+[02-Apr-2025 03:44:39 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'ccms_db.appointment_status_tracking' doesn't exist in D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\coach_decline_appointment.php:77
 Stack trace:
 #0 D:\laragon\www\CareerPathlink\api\coach_accept_or_decline_appointments\coach_decline_appointment.php(77): mysqli_stmt->execute()
 #1 {main}

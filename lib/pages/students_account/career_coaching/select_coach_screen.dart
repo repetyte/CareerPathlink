@@ -5,7 +5,6 @@ import '../../../models/career_coaching/time_slot.dart';
 import '../../../models/user_role/student.dart';
 import '../../../services/career_coaching/api_services.dart';
 import 'calendar.dart';
-import 'student_header.dart';
 
 class SelectCoachScreen extends StatefulWidget {
   final StudentAccount studentAccount;

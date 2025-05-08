@@ -5,7 +5,9 @@ import '../student_home_screen.dart';
 
 class BookConfirmationScreen extends StatelessWidget {
   final StudentAccount studentAccount;
-  const BookConfirmationScreen({super.key, required this.studentAccount});
+  const BookConfirmationScreen({super.key, 
+  required this.studentAccount
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +67,7 @@ class BookConfirmationScreen extends StatelessWidget {
 class FadeInEffect extends StatelessWidget {
   final Widget child;
 
-  const FadeInEffect({Key? key, required this.child}) : super(key: key);
+  const FadeInEffect({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +82,7 @@ class FadeInEffect extends StatelessWidget {
 class AnimatedScaleEffect extends StatefulWidget {
   final Widget child;
 
-  const AnimatedScaleEffect({Key? key, required this.child}) : super(key: key);
+  const AnimatedScaleEffect({super.key, required this.child});
 
   @override
   _AnimatedScaleEffectState createState() => _AnimatedScaleEffectState();

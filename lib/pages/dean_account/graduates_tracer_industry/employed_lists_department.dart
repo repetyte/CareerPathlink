@@ -31,11 +31,11 @@ class _EmployedListsDepartmentDeanState extends State<EmployedListsDepartmentDea
           employed = json.decode(response.body);
         });
       } else {
-        print('Failed to fetch employed. Status code: ${response.statusCode}');
-        print('Response body: ${response.body}');
+        debugPrint('Failed to fetch employed. Status code: ${response.statusCode}');
+        debugPrint('Response body: ${response.body}');
       }
     } catch (e) {
-      print('Error fetching employed: $e');
+      debugPrint('Error fetching employed: $e');
     }
   }
 
@@ -48,10 +48,10 @@ class _EmployedListsDepartmentDeanState extends State<EmployedListsDepartmentDea
           employed.removeWhere((employee) => employee['student_no'] == studentNo);
         });
       } else {
-        print('Failed to delete employee. Status code: ${response.statusCode}');
+        debugPrint('Failed to delete employee. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error deleting employee: $e');
+      debugPrint('Error deleting employee: $e');
     }
   }
 
@@ -79,10 +79,10 @@ class _EmployedListsDepartmentDeanState extends State<EmployedListsDepartmentDea
       if (response.statusCode == 200) {
         fetchEmployed();
       } else {
-        print('Failed to update employee. Status code: ${response.statusCode}');
+        debugPrint('Failed to update employee. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error updating employee: $e');
+      debugPrint('Error updating employee: $e');
     }
   }
 
@@ -110,10 +110,10 @@ class _EmployedListsDepartmentDeanState extends State<EmployedListsDepartmentDea
       if (response.statusCode == 200) {
         fetchEmployed();
       } else {
-        print('Failed to create employee. Status code: ${response.statusCode}');
+        debugPrint('Failed to create employee. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error creating employee: $e');
+      debugPrint('Error creating employee: $e');
     }
   }
 

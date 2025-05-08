@@ -11,7 +11,7 @@ ini_set('log_errors', 1);
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "final_careercoaching";
+$database = "ccms_db";
 
 $response = [];
 

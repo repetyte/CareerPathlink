@@ -9,7 +9,7 @@ header("Access-Control-Allow-Credentials: true");
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "final_careercoaching";
+$database = "ccms_db";
 
 $conn = new mysqli($servername, $username, $password, $database);
 

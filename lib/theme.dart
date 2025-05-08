@@ -168,5 +168,11 @@ class AppTheme {
       hintStyle: TextStyle(color: greyColor), // Gray hint text
       labelStyle: TextStyle(color: blackColor), // Black label text
     ),
+    snackBarTheme: SnackBarThemeData(
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+    ),
   );
 }

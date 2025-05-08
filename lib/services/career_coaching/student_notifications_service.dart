@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../models/career_coaching/student_notification_model.dart';
@@ -17,16 +18,16 @@ class NotificationService {
       final url =
           'http://localhost/CareerPathlink/api/career_coaching/student_notifications/get_notifications.php?user_id=${Uri.encodeComponent(userId)}';
 
-      print('Fetching notifications for user ID: $userId');
-      print('URL: $url');
+      debugPrint('Fetching notifications for user ID: $userId');
+      debugPrint('URL: $url');
 
       final response = await http.get(
         Uri.parse(url),
         headers: {'Accept': 'application/json'},
       ).timeout(Duration(seconds: 10));
 
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      debugPrint('Response status: ${response.statusCode}');
+      debugPrint('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
@@ -36,14 +37,14 @@ class NotificationService {
         }
 
         final List<dynamic> data = responseData['data'];
-        print('Fetched ${data.length} notifications');
+        debugPrint('Fetched ${data.length} notifications');
 
         return data.map((json) {
           try {
             return StudentNotification.fromJson(json);
           } catch (e) {
-            print('Error parsing notification: $e');
-            print('Problematic JSON: $json');
+            debugPrint('Error parsing notification: $e');
+            debugPrint('Problematic JSON: $json');
             throw Exception('Failed to parse notification: $e');
           }
         }).toList();
@@ -51,7 +52,7 @@ class NotificationService {
         throw Exception('HTTP Error ${response.statusCode}: ${response.body}');
       }
     } catch (e) {
-      print('Error in fetchAll: $e');
+      debugPrint('Error in fetchAll: $e');
       rethrow;
     }
   }
@@ -133,7 +134,7 @@ class NotificationService {
             responseData['error'] ?? 'Failed to update notification status');
       }
     } catch (e) {
-      print('Error updating notification status: $e');
+      debugPrint('Error updating notification status: $e');
       rethrow;
     }
   }

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Session {
   final String id;
   final String appointmentId;
@@ -22,7 +24,7 @@ class Session {
   });
 
   factory Session.fromJson(Map<String, dynamic> json) {
-    print('Session Data: ${json.toString()}');
+    debugPrint('Session Data: ${json.toString()}');
     
     return Session(
       id: json['session_id']?.toString() ?? '0',

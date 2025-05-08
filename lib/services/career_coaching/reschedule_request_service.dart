@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../models/career_coaching/student_request_reschedule_model.dart';
@@ -16,7 +17,7 @@ class RescheduleRequestService {
       }
       return false;
     } catch (e) {
-      print('Error checking reschedule status: $e');
+      debugPrint('Error checking reschedule status: $e');
       return false;
     }
   }
@@ -33,7 +34,7 @@ class RescheduleRequestService {
       }
       return false;
     } catch (e) {
-      print('Error checking accepted reschedule: $e');
+      debugPrint('Error checking accepted reschedule: $e');
       return false;
     }
   }
@@ -53,7 +54,7 @@ class RescheduleRequestService {
       }
       return null;
     } catch (e) {
-      print('Error fetching pending request: $e');
+      debugPrint('Error fetching pending request: $e');
       return null;
     }
   }
@@ -70,7 +71,7 @@ class RescheduleRequestService {
       }
       return [];
     } catch (e) {
-      print('Error fetching reschedule requests: $e');
+      debugPrint('Error fetching reschedule requests: $e');
       return [];
     }
   }

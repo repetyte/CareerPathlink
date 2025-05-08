@@ -34,17 +34,17 @@
 //     try {
 //       final prefs = await SharedPreferences.getInstance();
 //       final userId = prefs.getString('user_id');
-//       print('Loaded user ID from preferences: $userId');
+//       debugPrint('Loaded user ID from preferences: $userId');
 
 //       if (userId != null) {
 //         setState(() => _currentUserId = userId);
 //         await Provider.of<StudentNotificationProvider>(context, listen: false)
 //             .loadNotifications(userId);
 //       } else {
-//         print('No user ID found in SharedPreferences');
+//         debugPrint('No user ID found in SharedPreferences');
 //       }
 //     } catch (e) {
-//       print('Error loading user ID: $e');
+//       debugPrint('Error loading user ID: $e');
 //     }
 //   }
 
@@ -90,14 +90,14 @@
 //         _bellIconKey.currentContext?.findRenderObject() as RenderBox?;
 
 //     if (renderBox == null) {
-//       print('Could not find bell icon render box');
+//       debugPrint('Could not find bell icon render box');
 //       return;
 //     }
 
 //     final position = renderBox.localToGlobal(Offset.zero);
 //     final size = renderBox.size;
 
-//     print('Showing notification popup at position: $position');
+//     debugPrint('Showing notification popup at position: $position');
 
 //     _notificationOverlayEntry = OverlayEntry(
 //       builder: (context) => Positioned(
@@ -148,7 +148,7 @@
 //   }
 
 //   Widget _buildNotificationListView(StudentNotificationProvider provider) {
-//     print(
+//     debugPrint(
 //         'Building notification list with ${provider.notifications.length} items');
 
 //     return Column(
@@ -197,7 +197,7 @@
 //                   itemCount: provider.notifications.length,
 //                   itemBuilder: (context, index) {
 //                     final notification = provider.notifications[index];
-//                     print(
+//                     debugPrint(
 //                         'Building notification item $index: ${notification.message}');
 //                     return _buildNotificationItem(
 //                       icon: _getNotificationIcon(notification.notificationType),

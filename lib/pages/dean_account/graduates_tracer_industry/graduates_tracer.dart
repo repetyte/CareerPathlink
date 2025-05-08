@@ -10,7 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'graduates_lists.dart'; // Import the GraduatesLists screen
 import 'employed_lists.dart'; // Import the EmployedLists screen
 import 'unemployed_lists.dart'; // Import the UnemployedLists screen
-import 'graduates_tracker.dart'; // Import the GraduatesTracker screen
+// Import the GraduatesTracker screen
 
 class TracerDashboardDean extends StatefulWidget {
   final CollegeDeanAccount collegeDeanAccount;
@@ -424,13 +424,13 @@ class _TracerDashboardDeanState extends State<TracerDashboardDean> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  // Header Section: Graduates Tracer Industry
+                  // Header Section: Employment Tracking
                   Container(
                     margin: const EdgeInsets.fromLTRB(16, 24, 16, 24),
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        'Graduates Tracer Industry',
+                        'Employment Tracking',
                         style: GoogleFonts.getFont(
                           'Montserrat',
                           fontWeight: FontWeight.w700,
@@ -441,7 +441,7 @@ class _TracerDashboardDeanState extends State<TracerDashboardDean> {
                     ),
                   ),
 
-                  // Header Section: Graduates Tracer Industry
+                  // Header Section: Employment Tracking
                   Container(
                     margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                     height: 300,

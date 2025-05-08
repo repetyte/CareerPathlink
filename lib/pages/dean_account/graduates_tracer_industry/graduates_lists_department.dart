@@ -37,7 +37,7 @@ class _GraduatesListsDepartmentDeanState extends State<GraduatesListsDepartmentD
       });
     } catch (e) {
       if (kDebugMode) {
-        print('Error fetching graduates: $e');
+        debugPrint('Error fetching graduates: $e');
       }
     }
   }

@@ -1,7 +1,7 @@
 <?php
 // Database configuration
 $dbHost = 'localhost';
-$dbName = 'final_careercoaching';
+$dbName = 'ccms_db';
 $dbUser = 'root';
 $dbPass = '';
 

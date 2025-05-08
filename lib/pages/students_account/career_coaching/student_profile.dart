@@ -57,7 +57,7 @@
 //   @override
 //   void initState() {
 //     super.initState();
-//     print("Initializing StudentProfileScreen...");
+//     debugPrint("Initializing StudentProfileScreen...");
 //     _loadInitialData();
 //     _loadProfilePicture();
 //     ApiService.fetchRescheduleRequests().then((_) {
@@ -141,7 +141,7 @@
 //   //       });
 //   //     }
 //   //   } catch (e) {
-//   //     print('Error loading student data: $e');
+//   //     debugPrint('Error loading student data: $e');
 //   //   }
 //   // }
 
@@ -183,7 +183,7 @@
 //         await _saveImageLocally(picture.imageUrl);
 //       }
 //     } catch (e) {
-//       print('Error loading profile picture: $e');
+//       debugPrint('Error loading profile picture: $e');
 //     } finally {
 //       if (mounted) {
 //         setState(() => _imageLoading = false);
@@ -193,23 +193,23 @@
 
 //   Future<void> _loadSessions() async {
 //     try {
-//       print("Loading sessions...");
+//       debugPrint("Loading sessions...");
 //       String? userId = await _getLoggedInUserId();
-//       print("Sessions - User ID: $userId");
+//       debugPrint("Sessions - User ID: $userId");
 //       if (userId == null) {
-//         print("Error: No logged-in user found!");
+//         debugPrint("Error: No logged-in user found!");
 //         return;
 //       }
 
 //       Map<String, List<Session>> sessionData =
 //           await ApiService.fetchSessions(userId);
 
-//       print(
+//       debugPrint(
 //           "Upcoming Sessions: ${sessionData['upcoming_sessions']?.length ?? 0}");
-//       print("Past Sessions: ${sessionData['past_sessions']?.length ?? 0}");
-//       print(
+//       debugPrint("Past Sessions: ${sessionData['past_sessions']?.length ?? 0}");
+//       debugPrint(
 //           "Pending Sessions: ${sessionData['pending_sessions']?.length ?? 0}");
-//       print(
+//       debugPrint(
 //           "Cancelled Sessions: ${sessionData['cancelled_sessions']?.length ?? 0}");
 
 //       setState(() {
@@ -219,7 +219,7 @@
 //         cancelledSessions = sessionData['cancelled_sessions'] ?? [];
 //       });
 //     } catch (e) {
-//       print("Error loading sessions: $e");
+//       debugPrint("Error loading sessions: $e");
 //     }
 //   }
 
@@ -241,7 +241,7 @@
 //   }
 
 //   void _editProfile() {
-//     print("Navigate to Edit Profile Screen");
+//     debugPrint("Navigate to Edit Profile Screen");
 //   }
 
 //   Future<void> _pickImage(ImageSource source) async {
@@ -307,7 +307,7 @@
 //         }
 //       }
 //     } catch (e) {
-//       print('Error picking image: $e');
+//       debugPrint('Error picking image: $e');
 //       ScaffoldMessenger.of(context).showSnackBar(
 //         SnackBar(content: Text('Error: ${e.toString()}')),
 //       );
@@ -321,7 +321,7 @@
 //       SharedPreferences prefs = await SharedPreferences.getInstance();
 //       await prefs.setString('profile_image_url', imageUrl);
 //     } catch (e) {
-//       print('Error saving image URL locally: $e');
+//       debugPrint('Error saving image URL locally: $e');
 //     }
 //   }
 
@@ -384,7 +384,7 @@
 //         await prefs.setString('profile_image_url', normalizedUrl);
 //       }
 //     } catch (e) {
-//       print('Error loading profile picture: $e');
+//       debugPrint('Error loading profile picture: $e');
 //     } finally {
 //       if (mounted) {
 //         setState(() => _imageLoading = false);
@@ -400,7 +400,7 @@
 //       final response = await http.head(Uri.parse(url));
 //       return response.statusCode == 200;
 //     } catch (e) {
-//       print('Error verifying image URL: $e');
+//       debugPrint('Error verifying image URL: $e');
 //       return false;
 //     }
 //   }
@@ -408,7 +408,7 @@
 //   Future<String?> _getLoggedInUserId() async {
 //     SharedPreferences prefs = await SharedPreferences.getInstance();
 //     String? userId = prefs.getString("user_id");
-//     print("Retrieved user ID from SharedPreferences: $userId");
+//     debugPrint("Retrieved user ID from SharedPreferences: $userId");
 //     return userId;
 //   }
 

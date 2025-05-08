@@ -38,7 +38,7 @@ class CancellationReasonDialog extends StatelessWidget {
               builder: (context, color, child) => Icon(
                 Icons.info_outline_rounded,
                 size: 48,
-                color: color as Color?,
+                color: color,
               ),
             ),
             const SizedBox(height: 16),
@@ -96,7 +96,7 @@ class CancellationReasonDialog extends StatelessWidget {
               tween: Tween<double>(begin: 1, end: 1),
               duration: const Duration(milliseconds: 150),
               builder: (context, scale, child) => Transform.scale(
-                scale: scale as double,
+                scale: scale,
                 child: ElevatedButton(
                   onPressed: () {
                     HapticFeedback.lightImpact();

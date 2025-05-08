@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:nativewrappers/_internal/vm/lib/ffi_patch.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class CoachProfileService {
@@ -27,7 +27,7 @@ class CoachProfileService {
             'Failed to load coach profiles. Status: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error in getAllCoachProfiles: $e');
+      debugPrint('Error in getAllCoachProfiles: $e');
       rethrow;
     }
   }
@@ -52,7 +52,7 @@ class CoachProfileService {
         throw Exception('Server error: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error in getCoachProfileById: $e');
+      debugPrint('Error in getCoachProfileById: $e');
       rethrow;
     }
   }
@@ -70,7 +70,7 @@ class CoachProfileService {
         'contact': profileData['contact']?.toString() ?? '',
       };
 
-      print('Sending update request with data: $updateData');
+      debugPrint('Sending update request with data: $updateData');
 
       final response = await http.put(
         url,
@@ -81,7 +81,7 @@ class CoachProfileService {
         body: jsonEncode(updateData),
       );
 
-      print('Update response: ${response.statusCode} - ${response.body}');
+      debugPrint('Update response: ${response.statusCode} - ${response.body}');
 
       final responseBody = jsonDecode(response.body);
 
@@ -96,13 +96,13 @@ class CoachProfileService {
             'Failed to update profile. Status: ${response.statusCode}');
       }
     } on FormatException catch (e) {
-      print('JSON parsing error: $e');
+      debugPrint('JSON parsing error: $e');
       throw Exception('Failed to parse server response');
     } on http.ClientException catch (e) {
-      print('Network error: $e');
+      debugPrint('Network error: $e');
       throw Exception('Network error occurred. Please check your connection.');
     } catch (e) {
-      print('Unexpected error: $e');
+      debugPrint('Unexpected error: $e');
       rethrow;
     }
   }

@@ -366,7 +366,7 @@ class _HomeScreenState extends State<HomeScreenPartner> {
       _buildImageCard(
         3,
         'assets/career_coaching/mentoring_.png',
-        'Graduates Tracer Industry',
+        'Employment Tracking',
         'Mentoring connects you with alumni who’ve been where you are. Get career advice and support to make your professional journey a success.',
         cardWidth,
       ),

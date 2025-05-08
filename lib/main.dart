@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
 
         // // College Deans/Coach Account Routes
         // '/deans/career_coaching': (context) => const RrJobDashboardUser(), // test only: should be Career Coaching
-        // '/deans/graduates_tracer_industry': (context) => const InternshipDashboardStud(), // test only: should be Graduates Tracer Industry
+        // '/deans/graduates_tracer_industry': (context) => const InternshipDashboardStud(), // test only: should be Employment Tracking
         
         // // Employer Partners Account Routes
         // '/partner/recruitment_and_placement': (context) => const RrJobDashboardEmpPartners(),
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         // '/career_center_director/recruitment_and_placement': (context) => const RrJobDashboardUser(), // test only: should be Recruitment and Placement
         // '/career_center_director/career_coaching': (context) => const JobPostingDetailsScreen(),  // test only: should be Career Coaching
         // '/career_center_director/work_integrated_learning': (context) => const JobPostingDetailsScreen(), // test only: should be Work Integrated Learning
-        // '/career_center_director/graduates_tracer_industry': (context) => const JobPostingDetailsScreen(),  // test only: should be Graduates Tracer Industry
+        // '/career_center_director/graduates_tracer_industry': (context) => const JobPostingDetailsScreen(),  // test only: should be Employment Tracking
       },
     );
   }

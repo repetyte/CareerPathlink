@@ -6,7 +6,7 @@ header("Access-Control-Allow-Methods: POST");
 $servername = "localhost";
 $username = "root"; // Default for Laragon
 $password = ""; // Default for Laragon
-$dbname = "final_careercoaching"; // Change this to your actual DB name
+$dbname = "ccms_db"; // Change this to your actual DB name
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 

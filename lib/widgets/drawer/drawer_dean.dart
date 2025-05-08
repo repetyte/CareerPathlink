@@ -94,7 +94,7 @@ class MyDrawerDean extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.bar_chart),
             title: const Text(
-              'Graduates Tracer Industry',
+              'Employment Tracking',
               style: TextStyle(
                 height: 1.3,
               ),

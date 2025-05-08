@@ -8,7 +8,6 @@ import '../../../widgets/drawer/drawer_students.dart';
 import '../../../widgets/footer/footer.dart';
 import '../../login_and_signup/login_view.dart';
 import 'select_coach_screen.dart';
-import 'student_header.dart';
 
 
 class AppointmentBookingScreen extends StatefulWidget {

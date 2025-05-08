@@ -1,8 +1,8 @@
 <?php
 $servername = "localhost";
-$username = "final_careercoaching";
+$username = "ccms_db";
 $password = "";
-$dbname = "final_careercoaching";
+$dbname = "ccms_db";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

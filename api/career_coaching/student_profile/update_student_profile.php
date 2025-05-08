@@ -8,7 +8,7 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header('Content-Type: application/json');
 
 // Connect to database
-$mysqli = new mysqli("localhost", "root", "", "final_careercoaching");
+$mysqli = new mysqli("localhost", "root", "", "ccms_db");
 
 if ($mysqli->connect_error) {
     die(json_encode(["error" => "Database connection failed: " . $mysqli->connect_error]));

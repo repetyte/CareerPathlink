@@ -10,7 +10,7 @@ ini_set('display_errors', 1);
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "final_careercoaching";
+$dbname = "ccms_db";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 

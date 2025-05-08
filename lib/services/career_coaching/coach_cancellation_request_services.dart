@@ -2,7 +2,6 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,8 +25,8 @@ class CancellationRequestService {
     throw Exception('All fields are required');
   }
 
-  print('Sending cancellation request with data:');
-print(jsonEncode({
+  debugPrint('Sending cancellation request with data:');
+debugPrint(jsonEncode({
   'appointment_id': appointmentId,
   'coach_id': coachId,
   'student_name': studentName,
@@ -51,7 +50,7 @@ print(jsonEncode({
     }),
   );
 
-print('API Response: ${response.body}');
+debugPrint('API Response: ${response.body}');
   if (response.statusCode == 200) {
     final data = jsonDecode(response.body);
     return CoachCancellationRequest.fromJson(data);
@@ -82,7 +81,7 @@ static Future<void> markAsCompleted({
     }),
   );
 
-  print('API Response: ${response.body}');
+  debugPrint('API Response: ${response.body}');
   final responseData = jsonDecode(response.body);
   if (response.statusCode != 200 || responseData['success'] != true) {
     throw Exception(responseData['error'] ?? 'Failed to mark as completed');

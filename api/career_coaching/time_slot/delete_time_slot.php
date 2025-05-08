@@ -7,7 +7,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Methods
 $servername = "localhost";
 $username = "root"; 
 $password = ""; 
-$dbname = "final_careercoaching"; 
+$dbname = "ccms_db"; 
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {

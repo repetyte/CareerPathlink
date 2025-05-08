@@ -29,8 +29,8 @@ class ApiService {
       );
 
       if (response.statusCode == 200) {
-        // First print the raw response to debug
-        print('Raw response: ${response.body}');
+        // First debugPrint the raw response to debug
+        debugPrint('Raw response: ${response.body}');
 
         // Then parse the JSON
         final List<dynamic> data = jsonDecode(response.body);
@@ -40,7 +40,7 @@ class ApiService {
             'Failed to load coaches. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error in fetchCoaches: $e');
+      debugPrint('Error in fetchCoaches: $e');
       throw Exception('Failed to load coaches: $e');
     }
   }
@@ -61,7 +61,7 @@ class ApiService {
       final responseData = jsonDecode(response.body);
       if (responseData['message'] != null) {
         if (kDebugMode) {
-          print("Coach created successfully");
+          debugPrint("Coach created successfully");
         }
       } else {
         throw Exception('Failed to create coach');
@@ -88,7 +88,7 @@ class ApiService {
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
       if (responseData['message'] != null) {
-        print("Coach updated successfully");
+        debugPrint("Coach updated successfully");
       } else {
         throw Exception('Failed to update coach');
       }
@@ -111,7 +111,7 @@ class ApiService {
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
       if (responseData['message'] != null) {
-        print("Coach deleted successfully");
+        debugPrint("Coach deleted successfully");
       } else {
         throw Exception('Failed to delete coach');
       }
@@ -128,7 +128,7 @@ class ApiService {
             "http://localhost/CareerPathlink/api/career_coaching/time_slot/get_coach_id.php?user_id=$userId"),
       );
 
-      print(
+      debugPrint(
           "[API] Fetch Coach ID Response: ${response.statusCode} - ${response.body}");
 
       if (response.statusCode == 200) {
@@ -138,7 +138,7 @@ class ApiService {
         throw Exception("Failed to fetch coach ID: ${response.statusCode}");
       }
     } catch (e) {
-      print("[API] Error fetching coach ID: $e");
+      debugPrint("[API] Error fetching coach ID: $e");
       return null;
     }
   }
@@ -146,7 +146,7 @@ class ApiService {
   static Future<TimeSlot?> createTimeSlot(
       TimeSlot timeSlot, String userId) async {
     try {
-      print("[API] Creating time slot for user $userId: ${timeSlot.toJson()}");
+      debugPrint("[API] Creating time slot for user $userId: ${timeSlot.toJson()}");
       final response = await http.post(
         Uri.parse(
             'http://localhost/CareerPathlink/api/career_coaching/time_slot/create_time_slot.php'),
@@ -160,7 +160,7 @@ class ApiService {
         }),
       );
 
-      print(
+      debugPrint(
           "[API] Create Time Slot Response: ${response.statusCode} - ${response.body}");
 
       if (response.statusCode == 200) {
@@ -173,7 +173,7 @@ class ApiService {
       }
       return null;
     } catch (e) {
-      print("[API] Exception creating time slot: $e");
+      debugPrint("[API] Exception creating time slot: $e");
       throw Exception("Failed to create time slot: $e");
     }
   }
@@ -217,18 +217,18 @@ class ApiService {
       );
 
       // Debugging: Print response details
-      print("Response Status: ${response.statusCode}");
-      print("Response Body: ${response.body}");
+      debugPrint("Response Status: ${response.statusCode}");
+      debugPrint("Response Body: ${response.body}");
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         return data["message"] == "Time slot updated successfully";
       } else {
-        print("Server returned error: ${response.body}");
+        debugPrint("Server returned error: ${response.body}");
         return false;
       }
     } catch (e) {
-      print("Exception: $e");
+      debugPrint("Exception: $e");
       return false;
     }
   }
@@ -253,7 +253,7 @@ class ApiService {
 // Signup
   static Future<bool> createUser(
       User user, String password, String? selectedCoachRole) async {
-    print("Sending user_id: ${user.id}"); // Debugging
+    debugPrint("Sending user_id: ${user.id}"); // Debugging
 
     final response = await http.post(
       Uri.parse(
@@ -268,25 +268,25 @@ class ApiService {
       }),
     );
 
-    print("Raw Response: ${response.body}"); // Debugging
+    debugPrint("Raw Response: ${response.body}"); // Debugging
 
     try {
       final data = jsonDecode(response.body);
       if (response.statusCode == 200 && data.containsKey("success")) {
         return true;
       } else {
-        print("Error from API: ${data['error']}");
+        debugPrint("Error from API: ${data['error']}");
         return false;
       }
     } catch (e) {
-      print("Error parsing JSON: ${response.body}");
+      debugPrint("Error parsing JSON: ${response.body}");
       return false;
     }
   }
 
   static Future<bool> createUserWithProfile(
       Map<String, dynamic> userData) async {
-    print("Sending user data: $userData"); // Debugging
+    debugPrint("Sending user data: $userData"); // Debugging
 
     final response = await http.post(
       Uri.parse(
@@ -295,18 +295,18 @@ class ApiService {
       body: jsonEncode(userData),
     );
 
-    print("Raw Response: ${response.body}"); // Debugging
+    debugPrint("Raw Response: ${response.body}"); // Debugging
 
     try {
       final data = jsonDecode(response.body);
       if (response.statusCode == 200 && data.containsKey("success")) {
         return true;
       } else {
-        print("Error from API: ${data['error']}");
+        debugPrint("Error from API: ${data['error']}");
         return false;
       }
     } catch (e) {
-      print("Error parsing JSON: ${response.body}");
+      debugPrint("Error parsing JSON: ${response.body}");
       return false;
     }
   }
@@ -446,7 +446,7 @@ class ApiService {
     if (response.statusCode == 200) {
       final Map<String, dynamic> jsonResponse =
           jsonDecode(response.body); // Parse as Map
-      print("API Response: $jsonResponse"); // Debugging
+      debugPrint("API Response: $jsonResponse"); // Debugging
 
       if (jsonResponse.containsKey("time_slots")) {
         final List<dynamic> data = jsonResponse["time_slots"]; // Extract List
@@ -481,31 +481,31 @@ class ApiService {
   // static Future<profile_model.StudentProfile?> getStudentProfile(
   //     String userId) async {
   //   try {
-  //     print("Fetching profile for user ID: $userId");
+  //     debugPrint("Fetching profile for user ID: $userId");
 
   //     final response = await http.get(
   //       Uri.parse(
   //           'http://localhost/CareerPathlink/api/career_coaching/student_profile/read_student_profiles.php?user_id=$userId'),
   //     );
 
-  //     print("API Response Status: ${response.statusCode}");
-  //     print("API Response Body: ${response.body}");
+  //     debugPrint("API Response Status: ${response.statusCode}");
+  //     debugPrint("API Response Body: ${response.body}");
 
   //     if (response.statusCode == 200) {
   //       final Map<String, dynamic> data = jsonDecode(response.body);
 
   //       if (data.containsKey("error")) {
-  //         print("Error fetching student profile: ${data["error"]}");
+  //         debugPrint("Error fetching student profile: ${data["error"]}");
   //         return null;
   //       }
 
   //       return profile_model.StudentProfile.fromJson(data);
   //     } else {
-  //       print("Error fetching student profile: ${response.statusCode}");
+  //       debugPrint("Error fetching student profile: ${response.statusCode}");
   //       return null;
   //     }
   //   } catch (e) {
-  //     print("Exception in API call: $e");
+  //     debugPrint("Exception in API call: $e");
   //     return null;
   //   }
   // }
@@ -563,7 +563,7 @@ class ApiService {
       }
       return null;
     } catch (e) {
-      print('Error creating profile picture: $e');
+      debugPrint('Error creating profile picture: $e');
       return null;
     }
   }
@@ -585,7 +585,7 @@ class ApiService {
         final data = json.decode(response.body);
 
         if (data['error'] != null) {
-          print('Error from server: ${data['error']}');
+          debugPrint('Error from server: ${data['error']}');
           return null;
         }
 
@@ -610,11 +610,11 @@ class ApiService {
         }
         return null;
       } else {
-        print('Server returned status code: ${response.statusCode}');
+        debugPrint('Server returned status code: ${response.statusCode}');
         return null;
       }
     } catch (e) {
-      print('Error loading profile picture: $e');
+      debugPrint('Error loading profile picture: $e');
       return null;
     }
   }
@@ -632,11 +632,11 @@ class ApiService {
       if (response.statusCode == 200) {
         return response.bodyBytes;
       } else {
-        print('Failed to load image. Status code: ${response.statusCode}');
+        debugPrint('Failed to load image. Status code: ${response.statusCode}');
         return null;
       }
     } catch (e) {
-      print('Error loading image: $e');
+      debugPrint('Error loading image: $e');
       return null;
     }
   }
@@ -678,7 +678,7 @@ class ApiService {
       }
       return null;
     } catch (e) {
-      print('Error updating profile picture: $e');
+      debugPrint('Error updating profile picture: $e');
       return null;
     }
   }
@@ -695,43 +695,43 @@ class ApiService {
       return response.statusCode == 200;
     } catch (e) {
       if (kDebugMode) {
-        print('Error deleting profile picture: $e');
+        debugPrint('Error deleting profile picture: $e');
       }
       return false;
     }
   }
 
   // Update student profile
-  // static Future<bool> modifyStudentProfile(
-  //     profile_model.StudentProfile student) async {
-  //   // Ensure we do not send empty values
-  //   Map<String, dynamic> updatedData = student.toJson();
-  //   updatedData.removeWhere((key, value) => value == ""); // Remove empty fields
+  static Future<bool> modifyStudentProfile(
+      profile_model.StudentProfile student) async {
+    // Ensure we do not send empty values
+    Map<String, dynamic> updatedData = student.toJson();
+    updatedData.removeWhere((key, value) => value == ""); // Remove empty fields
 
-  //   final response = await http.post(
-  //     Uri.parse(
-  //         'http://localhost/CareerPathlink/api/career_coaching/student_profile/update_student_profile.php'),
-  //     headers: {"Content-Type": "application/json"},
-  //     body: jsonEncode(updatedData),
-  //   );
+    final response = await http.post(
+      Uri.parse(
+          'http://localhost/CareerPathlink/api/career_coaching/student_profile/update_student_profile.php'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(updatedData),
+    );
 
-  //   print("API Response Status: ${response.statusCode}");
-  //   print("API Response Body: ${response.body}");
+    debugPrint("API Response Status: ${response.statusCode}");
+    debugPrint("API Response Body: ${response.body}");
 
-  //   if (response.statusCode == 200) {
-  //     final data = jsonDecode(response.body);
-  //     if (data.containsKey("success")) {
-  //       print("Profile updated successfully!");
-  //       return true;
-  //     } else {
-  //       print("Error updating profile: ${data["error"]}");
-  //       return false;
-  //     }
-  //   } else {
-  //     print("Server error: ${response.statusCode}");
-  //     return false;
-  //   }
-  // }
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      if (data.containsKey("success")) {
+        debugPrint("Profile updated successfully!");
+        return true;
+      } else {
+        debugPrint("Error updating profile: ${data["error"]}");
+        return false;
+      }
+    } else {
+      debugPrint("Server error: ${response.statusCode}");
+      return false;
+    }
+  }
 
   // Delete student profile
   static Future<bool> deleteStudentProfile(int id) async {
@@ -779,7 +779,7 @@ class ApiService {
             "Failed to load appointments. Status: ${response.statusCode}");
       }
     } catch (e) {
-      print("API Error: $e");
+      debugPrint("API Error: $e");
       throw Exception("Failed to fetch appointments. Please try again later.");
     }
   }
@@ -790,11 +790,11 @@ class ApiService {
     String? userId = prefs.getString('user_id');
 
     if (userId == null || userId.isEmpty) {
-      print("Error: user_id is NULL or EMPTY.");
+      debugPrint("Error: user_id is NULL or EMPTY.");
       return null;
     }
 
-    print("Retrieved user_id: $userId"); // ✅ Debugging
+    debugPrint("Retrieved user_id: $userId"); // ✅ Debugging
     return userId;
   }
 
@@ -802,7 +802,7 @@ class ApiService {
       Map<String, dynamic> requestData) async {
     String? userId = await getUserId();
     if (userId == null) {
-      print("Error: No user logged in.");
+      debugPrint("Error: No user logged in.");
       return false;
     }
 
@@ -818,10 +818,10 @@ class ApiService {
         requestData['wdt_user_id'] = coachData['user_id'];
       }
     } catch (e) {
-      print("Error fetching coach data: $e");
+      debugPrint("Error fetching coach data: $e");
     }
 
-    print("Sending request: ${jsonEncode(requestData)}");
+    debugPrint("Sending request: ${jsonEncode(requestData)}");
 
     try {
       final response = await http.post(
@@ -831,11 +831,11 @@ class ApiService {
         body: jsonEncode(requestData),
       );
 
-      print("Response Code: ${response.statusCode}");
-      print("Response Body: ${response.body}");
+      debugPrint("Response Code: ${response.statusCode}");
+      debugPrint("Response Body: ${response.body}");
 
       if (response.body.isEmpty) {
-        print("API Error: Empty response from server.");
+        debugPrint("API Error: Empty response from server.");
         return false;
       }
 
@@ -844,11 +844,11 @@ class ApiService {
       if (data.containsKey("success")) {
         return true;
       } else {
-        print("API Error: ${data['error']}");
+        debugPrint("API Error: ${data['error']}");
         return false;
       }
     } catch (e) {
-      print("API Error: $e");
+      debugPrint("API Error: $e");
       return false;
     }
   }
@@ -882,7 +882,7 @@ class ApiService {
       }
       throw Exception("Failed to load booked slots");
     } catch (e) {
-      print("API Error: $e");
+      debugPrint("API Error: $e");
       return [];
     }
   }
@@ -911,7 +911,7 @@ class ApiService {
         body: jsonEncode({'id': appointmentId, 'action': 'accept'}),
       );
 
-      print("Raw API Response: ${response.body}");
+      debugPrint("Raw API Response: ${response.body}");
 
       if (response.statusCode == 200) {
         try {
@@ -928,7 +928,7 @@ class ApiService {
         throw Exception("Server error: ${response.statusCode}");
       }
     } catch (e) {
-      print("Error in acceptAppointment: $e");
+      debugPrint("Error in acceptAppointment: $e");
       rethrow;
     }
   }
@@ -949,19 +949,19 @@ class ApiService {
         body: jsonEncode(requestBody),
       );
 
-      print("Request Body: ${jsonEncode(requestBody)}");
-      print("Response Status Code: ${response.statusCode}");
-      print("Response Body: ${response.body}");
+      debugPrint("Request Body: ${jsonEncode(requestBody)}");
+      debugPrint("Response Status Code: ${response.statusCode}");
+      debugPrint("Response Body: ${response.body}");
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         return data["success"] != null;
       } else {
-        print("Error response: ${response.body}");
+        debugPrint("Error response: ${response.body}");
         return false;
       }
     } catch (e) {
-      print("Error updating appointment status: $e");
+      debugPrint("Error updating appointment status: $e");
       return false;
     }
   }
@@ -982,7 +982,7 @@ class ApiService {
       final data = jsonDecode(response.body);
       return data['success'] != null;
     } else {
-      print("Error: ${response.statusCode}, ${response.body}");
+      debugPrint("Error: ${response.statusCode}, ${response.body}");
       return false;
     }
   }
@@ -994,22 +994,22 @@ class ApiService {
     try {
       final response = await http.get(url);
       if (kDebugMode) {
-        print("API Response Status: ${response.statusCode}");
+        debugPrint("API Response Status: ${response.statusCode}");
       }
       if (kDebugMode) {
-        print("API Response Body: ${response.body}");
+        debugPrint("API Response Body: ${response.body}");
       }
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
 
         if (responseData.containsKey("error")) {
-          print("API Error: ${responseData["error"]}");
+          debugPrint("API Error: ${responseData["error"]}");
           return {};
         }
 
-        // Debug print all received data
-        print("All Sessions Data: $responseData");
+        // Debug debugPrint all received data
+        debugPrint("All Sessions Data: $responseData");
 
         List<Session> upcomingSessions = [];
         List<Session> pastSessions = [];
@@ -1021,7 +1021,7 @@ class ApiService {
           upcomingSessions = (responseData["upcoming_sessions"] as List)
               .map((json) => Session.fromJson(json))
               .toList();
-          print("Found ${upcomingSessions.length} upcoming sessions");
+          debugPrint("Found ${upcomingSessions.length} upcoming sessions");
         }
 
         // Process past sessions
@@ -1029,7 +1029,7 @@ class ApiService {
           pastSessions = (responseData["past_sessions"] as List)
               .map((json) => Session.fromJson(json))
               .toList();
-          print("Found ${pastSessions.length} past sessions");
+          debugPrint("Found ${pastSessions.length} past sessions");
         }
 
         // Process pending sessions
@@ -1037,7 +1037,7 @@ class ApiService {
           pendingSessions = (responseData["pending_sessions"] as List)
               .map((json) => Session.fromJson(json))
               .toList();
-          print("Found ${pendingSessions.length} pending sessions");
+          debugPrint("Found ${pendingSessions.length} pending sessions");
         }
 
         // Process cancelled sessions
@@ -1045,7 +1045,7 @@ class ApiService {
           cancelledSessions = (responseData["cancelled_sessions"] as List)
               .map((json) => Session.fromJson(json))
               .toList();
-          print("Found ${cancelledSessions.length} cancelled sessions");
+          debugPrint("Found ${cancelledSessions.length} cancelled sessions");
         }
 
         return {
@@ -1055,11 +1055,11 @@ class ApiService {
           "cancelled_sessions": cancelledSessions,
         };
       } else {
-        print("Failed to fetch sessions. Status code: ${response.statusCode}");
+        debugPrint("Failed to fetch sessions. Status code: ${response.statusCode}");
         return {};
       }
     } catch (e) {
-      print("API Error: $e");
+      debugPrint("API Error: $e");
       return {};
     }
   }
@@ -1104,16 +1104,16 @@ class ApiService {
               .toList();
           return _cachedRescheduleRequests;
         } else {
-          print("Unexpected response format: $decodedResponse");
+          debugPrint("Unexpected response format: $decodedResponse");
           return [];
         }
       } else {
-        print(
+        debugPrint(
             "Failed to fetch reschedule requests. Status code: ${response.statusCode}");
         return [];
       }
     } catch (e) {
-      print("API Exception: $e");
+      debugPrint("API Exception: $e");
       return [];
     }
   }
@@ -1131,7 +1131,7 @@ class ApiService {
       }
       return false;
     } catch (e) {
-      print('Error checking reschedule status: $e');
+      debugPrint('Error checking reschedule status: $e');
       return false;
     }
   }
@@ -1153,7 +1153,7 @@ class ApiService {
       }
       return null;
     } catch (e) {
-      print('Error fetching pending request: $e');
+      debugPrint('Error fetching pending request: $e');
       return null;
     }
   }
@@ -1378,9 +1378,9 @@ class ApiService {
         "http://localhost/CareerPathlink/api/career_coaching/student_request_reschedule/create_reschedule.php");
 
     try {
-      print("Submitting reschedule request...");
-      print("URL: $url");
-      print("Request Method: POST");
+      debugPrint("Submitting reschedule request...");
+      debugPrint("URL: $url");
+      debugPrint("Request Method: POST");
 
       final response = await http.post(
         url,
@@ -1397,8 +1397,8 @@ class ApiService {
         }),
       );
 
-      print("Response Status Code: ${response.statusCode}");
-      print("Response Body: ${response.body}");
+      debugPrint("Response Status Code: ${response.statusCode}");
+      debugPrint("Response Body: ${response.body}");
 
       if (response.statusCode == 200) {
         return jsonDecode(response.body);
@@ -1409,7 +1409,7 @@ class ApiService {
         };
       }
     } catch (e) {
-      print("API Exception: $e");
+      debugPrint("API Exception: $e");
       return {"error": "Error: $e"};
     }
   }
@@ -1436,18 +1436,18 @@ class ApiService {
               upcomingAppointments.add(Map<String, dynamic>.from(appointment));
             }
           } catch (e) {
-            print("Error parsing date: $e");
+            debugPrint("Error parsing date: $e");
           }
         }
 
         return upcomingAppointments;
       } else {
-        print(
+        debugPrint(
             "Error fetching appointments: ${response.statusCode}, ${response.body}");
         throw Exception('Failed to load appointments');
       }
     } catch (e) {
-      print("Network error: $e");
+      debugPrint("Network error: $e");
       throw Exception('Network error occurred');
     }
   }
@@ -1467,7 +1467,7 @@ class ApiService {
       }
       return null;
     } catch (e) {
-      print('Error getting student user: $e');
+      debugPrint('Error getting student user: $e');
       return null;
     }
   }
@@ -1489,7 +1489,7 @@ class ApiService {
       }
       return [];
     } catch (e) {
-      print("Error fetching appointment status history: $e");
+      debugPrint("Error fetching appointment status history: $e");
       return [];
     }
   }
@@ -1514,7 +1514,7 @@ class ApiService {
         if (contact != null) 'contact': contact,
       };
 
-      print('Creating coach profile with data: $requestBody');
+      debugPrint('Creating coach profile with data: $requestBody');
 
       final response = await http.post(
         url,
@@ -1522,8 +1522,8 @@ class ApiService {
         body: jsonEncode(requestBody),
       );
 
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      debugPrint('Response status: ${response.statusCode}');
+      debugPrint('Response body: ${response.body}');
 
       final responseBody = jsonDecode(response.body);
 
@@ -1538,7 +1538,7 @@ class ApiService {
         throw Exception('Server error: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error in createCoachProfile: $e');
+      debugPrint('Error in createCoachProfile: $e');
       rethrow;
     }
   }
@@ -1549,12 +1549,12 @@ class ApiService {
         "http://localhost/CareerPathlink/api/career_coaching/coach_profile/get_coach_profile.php");
 
     try {
-      print('Fetching all coach profiles');
+      debugPrint('Fetching all coach profiles');
 
       final response = await http.get(url);
 
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      debugPrint('Response status: ${response.statusCode}');
+      debugPrint('Response body: ${response.body}');
 
       final responseBody = jsonDecode(response.body);
 
@@ -1569,7 +1569,7 @@ class ApiService {
         throw Exception('Server error: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error in getAllCoachProfiles: $e');
+      debugPrint('Error in getAllCoachProfiles: $e');
       rethrow;
     }
   }
@@ -1584,7 +1584,7 @@ class ApiService {
         'id': id,
       };
 
-      print('Fetching coach profile with ID: $id');
+      debugPrint('Fetching coach profile with ID: $id');
 
       final response = await http.post(
         url,
@@ -1592,8 +1592,8 @@ class ApiService {
         body: jsonEncode(requestBody),
       );
 
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      debugPrint('Response status: ${response.statusCode}');
+      debugPrint('Response body: ${response.body}');
 
       final responseBody = jsonDecode(response.body);
 
@@ -1607,7 +1607,7 @@ class ApiService {
         throw Exception('Server error: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error in getCoachProfileById: $e');
+      debugPrint('Error in getCoachProfileById: $e');
       rethrow;
     }
   }
@@ -1633,7 +1633,7 @@ class ApiService {
         if (address != null) 'address': address,
       };
 
-      print('Updating coach profile with data: $requestBody');
+      debugPrint('Updating coach profile with data: $requestBody');
 
       final response = await http.put(
         url,
@@ -1641,8 +1641,8 @@ class ApiService {
         body: jsonEncode(requestBody),
       );
 
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      debugPrint('Response status: ${response.statusCode}');
+      debugPrint('Response body: ${response.body}');
 
       final responseBody = jsonDecode(response.body);
 
@@ -1657,7 +1657,7 @@ class ApiService {
         throw Exception('Server error: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error in updateCoachProfile: $e');
+      debugPrint('Error in updateCoachProfile: $e');
       rethrow;
     }
   }
@@ -1672,7 +1672,7 @@ class ApiService {
         'id': id,
       };
 
-      print('Deleting coach profile with ID: $id');
+      debugPrint('Deleting coach profile with ID: $id');
 
       final response = await http.delete(
         url,
@@ -1680,8 +1680,8 @@ class ApiService {
         body: jsonEncode(requestBody),
       );
 
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      debugPrint('Response status: ${response.statusCode}');
+      debugPrint('Response body: ${response.body}');
 
       final responseBody = jsonDecode(response.body);
 
@@ -1696,7 +1696,7 @@ class ApiService {
         throw Exception('Server error: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error in deleteCoachProfile: $e');
+      debugPrint('Error in deleteCoachProfile: $e');
       rethrow;
     }
   }
@@ -1722,7 +1722,7 @@ class ApiService {
         throw Exception('Server error: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error in getCompletedSessionsByCoach: $e');
+      debugPrint('Error in getCompletedSessionsByCoach: $e');
       rethrow;
     }
   }

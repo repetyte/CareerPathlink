@@ -11,10 +11,10 @@ class SessionCard extends StatefulWidget {
   final Future<void> Function()? onReschedule;
 
   const SessionCard({
-    Key? key,
+    super.key,
     required this.session,
     this.onReschedule,
-  }) : super(key: key);
+  });
 
   @override
   _SessionCardState createState() => _SessionCardState();

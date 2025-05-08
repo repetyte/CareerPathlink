@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "final_careercoaching";
+$dbname = "ccms_db";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 

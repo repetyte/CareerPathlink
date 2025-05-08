@@ -11,7 +11,7 @@ ini_set('display_errors', 1);
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "final_careercoaching";
+$database = "ccms_db";
 
 // Connect to MySQL
 $conn = new mysqli($servername, $username, $password, $database);

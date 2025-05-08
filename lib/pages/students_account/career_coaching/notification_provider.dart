@@ -46,7 +46,7 @@ class StudentNotificationProvider with ChangeNotifier {
         notifyListeners();
       }
     } catch (e) {
-      print('Error marking notification as read: $e');
+      debugPrint('Error marking notification as read: $e');
       rethrow;
     }
   }
@@ -71,7 +71,7 @@ class StudentNotificationProvider with ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      print('Error marking all notifications as read: $e');
+      debugPrint('Error marking all notifications as read: $e');
       rethrow;
     }
   }

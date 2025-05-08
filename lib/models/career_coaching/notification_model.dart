@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class NotificationModel {
   final int id;
   final int userId;
@@ -27,7 +29,7 @@ class NotificationModel {
 
   factory NotificationModel.fromJson(Map<String, dynamic> json) {
     try {
-      print("🟢 [Model] Parsing notification JSON: ${json['id']}");
+      debugPrint("🟢 [Model] Parsing notification JSON: ${json['id']}");
       
       final model = NotificationModel(
         id: json['id'] as int,
@@ -43,13 +45,13 @@ class NotificationModel {
         studentId: json['student_id'] as int,
       );
 
-      print("🟢 [Model] Successfully parsed notification: ${model.toString()}");
+      debugPrint("🟢 [Model] Successfully parsed notification: ${model.toString()}");
       return model;
     } catch (e) {
-      print("🔴 [Model] Error parsing notification:");
-      print("🔴 [Model] Error: $e");
-      print("🔴 [Model] Problematic JSON: $json");
-      print("🔴 [Model] Stack trace: ${e is Error ? e.stackTrace : ''}");
+      debugPrint("🔴 [Model] Error parsing notification:");
+      debugPrint("🔴 [Model] Error: $e");
+      debugPrint("🔴 [Model] Problematic JSON: $json");
+      debugPrint("🔴 [Model] Stack trace: ${e is Error ? e.stackTrace : ''}");
       rethrow;
     }
   }

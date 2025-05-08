@@ -17,7 +17,7 @@ ini_set('error_log', 'error_log.txt');
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "final_careercoaching";
+$database = "ccms_db";
 
 $conn = new mysqli($servername, $username, $password, $database);
 

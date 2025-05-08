@@ -95,17 +95,17 @@ class _InformationScreenState extends State<InformationScreen> {
               ElevatedButton(
                 onPressed: () {
                   // Handle form submission (e.g., store data, send request)
-                  print('Form Data:');
-                  print('Name: ${_firstNameController.text} ${_middleNameController.text} ${_lastNameController.text}');
-                  print('Email: ${_emailController.text}');
-                  print('Phone: ${_phoneNoController.text}');
-                  print('Student No: ${_studentNoController.text}');
-                  print('Date of Birth: ${_dobController.text}');
-                  print('Gender: $_gender');
-                  print('Year Level: $_yearLevel');
-                  print('Department: $_department');
-                  print('Program: $_program');
-                  print('Status: $_status');
+                  debugPrint('Form Data:');
+                  debugPrint('Name: ${_firstNameController.text} ${_middleNameController.text} ${_lastNameController.text}');
+                  debugPrint('Email: ${_emailController.text}');
+                  debugPrint('Phone: ${_phoneNoController.text}');
+                  debugPrint('Student No: ${_studentNoController.text}');
+                  debugPrint('Date of Birth: ${_dobController.text}');
+                  debugPrint('Gender: $_gender');
+                  debugPrint('Year Level: $_yearLevel');
+                  debugPrint('Department: $_department');
+                  debugPrint('Program: $_program');
+                  debugPrint('Status: $_status');
                   // You can add more actions like API calls to store the booking data
                   Navigator.pop(context); // Navigate back after form submission
                 },

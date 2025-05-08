@@ -31,11 +31,11 @@ class _UnemployedListsDepartmentDirectorState
           unemployedLists = json.decode(response.body);
         });
       } else {
-        print(
+        debugPrint(
             'Failed to fetch unemployed lists. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching unemployed lists: $e');
+      debugPrint('Error fetching unemployed lists: $e');
     }
   }
 
@@ -49,10 +49,10 @@ class _UnemployedListsDepartmentDirectorState
               (unemployed) => unemployed['student_no'] == studentNo);
         });
       } else {
-        print('Failed to delete unemployed. Status code: ${response.statusCode}');
+        debugPrint('Failed to delete unemployed. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error deleting unemployed: $e');
+      debugPrint('Error deleting unemployed: $e');
     }
   }
 
@@ -83,10 +83,10 @@ class _UnemployedListsDepartmentDirectorState
       if (response.statusCode == 200) {
         fetchUnemployedLists();
       } else {
-        print('Failed to update unemployed. Status code: ${response.statusCode}');
+        debugPrint('Failed to update unemployed. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error updating unemployed: $e');
+      debugPrint('Error updating unemployed: $e');
     }
   }
 
@@ -117,10 +117,10 @@ class _UnemployedListsDepartmentDirectorState
       if (response.statusCode == 200) {
         fetchUnemployedLists();
       } else {
-        print('Failed to create unemployed. Status code: ${response.statusCode}');
+        debugPrint('Failed to create unemployed. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error creating unemployed: $e');
+      debugPrint('Error creating unemployed: $e');
     }
   }
 

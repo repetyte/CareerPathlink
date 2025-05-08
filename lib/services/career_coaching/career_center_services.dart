@@ -17,8 +17,8 @@ class EngagementService {
     try {
       final response = await http.get(url);
       if (kDebugMode) {
-        print('Raw API response: ${response.body}');
-      } // Debug print
+        debugPrint('Raw API response: ${response.body}');
+      } // Debug debugPrint
       final responseBody = jsonDecode(response.body);
       
       if (response.statusCode == 200) {
@@ -33,7 +33,7 @@ class EngagementService {
         throw Exception('Server error: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error in getAllYearLevelEngagement: $e');
+      debugPrint('Error in getAllYearLevelEngagement: $e');
       rethrow;
     }
   }
@@ -61,7 +61,7 @@ class EngagementService {
         throw Exception('Server error: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error in getEngagementByYearLevel: $e');
+      debugPrint('Error in getEngagementByYearLevel: $e');
       rethrow;
     }
   }
@@ -70,12 +70,12 @@ class EngagementService {
 
   static Future<List<Coach>> getAllCoaches() async {
     final url = Uri.parse("http://localhost/CareerPathlink/api/career_coaching/service_details/coach_display_mapping.php");
-    print('Fetching coaches from: $url');
+    debugPrint('Fetching coaches from: $url');
 
     try {
       final response = await http.get(url);
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      debugPrint('Response status: ${response.statusCode}');
+      debugPrint('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final responseBody = jsonDecode(response.body);
@@ -83,7 +83,7 @@ class EngagementService {
           final coaches = (responseBody['data'] as List)
               .map((json) => Coach.fromJson(json))
               .toList();
-          print('Successfully fetched ${coaches.length} coaches');
+          debugPrint('Successfully fetched ${coaches.length} coaches');
           return coaches;
         } else {
           throw Exception(responseBody['message'] ?? 'Failed to load coaches');
@@ -92,14 +92,14 @@ class EngagementService {
         throw Exception('Server responded with status: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error in getAllCoaches: $e');
+      debugPrint('Error in getAllCoaches: $e');
       rethrow;
     }
   }
 
   static Future<Coach> getCoachById(int coachId) async {
     final url = Uri.parse("http://localhost/CareerPathlink/api/career_coaching/service_details/coach_display_mapping.php");
-    print('Fetching coach $coachId from: $url');
+    debugPrint('Fetching coach $coachId from: $url');
 
     try {
       final response = await http.post(
@@ -108,14 +108,14 @@ class EngagementService {
         body: jsonEncode({'coach_id': coachId}),
       );
 
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      debugPrint('Response status: ${response.statusCode}');
+      debugPrint('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         final responseBody = jsonDecode(response.body);
         if (responseBody['success'] == true) {
           final coach = Coach.fromJson(responseBody['data']);
-          print('Successfully fetched coach: ${coach.coachName}');
+          debugPrint('Successfully fetched coach: ${coach.coachName}');
           return coach;
         } else {
           throw Exception(responseBody['message'] ?? 'Coach not found');
@@ -124,7 +124,7 @@ class EngagementService {
         throw Exception('Server responded with status: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error in getCoachById: $e');
+      debugPrint('Error in getCoachById: $e');
       rethrow;
     }
   }
@@ -136,7 +136,7 @@ class EngagementService {
   
   try {
     final response = await http.get(url);
-    print('Service Analytics API Response: ${response.body}');
+    debugPrint('Service Analytics API Response: ${response.body}');
 
     if (response.statusCode == 200) {
       final responseBody = jsonDecode(response.body);
@@ -180,7 +180,7 @@ class EngagementService {
       throw Exception('Server error: ${response.statusCode}');
     }
   } catch (e) {
-    print('Error in getServiceAnalytics: $e');
+    debugPrint('Error in getServiceAnalytics: $e');
     rethrow;
   }
 }
@@ -189,17 +189,17 @@ class EngagementService {
 
 
   static Future<ServiceAnalytics> getAnalyticsByService(String serviceType) async {
-    print('Fetching analytics for service: $serviceType');
+    debugPrint('Fetching analytics for service: $serviceType');
     try {
       final analytics = await getServiceAnalytics();
       final result = analytics.firstWhere(
         (a) => a.serviceType == serviceType,
         orElse: () => throw Exception('Service "$serviceType" not found'),
       );
-      print('Successfully fetched analytics for $serviceType');
+      debugPrint('Successfully fetched analytics for $serviceType');
       return result;
     } catch (e) {
-      print('Error in getAnalyticsByService: $e');
+      debugPrint('Error in getAnalyticsByService: $e');
       rethrow;
     }
   }
@@ -209,7 +209,7 @@ class EngagementService {
   
   try {
     final response = await http.get(url);
-    print('Gender Analytics API Response: ${response.body}');
+    debugPrint('Gender Analytics API Response: ${response.body}');
 
     if (response.statusCode == 200) {
       final responseBody = jsonDecode(response.body);
@@ -224,7 +224,7 @@ class EngagementService {
       throw Exception('Server error: ${response.statusCode}');
     }
   } catch (e) {
-    print('Error in getGenderEngagementAnalytics: $e');
+    debugPrint('Error in getGenderEngagementAnalytics: $e');
     rethrow;
   }
 }
@@ -236,27 +236,27 @@ class EngagementService {
     
     try {
       final response = await http.get(url);
-      print('Raw API response: ${response.body}'); // Debug print
+      debugPrint('Raw API response: ${response.body}'); // Debug debugPrint
 
       if (response.statusCode == 200) {
         final responseBody = jsonDecode(response.body);
         
         // Debug the decoded response structure
-        print('Decoded response: $responseBody');
+        debugPrint('Decoded response: $responseBody');
         
         if (responseBody['success'] == true) {
           final List<dynamic> data = responseBody['data'];
           
           // Debug individual items
           for (var item in data) {
-            print('Department engagement item: $item');
+            debugPrint('Department engagement item: $item');
             
             // Additional validation for numeric fields
             if (item['engagement_rate'] == null) {
-              print('Warning: engagement_rate is null for ${item['department']}');
+              debugPrint('Warning: engagement_rate is null for ${item['department']}');
             }
             if (item['completion_rate'] == null) {
-              print('Warning: completion_rate is null for ${item['department']}');
+              debugPrint('Warning: completion_rate is null for ${item['department']}');
             }
           }
           
@@ -268,7 +268,7 @@ class EngagementService {
         throw Exception('Server error: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error in getDepartmentEngagementAnalytics: $e');
+      debugPrint('Error in getDepartmentEngagementAnalytics: $e');
       rethrow;
     }
   }
@@ -282,7 +282,7 @@ class EngagementService {
         orElse: () => throw Exception('Department "$departmentName" not found'),
       );
     } catch (e) {
-      print('Error in getDepartmentAnalytics: $e');
+      debugPrint('Error in getDepartmentAnalytics: $e');
       rethrow;
     }
   }

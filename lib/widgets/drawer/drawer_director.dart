@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/career_center_director.dart';
-import 'package:flutter_app/pages/career_center_director_account/career_coaching/coaching_home_screen.dart';
 import 'package:flutter_app/pages/career_center_director_account/director_home_screen.dart';
 import 'package:flutter_app/pages/career_center_director_account/graduates_tracer_industry/graduates_tracer.dart';
 import 'package:flutter_app/pages/career_center_director_account/recruitment_and_placement/rr_job_dashboard_director.dart';
@@ -148,7 +147,7 @@ class MyDrawerDirector extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.bar_chart),
             title: const Text(
-              'Graduates Tracer Industry',
+              'Employment Tracking',
               style: TextStyle(
                 height: 1.3,
               ),
