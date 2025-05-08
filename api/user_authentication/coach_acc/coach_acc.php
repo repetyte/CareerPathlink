@@ -73,16 +73,14 @@ class CoachAccount
     {
         $query = "SELECT
                       jp.id,
-                      jp.name,
-                      jp.role,
-                      jp.user_account,
+                      jp.coach_name,
                       
                       ip.account_id,
                       ip.username,
                       ip.password
                   FROM " . $this->table_name . " jp
                   JOIN acc_coach_tb ip 
-                  ON jp.user_account = ip.account_id";
+                  ON jp.id = ip.account_id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;

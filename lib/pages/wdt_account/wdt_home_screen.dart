@@ -9,8 +9,7 @@ import '../../widgets/appbar/student_header.dart';
 
 class HomeScreenCoach extends StatefulWidget {
   final CoachAccount coachAccount;
-  final double screenWidth;
-  const HomeScreenCoach({super.key, required this.coachAccount, required this.screenWidth});
+  const HomeScreenCoach({super.key, required this.coachAccount});
 
   @override
   State<HomeScreenCoach> createState() => _HomeScreenState();
@@ -47,7 +46,7 @@ class _HomeScreenState extends State<HomeScreenCoach> {
                   ListTile(
                     leading: Icon(Icons.person),
                     title: Text(
-                      widget.coachAccount.name,
+                      widget.coachAccount.coachName,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     subtitle: Text('Workforce Development Trainer'),
@@ -195,7 +194,7 @@ class _HomeScreenState extends State<HomeScreenCoach> {
         toolbarHeight: 92,
       ),
       drawer: MyDrawerCoach(
-        coachAccount: widget.coachAccount, screenWidth: widget.screenWidth,
+        coachAccount: widget.coachAccount,
       ),
       body: Column(
         children: [

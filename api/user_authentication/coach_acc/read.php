@@ -21,14 +21,11 @@ if($num > 0){
         extract($row);
 
         $account_item = array(
-            "id" => $id,
-            "name" => $name,
-            "role" => $role,
-            "user_account" => $user_account,
-
-            "account_id" => $account_id,
-            "username" => $username,
-            "password" => $password,
+            "id" => $id ?? "",
+            "coach_name" => $coach_name ?? "",
+            "account_id" => $account_id ?? "",
+            "username" => $username ?? "",
+            "password" => $password ?? "",
         );
 
         array_push($accounts_arr["records"], $account_item);

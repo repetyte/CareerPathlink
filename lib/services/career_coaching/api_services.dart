@@ -17,14 +17,14 @@ import '../../models/career_coaching/time_slot.dart';
 import '../../models/career_coaching/user_model.dart';
 
 class ApiService {
-  static const String baseUrl = 'http://localhost/CareerPathlink/api/career_coaching';
+  static const String baseUrl = 'http://localhost/final_career_coaching/api';
 
   // Fetch list of coaches
   static Future<List<Coach>> fetchCoaches() async {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://localhost/CareerPathlink/api/career_coaching/select_coach/get_coaches.php'),
+            'http://localhost/final_career_coaching/api/select_coach/get_coaches.php'),
         headers: {'Accept': 'application/json'},
       );
 
@@ -49,7 +49,7 @@ class ApiService {
   static Future<void> createCoach(String coachName, String coachRole) async {
     final response = await http.post(
       Uri.parse(
-          'http://localhost/CareerPathlink/api/career_coaching/select_coach/create_coach.php'),
+          'http://localhost/final_career_coaching/api/select_coach/create_coach.php'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'coach_name': coachName,
@@ -60,9 +60,7 @@ class ApiService {
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
       if (responseData['message'] != null) {
-        if (kDebugMode) {
-          debugPrint("Coach created successfully");
-        }
+        debugPrint("Coach created successfully");
       } else {
         throw Exception('Failed to create coach');
       }
@@ -76,7 +74,7 @@ class ApiService {
       int id, String coachName, String coachRole) async {
     final response = await http.put(
       Uri.parse(
-          'http://localhost/CareerPathlink/api/career_coaching/select_coach/update_coach.php'),
+          'http://localhost/final_career_coaching/api/select_coach/update_coach.php'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'id': id,
@@ -101,7 +99,7 @@ class ApiService {
   static Future<void> deleteCoach(int id) async {
     final response = await http.delete(
       Uri.parse(
-          'http://localhost/CareerPathlink/api/career_coaching/select_coach/delete_coach.php'),
+          'http://localhost/final_career_coaching/api/select_coach/delete_coach.php'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'id': id,
@@ -125,7 +123,7 @@ class ApiService {
     try {
       final response = await http.get(
         Uri.parse(
-            "http://localhost/CareerPathlink/api/career_coaching/time_slot/get_coach_id.php?user_id=$userId"),
+            "http://localhost/final_career_coaching/api/time_slot/get_coach_id.php?user_id=$userId"),
       );
 
       debugPrint(
@@ -149,7 +147,7 @@ class ApiService {
       debugPrint("[API] Creating time slot for user $userId: ${timeSlot.toJson()}");
       final response = await http.post(
         Uri.parse(
-            'http://localhost/CareerPathlink/api/career_coaching/time_slot/create_time_slot.php'),
+            'http://localhost/final_career_coaching/api/time_slot/create_time_slot.php'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           "user_id": userId,
@@ -183,7 +181,7 @@ class ApiService {
       String userId) async {
     final response = await http.get(
       Uri.parse(
-          "http://localhost/CareerPathlink/api/career_coaching/time_slot/read_time_slot.php?coach_id=$userId"),
+          "http://localhost/final_career_coaching/api/time_slot/read_time_slot.php?coach_id=$userId"),
     );
 
     if (response.statusCode == 200) {
@@ -211,12 +209,12 @@ class ApiService {
     try {
       final response = await http.put(
         Uri.parse(
-            "http://localhost/CareerPathlink/api/career_coaching/time_slot/update_time_slot.php"),
+            "http://localhost/final_career_coaching/api/time_slot/update_time_slot.php"),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(timeSlot.toJson()),
       );
 
-      // Debugging: Print response details
+      // Debugging: debugPrint response details
       debugPrint("Response Status: ${response.statusCode}");
       debugPrint("Response Body: ${response.body}");
 
@@ -237,7 +235,7 @@ class ApiService {
   static Future<bool> deleteTimeSlot(int id) async {
     final response = await http.delete(
       Uri.parse(
-          "http://localhost/CareerPathlink/api/career_coaching/time_slot/delete_time_slot.php"),
+          "http://localhost/final_career_coaching/api/time_slot/delete_time_slot.php"),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({"id": id.toString()}),
     );
@@ -257,7 +255,7 @@ class ApiService {
 
     final response = await http.post(
       Uri.parse(
-          "http://localhost/CareerPathlink/api/career_coaching/users/create_user.php"),
+          "http://localhost/final_career_coaching/api/users/create_user.php"),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
         "user_id": user.id,
@@ -290,7 +288,7 @@ class ApiService {
 
     final response = await http.post(
       Uri.parse(
-          "http://localhost/CareerPathlink/api/career_coaching/users/create_user.php"),
+          "http://localhost/final_career_coaching/api/users/create_user.php"),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(userData),
     );
@@ -314,7 +312,7 @@ class ApiService {
   // Read (Get Users)
   static Future<List<User>> getUsers() async {
     final response = await http.get(Uri.parse(
-        "http://localhost/CareerPathlink/api/career_coaching/users/get_users.php"));
+        "http://localhost/final_career_coaching/api/users/get_users.php"));
 
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
@@ -329,7 +327,7 @@ class ApiService {
     try {
       final response = await http.post(
         Uri.parse(
-            "http://localhost/CareerPathlink/api/career_coaching/users/send_password_reset.php"),
+            "http://localhost/final_career_coaching/api/users/send_password_reset.php"),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'user_id': userId}),
       );
@@ -348,7 +346,7 @@ class ApiService {
 // Add this to your ApiService class
   static Future<Map<String, dynamic>> resetCoachPassword(String email) async {
     final url = Uri.parse(
-        "http://localhost/CareerPathlink/api/career_coaching/users/wdt_reset_password.php");
+        "http://localhost/final_career_coaching/api/users/wdt_reset_password.php");
 
     try {
       final response = await http.post(
@@ -384,7 +382,7 @@ class ApiService {
     try {
       final response = await http.post(
         Uri.parse(
-            "http://localhost/CareerPathlink/api/career_coaching/users/career_center_reset_password.php"),
+            "http://localhost/final_career_coaching/api/users/career_center_reset_password.php"),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({'email': email}),
       );
@@ -416,7 +414,7 @@ class ApiService {
   static Future<bool> updateUser(User user) async {
     final response = await http.put(
       Uri.parse(
-          "http://localhost/CareerPathlink/api/career_coaching/users/update_user.php"),
+          "http://localhost/final_career_coaching/api/users/update_user.php"),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(user.toJson()),
     );
@@ -429,7 +427,7 @@ class ApiService {
   static Future<bool> deleteUser(int id) async {
     final response = await http.delete(
       Uri.parse(
-          "http://localhost/CareerPathlink/api/career_coaching/users/delete_user.php"),
+          "http://localhost/final_career_coaching/api/users/delete_user.php"),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({"id": id.toString()}),
     );
@@ -441,7 +439,7 @@ class ApiService {
 //Read time slots by coach ID | Student Screen
   static Future<List<TimeSlot>> fetchTimeSlotsByCoach(int coachId) async {
     final response = await http.get(Uri.parse(
-        "http://localhost/CareerPathlink/api/career_coaching/time_slot/read_time_slot.php?coach_id=$coachId"));
+        "http://localhost/final_career_coaching/api/time_slot/read_time_slot.php?coach_id=$coachId"));
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> jsonResponse =
@@ -460,55 +458,55 @@ class ApiService {
   }
 
 // Create a new student profile
-  // static Future<bool> createStudentProfile(
-  //     profile_model.StudentProfile student) async {
-  //   final response = await http.post(
-  //     Uri.parse(
-  //         'http://localhost/CareerPathlink/api/career_coaching/student_profile/create_student_profile.php'),
-  //     headers: {"Content-Type": "application/json"},
-  //     body: jsonEncode(student.toJson()),
-  //   );
+  static Future<bool> createStudentProfile(
+      profile_model.StudentProfile student) async {
+    final response = await http.post(
+      Uri.parse(
+          'http://localhost/final_career_coaching/api/student_profile/create_student_profile.php'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(student.toJson()),
+    );
 
-  //   if (response.statusCode == 200) {
-  //     final data = jsonDecode(response.body);
-  //     return data.containsKey("success");
-  //   } else {
-  //     return false;
-  //   }
-  // }
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      return data.containsKey("success");
+    } else {
+      return false;
+    }
+  }
 
   // Read all student profiles
-  // static Future<profile_model.StudentProfile?> getStudentProfile(
-  //     String userId) async {
-  //   try {
-  //     debugPrint("Fetching profile for user ID: $userId");
+  static Future<profile_model.StudentProfile?> getStudentProfile(
+      String userId) async {
+    try {
+      debugPrint("Fetching profile for user ID: $userId");
 
-  //     final response = await http.get(
-  //       Uri.parse(
-  //           'http://localhost/CareerPathlink/api/career_coaching/student_profile/read_student_profiles.php?user_id=$userId'),
-  //     );
+      final response = await http.get(
+        Uri.parse(
+            'http://localhost/final_career_coaching/api/student_profile/read_student_profiles.php?user_id=$userId'),
+      );
 
-  //     debugPrint("API Response Status: ${response.statusCode}");
-  //     debugPrint("API Response Body: ${response.body}");
+      debugPrint("API Response Status: ${response.statusCode}");
+      debugPrint("API Response Body: ${response.body}");
 
-  //     if (response.statusCode == 200) {
-  //       final Map<String, dynamic> data = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = jsonDecode(response.body);
 
-  //       if (data.containsKey("error")) {
-  //         debugPrint("Error fetching student profile: ${data["error"]}");
-  //         return null;
-  //       }
+        if (data.containsKey("error")) {
+          debugPrint("Error fetching student profile: ${data["error"]}");
+          return null;
+        }
 
-  //       return profile_model.StudentProfile.fromJson(data);
-  //     } else {
-  //       debugPrint("Error fetching student profile: ${response.statusCode}");
-  //       return null;
-  //     }
-  //   } catch (e) {
-  //     debugPrint("Exception in API call: $e");
-  //     return null;
-  //   }
-  // }
+        return profile_model.StudentProfile.fromJson(data);
+      } else {
+        debugPrint("Error fetching student profile: ${response.statusCode}");
+        return null;
+      }
+    } catch (e) {
+      debugPrint("Exception in API call: $e");
+      return null;
+    }
+  }
 
 // Create profile picture
   static Future<pictures_model.StudentProfilePicture?> createProfilePicture(
@@ -519,7 +517,7 @@ class ApiService {
       var request = http.MultipartRequest(
         'POST',
         Uri.parse(
-            'http://localhost/CareerPathlink/api/career_coaching/student_profile_picture/create_profile_picture.php'),
+            'http://localhost/final_career_coaching/api/student_profile_picture/create_profile_picture.php'),
       );
 
       request.fields['user_id'] = userId;
@@ -573,7 +571,7 @@ class ApiService {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://localhost/CareerPathlink/api/career_coaching/student_profile_picture/read_profile_picture.php'),
+            'http://localhost/final_career_coaching/api/student_profile_picture/read_profile_picture.php'),
         headers: {
           'Content-Type': 'application/json',
           'Origin': 'http://localhost', // Add Origin header
@@ -595,7 +593,7 @@ class ApiService {
           String imageUrl = data['image_url'];
           if (!imageUrl.startsWith('http://localhost')) {
             imageUrl =
-                'http://localhost/CareerPathlink/${data['image_path']}';
+                'http://localhost/final_career_coaching/${data['image_path']}';
           }
 
           return pictures_model.StudentProfilePicture(
@@ -625,7 +623,7 @@ class ApiService {
         Uri.parse(imageUrl),
         headers: {
           'Origin':
-              'http://localhost/CareerPathlink/api/career_coaching/student_profile_picture/get_image.php'
+              'http://localhost/final_career_coaching/api/student_profile_picture/get_image.php'
         },
       );
 
@@ -650,7 +648,7 @@ class ApiService {
       var request = http.MultipartRequest(
         'POST',
         Uri.parse(
-            'http://localhost/CareerPathlink/api/career_coaching/student_profile_picture/update_profile_picture.php'),
+            'http://localhost/final_career_coaching/api/student_profile_picture/update_profile_picture.php'),
       );
 
       request.fields['user_id'] = userId;
@@ -688,15 +686,13 @@ class ApiService {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://localhost/CareerPathlink/api/career_coaching/student_profile_picture/delete_profile_picture.php'),
+            'http://localhost/final_career_coaching/api/student_profile_picture/delete_profile_picture.php'),
         body: {'user_id': userId},
       );
 
       return response.statusCode == 200;
     } catch (e) {
-      if (kDebugMode) {
-        debugPrint('Error deleting profile picture: $e');
-      }
+      debugPrint('Error deleting profile picture: $e');
       return false;
     }
   }
@@ -710,7 +706,7 @@ class ApiService {
 
     final response = await http.post(
       Uri.parse(
-          'http://localhost/CareerPathlink/api/career_coaching/student_profile/update_student_profile.php'),
+          'http://localhost/final_career_coaching/api/student_profile/update_student_profile.php'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(updatedData),
     );
@@ -737,7 +733,7 @@ class ApiService {
   static Future<bool> deleteStudentProfile(int id) async {
     final response = await http.delete(
       Uri.parse(
-          'http://localhost/CareerPathlink/api/career_coaching/student_profile/delete_student_profile.php'),
+          'http://localhost/final_career_coaching/api/student_profile/delete_student_profile.php'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({"id": id}),
     );
@@ -751,36 +747,79 @@ class ApiService {
   }
 
   // Fetch all appointment requests
-  // Fetch all appointment requests
   static Future<List<Appointment>> getPendingAppointments() async {
     const String apiUrl =
-        "http://localhost/CareerPathlink/api/career_coaching/request_appointments/read_requests.php";
+        "http://localhost/final_career_coaching/api/request_appointments/read_requests.php";
 
     try {
-      final response = await http.get(
+      final prefs = await SharedPreferences.getInstance();
+      final userId = prefs.getString('user_id');
+
+      if (userId == null) {
+        throw Exception('User not logged in');
+      }
+
+      final coachId = await getCoachId(userId);
+      debugPrint('Fetching appointments for coach ID: $coachId');
+
+      final response = await http.post(
         Uri.parse(apiUrl),
-        headers: {'Accept': 'application/json'},
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({'coach_id': coachId}),
       );
 
+      debugPrint('API Response: ${response.statusCode} - ${response.body}');
+
       if (response.statusCode == 200) {
-        final Map<String, dynamic> responseData = json.decode(response.body);
+        final responseData = json.decode(response.body);
 
         if (responseData['success'] == true) {
-          final List<dynamic> appointmentsData = responseData['data'];
-          return appointmentsData
-              .map((json) => Appointment.fromJson(json))
-              .toList();
+          final List<dynamic> data = responseData['data'];
+          return data.map((json) => Appointment.fromJson(json)).toList();
         } else {
-          throw Exception(
-              "Server error: ${responseData['error'] ?? 'Unknown error'}");
+          throw Exception(responseData['error'] ?? 'Unknown error');
         }
       } else {
-        throw Exception(
-            "Failed to load appointments. Status: ${response.statusCode}");
+        throw Exception('HTTP ${response.statusCode}');
       }
     } catch (e) {
-      debugPrint("API Error: $e");
-      throw Exception("Failed to fetch appointments. Please try again later.");
+      debugPrint('Error fetching appointments: $e');
+      throw Exception('Failed to load appointments. Please try again.');
+    }
+  }
+
+  static Future<int> getCoachId(String userId) async {
+    const String apiUrl =
+        "http://localhost/final_career_coaching/api/request_appointments/get_coach_id.php"; // Use 10.0.2.2 for Android emulator
+
+    try {
+      debugPrint('Getting coach ID for user: $userId');
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: json.encode({'user_id': userId}),
+      );
+
+      debugPrint('Coach ID Response: ${response.statusCode} - ${response.body}');
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+        if (responseData['success'] == true) {
+          debugPrint('Found coach ID: ${responseData['coach_id']}');
+          return responseData['coach_id'];
+        } else {
+          throw Exception(responseData['error'] ?? 'Failed to get coach ID');
+        }
+      } else {
+        throw Exception("HTTP ${response.statusCode}");
+      }
+    } catch (e) {
+      debugPrint("Error getting coach ID: $e");
+      throw Exception(
+          "Failed to get coach information. Please ensure you're logged in as a coach.");
     }
   }
 
@@ -810,7 +849,7 @@ class ApiService {
     try {
       final coachResponse = await http.get(
         Uri.parse(
-            "http://localhost/CareerPathlink/api/career_coaching/coaches/get_coach.php?id=${requestData['coach_id']}"),
+            "http://localhost/final_career_coaching/api/coaches/get_coach.php?id=${requestData['coach_id']}"),
       );
 
       if (coachResponse.statusCode == 200) {
@@ -826,7 +865,7 @@ class ApiService {
     try {
       final response = await http.post(
         Uri.parse(
-            "http://localhost/CareerPathlink/api/career_coaching/request_appointments/create_request.php"),
+            "http://localhost/final_career_coaching/api/request_appointments/create_request.php"),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(requestData),
       );
@@ -862,7 +901,7 @@ class ApiService {
 
   static Future<List<Map<String, String>>> fetchBookedSlots() async {
     const String apiUrl =
-        "http://localhost/CareerPathlink/api/career_coaching/request_appointments/create_request.php";
+        "http://localhost/final_career_coaching/api/request_appointments/create_request.php";
 
     try {
       final response = await http.get(Uri.parse(apiUrl));
@@ -891,7 +930,7 @@ class ApiService {
   static Future<bool> deleteAppointment(int id) async {
     final response = await http.post(
       Uri.parse(
-          "http://localhost/CareerPathlink/api/career_coaching/request_appointments/delete_request.php"),
+          "http://localhost/final_career_coaching/api/request_appointments/delete_request.php"),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({"id": id.toString()}),
     );
@@ -906,7 +945,7 @@ class ApiService {
       // Changed localhost to your server IP/domain
       final response = await http.post(
         Uri.parse(
-            'http://localhost/CareerPathlink/api/career_coaching/coach_accept_or_decline_appointments/accept_appointment.php'),
+            'http://localhost/final_career_coaching/api/coach_accept_or_decline_appointments/accept_appointment.php'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'id': appointmentId, 'action': 'accept'}),
       );
@@ -935,7 +974,7 @@ class ApiService {
 
   Future<bool> updateAppointmentStatus(int id, String action) async {
     final url = Uri.parse(
-        "http://localhost/CareerPathlink/api/career_coaching/coach_accept_or_decline_appointments/update_appointment_status.php");
+        "http://localhost/final_career_coaching/api/coach_accept_or_decline_appointments/update_appointment_status.php");
 
     final Map<String, dynamic> requestBody = {
       "id": id,
@@ -970,7 +1009,7 @@ class ApiService {
   static Future<bool> declineAppointment(int appointmentId) async {
     final response = await http.post(
       Uri.parse(
-          'http://localhost/CareerPathlink/api/career_coaching/coach_accept_or_decline_appointments/coach_decline_appointment.php'),
+          'http://localhost/final_career_coaching/api/coach_accept_or_decline_appointments/coach_decline_appointment.php'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
         "id": appointmentId,
@@ -987,18 +1026,56 @@ class ApiService {
     }
   }
 
+  // Add this method to fetch scheduled appointments
+static Future<List<Appointment>> getScheduledAppointments() async {
+  const String apiUrl = 
+      "http://localhost/final_career_coaching/api/request_appointments/read_schedules.php";
+
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    final userId = prefs.getString('user_id');
+
+    if (userId == null) {
+      throw Exception('User not logged in');
+    }
+
+    final coachId = await getCoachId(userId);
+    debugPrint('Fetching scheduled appointments for coach ID: $coachId');
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({'coach_id': coachId}),
+    );
+
+    debugPrint('API Response: ${response.statusCode} - ${response.body}');
+
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.body);
+
+      if (responseData['success'] == true) {
+        final List<dynamic> data = responseData['data'];
+        return data.map((json) => Appointment.fromJson(json)).toList();
+      } else {
+        throw Exception(responseData['error'] ?? 'Unknown error');
+      }
+    } else {
+      throw Exception('HTTP ${response.statusCode}');
+    }
+  } catch (e) {
+    debugPrint('Error fetching scheduled appointments: $e');
+    throw Exception('Failed to load scheduled appointments. Please try again.');
+  }
+}
+
   static Future<Map<String, List<Session>>> fetchSessions(String userId) async {
     final url = Uri.parse(
-        "http://localhost/CareerPathlink/api/career_coaching/sessions/get_sessions.php?user_id=$userId");
+        "http://localhost/final_career_coaching/api/sessions/get_sessions.php?user_id=$userId");
 
     try {
       final response = await http.get(url);
-      if (kDebugMode) {
-        debugPrint("API Response Status: ${response.statusCode}");
-      }
-      if (kDebugMode) {
-        debugPrint("API Response Body: ${response.body}");
-      }
+      debugPrint("API Response Status: ${response.statusCode}");
+      debugPrint("API Response Body: ${response.body}");
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> responseData = jsonDecode(response.body);
@@ -1068,7 +1145,7 @@ class ApiService {
   static Future<String> createRescheduleRequest(
       RescheduleRequest request) async {
     final url = Uri.parse(
-        "http://localhost/CareerPathlink/api/career_coaching/student_request_reschedule/create_reschedule.php");
+        "http://localhost/final_career_coaching/api/student_request_reschedule/create_reschedule.php");
     try {
       final response = await http.post(
         url,
@@ -1090,7 +1167,7 @@ class ApiService {
 
   static Future<List<RescheduleRequest>> fetchRescheduleRequests() async {
     final url = Uri.parse(
-        "http://localhost/CareerPathlink/api/career_coaching/student_request_reschedule/read_reschedule.php");
+        "http://localhost/final_career_coaching/api/student_request_reschedule/read_reschedule.php");
 
     try {
       final response = await http.get(url);
@@ -1118,29 +1195,11 @@ class ApiService {
     }
   }
 
-  static Future<bool> hasPendingReschedule(int appointmentId) async {
-    try {
-      final response = await http.get(
-        Uri.parse(
-            'http://localhost/CareerPathlink/api/career_coaching/student_request_reschedule/read_reschedule.php?appointment_id=$appointmentId'),
-      );
-
-      if (response.statusCode == 200) {
-        final List<dynamic> data = jsonDecode(response.body);
-        return data.any((request) => request['status'] == 'Pending');
-      }
-      return false;
-    } catch (e) {
-      debugPrint('Error checking reschedule status: $e');
-      return false;
-    }
-  }
-
   static Future<RescheduleRequest?> getPendingRequest(int appointmentId) async {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://localhost/CareerPathlink/api/career_coaching/student_request_reschedule/read_reschedule.php?appointment_id=$appointmentId'),
+            'http://localhost/final_career_coaching/api/student_request_reschedule/read_reschedule.php?appointment_id=$appointmentId'),
       );
 
       if (response.statusCode == 200) {
@@ -1171,7 +1230,7 @@ class ApiService {
     required String replyMessage,
   }) async {
     final url = Uri.parse(
-        "http://localhost/CareerPathlink/api/career_coaching/student_request_reschedule/coach_create_reply.php");
+        "http://localhost/final_career_coaching/api/student_request_reschedule/coach_create_reply.php");
 
     try {
       final response = await http.put(
@@ -1206,111 +1265,125 @@ class ApiService {
     }
   }
 
-//Coach accept reschedule request
-  static Future<Map<String, dynamic>> acceptRescheduleRequest({
-    required String requestId,
-    required String coachId,
-    String? coachReply,
-  }) async {
-    final url = Uri.parse(
-        "http://localhost/CareerPathlink/api/career_coaching/student_request_reschedule/accepted_reschedule.php");
+  static Future<List<RescheduleRequest>> getPendingRescheduleRequests() async {
+    const String apiUrl =
+        "http://localhost/final_career_coaching/api/student_request_reschedule/read_reschedule.php";
 
     try {
-      // Prepare the request body
-      final body = {
-        'id': requestId,
-        'coach_id': coachId,
-        if (coachReply != null) 'coach_reply': coachReply,
-      };
+      final prefs = await SharedPreferences.getInstance();
+      final userId = prefs.getString('user_id');
 
-      // Make the PUT request
-      final response = await http
-          .put(
-            url,
-            headers: {'Content-Type': 'application/json'},
-            body: jsonEncode(body),
-          )
-          .timeout(Duration(seconds: 10));
+      if (userId == null) {
+        throw Exception('User not logged in');
+      }
 
-      // Parse the response
-      final data = jsonDecode(response.body);
+      final coachId = await getCoachId(userId);
+      debugPrint('Fetching reschedule requests for coach ID: $coachId');
+
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({'coach_id': coachId}),
+      );
+
+      debugPrint('API Response: ${response.statusCode} - ${response.body}');
 
       if (response.statusCode == 200) {
-        return {
-          'success': true,
-          'message': data['success'] ?? 'Request accepted successfully',
-          'updated_data': data['updated_fields'] ?? {},
-        };
+        final responseData = json.decode(response.body);
+
+        if (responseData is! Map<String, dynamic>) {
+          throw Exception('Invalid response format');
+        }
+
+        if (responseData['success'] == true) {
+          final List<dynamic> data = responseData['data'] ?? [];
+          return data.map((json) {
+            try {
+              return RescheduleRequest.fromJson(json);
+            } catch (e) {
+              debugPrint('Error parsing reschedule request: $e');
+              debugPrint('Problematic JSON: $json');
+              throw Exception('Failed to parse reschedule request data');
+            }
+          }).toList();
+        } else {
+          throw Exception(responseData['error'] ?? 'Unknown error');
+        }
       } else {
-        throw Exception(data['error'] ??
-            'Failed to accept reschedule request. Status code: ${response.statusCode}');
+        throw Exception('HTTP ${response.statusCode}');
       }
-    } on SocketException {
-      throw Exception('No Internet connection');
-    } on TimeoutException {
-      throw Exception('Request timed out');
-    } on http.ClientException {
-      throw Exception('Failed to connect to the server');
     } catch (e) {
-      throw Exception("Error accepting reschedule request: ${e.toString()}");
+      debugPrint('Error fetching reschedule requests: $e');
+      throw Exception('Failed to load reschedule requests: ${e.toString()}');
     }
   }
 
-// Coach decline reschedule request
-  static Future<Map<String, dynamic>> declineRescheduleRequest({
+  static Future<bool> acceptRescheduleRequest({
     required String requestId,
-    required String coachId,
-    String? coachReply,
+    required int coachId,
+    required String coachReply,
   }) async {
-    // Update this URL to match your actual endpoint
-    final url = Uri.parse(
-        "http://localhost/CareerPathlink/api/career_coaching/student_request_reschedule/decline_reschedule.php");
+    const String apiUrl =
+        "http://localhost/final_career_coaching/api/student_request_reschedule/accepted_reschedule.php";
 
     try {
-      // Prepare the request body
-      final body = {
-        'id': requestId,
-        'coach_id': coachId,
-        if (coachReply != null) 'coach_reply': coachReply,
-      };
-
-      // Make the PUT request
-      final response = await http
-          .put(
-            url,
-            headers: {'Content-Type': 'application/json'},
-            body: jsonEncode(body),
-          )
-          .timeout(const Duration(seconds: 10));
-
-      // Parse the response
-      final data = jsonDecode(response.body);
+      final response = await http.put(
+        Uri.parse(apiUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'id': requestId,
+          'coach_id': coachId,
+          'coach_reply': coachReply,
+        }),
+      );
 
       if (response.statusCode == 200) {
-        return {
-          'success': true,
-          'message': data['success'] ?? 'Request declined successfully',
-          'updated_data': data['updated_fields'] ?? {},
-        };
+        final responseData = json.decode(response.body);
+        return responseData['success'] ?? false;
       } else {
-        throw Exception(data['error'] ??
-            'Failed to decline reschedule request. Status code: ${response.statusCode}');
+        throw Exception('HTTP ${response.statusCode}: ${response.body}');
       }
-    } on SocketException {
-      throw Exception('No Internet connection');
-    } on TimeoutException {
-      throw Exception('Request timed out');
-    } on http.ClientException {
-      throw Exception('Failed to connect to the server');
     } catch (e) {
-      throw Exception("Error declining reschedule request: ${e.toString()}");
+      debugPrint('Error accepting reschedule request: $e');
+      throw Exception('Failed to accept reschedule request: $e');
+    }
+  }
+
+  static Future<bool> declineRescheduleRequest({
+    required String requestId,
+    required int coachId,
+    required String coachReply,
+  }) async {
+    const String apiUrl =
+        "http://localhost/final_career_coaching/api/student_request_reschedule/decline_reschedule.php";
+
+    try {
+      final response = await http.put(
+        Uri.parse(apiUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'id': requestId,
+          'coach_id': coachId,
+          'coach_reply': coachReply,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+        return responseData['success'] ?? false;
+      } else {
+        throw Exception('HTTP ${response.statusCode}: ${response.body}');
+      }
+    } catch (e) {
+      debugPrint('Error declining reschedule request: $e');
+      throw Exception('Failed to decline reschedule request: $e');
     }
   }
 
   // Get all replies by a specific coach (your existing method)
   static Future<List<dynamic>> getCoachReplies(String coachId) async {
     final url = Uri.parse(
-        "http://localhost/CareerPathlink/api/career_coaching/student_request_reschedule/get_coach_replies.php?coach_id=$coachId");
+        "http://localhost/final_career_coaching/api/student_request_reschedule/get_coach_replies.php?coach_id=$coachId");
 
     try {
       final response = await http.get(url);
@@ -1330,7 +1403,7 @@ class ApiService {
   static Future<String> updateRescheduleRequest(
       RescheduleRequest request) async {
     final url = Uri.parse(
-        "http://localhost/CareerPathlink/api/career_coaching/student_request_reschedule/update_reschedule.php");
+        "http://localhost/final_career_coaching/api/student_request_reschedule/update_reschedule.php");
     try {
       final response = await http.put(
         url,
@@ -1347,7 +1420,7 @@ class ApiService {
   // Delete a reschedule request
   static Future<String> deleteRescheduleRequest(int id) async {
     final url = Uri.parse(
-        "http://localhost/CareerPathlink/api/career_coaching/student_request_reschedule/delete_reschedule.php");
+        "http://localhost/final_career_coaching/api/student_request_reschedule/delete_reschedule.php");
     try {
       final response = await http.delete(
         url,
@@ -1375,7 +1448,7 @@ class ApiService {
     required String message,
   }) async {
     final url = Uri.parse(
-        "http://localhost/CareerPathlink/api/career_coaching/student_request_reschedule/create_reschedule.php");
+        "http://localhost/final_career_coaching/api/student_request_reschedule/create_reschedule.php");
 
     try {
       debugPrint("Submitting reschedule request...");
@@ -1392,7 +1465,7 @@ class ApiService {
           "appointment_id": appointmentId.toString(),
           "student_name": studentName,
           "date_request": dateRequest,
-          "time_request": timeRequest, // ✅ Ensure correct format
+          "time_request": timeRequest,
           "message": message,
         }),
       );
@@ -1409,7 +1482,7 @@ class ApiService {
         };
       }
     } catch (e) {
-      debugPrint("API Exception: $e");
+      debugPrint("API Exceptionmark_as_completed.php: $e");
       return {"error": "Error: $e"};
     }
   }
@@ -1419,7 +1492,7 @@ class ApiService {
     try {
       final response = await http.get(
         Uri.parse(
-            'http://localhost/CareerPathlink/api/career_coaching/coach_accept_or_decline_appointments/fetch_accepted_appointments.php'),
+            'http://localhost/final_career_coaching/api/coach_accept_or_decline_appointments/fetch_accepted_appointments.php'),
       );
 
       if (response.statusCode == 200) {
@@ -1457,7 +1530,7 @@ class ApiService {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://localhost/CareerPathlink/api/career_coaching/students/getUserByName.php'),
+            'http://localhost/final_career_coaching/api/students/getUserByName.php'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({'student_name': studentName}),
       );
@@ -1476,7 +1549,7 @@ class ApiService {
   static Future<List<Map<String, dynamic>>> getAppointmentStatusHistory(
       int appointmentId) async {
     final url = Uri.parse(
-        "http://localhost/CareerPathlink/api/career_coaching/coach_accept_or_decline_appointments/get_status_history.php?appointment_id=$appointmentId");
+        "http://localhost/final_career_coaching/api/coach_accept_or_decline_appointments/get_status_history.php?appointment_id=$appointmentId");
 
     try {
       final response = await http.get(url);
@@ -1503,7 +1576,7 @@ class ApiService {
     String? contact,
   }) async {
     final url = Uri.parse(
-        "http://localhost/CareerPathlink/api/career_coaching/coach_profile/create_coach_profile.php");
+        "http://localhost/final_career_coaching/api/coach_profile/create_coach_profile.php");
 
     try {
       final requestBody = {
@@ -1546,7 +1619,7 @@ class ApiService {
   // Get all coach profiles
   static Future<List<Map<String, dynamic>>> getAllCoachProfiles() async {
     final url = Uri.parse(
-        "http://localhost/CareerPathlink/api/career_coaching/coach_profile/get_coach_profile.php");
+        "http://localhost/final_career_coaching/api/coach_profile/get_coach_profile.php");
 
     try {
       debugPrint('Fetching all coach profiles');
@@ -1577,7 +1650,7 @@ class ApiService {
   // Get a single coach profile by ID
   static Future<Map<String, dynamic>> getCoachProfileById(int id) async {
     final url = Uri.parse(
-        "http://localhost/CareerPathlink/api/career_coaching/coach_profile/get_coach_profile.php");
+        "http://localhost/final_career_coaching/api/coach_profile/get_coach_profile.php");
 
     try {
       final requestBody = {
@@ -1621,7 +1694,7 @@ class ApiService {
     String? address,
   }) async {
     final url = Uri.parse(
-        "http://localhost/CareerPathlink/api/career_coaching/coach_profile/update_coach_profile.php");
+        "http://localhost/final_career_coaching/api/coach_profile/update_coach_profile.php");
 
     try {
       final requestBody = {
@@ -1665,7 +1738,7 @@ class ApiService {
   // Delete a coach profile
   static Future<Map<String, dynamic>> deleteCoachProfile(int id) async {
     final url = Uri.parse(
-        "http://localhost/CareerPathlink/api/career_coaching/coach_profile/delete_coach_profile.php");
+        "http://localhost/final_career_coaching/api/coach_profile/delete_coach_profile.php");
 
     try {
       final requestBody = {
@@ -1706,7 +1779,7 @@ class ApiService {
       int coachId) async {
     try {
       final url = Uri.parse(
-          "http://localhost/CareerPathlink/api/career_coaching/past_session_coach_screen/read_past_session.php?coach_id=$coachId");
+          "http://localhost/final_career_coaching/api/past_session_coach_screen/read_past_session.php?coach_id=$coachId");
 
       final response = await http.get(url);
       final responseBody = jsonDecode(response.body);

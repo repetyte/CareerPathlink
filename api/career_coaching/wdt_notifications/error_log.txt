@@ -41006,3 +41006,11 @@
 
 [06-May-2025 00:52:21 UTC] Fetching notifications for user_id: 18-27463
 [06-May-2025 00:52:21 UTC] Found notifications: 0
+[08-May-2025 12:30:43 UTC] Request method: GET
+[08-May-2025 12:30:43 UTC] GET parameters: Array
+(
+    [user_id] => $userId
+)
+
+[08-May-2025 12:30:43 UTC] Fetching notifications for user_id: $userId
+[08-May-2025 12:30:43 UTC] Found notifications: 0

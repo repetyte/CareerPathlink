@@ -84,25 +84,24 @@ class UserApiService {
   }
 
   // Fetch coach accounts and match user
-  Future<CoachAccount?> fetchCoachAccount(
-      String username, String password) async {
-    final response = await http.get(Uri.parse('$apiUrl/coach_acc/read.php'));
+  Future<CoachAccount?> fetchCoachAccount(String username, String password) async {
+  final response = await http.get(Uri.parse('$apiUrl/coach_acc/read.php'));
 
-    if (response.statusCode == 200) {
-      List<dynamic> data = jsonDecode(response.body);
-      final coaches = data.map((json) => CoachAccount.fromJson(json)).toList();
+  if (response.statusCode == 200) {
+    List<dynamic> data = jsonDecode(response.body);
+    print('API Response: $data'); // Debugging line
+    final coaches = data.map((json) => CoachAccount.fromJson(json)).toList();
 
-      // Find the matching coach account
-      try {
-        return coaches.firstWhere((coach) =>
-            coach.username == username && coach.password == password);
-      } catch (e) {
-        return null; // Return null if no match is found
-      }
-    } else {
-      throw Exception('Failed to load coach accounts');
+    try {
+      return coaches.firstWhere((coach) =>
+          coach.username == username && coach.password == password);
+    } catch (e) {
+      return null;
     }
+  } else {
+    throw Exception('Failed to load coach accounts');
   }
+}
 
   // Fetch dean accounts and match user
   Future<CollegeDeanAccount?> fetchDeanAccount(

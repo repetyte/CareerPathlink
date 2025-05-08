@@ -96,7 +96,7 @@ class _LoginViewState extends State<LoginView> {
               const SnackBar(content: Text('Invalid Student credentials.')),
             );
           }
-        } else if (userType == 'College Dean') { 
+        } else if (userType == 'College Dean') {
           final collegeDeanAccount =
               await userApiService.fetchDeanAccount(username, password);
           if (collegeDeanAccount != null) {
@@ -116,18 +116,22 @@ class _LoginViewState extends State<LoginView> {
         } else if (userType == 'Workforce Development Trainer') {
           final coachAccount =
               await userApiService.fetchCoachAccount(username, password);
-          if (coachAccount != null) {
-            // Navigate to Workforce Development Trainer Dashboard with Workforce Development Trainer account details
+          if (coachAccount != null &&
+              coachAccount.username.isNotEmpty &&
+              coachAccount.password.isNotEmpty) {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>
-                    HomeScreenCoach(coachAccount: coachAccount, screenWidth: screenWidth,),
+                builder: (context) => HomeScreenCoach(
+                  coachAccount: coachAccount,
+                ),
               ),
             );
           } else {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Invalid Workforce Development Trainer credentials.')),
+              const SnackBar(
+                  content: Text(
+                      'Invalid Workforce Development Trainer credentials.')),
             );
           }
         } else if (userType == 'Career Center Director') {
@@ -519,7 +523,7 @@ class _LoginViewState extends State<LoginView> {
         child: _isLoading
             ? const CircularProgressIndicator(
                 color: Colors.white,
-            )
+              )
             : const Text('Login'),
       ),
     );
