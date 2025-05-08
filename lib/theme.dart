@@ -169,10 +169,18 @@ class AppTheme {
       labelStyle: TextStyle(color: blackColor), // Black label text
     ),
     snackBarTheme: SnackBarThemeData(
+      width: 500,
+      backgroundColor: whiteColor,
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+        borderRadius: BorderRadius.circular(40.0),
       ),
+      contentTextStyle: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+        fontFamily: 'Montserrat',
+      ),// Floating behavior for SnackBar
+      insetPadding: EdgeInsets.all(16.0), // Padding of 16 on all sides
     ),
   );
 }

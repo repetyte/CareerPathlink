@@ -42,10 +42,10 @@ class InternshipApplication
     {
         $query = "INSERT INTO " . $this->table_name . " (internship, applicant_first_name, applicant_last_name, course, applicant_location, applicant_contact_no, applicant_email, resume, cover_letter, skills, certifications, application_status, date_applied) 
                   VALUES (:internship, :applicant_first_name, :applicant_last_name, :course, :applicant_location, :applicant_contact_no, :applicant_email, :resume, :cover_letter, :skills, :certifications, :application_status, :date_applied)";
-
+    
         // Prepare query
         $stmt = $this->conn->prepare($query);
-
+    
         // Sanitize input
         $this->internship = htmlspecialchars(strip_tags($this->internship));
         $this->applicant_first_name = htmlspecialchars(strip_tags($this->applicant_first_name));
@@ -60,11 +60,12 @@ class InternshipApplication
         $this->certifications = htmlspecialchars(strip_tags($this->certifications));
         $this->application_status = htmlspecialchars(strip_tags($this->application_status));
         $this->date_applied = htmlspecialchars(strip_tags($this->date_applied));
-
+    
         // Bind parameters
         $stmt->bindParam(":internship", $this->internship);
         $stmt->bindParam(":applicant_first_name", $this->applicant_first_name);
         $stmt->bindParam(":applicant_last_name", $this->applicant_last_name);
+        $stmt->bindParam(":course", $this->course); // Missing bindParam added here
         $stmt->bindParam(":applicant_location", $this->applicant_location);
         $stmt->bindParam(":applicant_contact_no", $this->applicant_contact_no);
         $stmt->bindParam(":applicant_email", $this->applicant_email);
@@ -74,13 +75,15 @@ class InternshipApplication
         $stmt->bindParam(":certifications", $this->certifications);
         $stmt->bindParam(":application_status", $this->application_status);
         $stmt->bindParam(":date_applied", $this->date_applied);
-
+    
         // Execute query    
         if ($stmt->execute()) {
             return true;
         }
+    
+        return false;
     }
-
+    
     public function read()
     {
         $query = "SELECT

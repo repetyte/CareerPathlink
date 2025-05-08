@@ -10,6 +10,41 @@ require_once 'create_profile_picture.php';
 require_once 'update_profile_picture.php';
 require_once 'read_profile_picture.php';
 require_once 'delete_profile_picture.php';
+require_once 'validate_profile_picture.php';
+
+function getProfilePictureByUserId($userId, $dbHost, $dbName, $dbUser, $dbPass) {
+    try {
+        $pdo = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPass);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $stmt = $pdo->prepare("SELECT * FROM profile_pictures WHERE user_id = :user_id");
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("Database error: " . $e->getMessage());
+        return false;
+    }
+}
+
+function createProfilePicture($userId, $imagePath, $imageType, $imageSize, $dbHost, $dbName, $dbUser, $dbPass) {
+    try {
+        $pdo = new PDO("mysql:host=$dbHost;dbname=$dbName", $dbUser, $dbPass);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $stmt = $pdo->prepare("INSERT INTO profile_pictures (user_id, image_path, image_type, image_size) VALUES (:user_id, :image_path, :image_type, :image_size)");
+        $stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':image_path', $imagePath, PDO::PARAM_STR);
+        $stmt->bindParam(':image_type', $imageType, PDO::PARAM_STR);
+        $stmt->bindParam(':image_size', $imageSize, PDO::PARAM_INT);
+
+        return $stmt->execute();
+    } catch (PDOException $e) {
+        error_log("Database error: " . $e->getMessage());
+        return false;
+    }
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) {
     $userId = $_POST['user_id'];
