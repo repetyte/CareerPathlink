@@ -6,7 +6,8 @@ class CoachAccount
 
     // Coach Properties
     public $id;
-    public $name;
+    public $coach_id;
+    public $coach_name;
     public $role;
     public $user_account;
 
@@ -72,15 +73,11 @@ class CoachAccount
     function read()
     {
         $query = "SELECT
-                      jp.id,
-                      jp.coach_name,
-                      
-                      ip.account_id,
-                      ip.username,
-                      ip.password
-                  FROM " . $this->table_name . " jp
-                  JOIN acc_coach_tb ip 
-                  ON jp.id = ip.account_id";
+                      ch.*,
+                      acc.*
+                  FROM " . $this->table_name . " ch
+                  JOIN acc_coach_tb acc 
+                  ON ch.coach_id = acc.account_id";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;

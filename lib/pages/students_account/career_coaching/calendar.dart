@@ -2,26 +2,28 @@
 
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../../models/career_coaching/time_slot.dart';
+import '../../../models/user_role/coach_model.dart';
 import '../../../models/user_role/student.dart';
 import '../../../services/career_coaching/api_services.dart';
 import '../student_home_screen.dart';
 import 'book_confirmation.dart';
 
 class CalendarScreen extends StatefulWidget {
+  CoachAccount? coachAccount;
   final StudentAccount studentAccount;
   final String coachName;
   final Map<String, List<TimeSlot>> availableTimeSlots;
   final String selectedService;
 
-  const CalendarScreen({
+  CalendarScreen({
     super.key,
+    this.coachAccount,
     required this.coachName,
     required this.availableTimeSlots,
     required this.selectedService,
@@ -925,7 +927,11 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
     debugPrint("Sending Data to API: ${jsonEncode(requestData)}\n");
 
-    final apiService = ApiService(studentAccount: widget.studentAccount);
+    if (widget.coachAccount == null) {
+      debugPrint("Error: CoachAccount is null.");
+      return false;
+    }
+    final apiService = ApiService(studentAccount: widget.studentAccount, coachAccount: widget.coachAccount!);
     bool success = await apiService.createAppointment(requestData);
 
     if (success && mounted) {

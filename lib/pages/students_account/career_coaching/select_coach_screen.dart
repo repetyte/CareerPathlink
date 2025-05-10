@@ -2,21 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../models/career_coaching/select_coach_model.dart';
 import '../../../models/career_coaching/time_slot.dart';
+import '../../../models/user_role/coach_model.dart';
 import '../../../models/user_role/student.dart';
 import '../../../services/career_coaching/api_services.dart';
 import 'calendar.dart';
 
 class SelectCoachScreen extends StatefulWidget {
+  CoachAccount? coachAccount;
   final StudentAccount studentAccount;
-  const SelectCoachScreen({super.key, required this.studentAccount});
+  SelectCoachScreen({super.key, required this.studentAccount, this.coachAccount});
 
   @override
   _SelectCoachScreenState createState() => _SelectCoachScreenState();
 }
 
 class _SelectCoachScreenState extends State<SelectCoachScreen> {
-  List<Coach> _coaches = [];
-  List<Coach> _filteredCoaches = [];
+  List<Coach1> _coaches = [];
+  List<Coach1> _filteredCoaches = [];
   bool _isLoading = true;
   String _selectedProgram = 'Choose Program';
   TextEditingController searchController = TextEditingController();
@@ -37,8 +39,8 @@ class _SelectCoachScreenState extends State<SelectCoachScreen> {
 
   Future<void> loadCoaches() async {
     try {
-      ApiService apiService = ApiService(studentAccount: widget.studentAccount);
-      List<Coach> fetchedCoaches = await apiService.fetchCoaches();
+      ApiService apiService = ApiService(studentAccount: widget.studentAccount, coachAccount: widget.coachAccount!);
+      List<Coach1> fetchedCoaches = await apiService.fetchCoaches();
       setState(() {
         _coaches = fetchedCoaches;
         _filteredCoaches = [];
@@ -298,7 +300,7 @@ class _SelectCoachScreenState extends State<SelectCoachScreen> {
     );
   }
 
-  Widget _buildCoachTile(Coach coach) {
+  Widget _buildCoachTile(Coach1 coach) {
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 12.0),
       elevation: 4,

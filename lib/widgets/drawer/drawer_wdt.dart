@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/coach_model.dart';
+import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/pages/wdt_account/wdt_home_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../pages/wdt_account/career_coaching/coach_home_screen.dart';
 
 class MyDrawerCoach extends StatelessWidget {
+  StudentAccount? studentAccount;
   final CoachAccount coachAccount;
-  const MyDrawerCoach({super.key, required this.coachAccount});
+  MyDrawerCoach({super.key, required this.coachAccount, this.studentAccount});
 
   navigateTo(String route, BuildContext context) {
     Navigator.of(context).pushReplacementNamed(route);
@@ -87,7 +89,7 @@ class MyDrawerCoach extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    HomeScreenCoach(coachAccount: coachAccount,),
+                    HomeScreenCoach(coachAccount: coachAccount, studentAccount: studentAccount),
               ),
             );
             },
@@ -105,7 +107,7 @@ class MyDrawerCoach extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    CoachScreen(coachAccount: coachAccount, ),
+                    CoachScreen(coachAccount: coachAccount, studentAccount: studentAccount, ),
               ),
             );
             },

@@ -4,12 +4,14 @@ import 'package:flutter_app/pages/login_and_signup/login_view.dart';
 import 'package:flutter_app/widgets/drawer/drawer_wdt.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../models/user_role/student.dart';
 import '../../widgets/footer/footer.dart';
 import '../../widgets/appbar/student_header.dart';
 
 class HomeScreenCoach extends StatefulWidget {
+  StudentAccount? studentAccount;
   final CoachAccount coachAccount;
-  const HomeScreenCoach({super.key, required this.coachAccount});
+  HomeScreenCoach({super.key, required this.coachAccount, this.studentAccount});
 
   @override
   State<HomeScreenCoach> createState() => _HomeScreenState();
@@ -194,7 +196,7 @@ class _HomeScreenState extends State<HomeScreenCoach> {
         toolbarHeight: 92,
       ),
       drawer: MyDrawerCoach(
-        coachAccount: widget.coachAccount,
+        coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,
       ),
       body: Column(
         children: [

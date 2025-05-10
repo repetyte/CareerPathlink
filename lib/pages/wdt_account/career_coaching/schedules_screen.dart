@@ -1,4 +1,5 @@
 import 'package:flutter_app/models/user_role/coach_model.dart';
+import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/pages/wdt_account/career_coaching/coach_home_screen.dart';
 import 'package:flutter_app/pages/wdt_account/career_coaching/coach_header.dart';
 import 'package:flutter_app/models/career_coaching/request_appointment_model.dart';
@@ -20,7 +21,8 @@ const Color darkMessageShadowColor = Color(0xFF0D47A1); // Darker blue shadow
 
 class SchedulesScreen extends StatefulWidget {
   final CoachAccount coachAccount;
-  const SchedulesScreen({super.key, required this.coachAccount});
+  StudentAccount? studentAccount;
+  SchedulesScreen({super.key, required this.coachAccount, this.studentAccount});
 
   @override
   _SchedulesScreenState createState() => _SchedulesScreenState();
@@ -73,8 +75,9 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
     });
 
     try {
+      final apiService = ApiService(coachAccount: widget.coachAccount);
       List<Appointment> fetchedAppointments =
-          await ApiService.getScheduledAppointments();
+          await apiService.getScheduledAppointments();
 
       setState(() {
         appointments = fetchedAppointments;
@@ -184,7 +187,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                     builder: (context, color, child) => Icon(
                       Icons.check_circle_rounded,
                       size: 48,
-                      color: color as Color?,
+                      color: color,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -281,7 +284,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                         tween: Tween<double>(begin: 1, end: 1),
                         duration: const Duration(milliseconds: 150),
                         builder: (context, scale, child) => Transform.scale(
-                          scale: scale as double,
+                          scale: scale,
                           child: ElevatedButton(
                             onPressed: () {
                               Navigator.pop(context, true);
@@ -325,7 +328,8 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
     try {
       final prefs = await SharedPreferences.getInstance();
       final userId = prefs.getString('user_id');
-      final coachId = await ApiService.getCoachId(userId!);
+      final apiService = ApiService(coachAccount: widget.coachAccount);
+      final coachId = await apiService.getCoachId(userId!);
 
       await CancellationRequestService.markAsCompleted(
         appointmentId: appointment.id,
@@ -391,7 +395,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                       builder: (context, color, child) => Icon(
                         Icons.warning_amber_rounded,
                         size: 48,
-                        color: color as Color?,
+                        color: color,
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -515,7 +519,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                           tween: Tween<double>(begin: 1, end: 1),
                           duration: const Duration(milliseconds: 150),
                           builder: (context, scale, child) => Transform.scale(
-                            scale: scale as double,
+                            scale: scale,
                             child: ElevatedButton(
                               onPressed: isSubmitting
                                   ? null
@@ -529,8 +533,9 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                                               .getInstance();
                                           final userId =
                                               prefs.getString('user_id');
+                                          final apiService = ApiService(coachAccount: widget.coachAccount);
                                           final coachId =
-                                              await ApiService.getCoachId(
+                                              await apiService.getCoachId(
                                                   userId!);
 
                                           await CancellationRequestService
@@ -774,16 +779,16 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
               ),
             ),
           ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Material(
-              elevation: 4.0,
-              color: Colors.white,
-              child: const CoachHeader(),
-            ),
-          ),
+          // Positioned(
+          //   top: 0,
+          //   left: 0,
+          //   right: 0,
+          //   child: Material(
+          //     elevation: 4.0,
+          //     color: Colors.white,
+          //     child: const CoachHeader(),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -836,7 +841,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
               children: [
                 CircleAvatar(
                   radius: 32,
-                  backgroundImage: AssetImage('assets/student_profile.jpg'),
+                  backgroundImage: AssetImage('assets/career_coaching/student_profile.jpg'),
                 ),
                 SizedBox(width: 12),
                 Expanded(
@@ -986,19 +991,19 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
 
     switch (screenName) {
       case 'Dashboard':
-        screen = CoachScreen(coachAccount: widget.coachAccount,);
+        screen = CoachScreen(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,);
         break;
       case 'Request Schedules':
-        screen = RequestScheduleScreen(coachAccount: widget.coachAccount,);
+        screen = RequestScheduleScreen(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,);
         break;
       case 'Reschedule Request':
-        screen = RescheduleRequestScreen(coachAccount: widget.coachAccount,);
+        screen = RescheduleRequestScreen(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,);
         break;
       case 'Schedules':
-        screen = SchedulesScreen(coachAccount: widget.coachAccount,);
+        screen = SchedulesScreen(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,);
         break;
       default:
-        screen = SchedulesScreen(coachAccount: widget.coachAccount,);
+        screen = SchedulesScreen(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,);
     }
 
     Navigator.push(

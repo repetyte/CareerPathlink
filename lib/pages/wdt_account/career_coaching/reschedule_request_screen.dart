@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../models/user_role/coach_model.dart';
+import '../../../models/user_role/student.dart';
 import 'coach_header.dart';
 import 'coach_home_screen.dart';
 import 'request_schedule_screen.dart';
@@ -18,7 +19,8 @@ const Color darkDeclineShadowColor = Color(0xFFE57373);
 
 class RescheduleRequestScreen extends StatefulWidget {
   final CoachAccount coachAccount;
-  const RescheduleRequestScreen({super.key, required this.coachAccount});
+  StudentAccount? studentAccount;
+  RescheduleRequestScreen({super.key, required this.coachAccount, this.studentAccount});
 
   @override
   _RescheduleRequestScreenState createState() =>
@@ -62,8 +64,9 @@ class _RescheduleRequestScreenState extends State<RescheduleRequestScreen> {
     });
 
     try {
+      final apiService = ApiService();
       List<RescheduleRequest> fetchedRequests =
-          await ApiService.getPendingRescheduleRequests();
+          await apiService.getPendingRescheduleRequests();
 
       setState(() {
         requests = fetchedRequests;
@@ -520,7 +523,7 @@ class _RescheduleRequestScreenState extends State<RescheduleRequestScreen> {
               children: [
                 CircleAvatar(
                   radius: 32,
-                  backgroundImage: AssetImage('assets/student_profile.jpg'),
+                  backgroundImage: AssetImage('assets/career_coaching/student_profile.jpg'),
                 ),
                 SizedBox(width: 12),
                 Expanded(
@@ -773,7 +776,8 @@ class _RescheduleRequestScreenState extends State<RescheduleRequestScreen> {
     try {
       final prefs = await SharedPreferences.getInstance();
       final userId = prefs.getString('user_id');
-      final coachId = await ApiService.getCoachId(userId!);
+      final apiService = ApiService();
+      final coachId = await apiService.getCoachId(userId!);
 
       final success = await ApiService.acceptRescheduleRequest(
         requestId: request.id.toString(),
@@ -808,7 +812,8 @@ class _RescheduleRequestScreenState extends State<RescheduleRequestScreen> {
     try {
       final prefs = await SharedPreferences.getInstance();
       final userId = prefs.getString('user_id');
-      final coachId = await ApiService.getCoachId(userId!);
+      final apiService = ApiService();
+      final coachId = await apiService.getCoachId(userId!);
 
       final success = await ApiService.declineRescheduleRequest(
         requestId: request.id.toString(),
@@ -846,19 +851,19 @@ class _RescheduleRequestScreenState extends State<RescheduleRequestScreen> {
         if (text == 'Dashboard') {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => CoachScreen(coachAccount: widget.coachAccount,)),
+            MaterialPageRoute(builder: (context) => CoachScreen(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,)),
           );
         } else if (text == 'Request Schedules') {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => RequestScheduleScreen(coachAccount: widget.coachAccount,)),
+            MaterialPageRoute(builder: (context) => RequestScheduleScreen(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount)),
           );
         } else if (text == 'Reschedule Request') {
           // Stay on current screen
         } else if (text == 'Schedules') {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SchedulesScreen(coachAccount: widget.coachAccount,)),
+            MaterialPageRoute(builder: (context) => SchedulesScreen(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount)),
           );
         }
       },
@@ -1010,16 +1015,16 @@ class _RescheduleRequestScreenState extends State<RescheduleRequestScreen> {
               ),
             ),
           ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Material(
-              elevation: 4.0,
-              color: Colors.white,
-              child: const CoachHeader(),
-            ),
-          ),
+          // Positioned(
+          //   top: 0,
+          //   left: 0,
+          //   right: 0,
+          //   child: Material(
+          //     elevation: 4.0,
+          //     color: Colors.white,
+          //     child: const CoachHeader(),
+          //   ),
+          // ),
         ],
       ),
     );

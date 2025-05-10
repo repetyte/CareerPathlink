@@ -10,21 +10,29 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/career_coaching/request_appointment_model.dart';
 import '../../models/career_coaching/select_coach_model.dart';
 import '../../models/career_coaching/session_model.dart';
-import '../../models/career_coaching/student_profile_model.dart' as profile_model;
-import '../../models/career_coaching/student_profile_pictures_model.dart' as pictures_model;
+import '../../models/career_coaching/student_profile_model.dart'
+    as profile_model;
+import '../../models/career_coaching/student_profile_pictures_model.dart'
+    as pictures_model;
 import '../../models/career_coaching/student_request_reschedule_model.dart';
 import '../../models/career_coaching/time_slot.dart';
 import '../../models/career_coaching/user_model.dart';
+import '../../models/user_role/coach_model.dart';
 import '../../models/user_role/student.dart';
 
 class ApiService {
-  final StudentAccount studentAccount;
-  static const String baseUrl = 'http://localhost/CareerPathlink/api/career_coaching';
+  CoachAccount? coachAccount;
+  StudentAccount? studentAccount;
+  static const String baseUrl =
+      'http://localhost/CareerPathlink/api/career_coaching';
 
-  ApiService({required this.studentAccount});
+  ApiService({
+    this.coachAccount,
+    this.studentAccount,
+  });
 
   // Fetch list of coaches
-  Future<List<Coach>> fetchCoaches() async {
+  Future<List<Coach1>> fetchCoaches() async {
     try {
       final response = await http.get(
         Uri.parse(
@@ -38,7 +46,7 @@ class ApiService {
 
         // Then parse the JSON
         final List<dynamic> data = jsonDecode(response.body);
-        return data.map((json) => Coach.fromJson(json)).toList();
+        return data.map((json) => Coach1.fromJson(json)).toList();
       } else {
         throw Exception(
             'Failed to load coaches. Status code: ${response.statusCode}');
@@ -148,7 +156,8 @@ class ApiService {
   static Future<TimeSlot?> createTimeSlot(
       TimeSlot timeSlot, String userId) async {
     try {
-      debugPrint("[API] Creating time slot for user $userId: ${timeSlot.toJson()}");
+      debugPrint(
+          "[API] Creating time slot for user $userId: ${timeSlot.toJson()}");
       final response = await http.post(
         Uri.parse(
             'http://localhost/CareerPathlink/api/career_coaching/time_slot/create_time_slot.php'),
@@ -751,19 +760,21 @@ class ApiService {
   }
 
   // Fetch all appointment requests
-  static Future<List<Appointment>> getPendingAppointments() async {
+  Future<List<Appointment>> getPendingAppointments() async {
     const String apiUrl =
         "http://localhost/CareerPathlink/api/career_coaching/request_appointments/read_requests.php";
 
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final userId = prefs.getString('user_id');
+      // final prefs = await SharedPreferences.getInstance();
+      // final userId = prefs.getString('user_id');
+      final userId = coachAccount!.username;
 
       if (userId == null) {
         throw Exception('User not logged in');
       }
 
-      final coachId = await getCoachId(userId);
+      // final coachId = await getCoachId(userId);
+      final coachId = coachAccount?.accountId;
       debugPrint('Fetching appointments for coach ID: $coachId');
 
       final response = await http.post(
@@ -792,10 +803,10 @@ class ApiService {
     }
   }
 
-  static Future<int> getCoachId(String userId) async {
+  Future<int> getCoachId(String userId) async {
+    // final userId = coachAccount!.username;
     const String apiUrl =
-        "http://localhost/CareerPathlink/api/career_coaching/request_appointments/get_coach_id.php"; // Use 10.0.2.2 for Android emulator
-
+        "http://localhost/CareerPathlink/api/career_coaching/request_appointments/get_coach_id.php";
     try {
       debugPrint('Getting coach ID for user: $userId');
       final response = await http.post(
@@ -807,10 +818,15 @@ class ApiService {
         body: json.encode({'user_id': userId}),
       );
 
-      debugPrint('Coach ID Response: ${response.statusCode} - ${response.body}');
+      debugPrint(
+          'Coach ID Response: ${response.statusCode} - ${response.body}');
 
+      if (response.body.isEmpty) {
+        throw Exception("Empty response from server when fetching coach ID");
+      }
+
+      final responseData = json.decode(response.body);
       if (response.statusCode == 200) {
-        final responseData = json.decode(response.body);
         if (responseData['success'] == true) {
           debugPrint('Found coach ID: ${responseData['coach_id']}');
           return responseData['coach_id'];
@@ -841,10 +857,9 @@ class ApiService {
     return userId;
   }
 
-  Future<bool> createAppointment(
-      Map<String, dynamic> requestData) async {
+  Future<bool> createAppointment(Map<String, dynamic> requestData) async {
     // String? userId = await getUserId();
-    String? userId = studentAccount.accountId;
+    String? userId = studentAccount?.accountId;
     if (userId == null) {
       debugPrint("Error: No user logged in.");
       return false;
@@ -1032,46 +1047,48 @@ class ApiService {
   }
 
   // Add this method to fetch scheduled appointments
-static Future<List<Appointment>> getScheduledAppointments() async {
-  const String apiUrl = 
-      "http://localhost/CareerPathlink/api/career_coaching/request_appointments/read_schedules.php";
+  Future<List<Appointment>> getScheduledAppointments() async {
+    const String apiUrl =
+        "http://localhost/CareerPathlink/api/career_coaching/request_appointments/read_schedules.php";
 
-  try {
-    final prefs = await SharedPreferences.getInstance();
-    final userId = prefs.getString('user_id');
+    try {
+      // final prefs = await SharedPreferences.getInstance();
+      // final userId = prefs.getString('user_id');
+      final userId = coachAccount?.accountId;
 
-    if (userId == null) {
-      throw Exception('User not logged in');
-    }
-
-    final coachId = await getCoachId(userId);
-    debugPrint('Fetching scheduled appointments for coach ID: $coachId');
-
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode({'coach_id': coachId}),
-    );
-
-    debugPrint('API Response: ${response.statusCode} - ${response.body}');
-
-    if (response.statusCode == 200) {
-      final responseData = json.decode(response.body);
-
-      if (responseData['success'] == true) {
-        final List<dynamic> data = responseData['data'];
-        return data.map((json) => Appointment.fromJson(json)).toList();
-      } else {
-        throw Exception(responseData['error'] ?? 'Unknown error');
+      if (userId == null) {
+        throw Exception('User not logged in');
       }
-    } else {
-      throw Exception('HTTP ${response.statusCode}');
+
+      final coachId = await getCoachId(userId);
+      debugPrint('Fetching scheduled appointments for coach ID: $coachId');
+
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({'coach_id': coachId}),
+      );
+
+      debugPrint('API Response: ${response.statusCode} - ${response.body}');
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+
+        if (responseData['success'] == true) {
+          final List<dynamic> data = responseData['data'];
+          return data.map((json) => Appointment.fromJson(json)).toList();
+        } else {
+          throw Exception(responseData['error'] ?? 'Unknown error');
+        }
+      } else {
+        throw Exception('HTTP ${response.statusCode}');
+      }
+    } catch (e) {
+      debugPrint('Error fetching scheduled appointments: $e');
+      throw Exception(
+          'Failed to load scheduled appointments. Please try again.');
     }
-  } catch (e) {
-    debugPrint('Error fetching scheduled appointments: $e');
-    throw Exception('Failed to load scheduled appointments. Please try again.');
   }
-}
 
   static Future<Map<String, List<Session>>> fetchSessions(String userId) async {
     final url = Uri.parse(
@@ -1137,7 +1154,8 @@ static Future<List<Appointment>> getScheduledAppointments() async {
           "cancelled_sessions": cancelledSessions,
         };
       } else {
-        debugPrint("Failed to fetch sessions. Status code: ${response.statusCode}");
+        debugPrint(
+            "Failed to fetch sessions. Status code: ${response.statusCode}");
         return {};
       }
     } catch (e) {
@@ -1270,19 +1288,21 @@ static Future<List<Appointment>> getScheduledAppointments() async {
     }
   }
 
-  static Future<List<RescheduleRequest>> getPendingRescheduleRequests() async {
+  Future<List<RescheduleRequest>> getPendingRescheduleRequests() async {
     const String apiUrl =
         "http://localhost/CareerPathlink/api/career_coaching/student_request_reschedule/read_reschedule.php";
 
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final userId = prefs.getString('user_id');
+      // final prefs = await SharedPreferences.getInstance();
+      // final userId = prefs.getString('user_id');
+      final userId = coachAccount!.id;
 
       if (userId == null) {
         throw Exception('User not logged in');
       }
 
-      final coachId = await getCoachId(userId);
+      // final coachId = await getCoachId(userId);
+      final coachId = coachAccount?.accountId;
       debugPrint('Fetching reschedule requests for coach ID: $coachId');
 
       final response = await http.post(

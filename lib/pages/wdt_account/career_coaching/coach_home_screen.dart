@@ -10,6 +10,7 @@ import 'package:flutter_app/pages/wdt_account/career_coaching/schedules_screen.d
 import 'package:flutter_app/services/career_coaching/api_services.dart';
 import 'package:flutter_app/models/career_coaching/time_slot.dart';
 import '../../../models/user_role/coach_model.dart';
+import '../../../models/user_role/student.dart';
 import '../../../widgets/appbar/coach_header.dart';
 import '../../../widgets/drawer/drawer_wdt.dart';
 import '../../../widgets/shared_preferences_helper.dart';
@@ -17,7 +18,8 @@ import '../../login_and_signup/login_view.dart';
 
 class CoachScreen extends StatefulWidget {
   final CoachAccount coachAccount;
-  const CoachScreen({super.key, required this.coachAccount});
+  StudentAccount? studentAccount;
+  CoachScreen({super.key, required this.coachAccount, this.studentAccount});
 
   @override
   _CoachScreenState createState() => _CoachScreenState();
@@ -51,7 +53,8 @@ class _CoachScreenState extends State<CoachScreen> {
     });
 
     try {
-      String? userIdString = await UserPreferences.getUserId();
+      // String? userIdString = await UserPreferences.getUserId();
+      String? userIdString = widget.coachAccount.username;
       if (userIdString == null) {
         debugPrint('No user ID found in preferences');
         // Handle case where user is not logged in (redirect to login)
@@ -324,7 +327,7 @@ class _CoachScreenState extends State<CoachScreen> {
         toolbarHeight: 92,
       ),
       
-      drawer: MyDrawerCoach(coachAccount: widget.coachAccount,),
+      drawer: MyDrawerCoach(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,),
       
       body: Column(
         children: [
@@ -1001,16 +1004,16 @@ class _CoachScreenState extends State<CoachScreen> {
 
     switch (screenName) {
       case 'Request Schedules':
-        screen = RequestScheduleScreen(coachAccount: widget.coachAccount,);
+        screen = RequestScheduleScreen(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,);
         break;
       case 'Reschedule Request':
-        screen = RescheduleRequestScreen(coachAccount: widget.coachAccount,);
+        screen = RescheduleRequestScreen(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,);
         break;
       case 'Schedules':
-        screen = SchedulesScreen(coachAccount: widget.coachAccount,);
+        screen = SchedulesScreen(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,);
         break;
       default:
-        screen = CoachScreen(coachAccount: widget.coachAccount,);
+        screen = CoachScreen(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,);
     }
 
     Navigator.push(

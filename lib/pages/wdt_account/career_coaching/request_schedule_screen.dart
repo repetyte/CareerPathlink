@@ -14,6 +14,7 @@ import 'package:flutter_app/pages/wdt_account/career_coaching/schedules_screen.d
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../models/user_role/coach_model.dart';
+import '../../../models/user_role/student.dart';
 
 // Add these color constants at the top
 const Color darkAcceptColor = Color(0xFF0F9D58); // Darker green
@@ -23,7 +24,8 @@ const Color darkDeclineShadowColor = Color(0xFFE57373); // Darker red shadow
 
 class RequestScheduleScreen extends StatefulWidget {
   final CoachAccount coachAccount;
-  const RequestScheduleScreen({super.key, required this.coachAccount});
+  StudentAccount? studentAccount;
+  RequestScheduleScreen({super.key, required this.coachAccount, this.studentAccount});
 
   @override
   _RequestScheduleScreenState createState() => _RequestScheduleScreenState();
@@ -66,8 +68,9 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
     });
 
     try {
+      final apiService = ApiService(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount);
       List<Appointment> fetchedAppointments =
-          await ApiService.getPendingAppointments();
+          await apiService.getPendingAppointments();
 
       setState(() {
         appointments = fetchedAppointments;
@@ -438,16 +441,16 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
             ),
           ),
           // Fixed header positioned at the top
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Material(
-              elevation: 4.0,
-              color: Colors.white,
-              child: const CoachHeader(), // Your header
-            ),
-          ),
+          // Positioned(
+          //   top: 0,
+          //   left: 0,
+          //   right: 0,
+          //   child: Material(
+          //     elevation: 4.0,
+          //     color: Colors.white,
+          //     child: const CoachHeader(), // Your header
+          //   ),
+          // ),
         ],
       ),
     );
@@ -470,7 +473,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
               children: [
                 CircleAvatar(
                   radius: 32,
-                  backgroundImage: AssetImage('assets/student_profile.jpg'),
+                  backgroundImage: AssetImage('assets/career_coaching/student_profile.jpg'),
                 ),
                 SizedBox(width: 12),
                 Expanded(
@@ -820,22 +823,22 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
         if (text == 'Dashboard') {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => CoachScreen(coachAccount: widget.coachAccount,)),
+            MaterialPageRoute(builder: (context) => CoachScreen(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,)),
           );
         } else if (text == 'Request Schedules') {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => RequestScheduleScreen(coachAccount: widget.coachAccount,)),
+            MaterialPageRoute(builder: (context) => RequestScheduleScreen(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,)),
           );
         } else if (text == 'Reschedule Request') {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => RescheduleRequestScreen(coachAccount: widget.coachAccount,)),
+            MaterialPageRoute(builder: (context) => RescheduleRequestScreen(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,)),
           );
         } else if (text == 'Schedules') {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SchedulesScreen(coachAccount: widget.coachAccount,)),
+            MaterialPageRoute(builder: (context) => SchedulesScreen(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount)),
           );
         }
       },
