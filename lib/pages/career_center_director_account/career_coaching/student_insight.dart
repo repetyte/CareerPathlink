@@ -10,7 +10,7 @@ import '../../../services/career_coaching/career_center_services.dart';
 class StudentInsight extends StatefulWidget {
   final double screenWidth;
 
-  const StudentInsight({Key? key, required this.screenWidth}) : super(key: key);
+  const StudentInsight({super.key, required this.screenWidth});
 
   @override
   _StudentInsightState createState() => _StudentInsightState();

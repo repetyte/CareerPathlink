@@ -37,7 +37,8 @@ class _SelectCoachScreenState extends State<SelectCoachScreen> {
 
   Future<void> loadCoaches() async {
     try {
-      List<Coach> fetchedCoaches = await ApiService.fetchCoaches();
+      ApiService apiService = ApiService(studentAccount: widget.studentAccount);
+      List<Coach> fetchedCoaches = await apiService.fetchCoaches();
       setState(() {
         _coaches = fetchedCoaches;
         _filteredCoaches = [];

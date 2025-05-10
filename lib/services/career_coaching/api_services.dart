@@ -15,12 +15,16 @@ import '../../models/career_coaching/student_profile_pictures_model.dart' as pic
 import '../../models/career_coaching/student_request_reschedule_model.dart';
 import '../../models/career_coaching/time_slot.dart';
 import '../../models/career_coaching/user_model.dart';
+import '../../models/user_role/student.dart';
 
 class ApiService {
+  final StudentAccount studentAccount;
   static const String baseUrl = 'http://localhost/CareerPathlink/api/career_coaching';
 
+  ApiService({required this.studentAccount});
+
   // Fetch list of coaches
-  static Future<List<Coach>> fetchCoaches() async {
+  Future<List<Coach>> fetchCoaches() async {
     try {
       final response = await http.get(
         Uri.parse(
@@ -837,9 +841,10 @@ class ApiService {
     return userId;
   }
 
-  static Future<bool> createAppointment(
+  Future<bool> createAppointment(
       Map<String, dynamic> requestData) async {
-    String? userId = await getUserId();
+    // String? userId = await getUserId();
+    String? userId = studentAccount.accountId;
     if (userId == null) {
       debugPrint("Error: No user logged in.");
       return false;

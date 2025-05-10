@@ -1189,7 +1189,7 @@ class _CoachProfileScreenState extends State<CoachProfileScreen> {
                   children: [
                     ...sessionsToShow
                         .map((session) => _buildSessionCard(session))
-                        .toList(),
+                        ,
                     if (_pastSessions.length > 2)
                       Center(
                         child: TextButton(

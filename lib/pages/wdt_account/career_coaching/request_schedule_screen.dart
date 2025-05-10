@@ -177,7 +177,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                     builder: (context, color, child) => Icon(
                       Icons.check_circle_rounded,
                       size: 48,
-                      color: color as Color?,
+                      color: color,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -275,7 +275,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                         tween: Tween<double>(begin: 1, end: 1),
                         duration: const Duration(milliseconds: 150),
                         builder: (context, scale, child) => Transform.scale(
-                          scale: scale as double,
+                          scale: scale,
                           child: ElevatedButton(
                             onPressed: () {
                               HapticFeedback.lightImpact();
@@ -588,7 +588,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                     builder: (context, color, child) => Icon(
                       Icons.warning_amber_rounded,
                       size: 48,
-                      color: color as Color?,
+                      color: color,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -686,7 +686,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                         tween: Tween<double>(begin: 1, end: 1),
                         duration: const Duration(milliseconds: 150),
                         builder: (context, scale, child) => Transform.scale(
-                          scale: scale as double,
+                          scale: scale,
                           child: ElevatedButton(
                             onPressed: () {
                               HapticFeedback.lightImpact();

@@ -15,7 +15,7 @@ import '../../../models/career_coaching/analytics_reports_model.dart';
 import '../../../services/career_coaching/analytics_reports_service.dart';
 
 class CareerCenterHeader extends StatelessWidget {
-  const CareerCenterHeader({Key? key}) : super(key: key);
+  const CareerCenterHeader({super.key});
 
   Future<void> _launchGoogleMaps() async {
     const String googleMapsUrl =

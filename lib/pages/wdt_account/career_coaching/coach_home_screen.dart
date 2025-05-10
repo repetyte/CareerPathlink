@@ -7,7 +7,6 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter_app/pages/wdt_account/career_coaching/request_schedule_screen.dart';
 import 'package:flutter_app/pages/wdt_account/career_coaching/reschedule_request_screen.dart';
 import 'package:flutter_app/pages/wdt_account/career_coaching/schedules_screen.dart';
-import 'package:flutter_app/pages/wdt_account/career_coaching/coach_header.dart';
 import 'package:flutter_app/services/career_coaching/api_services.dart';
 import 'package:flutter_app/models/career_coaching/time_slot.dart';
 import '../../../models/user_role/coach_model.dart';

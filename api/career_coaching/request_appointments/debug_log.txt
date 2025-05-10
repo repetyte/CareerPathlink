@@ -2012,3 +2012,63 @@ Decoded Data: Array
     [service_type] => Career Coaching
 )
 
+Raw JSON Data: {"user_id":"21-68200","date_requested":"2025-05-20","time_requested":"10:00 AM","coach_id":"1","service_type":"Mock Interview"}
+Decoded Data: Array
+(
+    [user_id] => 21-68200
+    [date_requested] => 2025-05-20
+    [time_requested] => 10:00 AM
+    [coach_id] => 1
+    [service_type] => Mock Interview
+)
+
+Raw JSON Data: {"user_id":"21-68200","date_requested":"2025-05-20","time_requested":"10:00 AM","coach_id":"1","service_type":"Mock Interview"}
+Decoded Data: Array
+(
+    [user_id] => 21-68200
+    [date_requested] => 2025-05-20
+    [time_requested] => 10:00 AM
+    [coach_id] => 1
+    [service_type] => Mock Interview
+)
+
+Raw JSON Data: {"user_id":"21-68200","date_requested":"2025-05-20","time_requested":"10:00 AM","coach_id":"1","service_type":"Mock Interview"}
+Decoded Data: Array
+(
+    [user_id] => 21-68200
+    [date_requested] => 2025-05-20
+    [time_requested] => 10:00 AM
+    [coach_id] => 1
+    [service_type] => Mock Interview
+)
+
+Raw JSON Data: {"user_id":"21-68200","date_requested":"2025-05-20","time_requested":"10:00 AM","coach_id":"1","service_type":"Mock Interview"}
+Decoded Data: Array
+(
+    [user_id] => 21-68200
+    [date_requested] => 2025-05-20
+    [time_requested] => 10:00 AM
+    [coach_id] => 1
+    [service_type] => Mock Interview
+)
+
+Raw JSON Data: {"user_id":"21-68200","date_requested":"2025-05-20","time_requested":"09:00 AM","coach_id":"1","service_type":"Mock Interview"}
+Decoded Data: Array
+(
+    [user_id] => 21-68200
+    [date_requested] => 2025-05-20
+    [time_requested] => 09:00 AM
+    [coach_id] => 1
+    [service_type] => Mock Interview
+)
+
+Raw JSON Data: {"user_id":"21-68200","date_requested":"2025-05-20","time_requested":"09:30 AM","coach_id":"1","service_type":"Career Coaching"}
+Decoded Data: Array
+(
+    [user_id] => 21-68200
+    [date_requested] => 2025-05-20
+    [time_requested] => 09:30 AM
+    [coach_id] => 1
+    [service_type] => Career Coaching
+)
+

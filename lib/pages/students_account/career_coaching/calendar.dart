@@ -24,7 +24,7 @@ class CalendarScreen extends StatefulWidget {
     super.key,
     required this.coachName,
     required this.availableTimeSlots,
-    required this.selectedService, 
+    required this.selectedService,
     required this.studentAccount,
   });
 
@@ -139,7 +139,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         Navigator.of(context).pop();
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => HomeScreenStudent(studentAccount: widget.studentAccount)),
+                          MaterialPageRoute(
+                              builder: (context) => HomeScreenStudent(
+                                  studentAccount: widget.studentAccount)),
                         );
                       },
                       style: ElevatedButton.styleFrom(
@@ -359,12 +361,17 @@ class _CalendarScreenState extends State<CalendarScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => BookConfirmationScreen(studentAccount: widget.studentAccount,)),
+                                builder: (context) => BookConfirmationScreen(
+                                      studentAccount: widget.studentAccount,
+                                    )),
                           );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text("Failed to book appointment.", style: TextStyle(color: Colors.white),),
+                              content: Text(
+                                "Failed to book appointment.",
+                                style: TextStyle(color: Colors.white),
+                              ),
                               behavior: SnackBarBehavior.floating,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -906,27 +913,32 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
     String selectedDate = DateFormat('yyyy-MM-dd').format(_selectedDay.value);
     String selectedTime = _selectedSlot!.startTime;
-    String? userId = await ApiService.getUserId();
-
-    if (userId == null) {
-      if (kDebugMode) {
-        debugPrint("Error: No user ID found.");
-      }
-      return false;
-    }
-
     String coachId = _selectedSlot!.coachId.toString();
 
     Map<String, dynamic> requestData = {
-      "user_id": userId,
+      "user_id": widget.studentAccount.accountId,
       "date_requested": selectedDate,
       "time_requested": selectedTime,
       "coach_id": coachId,
       "service_type": widget.selectedService,
     };
 
-    debugPrint("Sending Data to API: ${jsonEncode(requestData)}");
+    debugPrint("Sending Data to API: ${jsonEncode(requestData)}\n");
 
-    return await ApiService.createAppointment(requestData);
+    final apiService = ApiService(studentAccount: widget.studentAccount);
+    bool success = await apiService.createAppointment(requestData);
+
+    if (success && mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BookConfirmationScreen(
+            studentAccount: widget.studentAccount,
+          ),
+        ),
+      );
+    }
+
+    return success;
   }
 }
