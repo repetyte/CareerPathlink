@@ -1054,13 +1054,14 @@ class ApiService {
     try {
       // final prefs = await SharedPreferences.getInstance();
       // final userId = prefs.getString('user_id');
-      final userId = coachAccount?.accountId;
+      final userId = coachAccount!.username;
 
       if (userId == null) {
         throw Exception('User not logged in');
       }
 
-      final coachId = await getCoachId(userId);
+      // final coachId = await getCoachId(userId);
+      final coachId = coachAccount?.accountId;
       debugPrint('Fetching scheduled appointments for coach ID: $coachId');
 
       final response = await http.post(
@@ -1295,7 +1296,7 @@ class ApiService {
     try {
       // final prefs = await SharedPreferences.getInstance();
       // final userId = prefs.getString('user_id');
-      final userId = coachAccount!.id;
+      final userId = coachAccount!.username;
 
       if (userId == null) {
         throw Exception('User not logged in');
