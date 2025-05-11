@@ -209,51 +209,91 @@ class _LoginViewState extends State<LoginView> {
       children: [
         Expanded(
           flex: 6,
-          child: Container(
-            height: size.height,
-            color: Colors.grey,
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(size.width * 0.03),
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'UNC',
-                            style: GoogleFonts.getFont(
-                              'Montserrat',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 48,
-                              color: Colors.black,
-                            ),
+          child: Stack(
+            children: [
+              /// Background Image
+              Image.network(
+                // "https://unc.edu.ph/wp-content/uploads/2022/03/IMG_7828_compressed-1024x683-1-1024x683.jpg.webp",
+                "assets/images/IMG_7828_compressed-1024x683-1-1024x683.jpg",
+                fit: BoxFit.cover,
+                width: size.width,
+                height: size.height,
+                opacity: AlwaysStoppedAnimation<double>(0.4),
+              ),
+
+              // Logo and Title
+              Container(
+                height: size.height,
+                color: Colors.black.withOpacity(0.6),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.network(
+                        'assets/logo/logo.png',
+                      ),
+                      SizedBox(
+                        height: size.height * 0.03,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: size.width * 0.03, right: size.width * 0.03),
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'UNC',
+                                style: GoogleFonts.getFont(
+                                  'Montserrat',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: size.height * 0.060,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              TextSpan(
+                                text: ' Career',
+                                style: GoogleFonts.getFont(
+                                  'Montserrat',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: size.height * 0.060,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              TextSpan(
+                                text: 'Pathlink',
+                                style: GoogleFonts.getFont(
+                                  'Montserrat',
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: size.height * 0.060,
+                                  color: Colors.red,
+                                ),
+                              ),
+                            ],
                           ),
-                          TextSpan(
-                            text: ' Career',
-                            style: GoogleFonts.getFont(
-                              'Montserrat',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 48,
+                        ),
+                      ),
+                      SizedBox(
+                        height: size.height * 0.01,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            text: 'Career Development Portal',
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w500,
+                              fontSize: size.height * 0.030,
                               color: Colors.white,
                             ),
                           ),
-                          TextSpan(
-                            text: 'Pathlink',
-                            style: GoogleFonts.getFont(
-                              'Montserrat',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 48,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                ]),
+                    ]),
+              ),
+            ],
           ),
         ),
         SizedBox(width: size.width * 0.03),
@@ -274,13 +314,110 @@ class _LoginViewState extends State<LoginView> {
     Size size,
     SimpleUIController simpleUIController,
   ) {
+    final size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              height: size.height * 0.5,
+              alignment: Alignment.center,
+              child: Stack(
+                children: [
+                  /// Background Image
+                  Image.network(
+                    // "https://unc.edu.ph/wp-content/uploads/2022/03/IMG_7828_compressed-1024x683-1-1024x683.jpg.webp",
+                    "assets/images/IMG_7828_compressed-1024x683-1-1024x683.jpg",
+                    fit: BoxFit.cover,
+                    width: size.width,
+                    height: size.height,
+                    opacity: AlwaysStoppedAnimation<double>(0.4),
+                  ),
+              
+                  /// Logo and Title
+                  Container(
+                    padding: const EdgeInsets.only(left: 16, right: 16),
+                    width: size.width,
+                    height: size.height,
+                    color: Colors.black.withOpacity(0.6),
+                    child: Column(
+                      children: [
+                        SizedBox(height: size.height * 0.06),
+                        Image.network(
+                          'assets/logo/logo.png',
+                          width: size.width * 0.3,
+                        ),
+                        SizedBox(height: size.height * 0.02),
+                        Align(
+                            alignment: Alignment.center,
+                            child: RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'UNC',
+                                    style: GoogleFonts.getFont(
+                                      'Montserrat',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: size.height * 0.060,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: ' Career',
+                                    style: GoogleFonts.getFont(
+                                      'Montserrat',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: size.height * 0.060,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: 'Pathlink',
+                                    style: GoogleFonts.getFont(
+                                      'Montserrat',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: size.height * 0.060,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )),
+                        SizedBox(
+                          height: size.height * 0.01,
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              text: 'Career Development Portal',
+                              style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.w500,
+                                fontSize: size.height * 0.030,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           _buildLoginForm(
             size,
             simpleUIController,
+          ),
+          SizedBox(
+            height: size.height * 0.06,
           ),
         ],
       ),
@@ -296,54 +433,6 @@ class _LoginViewState extends State<LoginView> {
             ? MainAxisAlignment.center
             : MainAxisAlignment.start,
         children: [
-          size.width > 700
-              ? Container()
-              : Container(
-                  width: size.width,
-                  color: Colors.grey,
-                  child: Column(
-                    children: [
-                      SizedBox(height: size.height * 0.06),
-                      Align(
-                          alignment: Alignment.center,
-                          child: RichText(
-                            textAlign: TextAlign.center,
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: 'UNC',
-                                  style: GoogleFonts.getFont(
-                                    'Montserrat',
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 32,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: ' Career',
-                                  style: GoogleFonts.getFont(
-                                    'Montserrat',
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 32,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                TextSpan(
-                                  text: 'Pathlink',
-                                  style: GoogleFonts.getFont(
-                                    'Montserrat',
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 32,
-                                    color: Colors.red,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )),
-                      SizedBox(height: size.height * 0.06),
-                    ],
-                  ),
-                ),
           SizedBox(
             height: size.height * 0.03,
           ),
@@ -355,7 +444,7 @@ class _LoginViewState extends State<LoginView> {
             ),
           ),
           const SizedBox(
-            height: 10,
+            height: 8,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 16.0),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/college_deans.dart';
 import 'package:flutter_app/pages/dean_account/dean_home_screen.dart';
-import 'package:flutter_app/pages/dean_account/graduates_tracer_industry/graduates_tracer.dart';
+import 'package:flutter_app/pages/dean_account/employment_tracking/graduates_tracer_dean.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyDrawerDean extends StatelessWidget {

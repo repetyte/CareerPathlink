@@ -55,11 +55,6 @@ class _CoachScreenState extends State<CoachScreen> {
     try {
       // String? userIdString = await UserPreferences.getUserId();
       String? userIdString = widget.coachAccount.username;
-      if (userIdString == null) {
-        debugPrint('No user ID found in preferences');
-        // Handle case where user is not logged in (redirect to login)
-        return;
-      }
 
       _userId = userIdString;
       debugPrint('Loaded user ID from preferences: $_userId');
@@ -199,6 +194,7 @@ class _CoachScreenState extends State<CoachScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: AppBar(
         centerTitle: false,
         title: Row(
@@ -331,6 +327,7 @@ class _CoachScreenState extends State<CoachScreen> {
       
       body: Column(
         children: [
+          
           SizedBox(
             width: double.infinity,
             child: Material(

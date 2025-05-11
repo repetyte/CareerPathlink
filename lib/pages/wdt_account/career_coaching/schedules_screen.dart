@@ -1,12 +1,15 @@
 import 'package:flutter_app/models/user_role/coach_model.dart';
 import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/pages/wdt_account/career_coaching/coach_home_screen.dart';
-import 'package:flutter_app/pages/wdt_account/career_coaching/coach_header.dart';
 import 'package:flutter_app/models/career_coaching/request_appointment_model.dart';
 import 'package:flutter_app/services/career_coaching/api_services.dart';
 import 'package:flutter_app/services/career_coaching/coach_cancellation_request_services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../../widgets/appbar/coach_header.dart';
+import '../../../widgets/drawer/drawer_wdt.dart';
+import '../../login_and_signup/login_view.dart';
 import 'request_schedule_screen.dart';
 import 'reschedule_request_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -77,7 +80,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
     try {
       final apiService = ApiService(coachAccount: widget.coachAccount);
       List<Appointment> fetchedAppointments =
-          await apiService.getScheduledAppointments();
+          await apiService.getScheduledAppointments(widget.coachAccount);
 
       setState(() {
         appointments = fetchedAppointments;
@@ -644,138 +647,416 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
       ],
     );
   }
+  
+  void _showProfileDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        var screenSize = MediaQuery.of(context).size;
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(40),
+          ),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: 600, // Set the maximum width for the dialog
+            ),
+            // height: screenSize.height * 0.5,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                   ListTile(
+                    leading: Icon(Icons.person),
+                    title: Text(
+                      widget.coachAccount.coachName,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text('Workforce Development Trainer'),
+                  ),
+                  const Divider(),
+                  ListTile(
+                    leading: const Icon(Icons.account_box),
+                    title: const Text('Profile'),
+                    onTap: () {
+                      // Navigate to profile
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.logout),
+                    title: const Text('Logout'),
+                    onTap: () {
+                      // Handle logout
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginView(),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    const headerHeight = 150.0;
-
     return Scaffold(
-      body: Stack(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(top: headerHeight),
-            child: SingleChildScrollView(
-              child: Container(
-                color: Colors.white,
-                padding: EdgeInsets.only(top: 20),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          _buildTextWithUnderline(
-                              'Dashboard', 16, context, _selectedText),
-                          SizedBox(width: 20),
-                          _buildTextWithUnderline(
-                              'Request Schedules', 16, context, _selectedText),
-                          SizedBox(width: 20),
-                          _buildTextWithUnderline(
-                              'Reschedule Request', 16, context, _selectedText),
-                          SizedBox(width: 20),
-                          _buildTextWithUnderline(
-                              'Schedules', 16, context, _selectedText),
-                        ],
+      
+      appBar: AppBar(
+        centerTitle: false,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              margin: const EdgeInsets.fromLTRB(0, 4, 0, 4),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage(
+                          'assets/images/seal_of_university_of_nueva_caceres_2.png',
+                        ),
                       ),
                     ),
-                    SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width / 2,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                  color: Color(0xFFE5E7EB), width: 1),
-                            ),
-                            child: TextField(
-                              controller: _searchController,
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.search,
-                                    color: Color(0xFF9CA3AF)),
-                                hintText: 'Search students...',
-                                hintStyle: TextStyle(color: Color(0xFF9CA3AF)),
-                                border: InputBorder.none,
-                                contentPadding: EdgeInsets.symmetric(
-                                    vertical: 12, horizontal: 15),
+                    child: const SizedBox(
+                      width: 48,
+                      height: 48,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'UNC ',
+                        style: GoogleFonts.getFont(
+                          'Montserrat',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 24,
+                          color: const Color(0xFF000000),
+                        ),
+                      ),
+                      Text(
+                        'Career',
+                        style: GoogleFonts.getFont(
+                          'Montserrat',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 24,
+                          color: const Color(0xFF9E9E9E),
+                        ),
+                      ),
+                      Text(
+                        'Pathlink',
+                        style: GoogleFonts.getFont(
+                          'Montserrat',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 24,
+                          color: const Color.fromARGB(255, 255, 0, 0),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: () => _showProfileDialog(context),
+                child: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFFD9D9D9),
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: SizedBox(
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          backgroundImage: AssetImage(
+                              'assets/images/image_12.png'), // Add the path to your profile image
+                          radius: 24,
+                        ),
+                        // Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     children: [
+                        //       Text('Partner Name',
+                        //           style: GoogleFonts.getFont(
+                        //             'Montserrat',
+                        //             fontWeight: FontWeight.bold,
+                        //             fontSize: 14,
+                        //             color: const Color(0xFF000000),
+                        //           )),
+                        //       Text('Employer Partner',
+                        //           style: GoogleFonts.getFont(
+                        //             'Montserrat',
+                        //             fontWeight: FontWeight.normal,
+                        //             fontSize: 12,
+                        //             color: const Color(0xFF000000),
+                        //           )),
+                        //     ]),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
+                          width: 12,
+                          height: 7.4,
+                          child: SizedBox(
+                              width: 12,
+                              height: 7.4,
+                              child: SvgPicture.asset(
+                                'assets/vectors/vector_331_x2.svg',
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20.0, vertical: 10.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        toolbarHeight: 92,
+      ),
+      
+      drawer: MyDrawerCoach(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,),
+      
+      body: Column(
+        children: [
+          
+          SizedBox(
+            width: double.infinity,
+            child: Material(
+              elevation: 4.0,
+              shadowColor: Colors.black.withOpacity(0.3),
+              child: const HeaderCoach(),
+            ),
+          ),
+      
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(16, 24, 16, 24),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        'Career Coaching',
+                        style: GoogleFonts.getFont(
+                          'Montserrat',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 32,
+                          color: const Color(0xFF000000),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+                    height: 300,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      image: const DecorationImage(
+                        fit: BoxFit.cover,
+                        image: AssetImage(
+                          'assets/images/rectangle_223.jpeg',
+                        ),
+                      ),
+                    ),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          left: 0,
+                          right: 0,
+                          top: 0,
+                          bottom: 0,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0x80000000),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            child: const SizedBox(
+                              width: 380,
+                              height: 200,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Scheduled Appointments',
-                                style: GoogleFonts.inter(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18,
-                                  color: Colors.black,
+                              Container(
+                                margin: const EdgeInsets.fromLTRB(0, 0, 0, 4),
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    'Manage Appointments',
+                                    style: GoogleFonts.getFont(
+                                      'Montserrat',
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 28,
+                                      color: const Color(0xFFFFFFFF),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Text(
+                                  'The Career Center Office is staffed with dedicated counselors who assist students in identifying a suitable career path, regardless of whether they already have a specific occupation in mind or are unsure about their direction.',
+                                  style: GoogleFonts.getFont(
+                                    'Montserrat',
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 14,
+                                    color: const Color(0xFFFFFFFF),
+                                  ),
                                 ),
                               ),
                             ],
                           ),
-                          SizedBox(height: 10),
-                          isLoading
-                              ? Center(child: CircularProgressIndicator())
-                              : filteredAppointments.isEmpty
-                                  ? Container(
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.6,
-                                      alignment: Alignment.center,
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(Icons.search_off,
-                                              size: 48, color: Colors.grey),
-                                          SizedBox(height: 16),
-                                          Text(
-                                            _searchController.text.isEmpty
-                                                ? 'No scheduled appointments'
-                                                : 'No results found',
-                                            style: GoogleFonts.inter(
-                                              fontSize: 15,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  : GridView.builder(
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        crossAxisSpacing: 10,
-                                        mainAxisSpacing: 10,
-                                        childAspectRatio: 3.9,
-                                      ),
-                                      itemCount: filteredAppointments.length,
-                                      itemBuilder: (context, index) {
-                                        return buildRequestCard(
-                                            filteredAppointments[index]);
-                                      },
-                                    ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  
+                  SizedBox(height: 24),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        _buildTextWithUnderline(
+                            'Dashboard', 16, context, _selectedText),
+                        SizedBox(width: 20),
+                        _buildTextWithUnderline(
+                            'Request Schedules', 16, context, _selectedText),
+                        SizedBox(width: 20),
+                        _buildTextWithUnderline(
+                            'Reschedule Request', 16, context, _selectedText),
+                        SizedBox(width: 20),
+                        _buildTextWithUnderline(
+                            'Schedules', 16, context, _selectedText),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width / 2,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                color: Color(0xFFE5E7EB), width: 1),
+                          ),
+                          child: TextField(
+                            controller: _searchController,
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.search,
+                                  color: Color(0xFF9CA3AF)),
+                              hintText: 'Search students...',
+                              hintStyle: TextStyle(color: Color(0xFF9CA3AF)),
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 12, horizontal: 15),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 10.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Scheduled Appointments',
+                              style: GoogleFonts.inter(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        isLoading
+                            ? Center(child: CircularProgressIndicator())
+                            : filteredAppointments.isEmpty
+                                ? Container(
+                                    height:
+                                        MediaQuery.of(context).size.height *
+                                            0.6,
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.search_off,
+                                            size: 48, color: Colors.grey),
+                                        SizedBox(height: 16),
+                                        Text(
+                                          _searchController.text.isEmpty
+                                              ? 'No scheduled appointments'
+                                              : 'No results found',
+                                          style: GoogleFonts.inter(
+                                            fontSize: 15,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : GridView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 10,
+                                      mainAxisSpacing: 10,
+                                      childAspectRatio: 3.9,
+                                    ),
+                                    itemCount: filteredAppointments.length,
+                                    itemBuilder: (context, index) {
+                                      return buildRequestCard(
+                                          filteredAppointments[index]);
+                                    },
+                                  ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

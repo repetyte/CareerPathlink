@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/career_center_director.dart';
 import 'package:flutter_app/pages/career_center_director_account/director_home_screen.dart';
-import 'package:flutter_app/pages/career_center_director_account/graduates_tracer_industry/graduates_tracer.dart';
+import 'package:flutter_app/pages/career_center_director_account/employment_tracking/graduates_tracer_director.dart';
 import 'package:flutter_app/pages/career_center_director_account/recruitment_and_placement/rr_job_dashboard_director.dart';
 import 'package:flutter_app/pages/career_center_director_account/work_integrated_learning/internship_dashboard_director.dart';
 import 'package:google_fonts/google_fonts.dart';

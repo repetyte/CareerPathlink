@@ -769,10 +769,6 @@ class ApiService {
       // final userId = prefs.getString('user_id');
       final userId = coachAccount!.username;
 
-      if (userId == null) {
-        throw Exception('User not logged in');
-      }
-
       // final coachId = await getCoachId(userId);
       final coachId = coachAccount?.accountId;
       debugPrint('Fetching appointments for coach ID: $coachId');
@@ -1047,21 +1043,18 @@ class ApiService {
   }
 
   // Add this method to fetch scheduled appointments
-  Future<List<Appointment>> getScheduledAppointments() async {
+  Future<List<Appointment>> getScheduledAppointments(CoachAccount? coach) async {
     const String apiUrl =
         "http://localhost/CareerPathlink/api/career_coaching/request_appointments/read_schedules.php";
 
     try {
       // final prefs = await SharedPreferences.getInstance();
       // final userId = prefs.getString('user_id');
-      final userId = coachAccount!.username;
-
-      if (userId == null) {
-        throw Exception('User not logged in');
-      }
+      final userId = coach!.username;
+      debugPrint('Fetching reschedule requests for user ID: $userId');
 
       // final coachId = await getCoachId(userId);
-      final coachId = coachAccount?.accountId;
+      final coachId = coach.id;
       debugPrint('Fetching scheduled appointments for coach ID: $coachId');
 
       final response = await http.post(
@@ -1289,27 +1282,62 @@ class ApiService {
     }
   }
 
-  Future<List<RescheduleRequest>> getPendingRescheduleRequests() async {
+  Future<List<RescheduleRequest>> getPendingRescheduleRequests(
+      CoachAccount? coach) async {
     const String apiUrl =
         "http://localhost/CareerPathlink/api/career_coaching/student_request_reschedule/read_reschedule.php";
 
     try {
       // final prefs = await SharedPreferences.getInstance();
       // final userId = prefs.getString('user_id');
-      final userId = coachAccount!.username;
-
-      if (userId == null) {
-        throw Exception('User not logged in');
-      }
+      final userId = coach!.username;
+      debugPrint('Fetching reschedule requests for user ID: $userId');
 
       // final coachId = await getCoachId(userId);
-      final coachId = coachAccount?.accountId;
+      final coachId = coach.accountId;
       debugPrint('Fetching reschedule requests for coach ID: $coachId');
 
-      final response = await http.post(
-        Uri.parse(apiUrl),
+      // final response = await http.post(
+      //   Uri.parse(apiUrl),
+      //   headers: {'Content-Type': 'application/json'},
+      //   body: json.encode({'coach_id': coachId}),
+      // );
+
+      // final response = await http.get(
+      //   Uri.parse('$apiUrl?coach_id=$coachId'),
+      //   headers: {'Content-Type': 'application/json'},
+      // );
+
+      // debugPrint('API Response: ${response.statusCode} - ${response.body}');
+
+      // if (response.statusCode == 200) {
+      //   final responseData = json.decode(response.body);
+
+      //   if (responseData is! Map<String, dynamic>) {
+      //     throw Exception('Invalid response format');
+      //   }
+
+      //   if (responseData['success'] == true) {
+      //     final List<dynamic> data = responseData['data'] ?? [];
+      //     return data.map((json) {
+      //       try {
+      //         return RescheduleRequest.fromJson(json);
+      //       } catch (e) {
+      //         debugPrint('Error parsing reschedule request: $e');
+      //         debugPrint('Problematic JSON: $json');
+      //         throw Exception('Failed to parse reschedule request data');
+      //       }
+      //     }).toList();
+      //   } else {
+      //     throw Exception(responseData['error'] ?? 'Unknown error');
+      //   }
+      // } else {
+      //   throw Exception('HTTP ${response.statusCode}');
+      // }
+
+      final response = await http.get(
+        Uri.parse('$apiUrl?coach_id=$coachId'),
         headers: {'Content-Type': 'application/json'},
-        body: json.encode({'coach_id': coachId}),
       );
 
       debugPrint('API Response: ${response.statusCode} - ${response.body}');
@@ -1317,13 +1345,9 @@ class ApiService {
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
 
-        if (responseData is! Map<String, dynamic>) {
-          throw Exception('Invalid response format');
-        }
-
-        if (responseData['success'] == true) {
-          final List<dynamic> data = responseData['data'] ?? [];
-          return data.map((json) {
+        // Handle if response is a List (array)
+        if (responseData is List) {
+          return responseData.map<RescheduleRequest>((json) {
             try {
               return RescheduleRequest.fromJson(json);
             } catch (e) {
@@ -1332,9 +1356,24 @@ class ApiService {
               throw Exception('Failed to parse reschedule request data');
             }
           }).toList();
-        } else {
-          throw Exception(responseData['error'] ?? 'Unknown error');
         }
+
+        // Handle if response is a Map (object)
+        if (responseData is Map<String, dynamic> &&
+            responseData['success'] == true) {
+          final List<dynamic> data = responseData['data'] ?? [];
+          return data.map<RescheduleRequest>((json) {
+            try {
+              return RescheduleRequest.fromJson(json);
+            } catch (e) {
+              debugPrint('Error parsing reschedule request: $e');
+              debugPrint('Problematic JSON: $json');
+              throw Exception('Failed to parse reschedule request data');
+            }
+          }).toList();
+        }
+
+        throw Exception('Invalid response format');
       } else {
         throw Exception('HTTP ${response.statusCode}');
       }
@@ -1346,7 +1385,7 @@ class ApiService {
 
   static Future<bool> acceptRescheduleRequest({
     required String requestId,
-    required int coachId,
+    required String? coachId,
     required String coachReply,
   }) async {
     const String apiUrl =
@@ -1363,9 +1402,23 @@ class ApiService {
         }),
       );
 
+      // if (response.statusCode == 200) {
+      //   final responseData = json.decode(response.body);
+      //   return responseData['success'] ?? false;
+      // } else {
+      //   throw Exception('HTTP ${response.statusCode}: ${response.body}');
+      // }
+
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
-        return responseData['success'] ?? false;
+        // Handle both string and map responses
+        if (responseData is Map && responseData.containsKey('success')) {
+          return responseData['success'] == true;
+        } else if (responseData is String) {
+          // If backend returns a string, treat as success if it contains "success"
+          return responseData.toLowerCase().contains('success');
+        }
+        return false;
       } else {
         throw Exception('HTTP ${response.statusCode}: ${response.body}');
       }

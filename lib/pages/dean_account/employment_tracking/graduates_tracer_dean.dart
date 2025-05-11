@@ -161,28 +161,40 @@ class _TracerDashboardDeanState extends State<TracerDashboardDean> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(40),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+            child: SizedBox(
+              height: 160, // Set a fixed height for all stat cards
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start, // Start content vertically
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  Text(
-                    value,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: color,
+                    Text(
+                      value,
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: color,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 8),
-                ],
+                    const Spacer(),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: const Icon(
+                        Icons.arrow_outward,
+                        color: Colors.black,
+                        size: 24,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -502,35 +514,90 @@ class _TracerDashboardDeanState extends State<TracerDashboardDean> {
                     ),
                   ),
 
-                  // Stats Cards
+                  // Stats Cards and Charts Section with Responsive Layout
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: const Text(
-                            'Graduates Employment Stats',
-                            style: TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        _buildStatsRow(),
-                        const SizedBox(height: 32),
-
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: const Text(
-                            'Employment Rate Chart',
-                            style: TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        // Charts Section
-                        _buildChartsSection(),
-                      ],
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        if (constraints.maxWidth >= 900) {
+                          // Desktop: side by side
+                          return Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Graduates Employment Stats (left)
+                              Expanded(
+                                flex: 1,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        'Graduates Employment Stats',
+                                        style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 16),
+                                    _buildStatsRow(),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 32),
+                              // Employment Rate Chart (right)
+                              Expanded(
+                                flex: 1,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(
+                                        'Employment Rate Chart',
+                                        style: TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 16),
+                                    _buildChartsSection(),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          );
+                        } else {
+                          // Mobile: stacked
+                          return Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: const Text(
+                                  'Graduates Employment Stats',
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              _buildStatsRow(),
+                              const SizedBox(height: 32),
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: const Text(
+                                  'Employment Rate Chart',
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              _buildChartsSection(),
+                            ],
+                          );
+                        }
+                      },
                     ),
                   ),
 

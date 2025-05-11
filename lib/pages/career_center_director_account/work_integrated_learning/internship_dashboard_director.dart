@@ -716,7 +716,7 @@ class _InternshipDashboardDirectorState
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const Text(
-                                      'Students WIL Opportinity Engagement Data',
+                                      'Students WIL Opportunity Engagement Data',
                                       style: TextStyle(
                                           fontSize: 24,
                                           fontWeight: FontWeight.bold),
