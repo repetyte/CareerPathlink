@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/career_coaching/student_notification_model.dart';
+import 'package:flutter_app/pages/students_account/career_coaching/notification_provider.dart';
+import 'package:flutter_app/pages/students_account/career_coaching/student_profile.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../../models/user_role/student.dart';
 import '../../../widgets/appbar/student_header.dart';
@@ -8,7 +13,6 @@ import '../../../widgets/drawer/drawer_students.dart';
 import '../../../widgets/footer/footer.dart';
 import '../../login_and_signup/login_view.dart';
 import 'select_coach_screen.dart';
-
 
 class AppointmentBookingScreen extends StatefulWidget {
   final StudentAccount studentAccount;
@@ -20,12 +24,409 @@ class AppointmentBookingScreen extends StatefulWidget {
 }
 
 class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
+  String? _currentUserId; // This is the line that was missing
+  StudentNotification? _selectedNotification;
+  bool _showNotificationDetails = false;
+  OverlayEntry? _notificationOverlayEntry;
+  final GlobalKey _bellIconKey = GlobalKey();
   bool isChecked = false;
 
   void _toggleCheckbox(bool? value) {
     setState(() {
       isChecked = value ?? false;
     });
+  }
+
+  void _showNotificationPopup(BuildContext context) {
+    final overlay = Overlay.of(context);
+    final renderBox =
+        _bellIconKey.currentContext?.findRenderObject() as RenderBox?;
+
+    if (renderBox == null) {
+      debugPrint('Could not find bell icon render box');
+      return;
+    }
+
+    final position = renderBox.localToGlobal(Offset.zero);
+    final size = renderBox.size;
+
+    debugPrint('Showing notification popup at position: $position');
+
+    _notificationOverlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: position.dy + size.height + 8,
+        right: MediaQuery.of(context).size.width - position.dx - size.width,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            width: 320,
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height * 0.6,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 10,
+                  offset: Offset(0, 4),
+                )
+              ],
+            ),
+            child: _buildNotificationContent(),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(_notificationOverlayEntry!);
+  }
+
+  void _hideNotificationPopup() {
+    _notificationOverlayEntry?.remove();
+    _notificationOverlayEntry = null;
+    setState(() {
+      _showNotificationDetails = false;
+    });
+  }
+
+  Widget _buildNotificationContent() {
+    final notificationProvider =
+        Provider.of<StudentNotificationProvider>(context, listen: true);
+
+    return _showNotificationDetails && _selectedNotification != null
+        ? _buildNotificationDetailsView(_selectedNotification!)
+        : _buildNotificationListView(notificationProvider);
+  }
+
+  Widget _buildNotificationListView(StudentNotificationProvider provider) {
+    debugPrint(
+        'Building notification list with ${provider.notifications.length} items');
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Notifications (${provider.unreadCount})',
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              if (provider.unreadCount > 0)
+                TextButton(
+                  onPressed: () => provider.markAllAsRead(),
+                  child: Text(
+                    'Mark all as read',
+                    style: GoogleFonts.inter(
+                      color: Color(0xFFEC1D25),
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+        const Divider(height: 1, thickness: 1),
+        Expanded(
+          child: provider.notifications.isEmpty
+              ? Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      'No notifications found',
+                      style: GoogleFonts.inter(color: Colors.grey),
+                    ),
+                  ),
+                )
+              : ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: provider.notifications.length,
+                  itemBuilder: (context, index) {
+                    final notification = provider.notifications[index];
+                    debugPrint(
+                        'Building notification item $index: ${notification.message}');
+                    return _buildNotificationItem(
+                      icon: _getNotificationIcon(notification.notificationType),
+                      title: notification.displayType,
+                      message: notification.message ?? 'No message',
+                      time: _formatTime(notification.createdAt),
+                      isUnread: notification.isUnread,
+                      notification: notification,
+                    );
+                  },
+                ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 8, bottom: 8),
+          child: TextButton(
+            onPressed: () {
+              // TODO: Navigate to full notifications page
+            },
+            child: Text(
+              'View all notifications',
+              style: GoogleFonts.inter(
+                color: Color(0xFFEC1D25),
+                fontSize: 14,
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  // In your HeaderWidget class
+  Widget _buildNotificationItem({
+    required IconData icon,
+    required String title,
+    required String message,
+    required String time,
+    required bool isUnread,
+    required StudentNotification notification,
+  }) {
+    return InkWell(
+      onTap: () {
+        final provider = context.read<StudentNotificationProvider>();
+
+        // Mark as read if it's unread
+        if (notification.isUnread) {
+          provider.markAsRead(notification.id);
+        }
+
+        setState(() {
+          _selectedNotification = notification;
+          _showNotificationDetails = true;
+        });
+
+        _notificationOverlayEntry?.markNeedsBuild();
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        decoration: BoxDecoration(
+          color: isUnread
+              ? Color(0xFFEC1D25).withOpacity(0.05)
+              : Colors.transparent,
+          border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: Color(0xFFEC1D25).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Icon(icon, color: Color(0xFFEC1D25), size: 20),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: GoogleFonts.inter(
+                      fontWeight: isUnread ? FontWeight.bold : FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    message,
+                    style: GoogleFonts.inter(
+                      fontSize: 12,
+                      color: Colors.grey.shade600,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    time,
+                    style: GoogleFonts.inter(
+                      fontSize: 10,
+                      color: Colors.grey.shade500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            if (isUnread)
+              Container(
+                width: 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: Color(0xFFEC1D25),
+                  shape: BoxShape.circle,
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNotificationDetailsView(StudentNotification notification) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: const [Color(0xFFEC1D25), Color(0xFFC2185B)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(12),
+              topRight: Radius.circular(12),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Notification Details',
+                  style: GoogleFonts.inter(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Colors.white,
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.close, color: Colors.white),
+                  onPressed: () {
+                    setState(() {
+                      _showNotificationDetails = false;
+                    });
+                    _notificationOverlayEntry?.markNeedsBuild();
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: 48,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFEC1D25).withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Icon(
+                          _getNotificationIcon(notification.notificationType),
+                          color: Color(0xFFEC1D25),
+                          size: 24,
+                        ),
+                      ),
+                      SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              notification.displayType,
+                              style: GoogleFonts.inter(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
+                            ),
+                            SizedBox(height: 4),
+                            Text(
+                              DateFormat('MMM d, y hh:mm a')
+                                  .format(notification.createdAt),
+                              style: GoogleFonts.inter(
+                                fontSize: 12,
+                                color: Colors.grey.shade600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16),
+                  Divider(height: 1, thickness: 1),
+                  SizedBox(height: 16),
+                  if (notification.message != null)
+                    Text(
+                      notification.message!,
+                      style: GoogleFonts.inter(
+                        fontSize: 14,
+                        color: Colors.grey.shade800,
+                      ),
+                    ),
+                  SizedBox(height: 16),
+                  if (notification.dateRequested != null)
+                    Text(
+                      'Scheduled for: ${DateFormat('MMM d, y').format(notification.dateRequested!)} '
+                      'at ${notification.timeRequested ?? ''}',
+                      style: GoogleFonts.inter(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  IconData _getNotificationIcon(String type) {
+    switch (type) {
+      case 'Accepted Appointment':
+        return Icons.check_circle_outline;
+      case 'Declined Appointment':
+        return Icons.cancel_outlined;
+      case 'Completed Appointment':
+        return Icons.done_all;
+      case 'Cancelled Appointment':
+        return Icons.event_busy;
+      case 'Accepted Reschedule Request':
+        return Icons.schedule;
+      case 'Declined Reschedule Request':
+        return Icons.schedule_send;
+      default:
+        return Icons.notifications;
+    }
+  }
+
+  String _formatTime(DateTime date) {
+    final now = DateTime.now();
+    final difference = now.difference(date);
+
+    if (difference.inMinutes < 1) {
+      return 'Just now';
+    } else if (difference.inHours < 1)
+      return '${difference.inMinutes} mins ago';
+    else if (difference.inDays < 1)
+      return '${difference.inHours} hours ago';
+    else if (difference.inDays < 7)
+      return '${difference.inDays} days ago';
+    else
+      return DateFormat('MMM d, y').format(date);
   }
 
   void _showProfileDialog(BuildContext context) {
@@ -59,7 +460,15 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
                     leading: const Icon(Icons.account_box),
                     title: const Text('Profile'),
                     onTap: () {
-                      // Navigate to profile
+                      // Handle profile navigation
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => StudentProfileScreen(
+                            studentAccount: widget.studentAccount,
+                          ),
+                        ),
+                      );
                     },
                   ),
                   ListTile(
@@ -87,6 +496,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
   @override
   Widget build(BuildContext context) {
     // Detect if the platform is mobile or web
+    final notificationProvider = context.watch<StudentNotificationProvider>();
     bool isWeb = MediaQuery.of(context).size.width > 600;
 
     return Scaffold(
@@ -150,49 +560,79 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
                 ],
               ),
             ),
-            MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: () => _showProfileDialog(context),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFD9D9D9),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: SizedBox(
+            Row(
+              children: [
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () {
+                      if (_notificationOverlayEntry == null) {
+                        _showNotificationPopup(context);
+                      } else {
+                        _hideNotificationPopup();
+                      }
+                    },
                     child: Container(
-                      padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.transparent,
-                            backgroundImage: const AssetImage(
-                                'assets/images/image_12.png'), // Add the path to your profile image
-                            radius: 24,
-                          ),
-                          SizedBox(
-                            width: 4,
-                          ),
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
-                            width: 12,
-                            height: 7.4,
-                            child: SizedBox(
-                              width: 12,
-                              height: 7.4,
-                              child: SvgPicture.asset(
-                                'assets/vectors/vector_331_x2.svg',
-                              ),
-                            ),
-                          ),
-                        ],
+                      key: _bellIconKey,
+                      padding: EdgeInsets.all(8),
+                      child: Badge(
+                        label: Text('${notificationProvider.unreadCount}',
+                            style: TextStyle(color: Colors.white)),
+                        isLabelVisible: notificationProvider.unreadCount > 0,
+                        backgroundColor: Color(0xFFEC1D25),
+                        child: Icon(Icons.notifications_active_outlined,
+                            size: 26, color: Color(0xFFEC1D25)),
                       ),
                     ),
                   ),
                 ),
-              ),
+                const SizedBox(width: 8),
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () => _showProfileDialog(context),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFD9D9D9),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: SizedBox(
+                        child: Container(
+                          padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                backgroundImage: const AssetImage(
+                                    'assets/images/image_12.png'), // Add the path to your profile image
+                                radius: 24,
+                              ),
+                              SizedBox(
+                                width: 4,
+                              ),
+                              Container(
+                                margin:
+                                    const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
+                                width: 12,
+                                height: 7.4,
+                                child: SizedBox(
+                                  width: 12,
+                                  height: 7.4,
+                                  child: SvgPicture.asset(
+                                    'assets/vectors/vector_331_x2.svg',
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -212,7 +652,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
               child: const HeaderStudent(),
             ),
           ),
-          
+
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -398,8 +838,9 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            SelectCoachScreen(studentAccount: widget.studentAccount,),
+                                        builder: (context) => SelectCoachScreen(
+                                          studentAccount: widget.studentAccount,
+                                        ),
                                       ),
                                     );
                                   }

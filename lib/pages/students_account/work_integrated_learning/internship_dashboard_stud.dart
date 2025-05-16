@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/models/work_integrated_learning/internship.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
+import 'package:flutter_app/pages/students_account/career_coaching/student_profile.dart';
 import 'package:flutter_app/pages/students_account/work_integrated_learning/internship_details_stud.dart';
 import 'package:flutter_app/services/internship_api_service.dart';
 import 'package:flutter_app/widgets/appbar/graduates_header.dart';
@@ -40,6 +41,7 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        var screenSize = MediaQuery.of(context).size;
         return Dialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),
@@ -66,7 +68,15 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
                     leading: const Icon(Icons.account_box),
                     title: const Text('Profile'),
                     onTap: () {
-                      // Navigate to profile
+                      // Handle profile navigation
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => StudentProfileScreen(
+                            studentAccount: widget.studentAccount,
+                          ),
+                        ),
+                      );
                     },
                   ),
                   ListTile(

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/student.dart';
+import 'package:flutter_app/pages/students_account/career_coaching/notification_provider.dart';
 import 'package:flutter_app/pages/students_account/student_home_screen.dart';
 import 'package:flutter_app/pages/students_account/work_integrated_learning/internship_dashboard_stud.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import '../../pages/students_account/career_coaching/terms_conditions_screen.dart';
 
@@ -104,12 +106,23 @@ class MyDrawerStudents extends StatelessWidget {
               ),
             ),
             onTap: () {
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => AppointmentBookingScreen(
+              //       studentAccount: studentAccount,
+              //     ), // Navigate to AppointmentBookingScreen
+              //   ),
+              // );
+              // When navigating to AppointmentBookingScreen
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AppointmentBookingScreen(
-                    studentAccount: studentAccount,
-                  ), // Navigate to AppointmentBookingScreen
+                  builder: (context) => ChangeNotifierProvider(
+                    create: (_) => StudentNotificationProvider(),
+                    child: AppointmentBookingScreen(
+                        studentAccount: studentAccount),
+                  ),
                 ),
               );
             },

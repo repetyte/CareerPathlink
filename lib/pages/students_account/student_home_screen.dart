@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
+import 'package:flutter_app/pages/students_account/career_coaching/student_profile.dart';
 import 'package:flutter_app/widgets/drawer/drawer_students.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -56,7 +57,15 @@ class _HomeScreenState extends State<HomeScreenStudent> {
                     leading: const Icon(Icons.account_box),
                     title: const Text('Profile'),
                     onTap: () {
-                      // Navigate to profile
+                      // Handle profile navigation
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => StudentProfileScreen(
+                            studentAccount: widget.studentAccount,
+                          ),
+                        ),
+                      );
                     },
                   ),
                   ListTile(
