@@ -1453,9 +1453,24 @@ class ApiService {
         }),
       );
 
+      // if (response.statusCode == 200) {
+      //   final responseData = json.decode(response.body);
+      //   return responseData['success'] ?? false;
+      // } else {
+      //   throw Exception('HTTP ${response.statusCode}: ${response.body}');
+      // }
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
-        return responseData['success'] ?? false;
+        // Accept both bool and string for 'success'
+        if (responseData['success'] == true ||
+            (responseData['success'] is String &&
+                responseData['success']
+                    .toString()
+                    .toLowerCase()
+                    .contains('success'))) {
+          return true;
+        }
+        return false;
       } else {
         throw Exception('HTTP ${response.statusCode}: ${response.body}');
       }
@@ -1885,5 +1900,5 @@ class ApiService {
     }
   }
 
-  static getRequests({required String studentName, required String status}) {}
+  // static getRequests({required String studentName, required String status}) {}
 }

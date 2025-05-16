@@ -32,7 +32,7 @@ $database = "ccms_db";
 
 try {
     $conn = new mysqli($servername, $username, $password, $database);
-    
+
     if ($conn->connect_error) {
         throw new Exception("Database Connection Failed: " . $conn->connect_error);
     }
@@ -55,7 +55,7 @@ try {
     // Validate required fields (for cancellation)
     $required_fields = [
         "appointment_id" => "Appointment ID",
-        "coach_id" => "Coach ID", 
+        "coach_id" => "Coach ID",
         "student_name" => "Student Name",
         "original_date" => "Original Date",
         "original_time" => "Original Time",
@@ -81,7 +81,7 @@ try {
         AND a.date_requested = ? AND a.time_requested = ?
     ");
     $verify_stmt->bind_param(
-        "issss", 
+        "issss",
         $data["appointment_id"],
         $data["coach_id"],
         $data["student_name"],
@@ -111,11 +111,11 @@ try {
         $stmt = $conn->prepare("INSERT INTO coach_cancellation_requests 
                               (appointment_id, coach_id, student_name, original_date, original_time, reason, status) 
                               VALUES (?, ?, ?, ?, ?, ?, 'Pending')");
-        
+
         if (!$stmt) {
             throw new Exception("Prepare failed: " . $conn->error);
         }
-        
+
         $stmt->bind_param("iissss", $appointment_id, $coach_id, $student_name, $original_date, $original_time, $reason);
         $stmt->execute();
 
@@ -124,7 +124,7 @@ try {
         }
 
         $new_id = $stmt->insert_id;
-        
+
         // 2. Update the request_appointments status to 'Cancelled' (this will trigger the appointment update)
         $update_request_stmt = $conn->prepare("UPDATE request_appointments SET status = 'Cancelled' WHERE appointment_id = ?");
         if (!$update_request_stmt) {
@@ -132,7 +132,7 @@ try {
         }
         $update_request_stmt->bind_param("i", $appointment_id);
         $update_request_stmt->execute();
-        
+
         if ($update_request_stmt->affected_rows === 0) {
             throw new Exception("Failed to update request_appointments status");
         }
@@ -148,13 +148,11 @@ try {
             "id" => $new_id
         ]);
         exit;
-
     } catch (Exception $e) {
         // Rollback transaction on error
         $conn->rollback();
         throw $e;
     }
-
 } catch (Exception $e) {
     // Error response
     ob_end_clean();

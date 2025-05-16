@@ -329,14 +329,20 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
     });
 
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final userId = prefs.getString('user_id');
-      final apiService = ApiService(coachAccount: widget.coachAccount);
-      final coachId = await apiService.getCoachId(userId!);
+      // final prefs = await SharedPreferences.getInstance();
+      // final userId = prefs.getString('user_id');
+      final userId = widget.coachAccount.username;
+      debugPrint('Fetching reschedule requests for user ID: $userId');
+
+      // final apiService = ApiService(coachAccount: widget.coachAccount);
+      // final coachId = await apiService.getCoachId(userId!);
+      final coachId = widget.coachAccount.id;
+      debugPrint(
+          'Accepting reschedule with coachId: $coachId, appointmentId: ${appointment.id}');
 
       await CancellationRequestService.markAsCompleted(
         appointmentId: appointment.id,
-        coachId: coachId,
+        coachId: coachId!,
         studentName: appointment.studentName,
         originalDate: appointment.dateRequested,
         originalTime: appointment.timeRequested,
@@ -532,14 +538,25 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                                         setState(() => isSubmitting = true);
                                         try {
                                           final reason = _reasonController.text;
-                                          final prefs = await SharedPreferences
-                                              .getInstance();
-                                          final userId =
-                                              prefs.getString('user_id');
-                                          final apiService = ApiService(coachAccount: widget.coachAccount);
+                                          // final prefs = await SharedPreferences
+                                          //     .getInstance();
+                                          // final userId =
+                                          //     prefs.getString('user_id');
+                                          final userId = widget
+                                              .coachAccount.username
+                                              .toString();
+                                          debugPrint(
+                                              'Fetching reschedule requests for user ID: $userId');
+
+                                          // final apiService = ApiService(
+                                          //     coachAccount:
+                                          //         widget.coachAccount);
+                                          // final coachId = await apiService
+                                          //     .getCoachId(userId!);
                                           final coachId =
-                                              await apiService.getCoachId(
-                                                  userId!);
+                                              widget.coachAccount.id;
+                                          debugPrint(
+                                              'Accepting reschedule with coachId: $coachId, appointmentId: ${appointment.id}');
 
                                           await CancellationRequestService
                                               .createRequest(
@@ -647,7 +664,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
       ],
     );
   }
-  
+
   void _showProfileDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -667,7 +684,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                   ListTile(
+                  ListTile(
                     leading: Icon(Icons.person),
                     title: Text(
                       widget.coachAccount.coachName,
@@ -708,7 +725,6 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: AppBar(
         centerTitle: false,
         title: Row(
@@ -775,49 +791,49 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
               child: GestureDetector(
                 onTap: () => _showProfileDialog(context),
                 child: Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xFFD9D9D9),
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: SizedBox(
-                  child: Container(
-                    padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          backgroundImage: AssetImage(
-                              'assets/images/image_12.png'), // Add the path to your profile image
-                          radius: 24,
-                        ),
-                        // Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     children: [
-                        //       Text('Partner Name',
-                        //           style: GoogleFonts.getFont(
-                        //             'Montserrat',
-                        //             fontWeight: FontWeight.bold,
-                        //             fontSize: 14,
-                        //             color: const Color(0xFF000000),
-                        //           )),
-                        //       Text('Employer Partner',
-                        //           style: GoogleFonts.getFont(
-                        //             'Montserrat',
-                        //             fontWeight: FontWeight.normal,
-                        //             fontSize: 12,
-                        //             color: const Color(0xFF000000),
-                        //           )),
-                        //     ]),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Container(
-                          margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
-                          width: 12,
-                          height: 7.4,
-                          child: SizedBox(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFD9D9D9),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  child: SizedBox(
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: AssetImage(
+                                'assets/images/image_12.png'), // Add the path to your profile image
+                            radius: 24,
+                          ),
+                          // Column(
+                          //     crossAxisAlignment: CrossAxisAlignment.start,
+                          //     children: [
+                          //       Text('Partner Name',
+                          //           style: GoogleFonts.getFont(
+                          //             'Montserrat',
+                          //             fontWeight: FontWeight.bold,
+                          //             fontSize: 14,
+                          //             color: const Color(0xFF000000),
+                          //           )),
+                          //       Text('Employer Partner',
+                          //           style: GoogleFonts.getFont(
+                          //             'Montserrat',
+                          //             fontWeight: FontWeight.normal,
+                          //             fontSize: 12,
+                          //             color: const Color(0xFF000000),
+                          //           )),
+                          //     ]),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
+                            width: 12,
+                            height: 7.4,
+                            child: SizedBox(
                               width: 12,
                               height: 7.4,
                               child: SvgPicture.asset(
@@ -836,12 +852,12 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
         ),
         toolbarHeight: 92,
       ),
-      
-      drawer: MyDrawerCoach(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,),
-      
+      drawer: MyDrawerCoach(
+        coachAccount: widget.coachAccount,
+        studentAccount: widget.studentAccount,
+      ),
       body: Column(
         children: [
-          
           SizedBox(
             width: double.infinity,
             child: Material(
@@ -850,12 +866,11 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
               child: const HeaderCoach(),
             ),
           ),
-      
+
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  
                   Container(
                     margin: const EdgeInsets.fromLTRB(16, 24, 16, 24),
                     child: Align(
@@ -940,7 +955,6 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                       ],
                     ),
                   ),
-                  
                   SizedBox(height: 24),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -972,14 +986,14 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: Color(0xFFE5E7EB), width: 1),
+                            border:
+                                Border.all(color: Color(0xFFE5E7EB), width: 1),
                           ),
                           child: TextField(
                             controller: _searchController,
                             decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.search,
-                                  color: Color(0xFF9CA3AF)),
+                              prefixIcon:
+                                  Icon(Icons.search, color: Color(0xFF9CA3AF)),
                               hintText: 'Search students...',
                               hintStyle: TextStyle(color: Color(0xFF9CA3AF)),
                               border: InputBorder.none,
@@ -1014,9 +1028,8 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                             ? Center(child: CircularProgressIndicator())
                             : filteredAppointments.isEmpty
                                 ? Container(
-                                    height:
-                                        MediaQuery.of(context).size.height *
-                                            0.6,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.6,
                                     alignment: Alignment.center,
                                     child: Column(
                                       mainAxisAlignment:
@@ -1122,7 +1135,8 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
               children: [
                 CircleAvatar(
                   radius: 32,
-                  backgroundImage: AssetImage('assets/career_coaching/student_profile.jpg'),
+                  backgroundImage:
+                      AssetImage('assets/career_coaching/student_profile.jpg'),
                 ),
                 SizedBox(width: 12),
                 Expanded(
@@ -1272,19 +1286,34 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
 
     switch (screenName) {
       case 'Dashboard':
-        screen = CoachScreen(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,);
+        screen = CoachScreen(
+          coachAccount: widget.coachAccount,
+          studentAccount: widget.studentAccount,
+        );
         break;
       case 'Request Schedules':
-        screen = RequestScheduleScreen(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,);
+        screen = RequestScheduleScreen(
+          coachAccount: widget.coachAccount,
+          studentAccount: widget.studentAccount,
+        );
         break;
       case 'Reschedule Request':
-        screen = RescheduleRequestScreen(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,);
+        screen = RescheduleRequestScreen(
+          coachAccount: widget.coachAccount,
+          studentAccount: widget.studentAccount,
+        );
         break;
       case 'Schedules':
-        screen = SchedulesScreen(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,);
+        screen = SchedulesScreen(
+          coachAccount: widget.coachAccount,
+          studentAccount: widget.studentAccount,
+        );
         break;
       default:
-        screen = SchedulesScreen(coachAccount: widget.coachAccount, studentAccount: widget.studentAccount,);
+        screen = SchedulesScreen(
+          coachAccount: widget.coachAccount,
+          studentAccount: widget.studentAccount,
+        );
     }
 
     Navigator.push(
