@@ -1189,8 +1189,8 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                     backgroundColor: isCompleted
                         ? Colors.grey
                         : const Color.fromARGB(255, 60, 138, 63),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 10),
+                    // padding: const EdgeInsets.symmetric(
+                    //     horizontal: 12, vertical: 10),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -1198,7 +1198,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                   icon: Icon(Icons.check, color: Colors.white),
                   label: Text(
                     isCompleted ? "Completed" : "Complete",
-                    style: GoogleFonts.inter(fontSize: 12, color: Colors.white),
+                    // style: GoogleFonts.inter(fontSize: 12, color: Colors.white),
                   ),
                 ),
                 SizedBox(width: 12),
@@ -1211,8 +1211,8 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor:
                         hasPendingReschedule ? Colors.grey : Color(0xFFC62828),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 10),
+                    // padding: const EdgeInsets.symmetric(
+                    //     horizontal: 12, vertical: 10),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -1220,7 +1220,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                   icon: Icon(Icons.loop, color: Colors.white),
                   label: Text(
                     hasPendingReschedule ? "Reschedule Pending" : "Reschedule",
-                    style: GoogleFonts.inter(fontSize: 12, color: Colors.white),
+                    // style: GoogleFonts.inter(fontSize: 12, color: Colors.white),
                   ),
                 ),
               ],

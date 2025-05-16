@@ -5,8 +5,9 @@ header("Access-Control-Allow-Methods: PUT");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
 // Enable error reporting for debugging
-error_reporting(E_ALL);
 ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 $servername = "localhost";
 $username = "root";
@@ -72,7 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     if ($conn->query($update_query) === TRUE) {
         http_response_code(200);
         echo json_encode([
-            "success" => "Reschedule request accepted successfully",
+            // "success" => "Reschedule request accepted successfully",
+             "success" => true,
             "updated_fields" => [
                 "status" => "Accepted",
                 "coach_reply" => $coach_reply,

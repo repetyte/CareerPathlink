@@ -69,17 +69,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
                         reply_by = '$coach_id' 
                     WHERE id = '$id'";
 
+    // if ($conn->query($update_query) === TRUE) {
+    //     http_response_code(200);
+    //     echo json_encode([
+    //         "success" => "Reschedule request declined successfully",
+    //         "updated_fields" => [
+    //             "status" => "Decline",
+    //             "coach_reply" => $coach_reply,
+    //             "reply_date" => date("Y-m-d H:i:s"),
+    //             "reply_by" => $coach_id
+    //         ]
+    //     ]);
     if ($conn->query($update_query) === TRUE) {
-        http_response_code(200);
-        echo json_encode([
-            "success" => "Reschedule request declined successfully",
-            "updated_fields" => [
-                "status" => "Decline",
-                "coach_reply" => $coach_reply,
-                "reply_date" => date("Y-m-d H:i:s"),
-                "reply_by" => $coach_id
-            ]
-        ]);
+    http_response_code(200);
+    echo json_encode([
+        "success" => true, // <-- Change this line
+        "message" => "Reschedule request declined successfully",
+        "updated_fields" => [
+            "status" => "Decline",
+            "coach_reply" => $coach_reply,
+            "reply_date" => date("Y-m-d H:i:s"),
+            "reply_by" => $coach_id
+        ]
+    ]);
     } else {
         http_response_code(500);
         echo json_encode(["error" => "Failed to decline reschedule request: " . $conn->error]);

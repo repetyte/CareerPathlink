@@ -1043,7 +1043,8 @@ class ApiService {
   }
 
   // Add this method to fetch scheduled appointments
-  Future<List<Appointment>> getScheduledAppointments(CoachAccount? coach) async {
+  Future<List<Appointment>> getScheduledAppointments(
+      CoachAccount? coach) async {
     const String apiUrl =
         "http://localhost/CareerPathlink/api/career_coaching/request_appointments/read_schedules.php";
 
@@ -1413,7 +1414,12 @@ class ApiService {
         final responseData = json.decode(response.body);
         // Handle both string and map responses
         if (responseData is Map && responseData.containsKey('success')) {
-          return responseData['success'] == true;
+          return responseData['success'] == true ||
+              (responseData['success'] is String &&
+                  responseData['success']
+                      .toString()
+                      .toLowerCase()
+                      .contains('success'));
         } else if (responseData is String) {
           // If backend returns a string, treat as success if it contains "success"
           return responseData.toLowerCase().contains('success');

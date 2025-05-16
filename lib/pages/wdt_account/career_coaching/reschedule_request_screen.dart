@@ -182,7 +182,7 @@ class _RescheduleRequestScreenState extends State<RescheduleRequestScreen> {
                     builder: (context, color, child) => Icon(
                       Icons.check_circle_rounded,
                       size: 48,
-                      color: color as Color?,
+                      color: color,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -280,7 +280,7 @@ class _RescheduleRequestScreenState extends State<RescheduleRequestScreen> {
                         tween: Tween<double>(begin: 1, end: 1),
                         duration: const Duration(milliseconds: 150),
                         builder: (context, scale, child) => Transform.scale(
-                          scale: scale as double,
+                          scale: scale,
                           child: ElevatedButton(
                             onPressed: () {
                               HapticFeedback.lightImpact();
@@ -347,7 +347,7 @@ class _RescheduleRequestScreenState extends State<RescheduleRequestScreen> {
                     builder: (context, color, child) => Icon(
                       Icons.warning_amber_rounded,
                       size: 48,
-                      color: color as Color?,
+                      color: color,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -445,7 +445,7 @@ class _RescheduleRequestScreenState extends State<RescheduleRequestScreen> {
                         tween: Tween<double>(begin: 1, end: 1),
                         duration: const Duration(milliseconds: 150),
                         builder: (context, scale, child) => Transform.scale(
-                          scale: scale as double,
+                          scale: scale,
                           child: ElevatedButton(
                             onPressed: () {
                               HapticFeedback.lightImpact();
@@ -463,7 +463,7 @@ class _RescheduleRequestScreenState extends State<RescheduleRequestScreen> {
                               shadowColor: darkDeclineShadowColor,
                             ),
                             child: Text(
-                              "Decline",
+                              "Decline Request",
                               style: GoogleFonts.inter(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
@@ -654,7 +654,7 @@ class _RescheduleRequestScreenState extends State<RescheduleRequestScreen> {
                 builder: (context, color, child) => Icon(
                   Icons.message_rounded,
                   size: 48,
-                  color: color as Color?,
+                  color: color,
                 ),
               ),
               const SizedBox(height: 16),
@@ -782,18 +782,18 @@ class _RescheduleRequestScreenState extends State<RescheduleRequestScreen> {
     try {
       // final prefs = await SharedPreferences.getInstance();
       // final userId = prefs.getString('user_id');
-      final userId = widget.coachAccount.username;
+      final userId = widget.coachAccount.id.toString();
       debugPrint('Fetching reschedule requests for user ID: $userId');
 
       // final apiService = ApiService();
       // final coachId = await apiService.getCoachId(userId);
-      final coachId = widget.coachAccount.accountId;
+      final coachId = widget.coachAccount.id;
       debugPrint(
           'Accepting reschedule with coachId: $coachId, requestId: ${request.id}');
 
       final success = await ApiService.acceptRescheduleRequest(
         requestId: request.id.toString(),
-        coachId: coachId,
+        coachId: coachId.toString(),
         coachReply: "Your reschedule request has been accepted",
       );
 
@@ -822,14 +822,20 @@ class _RescheduleRequestScreenState extends State<RescheduleRequestScreen> {
     if (!confirm) return;
 
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final userId = prefs.getString('user_id');
-      final apiService = ApiService();
-      final coachId = await apiService.getCoachId(userId!);
+      // final prefs = await SharedPreferences.getInstance();
+      // final userId = prefs.getString('user_id');
+      final userId = widget.coachAccount.id.toString();
+      debugPrint('Fetching reschedule requests for user ID: $userId');
+
+      // final apiService = ApiService();
+      // final coachId = await apiService.getCoachId(userId!);
+      final coachId = widget.coachAccount.id;
+      debugPrint(
+          'Accepting reschedule with coachId: $coachId, requestId: ${request.id}');
 
       final success = await ApiService.declineRescheduleRequest(
         requestId: request.id.toString(),
-        coachId: coachId,
+        coachId: coachId!,
         coachReply: "Your reschedule request has been declined",
       );
 
