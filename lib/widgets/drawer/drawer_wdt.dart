@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/coach_model.dart';
 import 'package:flutter_app/models/user_role/student.dart';
+import 'package:flutter_app/pages/wdt_account/career_coaching/notification_provider.dart';
 import 'package:flutter_app/pages/wdt_account/wdt_home_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import '../../pages/wdt_account/career_coaching/coach_home_screen.dart';
 
@@ -104,12 +106,14 @@ class MyDrawerCoach extends StatelessWidget {
             ),
             onTap: () {
               Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    CoachScreen(coachAccount: coachAccount, studentAccount: studentAccount, ),
-              ),
-            );
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChangeNotifierProvider(
+                    create: (_) => NotificationProvider(),
+                    child: CoachScreen(coachAccount: coachAccount, studentAccount: studentAccount),
+                  ),
+                ),
+              );
             },
           ),
         ],

@@ -31,6 +31,35 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
   final GlobalKey _bellIconKey = GlobalKey();
   bool isChecked = false;
 
+  @override
+  void initState() {
+    super.initState();
+    // _currentUserId = widget.studentAccount.username;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadUserId();
+    });
+    debugPrint('Current user ID: $_currentUserId');
+  }
+
+  Future<void> _loadUserId() async {
+    try {
+      // final prefs = await SharedPreferences.getInstance();
+      // final userId = prefs.getString('user_id');
+      final userId = widget.studentAccount.username;
+      debugPrint('Loaded user ID from preferences: $userId');
+
+      if (userId != null) {
+        setState(() => _currentUserId = userId);
+        await Provider.of<StudentNotificationProvider>(context, listen: false)
+            .loadNotifications(userId);
+      } else {
+        debugPrint('No user ID found in SharedPreferences');
+      }
+    } catch (e) {
+      debugPrint('Error loading user ID: $e');
+    }
+  }
+
   void _toggleCheckbox(bool? value) {
     setState(() {
       isChecked = value ?? false;

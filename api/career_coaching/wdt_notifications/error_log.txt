@@ -41014,3 +41014,851 @@
 
 [08-May-2025 12:30:43 UTC] Fetching notifications for user_id: $userId
 [08-May-2025 12:30:43 UTC] Found notifications: 0
+[17-May-2025 08:23:35 UTC] Request method: GET
+[17-May-2025 08:23:35 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 08:23:35 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 08:23:35 UTC] Found notifications: 24
+[17-May-2025 08:23:37 UTC] Request method: GET
+[17-May-2025 08:23:37 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 08:23:37 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 08:23:37 UTC] Found notifications: 24
+[17-May-2025 08:30:44 UTC] Request method: GET
+[17-May-2025 08:30:44 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 08:30:44 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 08:30:44 UTC] Found notifications: 24
+[17-May-2025 08:30:45 UTC] Request method: GET
+[17-May-2025 08:30:45 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 08:30:45 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 08:30:45 UTC] Found notifications: 24
+[17-May-2025 08:30:48 UTC] Request method: GET
+[17-May-2025 08:30:48 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 08:30:48 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 08:30:48 UTC] Found notifications: 24
+[17-May-2025 08:30:48 UTC] Request method: GET
+[17-May-2025 08:30:48 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 08:30:48 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 08:30:48 UTC] Found notifications: 24
+[17-May-2025 08:30:53 UTC] Request method: GET
+[17-May-2025 08:30:53 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 08:30:53 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 08:30:53 UTC] Found notifications: 24
+[17-May-2025 08:30:53 UTC] Request method: GET
+[17-May-2025 08:30:53 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 08:30:53 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 08:30:53 UTC] Found notifications: 24
+[17-May-2025 08:31:07 UTC] Request method: GET
+[17-May-2025 08:31:07 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 08:31:07 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 08:31:07 UTC] Found notifications: 24
+[17-May-2025 08:31:07 UTC] Request method: GET
+[17-May-2025 08:31:07 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 08:31:07 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 08:31:07 UTC] Found notifications: 24
+[17-May-2025 10:43:44 UTC] Request method: GET
+[17-May-2025 10:43:44 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:43:44 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:43:44 UTC] Found notifications: 24
+[17-May-2025 10:43:45 UTC] Request method: GET
+[17-May-2025 10:43:45 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:43:45 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:43:45 UTC] Found notifications: 24
+[17-May-2025 10:43:52 UTC] Request method: GET
+[17-May-2025 10:43:52 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:43:52 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:43:52 UTC] Found notifications: 24
+[17-May-2025 10:43:52 UTC] Request method: GET
+[17-May-2025 10:43:52 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:43:52 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:43:52 UTC] Found notifications: 24
+[17-May-2025 10:43:54 UTC] Request method: GET
+[17-May-2025 10:43:54 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:43:54 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:43:54 UTC] Found notifications: 24
+[17-May-2025 10:43:54 UTC] Request method: GET
+[17-May-2025 10:43:54 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:43:54 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:43:54 UTC] Found notifications: 24
+[17-May-2025 10:43:56 UTC] Request method: GET
+[17-May-2025 10:43:56 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:43:56 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:43:56 UTC] Found notifications: 24
+[17-May-2025 10:43:56 UTC] Request method: GET
+[17-May-2025 10:43:56 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:43:56 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:43:56 UTC] Found notifications: 24
+[17-May-2025 10:43:58 UTC] Request method: GET
+[17-May-2025 10:43:58 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:43:58 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:43:58 UTC] Found notifications: 24
+[17-May-2025 10:43:58 UTC] Request method: GET
+[17-May-2025 10:43:58 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:43:58 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:43:58 UTC] Found notifications: 24
+[17-May-2025 10:44:00 UTC] Request method: GET
+[17-May-2025 10:44:00 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:00 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:00 UTC] Found notifications: 24
+[17-May-2025 10:44:00 UTC] Request method: GET
+[17-May-2025 10:44:00 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:00 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:00 UTC] Found notifications: 24
+[17-May-2025 10:44:02 UTC] Request method: GET
+[17-May-2025 10:44:02 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:02 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:02 UTC] Found notifications: 24
+[17-May-2025 10:44:02 UTC] Request method: GET
+[17-May-2025 10:44:02 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:02 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:02 UTC] Found notifications: 24
+[17-May-2025 10:44:04 UTC] Request method: GET
+[17-May-2025 10:44:04 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:04 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:04 UTC] Found notifications: 24
+[17-May-2025 10:44:04 UTC] Request method: GET
+[17-May-2025 10:44:04 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:04 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:04 UTC] Found notifications: 24
+[17-May-2025 10:44:06 UTC] Request method: GET
+[17-May-2025 10:44:06 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:06 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:06 UTC] Found notifications: 24
+[17-May-2025 10:44:06 UTC] Request method: GET
+[17-May-2025 10:44:06 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:06 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:06 UTC] Found notifications: 24
+[17-May-2025 10:44:07 UTC] Request method: GET
+[17-May-2025 10:44:07 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:07 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:07 UTC] Found notifications: 24
+[17-May-2025 10:44:07 UTC] Request method: GET
+[17-May-2025 10:44:07 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:07 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:07 UTC] Found notifications: 24
+[17-May-2025 10:44:08 UTC] Request method: GET
+[17-May-2025 10:44:08 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:08 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:08 UTC] Found notifications: 24
+[17-May-2025 10:44:08 UTC] Request method: GET
+[17-May-2025 10:44:08 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:08 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:08 UTC] Found notifications: 24
+[17-May-2025 10:44:09 UTC] Request method: GET
+[17-May-2025 10:44:09 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:09 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:09 UTC] Found notifications: 24
+[17-May-2025 10:44:09 UTC] Request method: GET
+[17-May-2025 10:44:09 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:09 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:09 UTC] Found notifications: 24
+[17-May-2025 10:44:10 UTC] Request method: GET
+[17-May-2025 10:44:10 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:10 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:10 UTC] Found notifications: 24
+[17-May-2025 10:44:10 UTC] Request method: GET
+[17-May-2025 10:44:10 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:10 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:10 UTC] Found notifications: 24
+[17-May-2025 10:44:11 UTC] Request method: GET
+[17-May-2025 10:44:11 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:11 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:11 UTC] Found notifications: 24
+[17-May-2025 10:44:11 UTC] Request method: GET
+[17-May-2025 10:44:11 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:11 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:11 UTC] Found notifications: 24
+[17-May-2025 10:44:12 UTC] Request method: GET
+[17-May-2025 10:44:12 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:12 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:12 UTC] Found notifications: 24
+[17-May-2025 10:44:12 UTC] Request method: GET
+[17-May-2025 10:44:12 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:12 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:12 UTC] Found notifications: 24
+[17-May-2025 10:44:13 UTC] Request method: GET
+[17-May-2025 10:44:13 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:13 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:13 UTC] Found notifications: 24
+[17-May-2025 10:44:13 UTC] Request method: GET
+[17-May-2025 10:44:13 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:13 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:13 UTC] Found notifications: 24
+[17-May-2025 10:44:13 UTC] Request method: GET
+[17-May-2025 10:44:13 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:13 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:13 UTC] Found notifications: 24
+[17-May-2025 10:44:13 UTC] Request method: GET
+[17-May-2025 10:44:13 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:13 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:13 UTC] Found notifications: 24
+[17-May-2025 10:44:15 UTC] Request method: GET
+[17-May-2025 10:44:15 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:15 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:15 UTC] Found notifications: 24
+[17-May-2025 10:44:15 UTC] Request method: GET
+[17-May-2025 10:44:15 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:15 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:15 UTC] Found notifications: 24
+[17-May-2025 10:44:15 UTC] Request method: GET
+[17-May-2025 10:44:15 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:15 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:15 UTC] Found notifications: 24
+[17-May-2025 10:44:15 UTC] Request method: GET
+[17-May-2025 10:44:15 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:15 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:15 UTC] Found notifications: 24
+[17-May-2025 10:44:16 UTC] Request method: GET
+[17-May-2025 10:44:16 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:16 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:16 UTC] Found notifications: 24
+[17-May-2025 10:44:16 UTC] Request method: GET
+[17-May-2025 10:44:16 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:16 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:16 UTC] Found notifications: 24
+[17-May-2025 10:44:17 UTC] Request method: GET
+[17-May-2025 10:44:17 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:17 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:17 UTC] Found notifications: 24
+[17-May-2025 10:44:17 UTC] Request method: GET
+[17-May-2025 10:44:17 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:17 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:17 UTC] Found notifications: 24
+[17-May-2025 10:44:17 UTC] Request method: GET
+[17-May-2025 10:44:17 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:17 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:17 UTC] Found notifications: 24
+[17-May-2025 10:44:17 UTC] Request method: GET
+[17-May-2025 10:44:17 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:17 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:17 UTC] Found notifications: 24
+[17-May-2025 10:44:18 UTC] Request method: GET
+[17-May-2025 10:44:18 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:18 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:18 UTC] Found notifications: 24
+[17-May-2025 10:44:18 UTC] Request method: GET
+[17-May-2025 10:44:18 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:18 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:18 UTC] Found notifications: 24
+[17-May-2025 10:44:20 UTC] Request method: GET
+[17-May-2025 10:44:20 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:20 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:20 UTC] Found notifications: 24
+[17-May-2025 10:44:20 UTC] Request method: GET
+[17-May-2025 10:44:20 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:20 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:20 UTC] Found notifications: 24
+[17-May-2025 10:44:22 UTC] Request method: GET
+[17-May-2025 10:44:22 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:22 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:22 UTC] Found notifications: 24
+[17-May-2025 10:44:22 UTC] Request method: GET
+[17-May-2025 10:44:22 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:22 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:22 UTC] Found notifications: 24
+[17-May-2025 10:44:24 UTC] Request method: GET
+[17-May-2025 10:44:24 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:24 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:24 UTC] Found notifications: 24
+[17-May-2025 10:44:24 UTC] Request method: GET
+[17-May-2025 10:44:24 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:24 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:24 UTC] Found notifications: 24
+[17-May-2025 10:44:26 UTC] Request method: GET
+[17-May-2025 10:44:26 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:26 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:26 UTC] Found notifications: 24
+[17-May-2025 10:44:26 UTC] Request method: GET
+[17-May-2025 10:44:26 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:26 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:26 UTC] Found notifications: 24
+[17-May-2025 10:44:26 UTC] Request method: GET
+[17-May-2025 10:44:26 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:26 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:26 UTC] Found notifications: 24
+[17-May-2025 10:44:26 UTC] Request method: GET
+[17-May-2025 10:44:26 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:26 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:26 UTC] Found notifications: 24
+[17-May-2025 10:44:26 UTC] Request method: GET
+[17-May-2025 10:44:26 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:26 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:26 UTC] Found notifications: 24
+[17-May-2025 10:44:27 UTC] Request method: GET
+[17-May-2025 10:44:27 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 10:44:27 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 10:44:27 UTC] Found notifications: 24
+[17-May-2025 11:36:58 UTC] Request method: GET
+[17-May-2025 11:36:58 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 11:36:58 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 11:36:58 UTC] Found notifications: 24
+[17-May-2025 11:36:59 UTC] Request method: GET
+[17-May-2025 11:36:59 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 11:36:59 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 11:36:59 UTC] Found notifications: 24
+[17-May-2025 11:46:08 UTC] Request method: GET
+[17-May-2025 11:46:08 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 11:46:08 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 11:46:08 UTC] Found notifications: 24
+[17-May-2025 11:46:08 UTC] Request method: GET
+[17-May-2025 11:46:08 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 11:46:08 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 11:46:08 UTC] Found notifications: 24
+[17-May-2025 11:46:14 UTC] Request method: GET
+[17-May-2025 11:46:14 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 11:46:14 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 11:46:14 UTC] Found notifications: 24
+[17-May-2025 11:46:14 UTC] Request method: GET
+[17-May-2025 11:46:14 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 11:46:14 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 11:46:14 UTC] Found notifications: 24
+[17-May-2025 11:46:16 UTC] Request method: GET
+[17-May-2025 11:46:16 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 11:46:16 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 11:46:16 UTC] Found notifications: 24
+[17-May-2025 11:46:16 UTC] Request method: GET
+[17-May-2025 11:46:16 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 11:46:16 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 11:46:16 UTC] Found notifications: 24
+[17-May-2025 11:46:18 UTC] Request method: GET
+[17-May-2025 11:46:18 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 11:46:18 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 11:46:18 UTC] Found notifications: 24
+[17-May-2025 11:46:18 UTC] Request method: GET
+[17-May-2025 11:46:18 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 11:46:18 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 11:46:18 UTC] Found notifications: 24
+[17-May-2025 11:46:20 UTC] Request method: GET
+[17-May-2025 11:46:20 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 11:46:20 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 11:46:20 UTC] Found notifications: 24
+[17-May-2025 11:46:20 UTC] Request method: GET
+[17-May-2025 11:46:20 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 11:46:20 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 11:46:20 UTC] Found notifications: 24
+[17-May-2025 11:46:22 UTC] Request method: GET
+[17-May-2025 11:46:22 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 11:46:22 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 11:46:22 UTC] Found notifications: 24
+[17-May-2025 11:46:23 UTC] Request method: GET
+[17-May-2025 11:46:23 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 11:46:23 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 11:46:23 UTC] Found notifications: 24
+[17-May-2025 11:46:24 UTC] Request method: GET
+[17-May-2025 11:46:24 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 11:46:24 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 11:46:24 UTC] Found notifications: 24
+[17-May-2025 11:46:24 UTC] Request method: GET
+[17-May-2025 11:46:24 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 11:46:24 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 11:46:24 UTC] Found notifications: 24
+[17-May-2025 12:03:48 UTC] Request method: GET
+[17-May-2025 12:03:48 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 12:03:48 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 12:03:48 UTC] Found notifications: 24
+[17-May-2025 12:03:48 UTC] Request method: GET
+[17-May-2025 12:03:48 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 12:03:48 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 12:03:48 UTC] Found notifications: 24
+[17-May-2025 12:03:50 UTC] Request method: GET
+[17-May-2025 12:03:50 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 12:03:50 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 12:03:50 UTC] Found notifications: 24
+[17-May-2025 12:03:50 UTC] Request method: GET
+[17-May-2025 12:03:50 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 12:03:50 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 12:03:50 UTC] Found notifications: 24
+[17-May-2025 12:03:51 UTC] Request method: GET
+[17-May-2025 12:03:51 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 12:03:51 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 12:03:51 UTC] Found notifications: 24
+[17-May-2025 12:03:51 UTC] Request method: GET
+[17-May-2025 12:03:51 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 12:03:51 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 12:03:51 UTC] Found notifications: 24
+[17-May-2025 12:03:55 UTC] Request method: GET
+[17-May-2025 12:03:55 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 12:03:55 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 12:03:55 UTC] Found notifications: 24
+[17-May-2025 12:03:55 UTC] Request method: GET
+[17-May-2025 12:03:55 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 12:03:55 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 12:03:55 UTC] Found notifications: 24
+[17-May-2025 12:03:57 UTC] Request method: GET
+[17-May-2025 12:03:57 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 12:03:57 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 12:03:57 UTC] Found notifications: 24
+[17-May-2025 12:03:57 UTC] Request method: GET
+[17-May-2025 12:03:57 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 12:03:57 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 12:03:57 UTC] Found notifications: 24
+[17-May-2025 12:03:59 UTC] Request method: GET
+[17-May-2025 12:03:59 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 12:03:59 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 12:03:59 UTC] Found notifications: 24
+[17-May-2025 12:03:59 UTC] Request method: GET
+[17-May-2025 12:03:59 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 12:03:59 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 12:03:59 UTC] Found notifications: 24
+[17-May-2025 12:12:16 UTC] Request method: GET
+[17-May-2025 12:12:16 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 12:12:16 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 12:12:16 UTC] Found notifications: 24
+[17-May-2025 12:12:16 UTC] Request method: GET
+[17-May-2025 12:12:16 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 12:12:16 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 12:12:16 UTC] Found notifications: 24
+[17-May-2025 12:12:18 UTC] Request method: GET
+[17-May-2025 12:12:18 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 12:12:18 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 12:12:18 UTC] Found notifications: 24
+[17-May-2025 12:12:19 UTC] Request method: GET
+[17-May-2025 12:12:19 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 12:12:19 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 12:12:19 UTC] Found notifications: 24
+[17-May-2025 12:12:21 UTC] Request method: GET
+[17-May-2025 12:12:21 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 12:12:21 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 12:12:21 UTC] Found notifications: 24
+[17-May-2025 12:12:21 UTC] Request method: GET
+[17-May-2025 12:12:21 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 12:12:21 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 12:12:21 UTC] Found notifications: 24
+[17-May-2025 13:54:14 UTC] Request method: GET
+[17-May-2025 13:54:14 UTC] GET parameters: Array
+(
+    [user_id] => 18-27463
+)
+
+[17-May-2025 13:54:14 UTC] Fetching notifications for user_id: 18-27463
+[17-May-2025 13:54:14 UTC] Found notifications: 0
+[17-May-2025 13:54:14 UTC] Request method: GET
+[17-May-2025 13:54:14 UTC] GET parameters: Array
+(
+    [user_id] => 18-27463
+)
+
+[17-May-2025 13:54:14 UTC] Fetching notifications for user_id: 18-27463
+[17-May-2025 13:54:14 UTC] Found notifications: 0
+[17-May-2025 13:54:47 UTC] Request method: GET
+[17-May-2025 13:54:47 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 13:54:47 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 13:54:47 UTC] Found notifications: 24
+[17-May-2025 13:54:47 UTC] Request method: GET
+[17-May-2025 13:54:47 UTC] GET parameters: Array
+(
+    [user_id] => 22-39847
+)
+
+[17-May-2025 13:54:47 UTC] Fetching notifications for user_id: 22-39847
+[17-May-2025 13:54:47 UTC] Found notifications: 24

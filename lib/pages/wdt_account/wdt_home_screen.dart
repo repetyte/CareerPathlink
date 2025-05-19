@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/coach_model.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
+import 'package:flutter_app/pages/wdt_account/career_coaching/coach_profile_screen.dart';
 import 'package:flutter_app/widgets/drawer/drawer_wdt.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -58,7 +59,14 @@ class _HomeScreenState extends State<HomeScreenCoach> {
                     leading: const Icon(Icons.account_box),
                     title: const Text('Profile'),
                     onTap: () {
-                      // Navigate to profile
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CoachProfileScreen(
+                            coachAccount: widget.coachAccount,
+                          ),
+                        ),
+                      );
                     },
                   ),
                   ListTile(

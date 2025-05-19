@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/career_center_director.dart';
+import 'package:flutter_app/pages/career_center_director_account/career_coaching/career_center_profile.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
 import 'package:flutter_app/widgets/drawer/drawer_director.dart';
 import 'package:flutter_svg/svg.dart';
@@ -56,7 +57,15 @@ class _HomeScreenState extends State<HomeScreenDirector> {
                     leading: const Icon(Icons.account_box),
                     title: const Text('Profile'),
                     onTap: () {
-                      // Navigate to profile
+                      // Handle profile view
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CareerCenterProfileScreen(
+                            directorAccount: widget.directorAccount,
+                          ),
+                        ),
+                      );
                     },
                   ),
                   ListTile(

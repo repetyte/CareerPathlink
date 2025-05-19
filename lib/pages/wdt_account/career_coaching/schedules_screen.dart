@@ -1,18 +1,23 @@
+import 'package:flutter/services.dart';
+import 'package:flutter_app/models/career_coaching/wdt_notifications_model.dart';
 import 'package:flutter_app/models/user_role/coach_model.dart';
 import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/pages/wdt_account/career_coaching/coach_home_screen.dart';
 import 'package:flutter_app/models/career_coaching/request_appointment_model.dart';
-import 'package:flutter_app/services/career_coaching/api_services.dart';
+import 'package:flutter_app/pages/wdt_account/career_coaching/coach_profile_screen.dart';
+import 'package:flutter_app/pages/wdt_account/career_coaching/notification_provider.dart';
+import 'package:flutter_app/services/career_coaching/api_services.dart' as api_services;
 import 'package:flutter_app/services/career_coaching/coach_cancellation_request_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import '../../../widgets/appbar/coach_header.dart';
 import '../../../widgets/drawer/drawer_wdt.dart';
 import '../../login_and_signup/login_view.dart';
 import 'request_schedule_screen.dart';
 import 'reschedule_request_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 // Updated color constants (darker versions)
 const Color darkAcceptColor = Color(0xFF0D8E4B); // Darker green
@@ -40,12 +45,19 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
   bool isLoading = true;
   bool isSubmitting = false;
   final _formKey = GlobalKey<FormState>();
+  String? _userId;
+  String? _currentUserId;
+  WDTNotification? _selectedNotification;
+  bool _showNotificationDetails = false;
+  OverlayEntry? _notificationOverlayEntry;
+  final GlobalKey _bellIconKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
     _searchController.addListener(_filterAppointments);
     fetchScheduledAppointments();
+    _loadUserId();
   }
 
   @override
@@ -54,7 +66,28 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
     _reasonController.dispose();
     super.dispose();
   }
+  
+  Future<void> _loadUserId() async {
+    // final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      // _currentUserId = prefs.getString('user_id');
+      _currentUserId = widget.coachAccount.username;
+      debugPrint('Loaded user ID from preferences: $_currentUserId');
+    });
 
+    if (_currentUserId != null) {
+      debugPrint('Loading notifications for user: $_currentUserId');
+      context.read<NotificationProvider>().loadNotifications(_currentUserId!);
+    }
+  }
+
+  void _copyToClipboard(BuildContext context, String text) {
+    Clipboard.setData(ClipboardData(text: text));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Copied to clipboard')),
+    );
+  }
+  
   void _filterAppointments() {
     final query = _searchController.text.toLowerCase();
 
@@ -78,7 +111,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
     });
 
     try {
-      final apiService = ApiService(coachAccount: widget.coachAccount);
+      final apiService = api_services.ApiService(coachAccount: widget.coachAccount);
       List<Appointment> fetchedAppointments =
           await apiService.getScheduledAppointments(widget.coachAccount);
 
@@ -664,6 +697,459 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
       ],
     );
   }
+  
+  void _showNotificationPopup(BuildContext context) {
+    final overlay = Overlay.of(context);
+    final RenderBox renderBox =
+        _bellIconKey.currentContext!.findRenderObject() as RenderBox;
+    final bellIconPosition = renderBox.localToGlobal(Offset.zero);
+    final bellIconSize = renderBox.size;
+
+    _notificationOverlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: bellIconPosition.dy + bellIconSize.height + 8,
+        right: MediaQuery.of(context).size.width -
+            bellIconPosition.dx -
+            bellIconSize.width,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            width: 320,
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height * 0.6,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 10,
+                  offset: Offset(0, 4),
+                ),
+              ],
+            ),
+            child: _buildNotificationContent(),
+          ),
+        ),
+      ),
+    );
+
+    overlay.insert(_notificationOverlayEntry!);
+  }
+
+  void _hideNotificationPopup() {
+    _notificationOverlayEntry?.remove();
+    _notificationOverlayEntry = null;
+    setState(() {
+      _showNotificationDetails = false;
+    });
+  }
+
+  Widget _buildNotificationContent() {
+    final notificationProvider = context.read<NotificationProvider>();
+
+    return _showNotificationDetails && _selectedNotification != null
+        ? _buildNotificationDetailsView(_selectedNotification!)
+        : _buildNotificationListViewAlt(notificationProvider);
+  }
+
+  Widget _buildNotificationListViewAlt(
+      NotificationProvider notificationProvider) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Header
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Notifications (${notificationProvider.unreadCount})',
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              if (notificationProvider.unreadCount > 0)
+                TextButton(
+                  onPressed: () => notificationProvider.markAllAsRead(),
+                  child: Text(
+                    'Mark all as read',
+                    style: GoogleFonts.inter(
+                      color: Color(0xFFEC1D25),
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+        const Divider(height: 1, thickness: 1),
+        // Scrollable notification list
+        Expanded(
+          child: notificationProvider.notifications.isEmpty
+              ? Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      'No notifications found',
+                      style: GoogleFonts.inter(color: Colors.grey),
+                    ),
+                  ),
+                )
+              : ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: notificationProvider.notifications.length,
+                  itemBuilder: (context, index) {
+                    final notification =
+                        notificationProvider.notifications[index];
+                    return _buildNotificationItem(
+                      icon: _getNotificationIcon(notification.notificationType),
+                      title: _getNotificationTitle(notification),
+                      message: notification.message ?? 'No message',
+                      time: _formatTimes(notification.createdAt),
+                      isUnread: notification.status == 'Unread',
+                      notification: notification,
+                    );
+                  },
+                ),
+        ),
+        // Footer
+        Padding(
+          padding: const EdgeInsets.only(top: 8, bottom: 8),
+          child: TextButton(
+            onPressed: () {
+              // View all functionality
+            },
+            child: Text(
+              'View all notifications',
+              style: GoogleFonts.inter(
+                color: Color(0xFFEC1D25),
+                fontSize: 14,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildNotificationItem({
+    required IconData icon,
+    required String title,
+    required String message,
+    required String time,
+    required bool isUnread,
+    required WDTNotification notification,
+  }) {
+    return InkWell(
+      onTap: () {
+        final notificationProvider = context.read<NotificationProvider>();
+        notificationProvider.markAsRead(notification.id);
+
+        setState(() {
+          _selectedNotification = notification;
+          _showNotificationDetails = true;
+        });
+
+        _notificationOverlayEntry?.markNeedsBuild();
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        decoration: BoxDecoration(
+          color: isUnread
+              ? Color(0xFFEC1D25).withOpacity(0.05)
+              : Colors.transparent,
+          border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: Color(0xFFEC1D25).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Icon(icon, color: Color(0xFFEC1D25), size: 20),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: GoogleFonts.inter(
+                      fontWeight: isUnread ? FontWeight.bold : FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    message,
+                    style: GoogleFonts.inter(
+                      fontSize: 12,
+                      color: Colors.grey.shade600,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    time,
+                    style: GoogleFonts.inter(
+                      fontSize: 10,
+                      color: Colors.grey.shade500,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            if (isUnread)
+              Container(
+                width: 8,
+                height: 8,
+                decoration: BoxDecoration(
+                  color: Color(0xFFEC1D25),
+                  shape: BoxShape.circle,
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNotificationDetailsView(WDTNotification notification) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Header with gradient background
+        Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: const [Color(0xFFEC1D25), Color(0xFFC2185B)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(12),
+              topRight: Radius.circular(12),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Notification Details',
+                  style: GoogleFonts.inter(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    color: Colors.white,
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.close, color: Colors.white),
+                  onPressed: () {
+                    setState(() {
+                      _showNotificationDetails = false;
+                    });
+                    _notificationOverlayEntry?.markNeedsBuild();
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        // Notification card with shadow and animation
+        Expanded(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TweenAnimationBuilder(
+                duration: Duration(milliseconds: 300),
+                tween: Tween<double>(begin: 0.9, end: 1.0),
+                curve: Curves.easeOutBack,
+                builder: (context, double value, child) {
+                  return Transform.scale(
+                    scale: value,
+                    child: Card(
+                      elevation: 8,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Notification header with icon
+                            Row(
+                              children: [
+                                Container(
+                                  width: 48,
+                                  height: 48,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFEC1D25).withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Icon(
+                                    _getNotificationIcon(
+                                        notification.notificationType),
+                                    color: Color(0xFFEC1D25),
+                                    size: 24,
+                                  ),
+                                ),
+                                SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        _getNotificationTitle(notification),
+                                        style: GoogleFonts.inter(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                      SizedBox(height: 4),
+                                      Text(
+                                        DateFormat('MMM d, y hh:mm a')
+                                            .format(notification.createdAt),
+                                        style: GoogleFonts.inter(
+                                          fontSize: 12,
+                                          color: Colors.grey.shade600,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 16),
+
+                            // Decorative divider
+                            Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Divider(
+                                  color: Colors.grey.shade300,
+                                  thickness: 1,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 8),
+                                  color: Colors.white,
+                                  child: Text(
+                                    'DETAILS',
+                                    style: GoogleFonts.inter(
+                                      fontSize: 10,
+                                      color: Colors.grey.shade500,
+                                      letterSpacing: 1,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 16),
+
+                            // Notification content with animated reveal
+                            TweenAnimationBuilder(
+                              duration: Duration(milliseconds: 500),
+                              tween: Tween<double>(begin: 0, end: 1),
+                              builder: (context, double value, child) {
+                                return Opacity(
+                                  opacity: value,
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 20 * (1 - value)),
+                                    child: child,
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade50,
+                                  borderRadius: BorderRadius.circular(8),
+                                  border: Border.all(
+                                    color: Colors.grey.shade200,
+                                    width: 1,
+                                  ),
+                                ),
+                                child: Text(
+                                  notification.message ??
+                                      'No details available',
+                                  style: GoogleFonts.inter(
+                                    fontSize: 14,
+                                    color: Colors.grey.shade800,
+                                    height: 1.5,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  IconData _getNotificationIcon(String type) {
+    switch (type) {
+      case 'New Appointment':
+        return Icons.calendar_today;
+      case 'Reschedule Request':
+        return Icons.schedule;
+      case 'Cancellation':
+        return Icons.cancel;
+      default:
+        return Icons.notifications;
+    }
+  }
+
+  String _getNotificationTitle(WDTNotification notification) {
+    switch (notification.notificationType) {
+      case 'New Appointment':
+        return 'New Appointment Request';
+      case 'Reschedule Request':
+        return 'Reschedule Request';
+      case 'Cancellation':
+        return 'Appointment Cancelled';
+      default:
+        return 'Notification';
+    }
+  }
+
+  String _formatTimes(DateTime date) {
+    final now = DateTime.now();
+    final difference = now.difference(date);
+
+    if (difference.inMinutes < 1) {
+      return 'Just now';
+    } else if (difference.inHours < 1)
+      return '${difference.inMinutes} mins ago';
+    else if (difference.inDays < 1)
+      return '${difference.inHours} hours ago';
+    else if (difference.inDays < 7)
+      return '${difference.inDays} days ago';
+    else
+      return DateFormat('MMM d, y').format(date);
+  }
 
   void _showProfileDialog(BuildContext context) {
     showDialog(
@@ -697,7 +1183,14 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                     leading: const Icon(Icons.account_box),
                     title: const Text('Profile'),
                     onTap: () {
-                      // Navigate to profile
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CoachProfileScreen(
+                            coachAccount: widget.coachAccount,
+                          ),
+                        ),
+                      );
                     },
                   ),
                   ListTile(
@@ -724,6 +1217,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final notificationProvider = context.watch<NotificationProvider>();
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -786,67 +1280,107 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                 ],
               ),
             ),
-            MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: () => _showProfileDialog(context),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFD9D9D9),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                  child: SizedBox(
+            Row(
+              children: [
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () {
+                      if (_notificationOverlayEntry == null) {
+                        _showNotificationPopup(context);
+                      } else {
+                        _hideNotificationPopup();
+                      }
+                    },
                     child: Container(
-                      padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const CircleAvatar(
-                            backgroundColor: Colors.transparent,
-                            backgroundImage: AssetImage(
-                                'assets/images/image_12.png'), // Add the path to your profile image
-                            radius: 24,
-                          ),
-                          // Column(
-                          //     crossAxisAlignment: CrossAxisAlignment.start,
-                          //     children: [
-                          //       Text('Partner Name',
-                          //           style: GoogleFonts.getFont(
-                          //             'Montserrat',
-                          //             fontWeight: FontWeight.bold,
-                          //             fontSize: 14,
-                          //             color: const Color(0xFF000000),
-                          //           )),
-                          //       Text('Employer Partner',
-                          //           style: GoogleFonts.getFont(
-                          //             'Montserrat',
-                          //             fontWeight: FontWeight.normal,
-                          //             fontSize: 12,
-                          //             color: const Color(0xFF000000),
-                          //           )),
-                          //     ]),
-                          SizedBox(
-                            width: 4,
-                          ),
-                          Container(
-                            margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
-                            width: 12,
-                            height: 7.4,
-                            child: SizedBox(
-                              width: 12,
-                              height: 7.4,
-                              child: SvgPicture.asset(
-                                'assets/vectors/vector_331_x2.svg',
-                              ),
-                            ),
-                          ),
-                        ],
+                      key: _bellIconKey,
+                      padding: EdgeInsets.all(8),
+                      child: Badge(
+                        label: Text('${notificationProvider.unreadCount}',
+                            style: TextStyle(color: Colors.white)),
+                        isLabelVisible: notificationProvider.unreadCount > 0,
+                        backgroundColor: Color(0xFFEC1D25),
+                        child: TweenAnimationBuilder(
+                          tween: Tween<double>(begin: 1.0, end: 1.2),
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.easeInOut,
+                          builder: (context, double value, child) {
+                            return Transform.scale(
+                              scale: value,
+                              child: Icon(Icons.notifications_active_outlined,
+                                  size: 26, color: Color(0xFFEC1D25)),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+                const SizedBox(width: 8),
+                
+                MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () => _showProfileDialog(context),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFD9D9D9),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: SizedBox(
+                        child: Container(
+                          padding: const EdgeInsets.fromLTRB(8, 4, 14, 4),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                backgroundImage: AssetImage(
+                                    'assets/images/image_12.png'), // Add the path to your profile image
+                                radius: 24,
+                              ),
+                              // Column(
+                              //     crossAxisAlignment: CrossAxisAlignment.start,
+                              //     children: [
+                              //       Text('Partner Name',
+                              //           style: GoogleFonts.getFont(
+                              //             'Montserrat',
+                              //             fontWeight: FontWeight.bold,
+                              //             fontSize: 14,
+                              //             color: const Color(0xFF000000),
+                              //           )),
+                              //       Text('Employer Partner',
+                              //           style: GoogleFonts.getFont(
+                              //             'Montserrat',
+                              //             fontWeight: FontWeight.normal,
+                              //             fontSize: 12,
+                              //             color: const Color(0xFF000000),
+                              //           )),
+                              //     ]),
+                              SizedBox(
+                                width: 4,
+                              ),
+                              Container(
+                                margin: const EdgeInsets.fromLTRB(0, 20.6, 0, 20),
+                                width: 12,
+                                height: 7.4,
+                                child: SizedBox(
+                                  width: 12,
+                                  height: 7.4,
+                                  child: SvgPicture.asset(
+                                    'assets/vectors/vector_331_x2.svg',
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -1286,33 +1820,68 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
 
     switch (screenName) {
       case 'Dashboard':
-        screen = CoachScreen(
-          coachAccount: widget.coachAccount,
-          studentAccount: widget.studentAccount,
+        // screen = CoachScreen(
+        //   coachAccount: widget.coachAccount,
+        //   studentAccount: widget.studentAccount,
+        // );
+        screen = ChangeNotifierProvider(
+          create: (_) => NotificationProvider(),
+          child: CoachScreen(
+            coachAccount: widget.coachAccount,
+            studentAccount: widget.studentAccount,
+          ),
         );
         break;
       case 'Request Schedules':
-        screen = RequestScheduleScreen(
-          coachAccount: widget.coachAccount,
-          studentAccount: widget.studentAccount,
+        // screen = RequestScheduleScreen(
+        //   coachAccount: widget.coachAccount,
+        //   studentAccount: widget.studentAccount,
+        // );
+        screen = ChangeNotifierProvider(
+          create: (_) => NotificationProvider(),
+          child: RequestScheduleScreen(
+            coachAccount: widget.coachAccount,
+            studentAccount: widget.studentAccount,
+          ),
         );
         break;
       case 'Reschedule Request':
-        screen = RescheduleRequestScreen(
-          coachAccount: widget.coachAccount,
-          studentAccount: widget.studentAccount,
+        // screen = RescheduleRequestScreen(
+        //   coachAccount: widget.coachAccount,
+        //   studentAccount: widget.studentAccount,
+        // );
+        screen = ChangeNotifierProvider(
+          create: (_) => NotificationProvider(),
+          child: RescheduleRequestScreen(
+            coachAccount: widget.coachAccount,
+            studentAccount: widget.studentAccount,
+          ),
         );
         break;
       case 'Schedules':
-        screen = SchedulesScreen(
-          coachAccount: widget.coachAccount,
-          studentAccount: widget.studentAccount,
+        // screen = SchedulesScreen(
+        //   coachAccount: widget.coachAccount,
+        //   studentAccount: widget.studentAccount,
+        // );
+        screen = ChangeNotifierProvider(
+          create: (_) => NotificationProvider(),
+          child: SchedulesScreen(
+            coachAccount: widget.coachAccount,
+            studentAccount: widget.studentAccount,
+          ),
         );
         break;
       default:
-        screen = SchedulesScreen(
-          coachAccount: widget.coachAccount,
-          studentAccount: widget.studentAccount,
+        // screen = SchedulesScreen(
+        //   coachAccount: widget.coachAccount,
+        //   studentAccount: widget.studentAccount,
+        // );
+        screen = ChangeNotifierProvider(
+          create: (_) => NotificationProvider(),
+          child: SchedulesScreen(
+            coachAccount: widget.coachAccount,
+            studentAccount: widget.studentAccount,
+          ),
         );
     }
 

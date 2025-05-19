@@ -1,5 +1,6 @@
 // ignore_for_file: unused_field
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/user_role/career_center_director.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
 import 'package:http/http.dart' as http;
@@ -39,7 +40,8 @@ class CareerCenterProfile {
 }
 
 class CareerCenterProfileScreen extends StatefulWidget {
-  const CareerCenterProfileScreen({super.key});
+  final CareerCenterDirectorAccount directorAccount;
+  const CareerCenterProfileScreen({super.key, required this.directorAccount});
 
   @override
   _CareerCenterProfileScreenState createState() =>
@@ -71,7 +73,7 @@ class _CareerCenterProfileScreenState extends State<CareerCenterProfileScreen> {
   Future<void> _loadHardcodedImage() async {
     try {
       final ByteData imageData =
-          await rootBundle.load('assets/1743121683181.jpg');
+          await rootBundle.load('assets/career_coaching/1743121683181.jpg');
       setState(() {
         _profileImage = imageData.buffer.asUint8List();
       });

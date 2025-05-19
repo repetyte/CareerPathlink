@@ -1,6 +1,7 @@
 // ignore_for_file: unused_field
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/user_role/coach_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:unicons/unicons.dart';
@@ -10,7 +11,8 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CoachProfileScreen extends StatefulWidget {
-  const CoachProfileScreen({super.key});
+  final CoachAccount coachAccount;
+  const CoachProfileScreen({super.key, required this.coachAccount});
 
   @override
   _CoachProfileScreenState createState() => _CoachProfileScreenState();
@@ -48,8 +50,9 @@ class _CoachProfileScreenState extends State<CoachProfileScreen> {
   Future<void> _loadUserIdAndData() async {
     setState(() => _isLoading = true);
     try {
-      final prefs = await SharedPreferences.getInstance();
-      _currentUserId = prefs.getString('user_id');
+      // final prefs = await SharedPreferences.getInstance();
+      // _currentUserId = prefs.getString('user_id');
+      _currentUserId = widget.coachAccount.username;
 
       if (_currentUserId != null) {
         await _loadCoachData();

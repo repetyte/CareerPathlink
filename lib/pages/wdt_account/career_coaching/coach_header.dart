@@ -4,6 +4,7 @@
 // import 'package:final_career_coaching/Login%20and%20Signup%20Page/user.dart';
 // import 'package:final_career_coaching/model/wdt_notifications_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/user_role/coach_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -16,7 +17,8 @@ import 'coach_profile_screen.dart';
 import 'notification_provider.dart';
 
 class CoachHeader extends StatefulWidget {
-  const CoachHeader({super.key});
+  final CoachAccount coachAccount;
+  const CoachHeader({super.key, required this.coachAccount});
 
   @override
   State<CoachHeader> createState() => _CoachHeaderState();
@@ -604,6 +606,7 @@ class _CoachHeaderState extends State<CoachHeader> {
               ),
               Row(
                 children: [
+                  
                   MouseRegion(
                     cursor: SystemMouseCursors.click,
                     child: GestureDetector(
@@ -639,6 +642,7 @@ class _CoachHeaderState extends State<CoachHeader> {
                     ),
                   ),
                   const SizedBox(width: 8),
+                  
                   MouseRegion(
                     cursor: SystemMouseCursors.click,
                     child: PopupMenuButton<int>(
@@ -691,7 +695,7 @@ class _CoachHeaderState extends State<CoachHeader> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    const CoachProfileScreen()),
+                                    CoachProfileScreen(coachAccount: widget.coachAccount,)),
                           );
                         } else if (value == 4) {
                           _logout(context);

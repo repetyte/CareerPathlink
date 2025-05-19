@@ -4,6 +4,7 @@ import 'package:flutter_app/models/user_role/industry_partner.dart';
 import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/models/work_integrated_learning/internship.dart';
 import 'package:flutter_app/models/work_integrated_learning/internship_application.dart';
+import 'package:flutter_app/pages/career_center_director_account/career_coaching/career_center_profile.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
 import 'package:flutter_app/services/industry_partner_api_service.dart';
 import 'package:flutter_app/services/internship_api_service.dart';
@@ -79,7 +80,15 @@ class _InternshipDashboardDirectorState
                     leading: const Icon(Icons.account_box),
                     title: const Text('Profile'),
                     onTap: () {
-                      // Navigate to profile
+                      // Handle profile view
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CareerCenterProfileScreen(
+                            directorAccount: widget.directorAccount,
+                          ),
+                        ),
+                      );
                     },
                   ),
                   ListTile(

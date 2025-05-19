@@ -1,5 +1,6 @@
 // ignore_for_file: unused_local_variable
 
+import 'package:flutter_app/models/user_role/career_center_director.dart';
 import 'package:flutter_app/pages/career_center_director_account/career_coaching/career_center_profile.dart';
 // import 'package:final_career_coaching/Login%20and%20Signup%20Page/login_page.dart';
 // import 'package:final_career_coaching/Login%20and%20Signup%20Page/user.dart';
@@ -15,7 +16,8 @@ import '../../../models/career_coaching/analytics_reports_model.dart';
 import '../../../services/career_coaching/analytics_reports_service.dart';
 
 class CareerCenterHeader extends StatelessWidget {
-  const CareerCenterHeader({super.key});
+  final CareerCenterDirectorAccount directorAccount;
+  const CareerCenterHeader({super.key, required this.directorAccount});
 
   Future<void> _launchGoogleMaps() async {
     const String googleMapsUrl =
@@ -680,7 +682,7 @@ class CareerCenterHeader extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
                   ),
-                  const SizedBox(width: 17),
+                  const SizedBox(width: 8),
                   // Profile menu (unchanged)
                   MouseRegion(
                     cursor: SystemMouseCursors.click,
@@ -730,7 +732,7 @@ class CareerCenterHeader extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    const CareerCenterProfileScreen()),
+                                    CareerCenterProfileScreen(directorAccount: directorAccount,)),
                           );
                         } else if (value == 2) {
                           _logout(context);
