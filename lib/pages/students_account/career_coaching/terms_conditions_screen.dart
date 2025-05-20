@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/career_coaching/student_notification_model.dart';
+import 'package:flutter_app/models/user_role/coach_model.dart';
 import 'package:flutter_app/pages/students_account/career_coaching/notification_provider.dart';
-import 'package:flutter_app/pages/students_account/career_coaching/student_profile.dart';
+import 'package:flutter_app/pages/students_account/student_profile.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -15,8 +16,9 @@ import '../../login_and_signup/login_view.dart';
 import 'select_coach_screen.dart';
 
 class AppointmentBookingScreen extends StatefulWidget {
+  CoachAccount? coachAccount;
   final StudentAccount studentAccount;
-  const AppointmentBookingScreen({super.key, required this.studentAccount});
+  AppointmentBookingScreen({super.key, required this.studentAccount, this.coachAccount});
 
   @override
   _AppointmentBookingScreenState createState() =>
@@ -143,7 +145,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
             children: [
               Text(
                 'Notifications (${provider.unreadCount})',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.montserrat(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -153,7 +155,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
                   onPressed: () => provider.markAllAsRead(),
                   child: Text(
                     'Mark all as read',
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       color: Color(0xFFEC1D25),
                       fontSize: 12,
                     ),
@@ -170,7 +172,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
                       'No notifications found',
-                      style: GoogleFonts.inter(color: Colors.grey),
+                      style: GoogleFonts.montserrat(color: Colors.grey),
                     ),
                   ),
                 )
@@ -200,7 +202,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
             },
             child: Text(
               'View all notifications',
-              style: GoogleFonts.inter(
+              style: GoogleFonts.montserrat(
                 color: Color(0xFFEC1D25),
                 fontSize: 14,
               ),
@@ -263,7 +265,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
                 children: [
                   Text(
                     title,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontWeight: isUnread ? FontWeight.bold : FontWeight.w500,
                       fontSize: 14,
                     ),
@@ -271,7 +273,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
                   const SizedBox(height: 4),
                   Text(
                     message,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 12,
                       color: Colors.grey.shade600,
                     ),
@@ -281,7 +283,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
                   const SizedBox(height: 4),
                   Text(
                     time,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 10,
                       color: Colors.grey.shade500,
                     ),
@@ -327,7 +329,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
               children: [
                 Text(
                   'Notification Details',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                     color: Colors.white,
@@ -375,7 +377,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
                           children: [
                             Text(
                               notification.displayType,
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
                               ),
@@ -384,7 +386,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
                             Text(
                               DateFormat('MMM d, y hh:mm a')
                                   .format(notification.createdAt),
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.montserrat(
                                 fontSize: 12,
                                 color: Colors.grey.shade600,
                               ),
@@ -400,7 +402,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
                   if (notification.message != null)
                     Text(
                       notification.message!,
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 14,
                         color: Colors.grey.shade800,
                       ),
@@ -410,7 +412,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
                     Text(
                       'Scheduled for: ${DateFormat('MMM d, y').format(notification.dateRequested!)} '
                       'at ${notification.timeRequested ?? ''}',
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -634,8 +636,8 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
                             children: [
                               CircleAvatar(
                                 backgroundColor: Colors.transparent,
-                                backgroundImage: const AssetImage(
-                                    'assets/images/image_12.png'), // Add the path to your profile image
+                                backgroundImage: const NetworkImage(
+                                    'assets/career_coaching/student_profile.jpg'), // Add the path to your profile image
                                 radius: 24,
                               ),
                               SizedBox(
@@ -668,7 +670,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
         toolbarHeight: 92,
       ),
       drawer: MyDrawerStudents(
-        studentAccount: widget.studentAccount,
+        studentAccount: widget.studentAccount, coachAccount: widget.coachAccount,
       ),
       body: Column(
         children: [
@@ -800,7 +802,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
                                   children: [
                                     Text(
                                       "Reminder:",
-                                      style: GoogleFonts.inter(
+                                      style: GoogleFonts.montserrat(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
                                         color: Color(0xFFEC1D25),
@@ -809,7 +811,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
                                     SizedBox(height: 5),
                                     Text(
                                       "Please ensure you have a valid UNC email address to access the platform. The platform is designed for seamless integration with various devices and browsers.",
-                                      style: GoogleFonts.inter(
+                                      style: GoogleFonts.montserrat(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black87,
@@ -828,7 +830,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
                           ),
                           child: Text(
                             "This appointment and scheduling system allocates slots on a first come, first served basis. Users are responsible for supplying, checking, and verifying the accuracy of the information they provide. Incorrect information may result in session cancellation.",
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.montserrat(
                               fontSize: 14,
                               color: Colors.black87,
                             ),
@@ -847,7 +849,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
                               Expanded(
                                 child: Text(
                                   "By proceeding with this application, you understand that you are signifying your consent to the collection and use of your personal information for the purpose of facilitating services.",
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 14,
                                     color: Color(0xFFEC1D25),
@@ -868,7 +870,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => SelectCoachScreen(
-                                          studentAccount: widget.studentAccount,
+                                          studentAccount: widget.studentAccount, coachAccount: widget.coachAccount, // Pass null or a default value
                                         ),
                                       ),
                                     );
@@ -886,7 +888,7 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
                               child: Center(
                                 child: Text(
                                   "Start Schedule an Appointment",
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.montserrat(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,

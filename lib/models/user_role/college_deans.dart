@@ -3,6 +3,7 @@ class CollegeDean {
   final String firstName;
   final String middleName;
   final String lastName;
+  final String uncEmail;
   final String department;
   final String userAccount;
 
@@ -11,6 +12,7 @@ class CollegeDean {
     required this.firstName,
     required this.middleName,
     required this.lastName,
+    required this.uncEmail,
     required this.department,
     required this.userAccount,
   });
@@ -21,6 +23,7 @@ class CollegeDean {
       firstName: json['first_name'] ?? '',
       middleName: json['middle_name'] ?? '',
       lastName: json['last_name'] ?? '',
+      uncEmail: json['unc_email'] ?? '',
       department: json['department'] ?? '',
       userAccount: json['user_account'] ?? '',
     );
@@ -48,6 +51,7 @@ class CollegeDeanAccount extends CollegeDean {
       required super.firstName,
       required super.middleName,
       required super.lastName,
+      required super.uncEmail,
       required super.department,
       required super.userAccount,
       this.accountId,
@@ -61,6 +65,7 @@ class CollegeDeanAccount extends CollegeDean {
       firstName: json['first_name'] ?? '',
       middleName: json['middle_name'] ?? '',
       lastName: json['last_name'] ?? '',
+      uncEmail: json['unc_email'] ?? '',
       department: json['department'] ?? '',
       userAccount: json['user_account'] ?? '',
       accountId: json['account_id'] ?? '',

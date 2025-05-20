@@ -63,7 +63,7 @@ class _StudentInsightState extends State<StudentInsight> {
               children: [
                 Text(
                   'Student Insight',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: const Color(0xFF2C3E50),
@@ -78,7 +78,7 @@ class _StudentInsightState extends State<StudentInsight> {
                   ),
                   child: Text(
                     'Gender Distribution',
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
                       color: Colors.blue[800],
@@ -102,7 +102,7 @@ class _StudentInsightState extends State<StudentInsight> {
                     return Center(
                       child: Text(
                         'Error loading data: ${snapshot.error}',
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 14,
                           color: Colors.red,
                         ),
@@ -112,7 +112,7 @@ class _StudentInsightState extends State<StudentInsight> {
                     return Center(
                       child: Text(
                         'No student data available',
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 14,
                           color: Colors.black54,
                         ),
@@ -140,7 +140,7 @@ class _StudentInsightState extends State<StudentInsight> {
                                   title:
                                       '${maleData.percentageDistribution.toStringAsFixed(1)}%',
                                   radius: 35,
-                                  titleStyle: GoogleFonts.inter(
+                                  titleStyle: GoogleFonts.montserrat(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
@@ -152,7 +152,7 @@ class _StudentInsightState extends State<StudentInsight> {
                                   title:
                                       '${femaleData.percentageDistribution.toStringAsFixed(1)}%',
                                   radius: 35,
-                                  titleStyle: GoogleFonts.inter(
+                                  titleStyle: GoogleFonts.montserrat(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black87,
@@ -225,7 +225,7 @@ class _StudentInsightState extends State<StudentInsight> {
         const SizedBox(width: 6),
         Text(
           label,
-          style: GoogleFonts.inter(
+          style: GoogleFonts.montserrat(
             fontSize: 12,
             color: Colors.black87,
           ),
@@ -241,7 +241,7 @@ class _StudentInsightState extends State<StudentInsight> {
           flex: 2,
           child: Text(
             label,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.montserrat(
               fontSize: 12,
               fontWeight: FontWeight.w500,
             ),
@@ -259,7 +259,7 @@ class _StudentInsightState extends State<StudentInsight> {
         const SizedBox(width: 8),
         Text(
           '${percentage.toStringAsFixed(1)}%',
-          style: GoogleFonts.inter(
+          style: GoogleFonts.montserrat(
             fontSize: 12,
             fontWeight: FontWeight.bold,
           ),

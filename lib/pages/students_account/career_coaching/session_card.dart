@@ -113,7 +113,7 @@ class _SessionCardState extends State<SessionCard> {
         ),
         child: Text(
           'RESCHEDULED',
-          style: GoogleFonts.inter(
+          style: GoogleFonts.montserrat(
             fontSize: 12,
             color: Colors.red[800],
             fontWeight: FontWeight.bold,
@@ -131,7 +131,7 @@ class _SessionCardState extends State<SessionCard> {
           ),
           child: Text(
             'PENDING',
-            style: GoogleFonts.inter(
+            style: GoogleFonts.montserrat(
               fontSize: 12,
               color: Colors.red[800],
               fontWeight: FontWeight.bold,
@@ -146,7 +146,7 @@ class _SessionCardState extends State<SessionCard> {
           ),
           child: Text(
             'ACCEPTED',
-            style: GoogleFonts.inter(
+            style: GoogleFonts.montserrat(
               fontSize: 12,
               color: Colors.red[800],
               fontWeight: FontWeight.bold,
@@ -161,7 +161,7 @@ class _SessionCardState extends State<SessionCard> {
           ),
           child: Text(
             'COMPLETED',
-            style: GoogleFonts.inter(
+            style: GoogleFonts.montserrat(
               fontSize: 12,
               color: Colors.red[800],
               fontWeight: FontWeight.bold,
@@ -178,7 +178,7 @@ class _SessionCardState extends State<SessionCard> {
           ),
           child: Text(
             'CANCELLED',
-            style: GoogleFonts.inter(
+            style: GoogleFonts.montserrat(
               fontSize: 12,
               color: Colors.red[800],
               fontWeight: FontWeight.bold,
@@ -193,7 +193,7 @@ class _SessionCardState extends State<SessionCard> {
           ),
           child: Text(
             'DECLINED',
-            style: GoogleFonts.inter(
+            style: GoogleFonts.montserrat(
               fontSize: 12,
               fontWeight: FontWeight.bold,
             ),
@@ -233,7 +233,7 @@ class _SessionCardState extends State<SessionCard> {
           SnackBar(
             content: Text(
               'No cancellation reason found',
-              style: GoogleFonts.inter(),
+              style: GoogleFonts.montserrat(),
             ),
             backgroundColor: Colors.grey[700],
           ),
@@ -244,7 +244,7 @@ class _SessionCardState extends State<SessionCard> {
         SnackBar(
           content: Text(
             'Failed to load cancellation reason',
-            style: GoogleFonts.inter(),
+            style: GoogleFonts.montserrat(),
           ),
           backgroundColor: Colors.red,
         ),
@@ -289,7 +289,7 @@ class _SessionCardState extends State<SessionCard> {
               Expanded(
                 child: Text(
                   'WDT: ${widget.session.coachName}',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                     color: isDisabled ? Colors.grey : Colors.black,
@@ -307,7 +307,7 @@ class _SessionCardState extends State<SessionCard> {
                 ),
                 child: Text(
                   widget.session.serviceType,
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontSize: 12,
                     color: Colors.grey[700],
                   ),
@@ -326,7 +326,7 @@ class _SessionCardState extends State<SessionCard> {
                   children: [
                     Text(
                       'Date: ${_formatDate(widget.session.sessionDate)}',
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 14, 
                         color: isDisabled ? Colors.grey : Colors.black,
                       ),
@@ -334,7 +334,7 @@ class _SessionCardState extends State<SessionCard> {
                     const SizedBox(height: 2),
                     Text(
                       'Time: ${_formatTime(widget.session.sessionTime)}',
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 14, 
                         color: isDisabled ? Colors.grey : Colors.black,
                       ),
@@ -362,7 +362,7 @@ class _SessionCardState extends State<SessionCard> {
                 const SizedBox(width: 6),
                 Text(
                   "Accepted",
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                     color: Colors.green[800],
@@ -388,7 +388,7 @@ class _SessionCardState extends State<SessionCard> {
                     const SizedBox(width: 6),
                     Text(
                       "Awaiting Confirmation",
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
                         color: Colors.red[800],
@@ -422,7 +422,7 @@ class _SessionCardState extends State<SessionCard> {
                     const SizedBox(width: 8),
                     Text(
                       "Reschedule",
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 13,
                         fontWeight: FontWeight.w500,
                       ),
@@ -452,7 +452,7 @@ class _SessionCardState extends State<SessionCard> {
                         const SizedBox(width: 8),
                         Text(
                           "View Message",
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.montserrat(
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
                           ),

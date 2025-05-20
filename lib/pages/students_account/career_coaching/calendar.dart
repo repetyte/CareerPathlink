@@ -95,7 +95,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                     const SizedBox(width: 12),
                     Text(
                       "Cancel Booking",
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
                         color: Colors.black87,
@@ -106,7 +106,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 const SizedBox(height: 24),
                 Text(
                   "Are you sure you want to cancel this booking process?",
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w500,
                     color: Colors.grey[700],
                   ),
@@ -129,7 +129,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       ),
                       child: Text(
                         "No",
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           color: Colors.grey[700],
                           fontWeight: FontWeight.w500,
                         ),
@@ -156,7 +156,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       ),
                       child: Text(
                         "Yes",
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           color: Colors.white,
                           fontWeight: FontWeight.w500,
                         ),
@@ -203,7 +203,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 const SizedBox(height: 16),
                 Text(
                   "Plan Ahead",
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                     color: Colors.black87,
@@ -213,7 +213,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 Text(
                   "Please schedule at least 3 days before your session",
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontSize: 16,
                     color: Colors.grey[700],
                   ),
@@ -232,7 +232,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                     ),
                     child: Text(
                       'Got It',
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         color: Colors.white,
                         fontWeight: FontWeight.w500,
                       ),
@@ -290,7 +290,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 const SizedBox(height: 12),
                 Text(
                   "Review Booking",
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                     color: Colors.black87,
@@ -322,7 +322,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   child: Text(
                     "Note: The session duration is 30 minutes.",
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 14,
                       color: Colors.grey[600],
                     ),
@@ -347,7 +347,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       ),
                       child: Text(
                         "Cancel",
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: Colors.grey[700],
@@ -394,7 +394,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       ),
                       child: Text(
                         "Confirm",
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: Colors.white,
@@ -419,7 +419,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           width: 80,
           child: Text(
             "$label:",
-            style: GoogleFonts.inter(
+            style: GoogleFonts.montserrat(
               fontWeight: FontWeight.w500,
               color: Colors.grey[700],
             ),
@@ -428,7 +428,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         Expanded(
           child: Text(
             value,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.montserrat(
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -476,7 +476,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                             children: [
                               Text(
                                 'Book Your ${widget.selectedService}',
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.montserrat(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w700,
                                   color: Color(0xFF111827),
@@ -485,7 +485,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                               SizedBox(height: 8),
                               Text(
                                 'Select an available date and time below',
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.montserrat(
                                   fontSize: 16,
                                   color: Colors.grey[600],
                                   fontWeight: FontWeight.w500,
@@ -568,18 +568,18 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                       rightChevronIcon: Icon(
                                           Icons.chevron_right,
                                           color: Colors.red),
-                                      titleTextStyle: GoogleFonts.inter(
+                                      titleTextStyle: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
                                         color: Colors.black,
                                       ),
                                     ),
                                     daysOfWeekStyle: DaysOfWeekStyle(
-                                      weekdayStyle: GoogleFonts.inter(
+                                      weekdayStyle: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black87,
                                       ),
-                                      weekendStyle: GoogleFonts.inter(
+                                      weekendStyle: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.w500,
                                         color: Colors.grey,
                                       ),
@@ -611,7 +611,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                               children: [
                                                 Text(
                                                   'Available Slots',
-                                                  style: GoogleFonts.inter(
+                                                  style: GoogleFonts.montserrat(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 16,
                                                     color: Colors.black87,
@@ -622,7 +622,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                                   DateFormat('EEEE, MMMM d')
                                                       .format(
                                                           _selectedDay.value),
-                                                  style: GoogleFonts.inter(
+                                                  style: GoogleFonts.montserrat(
                                                     fontSize: 14,
                                                     color: Colors.grey[600],
                                                   ),
@@ -681,7 +681,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                 ),
                                 child: Text(
                                   'Cancel',
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.montserrat(
                                     color: Colors.grey[700],
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -703,7 +703,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                                     : null,
                                 child: Text(
                                   'Book Session',
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.montserrat(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -754,7 +754,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               SizedBox(height: 8),
               Text(
                 'No available slots for this day',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.montserrat(
                     color: Colors.grey[600], fontWeight: FontWeight.w500),
               ),
             ],
@@ -836,7 +836,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       children: [
                         Text(
                           "${_formatTime(slot.startTime)} - ${_formatTime(slot.endTime)}",
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.montserrat(
                             fontSize: 14,
                             color: isClickable ? Colors.black : Colors.grey,
                             fontWeight: FontWeight.w600,
@@ -845,7 +845,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                         SizedBox(height: 2),
                         Text(
                           isClickable ? "Available" : "Unavailable",
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.montserrat(
                             fontSize: 12,
                             color: isClickable
                                 ? Colors.green[700]
@@ -927,11 +927,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
     debugPrint("Sending Data to API: ${jsonEncode(requestData)}\n");
 
-    if (widget.coachAccount == null) {
-      debugPrint("Error: CoachAccount is null.");
-      return false;
-    }
-    final apiService = ApiService(studentAccount: widget.studentAccount, coachAccount: widget.coachAccount!);
+    final apiService = ApiService(studentAccount: widget.studentAccount, coachAccount: widget.coachAccount);
     bool success = await apiService.createAppointment(requestData);
 
     if (success && mounted) {

@@ -2072,3 +2072,13 @@ Decoded Data: Array
     [service_type] => Career Coaching
 )
 
+Raw JSON Data: {"user_id":"19-42344","date_requested":"2025-05-29","time_requested":"12:14 AM","coach_id":"1","service_type":"Career Coaching"}
+Decoded Data: Array
+(
+    [user_id] => 19-42344
+    [date_requested] => 2025-05-29
+    [time_requested] => 12:14 AM
+    [coach_id] => 1
+    [service_type] => Career Coaching
+)
+

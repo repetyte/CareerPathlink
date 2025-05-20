@@ -38,21 +38,24 @@ class _SelectCoachScreenState extends State<SelectCoachScreen> {
   }
 
   Future<void> loadCoaches() async {
-    try {
-      ApiService apiService = ApiService(studentAccount: widget.studentAccount, coachAccount: widget.coachAccount!);
-      List<Coach1> fetchedCoaches = await apiService.fetchCoaches();
-      setState(() {
-        _coaches = fetchedCoaches;
-        _filteredCoaches = [];
-        _isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        _isLoading = false;
-      });
+  try {
+    ApiService apiService = ApiService(studentAccount: widget.studentAccount, coachAccount: widget.coachAccount);
+    List<Coach1> fetchedCoaches = await apiService.fetchCoaches();
+    setState(() {
+      _coaches = fetchedCoaches;
+      _filteredCoaches = [];
+      _isLoading = false;
+    });
+  } catch (e) {
+    setState(() {
+      _isLoading = false;
+    });
+    // Show error after the first frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       showError('Error fetching coaches: $e');
-    }
+    });
   }
+}
 
   void _onSearchChanged() {
     _filterCoaches();
@@ -147,7 +150,7 @@ class _SelectCoachScreenState extends State<SelectCoachScreen> {
                             value: value,
                             child: Text(
                               value,
-                              style: GoogleFonts.inter(fontSize: 14),
+                              style: GoogleFonts.montserrat(fontSize: 14),
                             ),
                           );
                         }).toList(),
@@ -174,7 +177,7 @@ class _SelectCoachScreenState extends State<SelectCoachScreen> {
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: 'Search Workforce Development Trainer',
-                              hintStyle: GoogleFonts.inter(
+                              hintStyle: GoogleFonts.montserrat(
                                   color: Colors.grey[600], fontSize: 14),
                             ),
                           ),
@@ -203,7 +206,7 @@ class _SelectCoachScreenState extends State<SelectCoachScreen> {
                             const SizedBox(height: 20),
                             Text(
                               'Select a Program',
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.montserrat(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
                                 color: Colors.blueGrey[800],
@@ -216,7 +219,7 @@ class _SelectCoachScreenState extends State<SelectCoachScreen> {
                               child: Text(
                                 'Please choose a program from the dropdown to view available Workforce Development Trainers',
                                 textAlign: TextAlign.center,
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.montserrat(
                                   fontSize: 16,
                                   color: Colors.blueGrey[500],
                                   height: 1.4,
@@ -240,7 +243,7 @@ class _SelectCoachScreenState extends State<SelectCoachScreen> {
                                 const SizedBox(height: 20),
                                 Text(
                                   'No Trainers Found',
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.montserrat(
                                     fontSize: 22,
                                     fontWeight: FontWeight.w600,
                                     color: Colors.blueGrey[800],
@@ -253,7 +256,7 @@ class _SelectCoachScreenState extends State<SelectCoachScreen> {
                                   child: Text(
                                     'We couldn\'t find any Workforce Development Trainers matching your search',
                                     textAlign: TextAlign.center,
-                                    style: GoogleFonts.inter(
+                                    style: GoogleFonts.montserrat(
                                       fontSize: 16,
                                       color: Colors.blueGrey[500],
                                       height: 1.4,
@@ -278,7 +281,7 @@ class _SelectCoachScreenState extends State<SelectCoachScreen> {
                                   },
                                   child: Text(
                                     'Clear Search',
-                                    style: GoogleFonts.inter(
+                                    style: GoogleFonts.montserrat(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -326,7 +329,7 @@ class _SelectCoachScreenState extends State<SelectCoachScreen> {
                 children: [
                   Text(
                     coach.coachName,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
@@ -334,7 +337,7 @@ class _SelectCoachScreenState extends State<SelectCoachScreen> {
                   const SizedBox(height: 6.0), // Reduced spacing
                   Text(
                     _selectedProgram,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 14,
                       color: Colors.grey[700],
                     ),
@@ -361,7 +364,7 @@ class _SelectCoachScreenState extends State<SelectCoachScreen> {
                 onPressed: () => bookNow(coach.id, coach.coachName),
                 child: Text(
                   'Book Now',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     color: Colors.white,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

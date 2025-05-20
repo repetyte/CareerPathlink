@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/industry_partner.dart';
 import 'package:flutter_app/models/recruitment_and_placement/job_posting.dart';
+import 'package:flutter_app/pages/employer_partners_account/partner_profile.dart';
 import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_add_job_posting.dart';
 import 'package:flutter_app/pages/employer_partners_account/recruitment_and_placement/rr_job_details_emp_partners.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
@@ -73,7 +74,13 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
                     leading: const Icon(Icons.account_box),
                     title: const Text('Profile'),
                     onTap: () {
-                      // Navigate to profile
+                      // Handle profile view
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PartnerProfileScreen(partnerAccount: widget.employerPartnerAccount,),
+                        ),
+                      );
                     },
                   ),
                   ListTile(
@@ -220,8 +227,8 @@ class _RrJobDashboardEmpPartnersState extends State<RrJobDashboardEmpPartners> {
                       children: [
                         const CircleAvatar(
                           backgroundColor: Colors.transparent,
-                          backgroundImage: AssetImage(
-                              'assets/images/image_12.png'), // Add the path to your profile image
+                          backgroundImage: NetworkImage(
+                              'assets/images/employer_partner.jpg'), // Add the path to your profile image
                           radius: 24,
                         ),
                         // Column(

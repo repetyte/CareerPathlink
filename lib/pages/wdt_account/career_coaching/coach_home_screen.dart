@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/models/career_coaching/wdt_notifications_model.dart';
-import 'package:flutter_app/pages/wdt_account/career_coaching/coach_profile_screen.dart';
+import 'package:flutter_app/pages/wdt_account/coach_profile_screen.dart';
 import 'package:flutter_app/pages/wdt_account/career_coaching/notification_provider.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -235,7 +235,7 @@ class _CoachScreenState extends State<CoachScreen> {
             children: [
               Text(
                 'Notifications (${notificationProvider.unreadCount})',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.montserrat(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -245,7 +245,7 @@ class _CoachScreenState extends State<CoachScreen> {
                   onPressed: () => notificationProvider.markAllAsRead(),
                   child: Text(
                     'Mark all as read',
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       color: Color(0xFFEC1D25),
                       fontSize: 12,
                     ),
@@ -263,7 +263,7 @@ class _CoachScreenState extends State<CoachScreen> {
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
                       'No notifications found',
-                      style: GoogleFonts.inter(color: Colors.grey),
+                      style: GoogleFonts.montserrat(color: Colors.grey),
                     ),
                   ),
                 )
@@ -293,7 +293,7 @@ class _CoachScreenState extends State<CoachScreen> {
             },
             child: Text(
               'View all notifications',
-              style: GoogleFonts.inter(
+              style: GoogleFonts.montserrat(
                 color: Color(0xFFEC1D25),
                 fontSize: 14,
               ),
@@ -351,7 +351,7 @@ class _CoachScreenState extends State<CoachScreen> {
                 children: [
                   Text(
                     title,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontWeight: isUnread ? FontWeight.bold : FontWeight.w500,
                       fontSize: 14,
                     ),
@@ -359,7 +359,7 @@ class _CoachScreenState extends State<CoachScreen> {
                   const SizedBox(height: 4),
                   Text(
                     message,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 12,
                       color: Colors.grey.shade600,
                     ),
@@ -369,7 +369,7 @@ class _CoachScreenState extends State<CoachScreen> {
                   const SizedBox(height: 4),
                   Text(
                     time,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 10,
                       color: Colors.grey.shade500,
                     ),
@@ -416,7 +416,7 @@ class _CoachScreenState extends State<CoachScreen> {
               children: [
                 Text(
                   'Notification Details',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                     color: Colors.white,
@@ -483,7 +483,7 @@ class _CoachScreenState extends State<CoachScreen> {
                                     children: [
                                       Text(
                                         _getNotificationTitle(notification),
-                                        style: GoogleFonts.inter(
+                                        style: GoogleFonts.montserrat(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 18,
                                         ),
@@ -492,7 +492,7 @@ class _CoachScreenState extends State<CoachScreen> {
                                       Text(
                                         DateFormat('MMM d, y hh:mm a')
                                             .format(notification.createdAt),
-                                        style: GoogleFonts.inter(
+                                        style: GoogleFonts.montserrat(
                                           fontSize: 12,
                                           color: Colors.grey.shade600,
                                         ),
@@ -517,7 +517,7 @@ class _CoachScreenState extends State<CoachScreen> {
                                   color: Colors.white,
                                   child: Text(
                                     'DETAILS',
-                                    style: GoogleFonts.inter(
+                                    style: GoogleFonts.montserrat(
                                       fontSize: 10,
                                       color: Colors.grey.shade500,
                                       letterSpacing: 1,
@@ -555,7 +555,7 @@ class _CoachScreenState extends State<CoachScreen> {
                                 child: Text(
                                   notification.message ??
                                       'No details available',
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.montserrat(
                                     fontSize: 14,
                                     color: Colors.grey.shade800,
                                     height: 1.5,
@@ -805,8 +805,8 @@ class _CoachScreenState extends State<CoachScreen> {
                             children: [
                               const CircleAvatar(
                                 backgroundColor: Colors.transparent,
-                                backgroundImage: AssetImage(
-                                    'assets/images/image_12.png'), // Add the path to your profile image
+                                backgroundImage: NetworkImage(
+                                    'assets/career_coaching/1709211669228.jpg'), // Add the path to your profile image
                                 radius: 24,
                               ),
                               // Column(
@@ -1000,7 +1000,7 @@ class _CoachScreenState extends State<CoachScreen> {
                               children: [
                                 Text(
                                   'Time Slot Manager',
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
                                     color: Color(0xFF111827),
@@ -1097,18 +1097,18 @@ class _CoachScreenState extends State<CoachScreen> {
                                         rightChevronIcon: Icon(
                                             Icons.chevron_right,
                                             color: Colors.red),
-                                        titleTextStyle: GoogleFonts.inter(
+                                        titleTextStyle: GoogleFonts.montserrat(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16,
                                           color: Colors.black,
                                         ),
                                       ),
                                       daysOfWeekStyle: DaysOfWeekStyle(
-                                        weekdayStyle: GoogleFonts.inter(
+                                        weekdayStyle: GoogleFonts.montserrat(
                                           fontWeight: FontWeight.w500,
                                           color: Colors.black87,
                                         ),
-                                        weekendStyle: GoogleFonts.inter(
+                                        weekendStyle: GoogleFonts.montserrat(
                                           fontWeight: FontWeight.w500,
                                           color: Colors.grey,
                                         ),
@@ -1132,7 +1132,7 @@ class _CoachScreenState extends State<CoachScreen> {
                                         if (_selectedDay != null) ...[
                                           Text(
                                             'Slots for ${DateFormat('EEEE, MMMM d').format(_selectedDay!)}',
-                                            style: GoogleFonts.inter(
+                                            style: GoogleFonts.montserrat(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 16,
                                               color: Colors.black87,
@@ -1272,7 +1272,7 @@ class _CoachScreenState extends State<CoachScreen> {
         const SizedBox(width: 8),
         Text(
           label,
-          style: GoogleFonts.inter(
+          style: GoogleFonts.montserrat(
             fontSize: 14,
             fontWeight: FontWeight.w500,
             color: Colors.grey[700],
@@ -1282,7 +1282,7 @@ class _CoachScreenState extends State<CoachScreen> {
         Expanded(
           child: Text(
             value,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.montserrat(
               fontSize: 14,
               fontWeight: FontWeight.w400,
               color: Colors.black87,
@@ -1316,7 +1316,7 @@ class _CoachScreenState extends State<CoachScreen> {
         ),
         child: Text(
           text,
-          style: GoogleFonts.inter(
+          style: GoogleFonts.montserrat(
             fontWeight: FontWeight.w500,
             fontSize: fontSize,
             color: _selectedText == text ? Color(0xFFFF0000) : Colors.black,
@@ -1330,7 +1330,7 @@ class _CoachScreenState extends State<CoachScreen> {
     if (_selectedDay == null) {
       return Center(
           child: Text('Select a date to view slots',
-              style: GoogleFonts.inter(color: Colors.grey)));
+              style: GoogleFonts.montserrat(color: Colors.grey)));
     }
 
     final normalizedDate =
@@ -1352,13 +1352,13 @@ class _CoachScreenState extends State<CoachScreen> {
               SizedBox(height: 8),
               Text(
                 'No slots scheduled',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.montserrat(
                     color: Colors.grey[600], fontWeight: FontWeight.w500),
               ),
               SizedBox(height: 4),
               Text(
                 'Tap "Add Time Slot" to create availability',
-                style: GoogleFonts.inter(color: Colors.grey[400], fontSize: 12),
+                style: GoogleFonts.montserrat(color: Colors.grey[400], fontSize: 12),
               ),
             ],
           ),
@@ -1418,7 +1418,7 @@ class _CoachScreenState extends State<CoachScreen> {
                         children: [
                           Text(
                             "${_formatTime(slot.startTime)} - ${_formatTime(slot.endTime)}",
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.montserrat(
                               fontSize: 14,
                               color: Colors.black,
                               fontWeight: FontWeight.w600,
@@ -1427,7 +1427,7 @@ class _CoachScreenState extends State<CoachScreen> {
                           SizedBox(height: 2),
                           Text(
                             "Available for booking",
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.montserrat(
                               fontSize: 12,
                               color: Colors.green[700],
                               fontWeight: FontWeight.w500,
@@ -1648,7 +1648,7 @@ class _CoachScreenState extends State<CoachScreen> {
                         const SizedBox(height: 16),
                         Text(
                           "Create New Time Slot",
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.montserrat(
                             fontSize: 20,
                             fontWeight: FontWeight.w600,
                             color: Colors.black87,
@@ -1657,7 +1657,7 @@ class _CoachScreenState extends State<CoachScreen> {
                         const SizedBox(height: 8),
                         Text(
                           "Select your available time for ${DateFormat('MMM d, yyyy').format(_selectedDay!)}",
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.montserrat(
                             fontSize: 14,
                             color: Colors.grey[600],
                           ),
@@ -1686,7 +1686,7 @@ class _CoachScreenState extends State<CoachScreen> {
                               Text(
                                 DateFormat('EEEE, MMMM d')
                                     .format(_selectedDay!),
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.montserrat(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.grey[700],
@@ -1754,7 +1754,7 @@ class _CoachScreenState extends State<CoachScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Text(
                         "Students will be able to book appointments during this time slot.",
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 13,
                           color: Colors.grey[600],
                           fontStyle: FontStyle.italic,
@@ -1783,7 +1783,7 @@ class _CoachScreenState extends State<CoachScreen> {
                             ),
                             child: Text(
                               "Cancel",
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.montserrat(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -1881,7 +1881,7 @@ class _CoachScreenState extends State<CoachScreen> {
                                       const SizedBox(width: 8),
                                       Text(
                                         "Add Slot",
-                                        style: GoogleFonts.inter(
+                                        style: GoogleFonts.montserrat(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -1916,7 +1916,7 @@ class _CoachScreenState extends State<CoachScreen> {
           width: 80,
           child: Text(
             label,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.montserrat(
               fontSize: 14,
               fontWeight: FontWeight.w500,
               color: isDisabled ? Colors.grey[400] : Colors.grey[700],
@@ -1944,7 +1944,7 @@ class _CoachScreenState extends State<CoachScreen> {
                     selectedTime != null
                         ? selectedTime.format(context)
                         : defaultText ?? "Select Time",
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       color: selectedTime != null
                           ? Colors.black87
                           : Colors.grey[600],

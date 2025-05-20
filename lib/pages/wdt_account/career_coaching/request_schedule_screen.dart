@@ -4,7 +4,7 @@ import 'package:flutter_app/models/career_coaching/request_appointment_model.dar
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/models/career_coaching/wdt_notifications_model.dart';
-import 'package:flutter_app/pages/wdt_account/career_coaching/coach_profile_screen.dart';
+import 'package:flutter_app/pages/wdt_account/coach_profile_screen.dart';
 import 'package:flutter_app/pages/wdt_account/career_coaching/notification_provider.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -225,7 +225,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                   const SizedBox(height: 16),
                   Text(
                     "Confirm Appointment",
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
                       color: Colors.black87,
@@ -278,7 +278,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                     "This will notify ${appointment.studentName.split(' ')[0]} "
                     "that you've accepted their appointment request.",
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 14,
                       color: Colors.grey[700],
                       height: 1.4,
@@ -304,7 +304,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                             ),
                             child: Text(
                               "Not Now",
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.montserrat(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -336,7 +336,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                             ),
                             child: Text(
                               "Accept",
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.montserrat(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -487,7 +487,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
             children: [
               Text(
                 'Notifications (${notificationProvider.unreadCount})',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.montserrat(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -497,7 +497,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                   onPressed: () => notificationProvider.markAllAsRead(),
                   child: Text(
                     'Mark all as read',
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       color: Color(0xFFEC1D25),
                       fontSize: 12,
                     ),
@@ -515,7 +515,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
                       'No notifications found',
-                      style: GoogleFonts.inter(color: Colors.grey),
+                      style: GoogleFonts.montserrat(color: Colors.grey),
                     ),
                   ),
                 )
@@ -545,7 +545,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
             },
             child: Text(
               'View all notifications',
-              style: GoogleFonts.inter(
+              style: GoogleFonts.montserrat(
                 color: Color(0xFFEC1D25),
                 fontSize: 14,
               ),
@@ -603,7 +603,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                 children: [
                   Text(
                     title,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontWeight: isUnread ? FontWeight.bold : FontWeight.w500,
                       fontSize: 14,
                     ),
@@ -611,7 +611,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                   const SizedBox(height: 4),
                   Text(
                     message,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 12,
                       color: Colors.grey.shade600,
                     ),
@@ -621,7 +621,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                   const SizedBox(height: 4),
                   Text(
                     time,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 10,
                       color: Colors.grey.shade500,
                     ),
@@ -668,7 +668,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
               children: [
                 Text(
                   'Notification Details',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                     color: Colors.white,
@@ -735,7 +735,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                                     children: [
                                       Text(
                                         _getNotificationTitle(notification),
-                                        style: GoogleFonts.inter(
+                                        style: GoogleFonts.montserrat(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 18,
                                         ),
@@ -744,7 +744,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                                       Text(
                                         DateFormat('MMM d, y hh:mm a')
                                             .format(notification.createdAt),
-                                        style: GoogleFonts.inter(
+                                        style: GoogleFonts.montserrat(
                                           fontSize: 12,
                                           color: Colors.grey.shade600,
                                         ),
@@ -769,7 +769,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                                   color: Colors.white,
                                   child: Text(
                                     'DETAILS',
-                                    style: GoogleFonts.inter(
+                                    style: GoogleFonts.montserrat(
                                       fontSize: 10,
                                       color: Colors.grey.shade500,
                                       letterSpacing: 1,
@@ -807,7 +807,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                                 child: Text(
                                   notification.message ??
                                       'No details available',
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.montserrat(
                                     fontSize: 14,
                                     color: Colors.grey.shade800,
                                     height: 1.5,
@@ -993,8 +993,8 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                             children: [
                               const CircleAvatar(
                                 backgroundColor: Colors.transparent,
-                                backgroundImage: AssetImage(
-                                    'assets/images/image_12.png'), // Add the path to your profile image
+                                backgroundImage: NetworkImage(
+                                    'assets/career_coaching/1709211669228.jpg'), // Add the path to your profile image
                                 radius: 24,
                               ),
                               // Column(
@@ -1202,7 +1202,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                       children: [
                         Text(
                           'Requested Appointments',
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.montserrat(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                             color: Colors.black,
@@ -1226,7 +1226,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                                     _searchController.text.isEmpty
                                         ? 'No Request'
                                         : 'No result found',
-                                    style: GoogleFonts.inter(
+                                    style: GoogleFonts.montserrat(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w400,
                                       color: Colors.grey,
@@ -1305,7 +1305,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                           Expanded(
                             child: Text(
                               appointment.studentName,
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.montserrat(
                                   fontSize: 16, fontWeight: FontWeight.bold),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
@@ -1323,7 +1323,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                             child: Text(
                               formatServiceType(appointment.serviceType)
                                   .toUpperCase(),
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.montserrat(
                                 fontSize: 12,
                                 color: Colors.red[800],
                                 fontWeight: FontWeight.bold,
@@ -1336,12 +1336,12 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                       if (appointment.dateRequested != null)
                         Text(
                           "Date: ${formatDateString(appointment.dateRequested)}",
-                          style: GoogleFonts.inter(fontSize: 13),
+                          style: GoogleFonts.montserrat(fontSize: 13),
                         ),
                       if (appointment.timeRequested != null)
                         Text(
                           "Time: ${formatTimeString(appointment.timeRequested)}",
-                          style: GoogleFonts.inter(fontSize: 13),
+                          style: GoogleFonts.montserrat(fontSize: 13),
                         ),
                     ],
                   ),
@@ -1417,7 +1417,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                   const SizedBox(height: 16),
                   Text(
                     "Decline Appointment?",
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
                       color: Colors.black87,
@@ -1470,7 +1470,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                     "This will notify ${appointment.studentName.split(' ')[0]} that "
                     "you're unavailable. They'll be encouraged to request another time.",
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 14,
                       color: Colors.grey[700],
                       height: 1.4,
@@ -1496,7 +1496,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                             ),
                             child: Text(
                               "Go Back",
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.montserrat(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -1528,7 +1528,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
                             ),
                             child: Text(
                               "Decline",
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.montserrat(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -1553,7 +1553,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
         const SizedBox(width: 8),
         Text(
           label,
-          style: GoogleFonts.inter(
+          style: GoogleFonts.montserrat(
             fontSize: 14,
             fontWeight: FontWeight.w500,
             color: Colors.grey[700],
@@ -1563,7 +1563,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
         Expanded(
           child: Text(
             value,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.montserrat(
               fontSize: 14,
               fontWeight: FontWeight.w400,
               color: Colors.black87,
@@ -1695,7 +1695,7 @@ class _RequestScheduleScreenState extends State<RequestScheduleScreen> {
         children: [
           Text(
             text,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.montserrat(
               fontSize: fontSize,
               fontWeight:
                   _selectedText == text ? FontWeight.bold : FontWeight.normal,

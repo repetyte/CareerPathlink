@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/career_coaching/analytics_reports_model.dart';
-import 'package:flutter_app/pages/career_center_director_account/career_coaching/career_center_profile.dart';
+import 'package:flutter_app/pages/career_center_director_account/career_center_profile.dart';
 import 'package:flutter_app/services/career_coaching/analytics_reports_service.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -68,7 +68,7 @@ class _CareerCenterScreen extends State<CareerCenterScreen> {
                   const SizedBox(width: 16),
                   Text(
                     "Download Analytics",
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
                       color: Colors.black87,
@@ -128,7 +128,7 @@ class _CareerCenterScreen extends State<CareerCenterScreen> {
                                 children: [
                                   Text(
                                     "Download All Reports",
-                                    style: GoogleFonts.inter(
+                                    style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 15,
                                       color: const Color(0xFFEC1D25),
@@ -137,7 +137,7 @@ class _CareerCenterScreen extends State<CareerCenterScreen> {
                                   const SizedBox(height: 4),
                                   Text(
                                     "Get a complete ZIP file containing all available reports",
-                                    style: GoogleFonts.inter(
+                                    style: GoogleFonts.montserrat(
                                       fontSize: 13,
                                       color: Colors.grey[600],
                                       height: 1.4,
@@ -222,7 +222,7 @@ class _CareerCenterScreen extends State<CareerCenterScreen> {
                                       children: [
                                         Text(
                                           report.displayName,
-                                          style: GoogleFonts.inter(
+                                          style: GoogleFonts.montserrat(
                                             fontWeight: FontWeight.w600,
                                             fontSize: 15,
                                             color: Colors.black87,
@@ -231,7 +231,7 @@ class _CareerCenterScreen extends State<CareerCenterScreen> {
                                         const SizedBox(height: 4),
                                         Text(
                                           report.description,
-                                          style: GoogleFonts.inter(
+                                          style: GoogleFonts.montserrat(
                                             fontSize: 13,
                                             color: Colors.grey[600],
                                             height: 1.4,
@@ -268,7 +268,7 @@ class _CareerCenterScreen extends State<CareerCenterScreen> {
                 ),
                 child: Text(
                   "Cancel",
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w600,
                     fontSize: 15,
                     color: Colors.black87,
@@ -306,7 +306,7 @@ class _CareerCenterScreen extends State<CareerCenterScreen> {
                   const SizedBox(height: 16),
                   Text(
                     "Preparing Reports for Download",
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                       color: Colors.black87,
@@ -318,7 +318,7 @@ class _CareerCenterScreen extends State<CareerCenterScreen> {
                     child: Text(
                       "Please wait while we compile all analytics reports into a ZIP file...",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 13,
                         color: Colors.grey[600],
                       ),
@@ -357,7 +357,7 @@ class _CareerCenterScreen extends State<CareerCenterScreen> {
                     const SizedBox(height: 12),
                     Text(
                       "Reports Downloaded Successfully",
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                         color: Colors.black87,
@@ -369,7 +369,7 @@ class _CareerCenterScreen extends State<CareerCenterScreen> {
                       child: Text(
                         "All reports have been compiled and downloaded as a ZIP file.",
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 13,
                           color: Colors.grey[600],
                         ),
@@ -388,7 +388,7 @@ class _CareerCenterScreen extends State<CareerCenterScreen> {
                       ),
                       child: Text(
                         "OK",
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 13,
                           fontWeight: FontWeight.w500,
                           color: Colors.white,
@@ -407,7 +407,7 @@ class _CareerCenterScreen extends State<CareerCenterScreen> {
           SnackBar(
             content: Text(
               'Failed to download all reports: ${e.toString()}',
-              style: GoogleFonts.inter(),
+              style: GoogleFonts.montserrat(),
             ),
             backgroundColor: Colors.red,
             duration: const Duration(seconds: 3),
@@ -442,7 +442,7 @@ class _CareerCenterScreen extends State<CareerCenterScreen> {
                   const SizedBox(height: 16),
                   Text(
                     "Preparing ${selectedReport.displayName}",
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                       color: Colors.black87,
@@ -454,7 +454,7 @@ class _CareerCenterScreen extends State<CareerCenterScreen> {
                     child: Text(
                       "Please wait while we generate the ${selectedReport.displayName} report...",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 13,
                         color: Colors.grey[600],
                       ),
@@ -496,7 +496,7 @@ class _CareerCenterScreen extends State<CareerCenterScreen> {
                     const SizedBox(height: 12),
                     Text(
                       "Download Complete",
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                         color: Colors.black87,
@@ -508,7 +508,7 @@ class _CareerCenterScreen extends State<CareerCenterScreen> {
                       child: Text(
                         "${selectedReport.displayName} has been downloaded successfully.",
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 13,
                           color: Colors.grey[600],
                         ),
@@ -527,7 +527,7 @@ class _CareerCenterScreen extends State<CareerCenterScreen> {
                       ),
                       child: Text(
                         "OK",
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 13,
                           fontWeight: FontWeight.w500,
                           color: Colors.white,
@@ -546,7 +546,7 @@ class _CareerCenterScreen extends State<CareerCenterScreen> {
           SnackBar(
             content: Text(
               'Failed to download report: ${e.toString()}',
-              style: GoogleFonts.inter(),
+              style: GoogleFonts.montserrat(),
             ),
             backgroundColor: Colors.red,
             duration: const Duration(seconds: 3),
@@ -739,8 +739,8 @@ class _CareerCenterScreen extends State<CareerCenterScreen> {
                             children: [
                               CircleAvatar(
                                 backgroundColor: Colors.transparent,
-                                backgroundImage: const AssetImage(
-                                    'assets/images/image_12.png'), // Add the path to your profile image
+                                backgroundImage: const NetworkImage(
+                                    'assets/career_coaching/1743121683181.jpg'), // Add the path to your profile image
                                 radius: 24,
                               ),
                               SizedBox(
@@ -936,7 +936,7 @@ class _CareerCenterScreen extends State<CareerCenterScreen> {
                                 children: [
                                   Text(
                                     'Year Level',
-                                    style: GoogleFonts.inter(
+                                    style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
                                       color: Colors.black,
@@ -954,7 +954,7 @@ class _CareerCenterScreen extends State<CareerCenterScreen> {
                                 children: [
                                   Text(
                                     'Service Details',
-                                    style: GoogleFonts.inter(
+                                    style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18,
                                       color: Colors.black,

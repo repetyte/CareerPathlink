@@ -154,7 +154,7 @@ class _DepartmentState extends State<Department> {
                         const SizedBox(height: 16),
                         Text(
                           'Loading department data...',
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.montserrat(
                             color: secondaryColor,
                           ),
                         ),
@@ -181,7 +181,7 @@ class _DepartmentState extends State<Department> {
                                 Expanded(
                                   child: Text(
                                     errorMessage,
-                                    style: GoogleFonts.inter(
+                                    style: GoogleFonts.montserrat(
                                       color: Colors.amber[800],
                                     ),
                                   ),
@@ -205,7 +205,7 @@ class _DepartmentState extends State<Department> {
       children: [
         Text(
           'Department Engagement',
-          style: GoogleFonts.inter(
+          style: GoogleFonts.montserrat(
             fontSize: 18,
             fontWeight: FontWeight.bold,
             color: secondaryColor,
@@ -214,7 +214,7 @@ class _DepartmentState extends State<Department> {
         const SizedBox(height: 8),
         Text(
           'Overview of student engagement across departments',
-          style: GoogleFonts.inter(
+          style: GoogleFonts.montserrat(
             fontSize: 14,
             color: Colors.grey[600],
           ),
@@ -276,7 +276,7 @@ class _DepartmentState extends State<Department> {
                 Expanded(
                   child: Text(
                     title,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w600,
                       fontSize: 16,
                       color: secondaryColor,
@@ -292,7 +292,7 @@ class _DepartmentState extends State<Department> {
                   ),
                   child: Text(
                     totalPercentageText,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
                       color: Colors.white,
@@ -312,7 +312,7 @@ class _DepartmentState extends State<Department> {
             const SizedBox(height: 8),
             Text(
               'Engagement Rate',
-              style: GoogleFonts.inter(
+              style: GoogleFonts.montserrat(
                 fontSize: 12,
                 color: Colors.grey[600],
               ),

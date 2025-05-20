@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/user_role/coach_model.dart';
 import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/pages/students_account/career_coaching/notification_provider.dart';
 import 'package:flutter_app/pages/students_account/student_home_screen.dart';
@@ -9,8 +10,9 @@ import 'package:provider/provider.dart';
 import '../../pages/students_account/career_coaching/terms_conditions_screen.dart';
 
 class MyDrawerStudents extends StatelessWidget {
+  CoachAccount? coachAccount;
   final StudentAccount studentAccount;
-  const MyDrawerStudents({super.key, required this.studentAccount});
+  MyDrawerStudents({super.key, required this.studentAccount, this.coachAccount});
 
   navigateTo(String route, BuildContext context) {
     Navigator.of(context).pushReplacementNamed(route);
@@ -121,7 +123,7 @@ class MyDrawerStudents extends StatelessWidget {
                   builder: (context) => ChangeNotifierProvider(
                     create: (_) => StudentNotificationProvider(),
                     child: AppointmentBookingScreen(
-                        studentAccount: studentAccount),
+                        studentAccount: studentAccount, coachAccount: coachAccount,),
                   ),
                 ),
               );

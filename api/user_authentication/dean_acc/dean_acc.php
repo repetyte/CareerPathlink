@@ -9,6 +9,7 @@ class DeanAccount
     public $first_name;
     public $middle_name;
     public $last_name;
+    public $unc_email;
     public $department;
     public $user_account;
 
@@ -78,6 +79,7 @@ class DeanAccount
                       jp.first_name,
                       jp.middle_name,
                       jp.last_name,
+                      jp.unc_email,
                       jp.department,
                       jp.user_account,
                       

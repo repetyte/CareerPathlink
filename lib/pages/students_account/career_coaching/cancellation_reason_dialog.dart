@@ -44,7 +44,7 @@ class CancellationReasonDialog extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               "Cancellation Reason",
-              style: GoogleFonts.inter(
+              style: GoogleFonts.montserrat(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
                 color: Colors.black87,
@@ -85,7 +85,7 @@ class CancellationReasonDialog extends StatelessWidget {
             Text(
               "This appointment has been cancelled by the Workforce Development Trainer.",
               textAlign: TextAlign.center,
-              style: GoogleFonts.inter(
+              style: GoogleFonts.montserrat(
                 fontSize: 14,
                 color: Colors.grey[700],
                 height: 1.4,
@@ -116,7 +116,7 @@ class CancellationReasonDialog extends StatelessWidget {
                   ),
                   child: Text(
                     "Close",
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
@@ -145,7 +145,7 @@ class CancellationReasonDialog extends StatelessWidget {
                   children: [
                     Text(
                       label,
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: Colors.grey[700],
@@ -154,7 +154,7 @@ class CancellationReasonDialog extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       value,
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
                         color: Colors.black87,
@@ -168,7 +168,7 @@ class CancellationReasonDialog extends StatelessWidget {
                   children: [
                     Text(
                       label,
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: Colors.grey[700],
@@ -178,7 +178,7 @@ class CancellationReasonDialog extends StatelessWidget {
                     Expanded(
                       child: Text(
                         value,
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
                           color: Colors.black87,

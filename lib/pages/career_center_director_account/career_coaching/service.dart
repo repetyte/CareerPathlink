@@ -73,7 +73,7 @@ class _ServiceState extends State<Service> {
               children: [
                 Text(
                   'Service Details',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: const Color(0xFF2C3E50),
@@ -87,7 +87,7 @@ class _ServiceState extends State<Service> {
                   ),
                   child: Text(
                     'Completion %',
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
                       color: Colors.blue[800],
@@ -155,7 +155,7 @@ class _ServiceState extends State<Service> {
                     padding: const EdgeInsets.only(left: 8.0),
                     child: Text(
                       '$percentage%',
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 10,
                         color: Colors.grey,
                       ),
@@ -200,7 +200,7 @@ class _ServiceState extends State<Service> {
                                 padding: const EdgeInsets.only(bottom: 8),
                                 child: Text(
                                   '${percentage.toInt()}%',
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.montserrat(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -263,7 +263,7 @@ class _ServiceState extends State<Service> {
                               Flexible(
                                 child: Text(
                                   service.serviceType,
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.montserrat(
                                     fontSize: 10,
                                     fontWeight: FontWeight.w500,
                                     color: service.totalAppointments > 0 ? Colors.black : Colors.grey,

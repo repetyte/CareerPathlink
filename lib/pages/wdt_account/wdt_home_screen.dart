@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/coach_model.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
-import 'package:flutter_app/pages/wdt_account/career_coaching/coach_profile_screen.dart';
+import 'package:flutter_app/pages/wdt_account/coach_profile_screen.dart';
 import 'package:flutter_app/widgets/drawer/drawer_wdt.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -173,8 +173,8 @@ class _HomeScreenState extends State<HomeScreenCoach> {
                         children: [
                           CircleAvatar(
                             backgroundColor: Colors.transparent,
-                            backgroundImage: const AssetImage(
-                                'assets/images/image_12.png'), // Add the path to your profile image
+                            backgroundImage: const NetworkImage(
+                                'assets/career_coaching/1709211669228.jpg'), // Add the path to your profile image
                             radius: 24,
                           ),
                           SizedBox(
@@ -252,7 +252,7 @@ class _HomeScreenState extends State<HomeScreenCoach> {
                       child: Center(
                         child: Text(
                           'CAREER CENTER SERVICES',
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.montserrat(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -267,7 +267,7 @@ class _HomeScreenState extends State<HomeScreenCoach> {
                       ),
                       child: Text(
                         'STAY CONNECTED BEYOND GRADUATION',
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFFEC1D25),

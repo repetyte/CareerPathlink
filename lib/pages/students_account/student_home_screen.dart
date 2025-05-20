@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/user_role/coach_model.dart';
 import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
-import 'package:flutter_app/pages/students_account/career_coaching/student_profile.dart';
+import 'package:flutter_app/pages/students_account/student_profile.dart';
 import 'package:flutter_app/widgets/drawer/drawer_students.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,8 +10,9 @@ import '../../widgets/footer/footer.dart';
 import '../../widgets/appbar/student_header.dart';
 
 class HomeScreenStudent extends StatefulWidget {
+  CoachAccount? coachAccount;
   final StudentAccount studentAccount;
-  const HomeScreenStudent({super.key, required this.studentAccount});
+  HomeScreenStudent({super.key, required this.studentAccount, this.coachAccount});
 
   @override
   State<HomeScreenStudent> createState() => _HomeScreenState();
@@ -172,8 +174,8 @@ class _HomeScreenState extends State<HomeScreenStudent> {
                         children: [
                           CircleAvatar(
                             backgroundColor: Colors.transparent,
-                            backgroundImage: const AssetImage(
-                                'assets/images/image_12.png'), // Add the path to your profile image
+                            backgroundImage: const NetworkImage(
+                                'assets/career_coaching/student_profile.jpg'), // Add the path to your profile image
                             radius: 24,
                           ),
                           SizedBox(
@@ -203,7 +205,7 @@ class _HomeScreenState extends State<HomeScreenStudent> {
         toolbarHeight: 92,
       ),
       drawer: MyDrawerStudents(
-        studentAccount: widget.studentAccount,
+        studentAccount: widget.studentAccount, coachAccount: widget.coachAccount,
       ),
       body: Column(
         children: [
@@ -251,7 +253,7 @@ class _HomeScreenState extends State<HomeScreenStudent> {
                       child: Center(
                         child: Text(
                           'CAREER CENTER SERVICES',
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.montserrat(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -266,7 +268,7 @@ class _HomeScreenState extends State<HomeScreenStudent> {
                       ),
                       child: Text(
                         'STAY CONNECTED BEYOND GRADUATION',
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFFEC1D25),

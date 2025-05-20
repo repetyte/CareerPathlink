@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/college_deans.dart';
+import 'package:flutter_app/pages/dean_account/dean_profile.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
 import 'package:flutter_app/widgets/drawer/drawer_dean.dart';
 import 'package:flutter_svg/svg.dart';
@@ -57,7 +58,13 @@ class _HomeScreenState extends State<HomeScreenDean> {
                     leading: const Icon(Icons.account_box),
                     title: const Text('Profile'),
                     onTap: () {
-                      // Navigate to profile
+                      // Handle profile navigation
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DeanProfileScreen(deanAccount: widget.collegeDeanAccount,),
+                        ),
+                      );
                     },
                   ),
                   ListTile(
@@ -164,8 +171,8 @@ class _HomeScreenState extends State<HomeScreenDean> {
                         children: [
                           CircleAvatar(
                             backgroundColor: Colors.transparent,
-                            backgroundImage: const AssetImage(
-                                'assets/images/image_12.png'), // Add the path to your profile image
+                            backgroundImage: const NetworkImage(
+                                "assets/images/dean_agnes_reyes.jpg"), // Add the path to your profile image
                             radius: 24,
                           ),
                           SizedBox(
@@ -243,7 +250,7 @@ class _HomeScreenState extends State<HomeScreenDean> {
                       child: Center(
                         child: Text(
                           'CAREER CENTER SERVICES',
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.montserrat(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -258,7 +265,7 @@ class _HomeScreenState extends State<HomeScreenDean> {
                       ),
                       child: Text(
                         'STAY CONNECTED BEYOND GRADUATION',
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFFEC1D25),

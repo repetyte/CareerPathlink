@@ -4,7 +4,7 @@ import 'package:flutter_app/models/user_role/industry_partner.dart';
 import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/models/work_integrated_learning/internship.dart';
 import 'package:flutter_app/models/work_integrated_learning/internship_application.dart';
-import 'package:flutter_app/pages/career_center_director_account/career_coaching/career_center_profile.dart';
+import 'package:flutter_app/pages/career_center_director_account/career_center_profile.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
 import 'package:flutter_app/services/industry_partner_api_service.dart';
 import 'package:flutter_app/services/internship_api_service.dart';
@@ -561,8 +561,8 @@ class _InternshipDashboardDirectorState
                         children: [
                           CircleAvatar(
                             backgroundColor: Colors.transparent,
-                            backgroundImage: const AssetImage(
-                                'assets/images/image_12.png'), // Add the path to your profile image
+                            backgroundImage: const NetworkImage(
+                                'assets/career_coaching/1743121683181.jpg'), // Add the path to your profile image
                             radius: 24,
                           ),
                           SizedBox(

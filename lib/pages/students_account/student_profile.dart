@@ -8,13 +8,13 @@ import 'package:unicons/unicons.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:typed_data';
 
-import '../../../models/career_coaching/session_model.dart';
-import '../../../models/career_coaching/student_profile_model.dart';
-import '../../../models/career_coaching/student_profile_model.dart' as profile_model;
-import '../../../models/career_coaching/student_profile_pictures_model.dart';
-import '../../../models/user_role/student.dart';
-import '../../../services/career_coaching/api_services.dart';
-import 'session_widgets.dart';
+import '../../models/career_coaching/session_model.dart';
+import '../../models/career_coaching/student_profile_model.dart';
+import '../../models/career_coaching/student_profile_model.dart' as profile_model;
+import '../../models/career_coaching/student_profile_pictures_model.dart';
+import '../../models/user_role/student.dart';
+import '../../services/career_coaching/api_services.dart';
+import 'career_coaching/session_widgets.dart';
 
 class StudentProfileScreen extends StatefulWidget {
   final StudentAccount studentAccount;
@@ -520,7 +520,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                       const SizedBox(width: 8),
                       Text(
                         'Edit Profile',
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
@@ -669,7 +669,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                                         const SizedBox(height: 12),
                                         Text(
                                           "Remove Profile Picture?",
-                                          style: GoogleFonts.inter(
+                                          style: GoogleFonts.montserrat(
                                             fontSize: 18,
                                             fontWeight: FontWeight.w600,
                                             color: Colors.black87,
@@ -682,7 +682,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                                           child: Text(
                                             "Are you sure you want to remove your profile picture?",
                                             textAlign: TextAlign.center,
-                                            style: GoogleFonts.inter(
+                                            style: GoogleFonts.montserrat(
                                               fontSize: 13,
                                               color: Colors.grey[600],
                                             ),
@@ -708,7 +708,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                                               ),
                                               child: Text(
                                                 "Cancel",
-                                                style: GoogleFonts.inter(
+                                                style: GoogleFonts.montserrat(
                                                   fontSize: 13,
                                                   fontWeight: FontWeight.w500,
                                                   color: Colors.grey[700],
@@ -734,7 +734,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                                               ),
                                               child: Text(
                                                 "Remove",
-                                                style: GoogleFonts.inter(
+                                                style: GoogleFonts.montserrat(
                                                   fontSize: 13,
                                                   fontWeight: FontWeight.w500,
                                                   color: Colors.white,
@@ -885,7 +885,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           ),
                           child: Text(
                             'Cancel',
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.montserrat(
                               fontSize: 13,
                               color: const Color.fromARGB(255, 185, 22, 28),
                               fontWeight: FontWeight.w500,
@@ -950,7 +950,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           },
                           child: Text(
                             'Save',
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.montserrat(
                               fontSize: 13,
                               color: Colors.white,
                               fontWeight: FontWeight.w500,
@@ -1061,7 +1061,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                     const SizedBox(height: 16),
                     Text(
                       "Reschedule Session",
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
                         color: Colors.black87,
@@ -1090,7 +1090,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                               const SizedBox(width: 12),
                               Text(
                                 "Current Appointment:",
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   color: Colors.grey[700],
                                 ),
@@ -1100,7 +1100,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                           const SizedBox(height: 4),
                           Text(
                             "${_formatDate(session.sessionDate)} • ${_formatTime(session.sessionTime)}",
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w500,
                               color: Colors.black87,
                             ),
@@ -1111,7 +1111,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                     const SizedBox(height: 16),
                     Text(
                       "Reason for rescheduling:",
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontWeight: FontWeight.w600,
                         color: Colors.grey[700],
                       ),
@@ -1138,7 +1138,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                     const SizedBox(height: 16),
                     Text(
                       "Note: Rescheduling this appointment will notify the coach.",
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         color: Colors.grey[600],
                         fontSize: 12,
                       ),
@@ -1165,7 +1165,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                               ),
                               child: Text(
                                 "Cancel",
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.montserrat(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -1254,7 +1254,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                                 isSubmitting
                                     ? "Processing..."
                                     : "Submit Request",
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.montserrat(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -1300,7 +1300,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
       appBar: AppBar(
         title: Text(
           'Profile',
-          style: GoogleFonts.inter(
+          style: GoogleFonts.montserrat(
               fontWeight: FontWeight.bold,
               fontSize: 20,
               color: const Color.fromARGB(255, 255, 255, 255)),
@@ -1390,7 +1390,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                         children: [
                           Text(
                             _student?.studentName ?? 'Loading...',
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w600,
                               fontSize: 18,
                               color: Colors.white,
@@ -1410,7 +1410,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                       ),
                       Text(
                         _student?.course ?? 'Student',
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontWeight: FontWeight.w400,
                           fontSize: 13,
                           color: Colors.white,
@@ -1507,7 +1507,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
               children: [
                 Text(
                   'Coach: ${session.coachName}',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                     color: Colors.black,
@@ -1523,7 +1523,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                   ),
                   child: Text(
                     session.serviceType,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 12,
                       color: Colors.grey[700],
                     ),
@@ -1542,12 +1542,12 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                     Text(
                       'Date: ${_formatDate(session.sessionDate)}',
                       style:
-                          GoogleFonts.inter(fontSize: 14, color: Colors.black),
+                          GoogleFonts.montserrat(fontSize: 14, color: Colors.black),
                     ),
                     Text(
                       'Time: ${_formatTime(session.sessionTime)}',
                       style:
-                          GoogleFonts.inter(fontSize: 14, color: Colors.black),
+                          GoogleFonts.montserrat(fontSize: 14, color: Colors.black),
                     ),
                   ],
                 ),
@@ -1587,7 +1587,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                             hasRequestedReschedule
                                 ? "Awaiting Confirmation"
                                 : "Reschedule",
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.montserrat(
                               fontSize: 13,
                               fontWeight: FontWeight.w500,
                             ),
@@ -1628,7 +1628,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
             children: [
               Text(
                 'About Me',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                     color: Colors.black),
@@ -1663,7 +1663,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                 width: 140,
                 child: Text(
                   '$label:',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w500,
                       fontSize: 14,
                       color: Color(0xFF9F9F9F)),
@@ -1675,7 +1675,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                     Text(
                       value ?? 'N/A',
                       style:
-                          GoogleFonts.inter(fontSize: 14, color: Colors.black),
+                          GoogleFonts.montserrat(fontSize: 14, color: Colors.black),
                     ),
                     if (isPassword)
                       TextButton(
@@ -1705,7 +1705,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                                       const SizedBox(height: 12),
                                       Text(
                                         "Reset Password?",
-                                        style: GoogleFonts.inter(
+                                        style: GoogleFonts.montserrat(
                                           fontSize: 18,
                                           fontWeight: FontWeight.w600,
                                           color: Colors.black87,
@@ -1718,7 +1718,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                                         child: Text(
                                           "A new password will be sent to your registered email. Continue?",
                                           textAlign: TextAlign.center,
-                                          style: GoogleFonts.inter(
+                                          style: GoogleFonts.montserrat(
                                             fontSize: 13,
                                             color: Colors.grey[600],
                                           ),
@@ -1744,7 +1744,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                                             ),
                                             child: Text(
                                               "Cancel",
-                                              style: GoogleFonts.inter(
+                                              style: GoogleFonts.montserrat(
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.w500,
                                                 color: Colors.grey[700],
@@ -1770,7 +1770,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                                             ),
                                             child: Text(
                                               "Continue",
-                                              style: GoogleFonts.inter(
+                                              style: GoogleFonts.montserrat(
                                                 fontSize: 13,
                                                 fontWeight: FontWeight.w500,
                                                 color: Colors.white,
@@ -1833,7 +1833,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                                               const SizedBox(height: 12),
                                               Text(
                                                 "Password Reset Successful",
-                                                style: GoogleFonts.inter(
+                                                style: GoogleFonts.montserrat(
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.w600,
                                                   color: Colors.black87,
@@ -1847,7 +1847,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                                                 child: Text(
                                                   "A new password has been sent to your email address.",
                                                   textAlign: TextAlign.center,
-                                                  style: GoogleFonts.inter(
+                                                  style: GoogleFonts.montserrat(
                                                     fontSize: 13,
                                                     color: Colors.grey[600],
                                                   ),
@@ -1873,7 +1873,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                                                 ),
                                                 child: Text(
                                                   "OK",
-                                                  style: GoogleFonts.inter(
+                                                  style: GoogleFonts.montserrat(
                                                     fontSize: 13,
                                                     fontWeight: FontWeight.w500,
                                                     color: Colors.white,
@@ -1915,7 +1915,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
                         ),
                         child: Text(
                           'Change Password?',
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.montserrat(
                             fontSize: 14,
                             color: Color(0xFF3771C8),
                             decoration: TextDecoration.underline,
@@ -1934,7 +1934,7 @@ class _StudentProfileScreenState extends State<StudentProfileScreen> {
               child: Text(
                 'If you lost your password, a new password can be sent to this email.',
                 style:
-                    GoogleFonts.inter(fontSize: 12, color: Color(0xFFFF0000)),
+                    GoogleFonts.montserrat(fontSize: 12, color: Color(0xFFFF0000)),
               ),
             ),
         ],

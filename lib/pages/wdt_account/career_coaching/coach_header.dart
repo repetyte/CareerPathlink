@@ -13,7 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 
 import '../../../models/career_coaching/wdt_notifications_model.dart';
-import 'coach_profile_screen.dart';
+import '../coach_profile_screen.dart';
 import 'notification_provider.dart';
 
 class CoachHeader extends StatefulWidget {
@@ -154,7 +154,7 @@ class _CoachHeaderState extends State<CoachHeader> {
             children: [
               Text(
                 'Notifications (${notificationProvider.unreadCount})',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.montserrat(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -164,7 +164,7 @@ class _CoachHeaderState extends State<CoachHeader> {
                   onPressed: () => notificationProvider.markAllAsRead(),
                   child: Text(
                     'Mark all as read',
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       color: Color(0xFFEC1D25),
                       fontSize: 12,
                     ),
@@ -182,7 +182,7 @@ class _CoachHeaderState extends State<CoachHeader> {
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
                       'No notifications found',
-                      style: GoogleFonts.inter(color: Colors.grey),
+                      style: GoogleFonts.montserrat(color: Colors.grey),
                     ),
                   ),
                 )
@@ -212,7 +212,7 @@ class _CoachHeaderState extends State<CoachHeader> {
             },
             child: Text(
               'View all notifications',
-              style: GoogleFonts.inter(
+              style: GoogleFonts.montserrat(
                 color: Color(0xFFEC1D25),
                 fontSize: 14,
               ),
@@ -270,7 +270,7 @@ class _CoachHeaderState extends State<CoachHeader> {
                 children: [
                   Text(
                     title,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontWeight: isUnread ? FontWeight.bold : FontWeight.w500,
                       fontSize: 14,
                     ),
@@ -278,7 +278,7 @@ class _CoachHeaderState extends State<CoachHeader> {
                   const SizedBox(height: 4),
                   Text(
                     message,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 12,
                       color: Colors.grey.shade600,
                     ),
@@ -288,7 +288,7 @@ class _CoachHeaderState extends State<CoachHeader> {
                   const SizedBox(height: 4),
                   Text(
                     time,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 10,
                       color: Colors.grey.shade500,
                     ),
@@ -335,7 +335,7 @@ class _CoachHeaderState extends State<CoachHeader> {
               children: [
                 Text(
                   'Notification Details',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                     color: Colors.white,
@@ -402,7 +402,7 @@ class _CoachHeaderState extends State<CoachHeader> {
                                     children: [
                                       Text(
                                         _getNotificationTitle(notification),
-                                        style: GoogleFonts.inter(
+                                        style: GoogleFonts.montserrat(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 18,
                                         ),
@@ -411,7 +411,7 @@ class _CoachHeaderState extends State<CoachHeader> {
                                       Text(
                                         DateFormat('MMM d, y hh:mm a')
                                             .format(notification.createdAt),
-                                        style: GoogleFonts.inter(
+                                        style: GoogleFonts.montserrat(
                                           fontSize: 12,
                                           color: Colors.grey.shade600,
                                         ),
@@ -436,7 +436,7 @@ class _CoachHeaderState extends State<CoachHeader> {
                                   color: Colors.white,
                                   child: Text(
                                     'DETAILS',
-                                    style: GoogleFonts.inter(
+                                    style: GoogleFonts.montserrat(
                                       fontSize: 10,
                                       color: Colors.grey.shade500,
                                       letterSpacing: 1,
@@ -474,7 +474,7 @@ class _CoachHeaderState extends State<CoachHeader> {
                                 child: Text(
                                   notification.message ??
                                       'No details available',
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.montserrat(
                                     fontSize: 14,
                                     color: Colors.grey.shade800,
                                     height: 1.5,
@@ -570,7 +570,7 @@ class _CoachHeaderState extends State<CoachHeader> {
                         children: [
                           Text(
                             'UNC',
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               color: Colors.black,
@@ -580,7 +580,7 @@ class _CoachHeaderState extends State<CoachHeader> {
                             children: [
                               Text(
                                 'Career',
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 14,
                                   color:
@@ -590,7 +590,7 @@ class _CoachHeaderState extends State<CoachHeader> {
                               const SizedBox(width: 0),
                               Text(
                                 'Pathlink',
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 14,
                                   color: const Color(0xFFEC1D25),
@@ -710,7 +710,7 @@ class _CoachHeaderState extends State<CoachHeader> {
                                   color: Colors.grey.shade700),
                               const SizedBox(width: 12),
                               Text("My Profile",
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w500)),
                             ],
                           ),
@@ -723,7 +723,7 @@ class _CoachHeaderState extends State<CoachHeader> {
                               Icon(Icons.logout, color: Colors.red.shade400),
                               const SizedBox(width: 12),
                               Text("Logout",
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w500,
                                     color: Colors.red.shade400,
                                   )),
@@ -806,7 +806,7 @@ class _CoachHeaderState extends State<CoachHeader> {
                 constraints: BoxConstraints(maxWidth: 250),
                 child: Text(
                   text,
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,

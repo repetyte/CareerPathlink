@@ -110,7 +110,7 @@ class _CombinedSessionsViewState extends State<CombinedSessionsView> {
             padding: const EdgeInsets.all(16),
             child: Text(
               title,
-              style: GoogleFonts.inter(
+              style: GoogleFonts.montserrat(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
                 color: const Color(0xFFFF0000),
@@ -138,7 +138,7 @@ class _CombinedSessionsViewState extends State<CombinedSessionsView> {
                         onPressed: onToggleShowAll,
                         child: Text(
                           showAll ? 'View Less' : 'View More (${sessions.length})',
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.montserrat(
                             color: const Color(0xFFFF0000),
                             fontWeight: FontWeight.w500,
                           ),
@@ -158,7 +158,7 @@ class _CombinedSessionsViewState extends State<CombinedSessionsView> {
                     const SizedBox(height: 10),
                     Text(
                       emptyMessage,
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 16,
                         color: Colors.grey,
                       ),

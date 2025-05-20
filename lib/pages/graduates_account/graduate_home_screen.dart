@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/graduate.dart';
+import 'package:flutter_app/pages/graduates_account/graduate_profile.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
 import 'package:flutter_app/widgets/appbar/graduates_header.dart';
 import 'package:flutter_app/widgets/drawer/drawer_graduates.dart';
@@ -49,14 +50,22 @@ class _HomeScreenState extends State<HomeScreenGraduate> {
                       '${widget.graduateAccount.firstName} ${widget.graduateAccount.lastName}',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    subtitle: Text('Graduate | ${widget.graduateAccount.course}'),
+                    subtitle: Text('Graduate | 2025'),
                   ),
                   const Divider(),
                   ListTile(
                     leading: const Icon(Icons.account_box),
                     title: const Text('Profile'),
                     onTap: () {
-                      // Navigate to profile
+                      // Handle profile navigation
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => GraduateProfileScreen(
+                            graduateAccount: widget.graduateAccount,
+                          ),
+                        ),
+                      );
                     },
                   ),
                   ListTile(
@@ -163,8 +172,8 @@ class _HomeScreenState extends State<HomeScreenGraduate> {
                         children: [
                           CircleAvatar(
                             backgroundColor: Colors.transparent,
-                            backgroundImage: const AssetImage(
-                                'assets/images/image_12.png'), // Add the path to your profile image
+                            backgroundImage: const NetworkImage(
+                                'assets/images/graduate_hendrixon_moldes.jpg'), // Add the path to your profile image
                             radius: 24,
                           ),
                           SizedBox(
@@ -242,7 +251,7 @@ class _HomeScreenState extends State<HomeScreenGraduate> {
                       child: Center(
                         child: Text(
                           'CAREER CENTER SERVICES',
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.montserrat(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -257,7 +266,7 @@ class _HomeScreenState extends State<HomeScreenGraduate> {
                       ),
                       child: Text(
                         'STAY CONNECTED BEYOND GRADUATION',
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFFEC1D25),

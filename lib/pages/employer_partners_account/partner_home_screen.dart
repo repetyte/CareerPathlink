@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/industry_partner.dart';
+import 'package:flutter_app/pages/employer_partners_account/partner_profile.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
 import 'package:flutter_app/widgets/appbar/partner_header.dart';
 import 'package:flutter_app/widgets/drawer/drawer_partner.dart';
@@ -56,7 +57,13 @@ class _HomeScreenState extends State<HomeScreenPartner> {
                     leading: const Icon(Icons.account_box),
                     title: const Text('Profile'),
                     onTap: () {
-                      // Navigate to profile
+                      // Handle profile view
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PartnerProfileScreen(partnerAccount: widget.employerPartnerAccount,),
+                        ),
+                      );
                     },
                   ),
                   ListTile(
@@ -163,8 +170,8 @@ class _HomeScreenState extends State<HomeScreenPartner> {
                         children: [
                           CircleAvatar(
                             backgroundColor: Colors.transparent,
-                            backgroundImage: const AssetImage(
-                                'assets/images/image_12.png'), // Add the path to your profile image
+                            backgroundImage: const NetworkImage(
+                                'assets/images/employer_partner.jpg'), // Add the path to your profile image
                             radius: 24,
                           ),
                           SizedBox(
@@ -242,7 +249,7 @@ class _HomeScreenState extends State<HomeScreenPartner> {
                       child: Center(
                         child: Text(
                           'CAREER CENTER SERVICES',
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.montserrat(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -257,7 +264,7 @@ class _HomeScreenState extends State<HomeScreenPartner> {
                       ),
                       child: Text(
                         'STAY CONNECTED BEYOND GRADUATION',
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFFEC1D25),

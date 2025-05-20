@@ -148,7 +148,7 @@ class _CourseEngagementScreenState extends State<CourseEngagementScreen> {
             children: [
               Text(
                 'Course Engagement',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.montserrat(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF2C3E50),
@@ -162,7 +162,7 @@ class _CourseEngagementScreenState extends State<CourseEngagementScreen> {
                 ),
                 child: Text(
                   'Engagement %',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                     color: Colors.blue[800],
@@ -174,7 +174,7 @@ class _CourseEngagementScreenState extends State<CourseEngagementScreen> {
           SizedBox(height: 12),
           Text(
             'Track student engagement across all courses',
-            style: GoogleFonts.inter(
+            style: GoogleFonts.montserrat(
               fontSize: 14,
               color: Colors.black54,
             ),
@@ -204,7 +204,7 @@ class _CourseEngagementScreenState extends State<CourseEngagementScreen> {
                   Expanded(
                     child: Text(
                       _errorMessage,
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         color: Colors.black87,
                         fontSize: 13,
                       ),
@@ -227,7 +227,7 @@ class _CourseEngagementScreenState extends State<CourseEngagementScreen> {
                         SizedBox(height: 16),
                         Text(
                           'Loading engagement data...',
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.montserrat(
                             color: Colors.black54,
                           ),
                         ),
@@ -293,7 +293,7 @@ class CourseCard extends StatelessWidget {
               Flexible(
                 child: Text(
                   course.course,
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w600,
                     fontSize: 14,
                     color: hasData ? Colors.black87 : Colors.black54,
@@ -315,7 +315,7 @@ class CourseCard extends StatelessWidget {
                 ),
                 child: Text(
                   "${course.engagementRate.toInt()}%",
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w600,
                     fontSize: 12,
                     color: engagementColor,
@@ -400,7 +400,7 @@ class CourseCard extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           value,
-          style: GoogleFonts.inter(
+          style: GoogleFonts.montserrat(
             fontSize: 12,
             fontWeight: FontWeight.w600,
             color: hasData ? Colors.black87 : Colors.black38,
@@ -408,7 +408,7 @@ class CourseCard extends StatelessWidget {
         ),
         Text(
           label,
-          style: GoogleFonts.inter(
+          style: GoogleFonts.montserrat(
             fontSize: 10,
             color: hasData ? Colors.black54 : Colors.black26,
           ),

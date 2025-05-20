@@ -72,7 +72,7 @@ class _CoachProfileScreenState extends State<CoachProfileScreen> {
   Future<void> _loadHardcodedImage() async {
     try {
       final ByteData imageData =
-          await rootBundle.load('assets/1709211669228.jpg');
+          await rootBundle.load('assets/career_coaching/1709211669228.jpg');
       setState(() {
         _profileImage = imageData.buffer.asUint8List();
       });
@@ -606,7 +606,7 @@ class _CoachProfileScreenState extends State<CoachProfileScreen> {
       appBar: AppBar(
         title: Text(
           'Profile',
-          style: GoogleFonts.inter(
+          style: GoogleFonts.montserrat(
               fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
         ),
         backgroundColor: primaryColor,
@@ -808,7 +808,7 @@ class _CoachProfileScreenState extends State<CoachProfileScreen> {
             children: [
               Text(
                 'About Me',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                     color: Colors.black),
@@ -843,7 +843,7 @@ class _CoachProfileScreenState extends State<CoachProfileScreen> {
                 width: 140,
                 child: Text(
                   '$label:',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w500,
                       fontSize: 14,
                       color: Color(0xFF9F9F9F)),
@@ -855,7 +855,7 @@ class _CoachProfileScreenState extends State<CoachProfileScreen> {
                     Text(
                       value ?? 'N/A',
                       style:
-                          GoogleFonts.inter(fontSize: 14, color: Colors.black),
+                          GoogleFonts.montserrat(fontSize: 14, color: Colors.black),
                     ),
                     if (isPassword)
                       TextButton(
@@ -1101,7 +1101,7 @@ class _CoachProfileScreenState extends State<CoachProfileScreen> {
                         ),
                         child: Text(
                           'Change Password?',
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.montserrat(
                             fontSize: 14,
                             color: Color(0xFF3771C8),
                             decoration: TextDecoration.underline,
@@ -1120,7 +1120,7 @@ class _CoachProfileScreenState extends State<CoachProfileScreen> {
               child: Text(
                 'If you lost your password, a new password can be sent to this email.',
                 style:
-                    GoogleFonts.inter(fontSize: 12, color: Color(0xFFFF0000)),
+                    GoogleFonts.montserrat(fontSize: 12, color: Color(0xFFFF0000)),
               ),
             ),
         ],
@@ -1153,7 +1153,7 @@ class _CoachProfileScreenState extends State<CoachProfileScreen> {
         children: [
           Text(
             'Past Sessions',
-            style: GoogleFonts.inter(
+            style: GoogleFonts.montserrat(
               fontWeight: FontWeight.bold,
               fontSize: 16,
               color: const Color(0xFFFF0000),
@@ -1211,7 +1211,7 @@ class _CoachProfileScreenState extends State<CoachProfileScreen> {
                             children: [
                               Text(
                                 _showAllSessions ? 'View Less' : 'View More',
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 14,
                                 ),
@@ -1259,7 +1259,7 @@ class _CoachProfileScreenState extends State<CoachProfileScreen> {
               Expanded(
                 child: Text(
                   'Student: ${session['studentName'] ?? 'Student'}',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                     color: Colors.black,
@@ -1275,7 +1275,7 @@ class _CoachProfileScreenState extends State<CoachProfileScreen> {
                 ),
                 child: Text(
                   'Completed',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontSize: 12,
                     color: Colors.grey[700],
                   ),
@@ -1293,7 +1293,7 @@ class _CoachProfileScreenState extends State<CoachProfileScreen> {
                   (session['service_type'] ?? 'Unknown')
                       .toString()
                       .toUpperCase(),
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontSize: 12,
                     color: Colors.red[800],
                     fontWeight: FontWeight.bold,
@@ -1312,7 +1312,7 @@ class _CoachProfileScreenState extends State<CoachProfileScreen> {
                 children: [
                   Text(
                     'Date: ${_formatDate(session['date']!)}',
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 14,
                       color: Colors.black,
                     ),
@@ -1320,7 +1320,7 @@ class _CoachProfileScreenState extends State<CoachProfileScreen> {
                   const SizedBox(height: 2),
                   Text(
                     'Time: ${_formatTime(session['time']!)}',
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 14,
                       color: Colors.black,
                     ),

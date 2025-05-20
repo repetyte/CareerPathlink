@@ -1,7 +1,7 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:flutter_app/models/user_role/career_center_director.dart';
-import 'package:flutter_app/pages/career_center_director_account/career_coaching/career_center_profile.dart';
+import 'package:flutter_app/pages/career_center_director_account/career_center_profile.dart';
 // import 'package:final_career_coaching/Login%20and%20Signup%20Page/login_page.dart';
 // import 'package:final_career_coaching/Login%20and%20Signup%20Page/user.dart';
 // import 'package:final_career_coaching/model/analytics_reports_model.dart';
@@ -96,7 +96,7 @@ class CareerCenterHeader extends StatelessWidget {
                   const SizedBox(width: 16),
                   Text(
                     "Download Analytics",
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
                       color: Colors.black87,
@@ -156,7 +156,7 @@ class CareerCenterHeader extends StatelessWidget {
                                 children: [
                                   Text(
                                     "Download All Reports",
-                                    style: GoogleFonts.inter(
+                                    style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w600,
                                       fontSize: 15,
                                       color: const Color(0xFFEC1D25),
@@ -165,7 +165,7 @@ class CareerCenterHeader extends StatelessWidget {
                                   const SizedBox(height: 4),
                                   Text(
                                     "Get a complete ZIP file containing all available reports",
-                                    style: GoogleFonts.inter(
+                                    style: GoogleFonts.montserrat(
                                       fontSize: 13,
                                       color: Colors.grey[600],
                                       height: 1.4,
@@ -250,7 +250,7 @@ class CareerCenterHeader extends StatelessWidget {
                                       children: [
                                         Text(
                                           report.displayName,
-                                          style: GoogleFonts.inter(
+                                          style: GoogleFonts.montserrat(
                                             fontWeight: FontWeight.w600,
                                             fontSize: 15,
                                             color: Colors.black87,
@@ -259,7 +259,7 @@ class CareerCenterHeader extends StatelessWidget {
                                         const SizedBox(height: 4),
                                         Text(
                                           report.description,
-                                          style: GoogleFonts.inter(
+                                          style: GoogleFonts.montserrat(
                                             fontSize: 13,
                                             color: Colors.grey[600],
                                             height: 1.4,
@@ -296,7 +296,7 @@ class CareerCenterHeader extends StatelessWidget {
                 ),
                 child: Text(
                   "Cancel",
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w600,
                     fontSize: 15,
                     color: Colors.black87,
@@ -334,7 +334,7 @@ class CareerCenterHeader extends StatelessWidget {
                   const SizedBox(height: 16),
                   Text(
                     "Preparing Reports for Download",
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                       color: Colors.black87,
@@ -346,7 +346,7 @@ class CareerCenterHeader extends StatelessWidget {
                     child: Text(
                       "Please wait while we compile all analytics reports into a ZIP file...",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 13,
                         color: Colors.grey[600],
                       ),
@@ -385,7 +385,7 @@ class CareerCenterHeader extends StatelessWidget {
                     const SizedBox(height: 12),
                     Text(
                       "Reports Downloaded Successfully",
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                         color: Colors.black87,
@@ -397,7 +397,7 @@ class CareerCenterHeader extends StatelessWidget {
                       child: Text(
                         "All reports have been compiled and downloaded as a ZIP file.",
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 13,
                           color: Colors.grey[600],
                         ),
@@ -416,7 +416,7 @@ class CareerCenterHeader extends StatelessWidget {
                       ),
                       child: Text(
                         "OK",
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 13,
                           fontWeight: FontWeight.w500,
                           color: Colors.white,
@@ -435,7 +435,7 @@ class CareerCenterHeader extends StatelessWidget {
           SnackBar(
             content: Text(
               'Failed to download all reports: ${e.toString()}',
-              style: GoogleFonts.inter(),
+              style: GoogleFonts.montserrat(),
             ),
             backgroundColor: Colors.red,
             duration: const Duration(seconds: 3),
@@ -470,7 +470,7 @@ class CareerCenterHeader extends StatelessWidget {
                   const SizedBox(height: 16),
                   Text(
                     "Preparing ${selectedReport.displayName}",
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                       color: Colors.black87,
@@ -482,7 +482,7 @@ class CareerCenterHeader extends StatelessWidget {
                     child: Text(
                       "Please wait while we generate the ${selectedReport.displayName} report...",
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 13,
                         color: Colors.grey[600],
                       ),
@@ -524,7 +524,7 @@ class CareerCenterHeader extends StatelessWidget {
                     const SizedBox(height: 12),
                     Text(
                       "Download Complete",
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                         color: Colors.black87,
@@ -536,7 +536,7 @@ class CareerCenterHeader extends StatelessWidget {
                       child: Text(
                         "${selectedReport.displayName} has been downloaded successfully.",
                         textAlign: TextAlign.center,
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 13,
                           color: Colors.grey[600],
                         ),
@@ -555,7 +555,7 @@ class CareerCenterHeader extends StatelessWidget {
                       ),
                       child: Text(
                         "OK",
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 13,
                           fontWeight: FontWeight.w500,
                           color: Colors.white,
@@ -574,7 +574,7 @@ class CareerCenterHeader extends StatelessWidget {
           SnackBar(
             content: Text(
               'Failed to download report: ${e.toString()}',
-              style: GoogleFonts.inter(),
+              style: GoogleFonts.montserrat(),
             ),
             backgroundColor: Colors.red,
             duration: const Duration(seconds: 3),
@@ -633,7 +633,7 @@ class CareerCenterHeader extends StatelessWidget {
                         children: [
                           Text(
                             'UNC',
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               color: Colors.black,
@@ -643,7 +643,7 @@ class CareerCenterHeader extends StatelessWidget {
                             children: [
                               Text(
                                 'Career',
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 14,
                                   color:
@@ -653,7 +653,7 @@ class CareerCenterHeader extends StatelessWidget {
                               const SizedBox(width: 0),
                               Text(
                                 'Pathlink',
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 14,
                                   color: const Color(0xFFEC1D25),
@@ -747,7 +747,7 @@ class CareerCenterHeader extends StatelessWidget {
                                   color: Colors.grey.shade700),
                               const SizedBox(width: 12),
                               Text("My Profile",
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w500)),
                             ],
                           ),
@@ -760,7 +760,7 @@ class CareerCenterHeader extends StatelessWidget {
                               Icon(Icons.logout, color: Colors.red.shade400),
                               const SizedBox(width: 12),
                               Text("Logout",
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w500,
                                     color: Colors.red.shade400,
                                   )),
@@ -827,7 +827,7 @@ class CareerCenterHeader extends StatelessWidget {
         const SizedBox(width: 5),
         Text(
           text,
-          style: GoogleFonts.inter(
+          style: GoogleFonts.montserrat(
               fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
         ),
       ],

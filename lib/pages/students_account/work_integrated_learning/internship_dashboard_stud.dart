@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/user_role/coach_model.dart';
 import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/models/work_integrated_learning/internship.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
-import 'package:flutter_app/pages/students_account/career_coaching/student_profile.dart';
+import 'package:flutter_app/pages/students_account/student_profile.dart';
 import 'package:flutter_app/pages/students_account/work_integrated_learning/internship_details_stud.dart';
 import 'package:flutter_app/services/internship_api_service.dart';
 import 'package:flutter_app/widgets/appbar/graduates_header.dart';
@@ -12,8 +13,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class InternshipDashboardStud extends StatefulWidget {
+  CoachAccount? coachAccount;
   final StudentAccount studentAccount;
-  const InternshipDashboardStud({super.key, required this.studentAccount});
+  InternshipDashboardStud({super.key, required this.studentAccount, this.coachAccount});
 
   @override
   _InternshipDashboardStudState createState() =>
@@ -212,8 +214,8 @@ class _InternshipDashboardStudState extends State<InternshipDashboardStud> {
                         children: [
                           CircleAvatar(
                             backgroundColor: Colors.transparent,
-                            backgroundImage: const AssetImage(
-                                'assets/images/image_12.png'), // Add the path to your profile image
+                            backgroundImage: const NetworkImage(
+                                'assets/career_coaching/student_profile.jpg'), // Add the path to your profile image
                             radius: 24,
                           ),
                           SizedBox(

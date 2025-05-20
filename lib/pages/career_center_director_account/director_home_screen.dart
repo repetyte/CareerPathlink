@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/career_center_director.dart';
-import 'package:flutter_app/pages/career_center_director_account/career_coaching/career_center_profile.dart';
+import 'package:flutter_app/pages/career_center_director_account/career_center_profile.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
 import 'package:flutter_app/widgets/drawer/drawer_director.dart';
 import 'package:flutter_svg/svg.dart';
@@ -172,8 +172,8 @@ class _HomeScreenState extends State<HomeScreenDirector> {
                         children: [
                           CircleAvatar(
                             backgroundColor: Colors.transparent,
-                            backgroundImage: const AssetImage(
-                                'assets/images/image_12.png'), // Add the path to your profile image
+                            backgroundImage: const NetworkImage(
+                                'assets/career_coaching/1743121683181.jpg'), // Add the path to your profile image
                             radius: 24,
                           ),
                           SizedBox(
@@ -251,7 +251,7 @@ class _HomeScreenState extends State<HomeScreenDirector> {
                       child: Center(
                         child: Text(
                           'CAREER CENTER SERVICES',
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.montserrat(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -266,7 +266,7 @@ class _HomeScreenState extends State<HomeScreenDirector> {
                       ),
                       child: Text(
                         'STAY CONNECTED BEYOND GRADUATION',
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFFEC1D25),

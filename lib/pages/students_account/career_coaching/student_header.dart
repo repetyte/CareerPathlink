@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 import '../../../models/career_coaching/student_notification_model.dart';
 import '../../../models/user_role/student.dart';
 import 'notification_provider.dart';
-import 'student_profile.dart';
+import '../student_profile.dart';
 
 class HeaderWidget extends StatefulWidget {
   final StudentAccount studentAccount;
@@ -163,7 +163,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
             children: [
               Text(
                 'Notifications (${provider.unreadCount})',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.montserrat(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -173,7 +173,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                   onPressed: () => provider.markAllAsRead(),
                   child: Text(
                     'Mark all as read',
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       color: Color(0xFFEC1D25),
                       fontSize: 12,
                     ),
@@ -190,7 +190,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
                       'No notifications found',
-                      style: GoogleFonts.inter(color: Colors.grey),
+                      style: GoogleFonts.montserrat(color: Colors.grey),
                     ),
                   ),
                 )
@@ -220,7 +220,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
             },
             child: Text(
               'View all notifications',
-              style: GoogleFonts.inter(
+              style: GoogleFonts.montserrat(
                 color: Color(0xFFEC1D25),
                 fontSize: 14,
               ),
@@ -283,7 +283,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                 children: [
                   Text(
                     title,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontWeight: isUnread ? FontWeight.bold : FontWeight.w500,
                       fontSize: 14,
                     ),
@@ -291,7 +291,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                   const SizedBox(height: 4),
                   Text(
                     message,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 12,
                       color: Colors.grey.shade600,
                     ),
@@ -301,7 +301,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                   const SizedBox(height: 4),
                   Text(
                     time,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 10,
                       color: Colors.grey.shade500,
                     ),
@@ -347,7 +347,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
               children: [
                 Text(
                   'Notification Details',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                     color: Colors.white,
@@ -395,7 +395,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                           children: [
                             Text(
                               notification.displayType,
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
                               ),
@@ -404,7 +404,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                             Text(
                               DateFormat('MMM d, y hh:mm a')
                                   .format(notification.createdAt),
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.montserrat(
                                 fontSize: 12,
                                 color: Colors.grey.shade600,
                               ),
@@ -420,7 +420,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                   if (notification.message != null)
                     Text(
                       notification.message!,
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 14,
                         color: Colors.grey.shade800,
                       ),
@@ -430,7 +430,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                     Text(
                       'Scheduled for: ${DateFormat('MMM d, y').format(notification.dateRequested!)} '
                       'at ${notification.timeRequested ?? ''}',
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -510,7 +510,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                         children: [
                           Text(
                             'UNC',
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.montserrat(
                               fontWeight: FontWeight.w700,
                               fontSize: 16,
                               color: Colors.black,
@@ -520,7 +520,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                             children: [
                               Text(
                                 'Career',
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 14,
                                   color:
@@ -530,7 +530,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                               const SizedBox(width: 0),
                               Text(
                                 'Pathlink',
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.montserrat(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 14,
                                   color: const Color(0xFFEC1D25),
@@ -638,7 +638,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                                   color: Colors.grey.shade700),
                               const SizedBox(width: 12),
                               Text("My Profile",
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.w500)),
                             ],
                           ),
@@ -651,7 +651,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                               Icon(Icons.logout, color: Colors.red.shade400),
                               const SizedBox(width: 12),
                               Text("Logout",
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.montserrat(
                                     fontWeight: FontWeight.w500,
                                     color: Colors.red.shade400,
                                   )),
@@ -718,7 +718,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
         const SizedBox(width: 5),
         Text(
           text,
-          style: GoogleFonts.inter(
+          style: GoogleFonts.montserrat(
               fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
         ),
       ],

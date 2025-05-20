@@ -178,7 +178,7 @@ class _MessageScreenState extends State<MessageScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
               child: Text(
                 'Messages',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.montserrat(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                   color: Colors.black,
@@ -233,7 +233,7 @@ class _MessageScreenState extends State<MessageScreen> {
                             child: Center(
                               child: Text(
                                 'No results found',
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.montserrat(
                                   fontSize: 16, color: Colors.grey),
                               ),
                             ),
@@ -268,7 +268,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                             children: [
                                               Text(
                                                 message.coachName ?? 'Coach Name',
-                                                style: GoogleFonts.inter(
+                                                style: GoogleFonts.montserrat(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 14,
                                                   color: Colors.black,
@@ -276,7 +276,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                               ),
                                               Text(
                                                 _formatDateTime(message.requestDate),
-                                                style: GoogleFonts.inter(
+                                                style: GoogleFonts.montserrat(
                                                   fontSize: 12,
                                                   color: Colors.grey,
                                                 ),
@@ -288,7 +288,7 @@ class _MessageScreenState extends State<MessageScreen> {
                                       SizedBox(height: 10),
                                       Text(
                                         message.reason ?? 'No reason provided',
-                                        style: GoogleFonts.inter(
+                                        style: GoogleFonts.montserrat(
                                           fontSize: 14,
                                           color: Colors.black,
                                         ),
@@ -314,7 +314,7 @@ class _MessageScreenState extends State<MessageScreen> {
           children: [
             Text(
               'You', // Or use student name if available
-              style: GoogleFonts.inter(
+              style: GoogleFonts.montserrat(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,
                 color: Colors.black,
@@ -322,7 +322,7 @@ class _MessageScreenState extends State<MessageScreen> {
             ),
             Text(
               _formatDateTime(message.replyDate),
-              style: GoogleFonts.inter(
+              style: GoogleFonts.montserrat(
                 fontSize: 12,
                 color: Colors.grey,
               ),
@@ -340,7 +340,7 @@ class _MessageScreenState extends State<MessageScreen> {
               ),
               child: Text(
                 message.studentReply!,
-                style: GoogleFonts.inter(
+                style: GoogleFonts.montserrat(
                   fontSize: 14,
                   color: Colors.black,
                 ),

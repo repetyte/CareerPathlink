@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/user_role/industry_partner.dart';
 import 'package:flutter_app/models/work_integrated_learning/internship.dart';
+import 'package:flutter_app/pages/employer_partners_account/partner_profile.dart';
 import 'package:flutter_app/pages/employer_partners_account/work_integrated_learning/add_internship.dart';
 import 'package:flutter_app/pages/employer_partners_account/work_integrated_learning/internship_details_emp_partner.dart';
 import 'package:flutter_app/pages/login_and_signup/login_view.dart';
@@ -70,7 +71,13 @@ class _InternshipDashboardPartnerState
                     leading: const Icon(Icons.account_box),
                     title: const Text('Profile'),
                     onTap: () {
-                      // Navigate to profile
+                      // Handle profile view
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PartnerProfileScreen(partnerAccount: widget.employerPartnerAccount,),
+                        ),
+                      );
                     },
                   ),
                   ListTile(
@@ -216,8 +223,8 @@ class _InternshipDashboardPartnerState
                         children: [
                           CircleAvatar(
                             backgroundColor: Colors.transparent,
-                            backgroundImage: const AssetImage(
-                                'assets/images/image_12.png'), // Add the path to your profile image
+                            backgroundImage: const NetworkImage(
+                                'assets/images/employer_partner.jpg'), // Add the path to your profile image
                             radius: 24,
                           ),
                           // Column(

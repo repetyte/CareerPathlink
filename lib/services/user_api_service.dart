@@ -126,6 +126,20 @@ class UserApiService {
     }
   }
 
+  // Read/Fetch total dean accounts
+  Future<List<GraduateAccount>> fetchTotalDeanAccounts() async {
+    // Add your API call here to fetch total graduate accounts
+    final response = await http.get(Uri.parse('$apiUrl/dean_acc/read.php'));
+
+    // Verifies if successfully fetched total graduate accounts
+    if (response.statusCode == 200) {
+      List<dynamic> data = jsonDecode(response.body);
+      return data.map((json) => GraduateAccount.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load dean accounts');
+    }
+  }
+
 // Fetch industry partner accounts and match user
   Future<IndustryPartnerAccount?> fetchIndustryPartnerAccount(
       String username, String password) async {

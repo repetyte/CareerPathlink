@@ -4,7 +4,7 @@ import 'package:flutter_app/models/user_role/coach_model.dart';
 import 'package:flutter_app/models/user_role/student.dart';
 import 'package:flutter_app/pages/wdt_account/career_coaching/coach_home_screen.dart';
 import 'package:flutter_app/models/career_coaching/request_appointment_model.dart';
-import 'package:flutter_app/pages/wdt_account/career_coaching/coach_profile_screen.dart';
+import 'package:flutter_app/pages/wdt_account/coach_profile_screen.dart';
 import 'package:flutter_app/pages/wdt_account/career_coaching/notification_provider.dart';
 import 'package:flutter_app/services/career_coaching/api_services.dart' as api_services;
 import 'package:flutter_app/services/career_coaching/coach_cancellation_request_services.dart';
@@ -229,7 +229,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                   const SizedBox(height: 16),
                   Text(
                     "Mark as Completed",
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
                       color: Colors.black87,
@@ -281,7 +281,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                   Text(
                     "This session will be marked as completed.",
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 14,
                       color: Colors.grey[700],
                       height: 1.4,
@@ -307,7 +307,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                             ),
                             child: Text(
                               "Not Now",
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.montserrat(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -338,7 +338,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                             ),
                             child: Text(
                               "Mark Completed",
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.montserrat(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -443,7 +443,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                     const SizedBox(height: 16),
                     Text(
                       "Cancel Session",
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
                         color: Colors.black87,
@@ -494,7 +494,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                     const SizedBox(height: 16),
                     Text(
                       "Reason for cancellation:",
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         fontWeight: FontWeight.w600,
                         color: Colors.grey[700],
                       ),
@@ -521,7 +521,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                     const SizedBox(height: 16),
                     Text(
                       "This will cancel the current appointment.",
-                      style: GoogleFonts.inter(
+                      style: GoogleFonts.montserrat(
                         color: Colors.grey[600],
                         fontSize: 12,
                       ),
@@ -548,7 +548,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                               ),
                               child: Text(
                                 "Cancel",
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.montserrat(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -649,7 +649,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                                 isSubmitting
                                     ? "Processing..."
                                     : "Confirm Cancellation",
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.montserrat(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -676,7 +676,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
         const SizedBox(width: 8),
         Text(
           label,
-          style: GoogleFonts.inter(
+          style: GoogleFonts.montserrat(
             fontSize: 14,
             fontWeight: FontWeight.w500,
             color: Colors.grey[700],
@@ -686,7 +686,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
         Expanded(
           child: Text(
             value,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.montserrat(
               fontSize: 14,
               fontWeight: FontWeight.w400,
               color: Colors.black87,
@@ -767,7 +767,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
             children: [
               Text(
                 'Notifications (${notificationProvider.unreadCount})',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.montserrat(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -777,7 +777,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                   onPressed: () => notificationProvider.markAllAsRead(),
                   child: Text(
                     'Mark all as read',
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       color: Color(0xFFEC1D25),
                       fontSize: 12,
                     ),
@@ -795,7 +795,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
                       'No notifications found',
-                      style: GoogleFonts.inter(color: Colors.grey),
+                      style: GoogleFonts.montserrat(color: Colors.grey),
                     ),
                   ),
                 )
@@ -825,7 +825,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
             },
             child: Text(
               'View all notifications',
-              style: GoogleFonts.inter(
+              style: GoogleFonts.montserrat(
                 color: Color(0xFFEC1D25),
                 fontSize: 14,
               ),
@@ -883,7 +883,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                 children: [
                   Text(
                     title,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontWeight: isUnread ? FontWeight.bold : FontWeight.w500,
                       fontSize: 14,
                     ),
@@ -891,7 +891,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                   const SizedBox(height: 4),
                   Text(
                     message,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 12,
                       color: Colors.grey.shade600,
                     ),
@@ -901,7 +901,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                   const SizedBox(height: 4),
                   Text(
                     time,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 10,
                       color: Colors.grey.shade500,
                     ),
@@ -948,7 +948,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
               children: [
                 Text(
                   'Notification Details',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                     color: Colors.white,
@@ -1015,7 +1015,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                                     children: [
                                       Text(
                                         _getNotificationTitle(notification),
-                                        style: GoogleFonts.inter(
+                                        style: GoogleFonts.montserrat(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 18,
                                         ),
@@ -1024,7 +1024,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                                       Text(
                                         DateFormat('MMM d, y hh:mm a')
                                             .format(notification.createdAt),
-                                        style: GoogleFonts.inter(
+                                        style: GoogleFonts.montserrat(
                                           fontSize: 12,
                                           color: Colors.grey.shade600,
                                         ),
@@ -1049,7 +1049,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                                   color: Colors.white,
                                   child: Text(
                                     'DETAILS',
-                                    style: GoogleFonts.inter(
+                                    style: GoogleFonts.montserrat(
                                       fontSize: 10,
                                       color: Colors.grey.shade500,
                                       letterSpacing: 1,
@@ -1087,7 +1087,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                                 child: Text(
                                   notification.message ??
                                       'No details available',
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.montserrat(
                                     fontSize: 14,
                                     color: Colors.grey.shade800,
                                     height: 1.5,
@@ -1336,8 +1336,8 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                             children: [
                               const CircleAvatar(
                                 backgroundColor: Colors.transparent,
-                                backgroundImage: AssetImage(
-                                    'assets/images/image_12.png'), // Add the path to your profile image
+                                backgroundImage: NetworkImage(
+                                    'assets/career_coaching/1709211669228.jpg'), // Add the path to your profile image
                                 radius: 24,
                               ),
                               // Column(
@@ -1549,7 +1549,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                           children: [
                             Text(
                               'Scheduled Appointments',
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.montserrat(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
                                 color: Colors.black,
@@ -1576,7 +1576,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                                           _searchController.text.isEmpty
                                               ? 'No scheduled appointments'
                                               : 'No results found',
-                                          style: GoogleFonts.inter(
+                                          style: GoogleFonts.montserrat(
                                             fontSize: 15,
                                             color: Colors.grey,
                                           ),
@@ -1682,7 +1682,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                           Expanded(
                             child: Text(
                               appointment.studentName,
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.montserrat(
                                   fontSize: 16, fontWeight: FontWeight.bold),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
@@ -1698,7 +1698,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                             ),
                             child: Text(
                               formattedService.toUpperCase(),
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.montserrat(
                                 fontSize: 12,
                                 color: Colors.red[800],
                                 fontWeight: FontWeight.bold,
@@ -1710,12 +1710,12 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                       SizedBox(height: 4),
                       Text(
                         "Date: $formattedDate",
-                        style: GoogleFonts.inter(fontSize: 13),
+                        style: GoogleFonts.montserrat(fontSize: 13),
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
                         "Time: $formattedTime",
-                        style: GoogleFonts.inter(fontSize: 13),
+                        style: GoogleFonts.montserrat(fontSize: 13),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ],
@@ -1746,7 +1746,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                   icon: Icon(Icons.check, color: Colors.white),
                   label: Text(
                     isCompleted ? "Completed" : "Complete",
-                    // style: GoogleFonts.inter(fontSize: 12, color: Colors.white),
+                    // style: GoogleFonts.montserrat(fontSize: 12, color: Colors.white),
                   ),
                 ),
                 SizedBox(width: 12),
@@ -1768,7 +1768,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
                   icon: Icon(Icons.loop, color: Colors.white),
                   label: Text(
                     hasPendingReschedule ? "Reschedule Pending" : "Reschedule",
-                    // style: GoogleFonts.inter(fontSize: 12, color: Colors.white),
+                    // style: GoogleFonts.montserrat(fontSize: 12, color: Colors.white),
                   ),
                 ),
               ],
@@ -1793,7 +1793,7 @@ class _SchedulesScreenState extends State<SchedulesScreen> {
         children: [
           Text(
             text,
-            style: GoogleFonts.inter(
+            style: GoogleFonts.montserrat(
               fontSize: fontSize,
               fontWeight:
                   selectedText == text ? FontWeight.bold : FontWeight.normal,

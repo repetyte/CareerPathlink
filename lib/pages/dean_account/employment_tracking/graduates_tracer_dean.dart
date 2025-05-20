@@ -389,8 +389,8 @@ class _TracerDashboardDeanState extends State<TracerDashboardDean> {
                         children: [
                           CircleAvatar(
                             backgroundColor: Colors.transparent,
-                            backgroundImage: const AssetImage(
-                                'assets/images/image_12.png'), // Add the path to your profile image
+                            backgroundImage: const NetworkImage(
+                                "assets/images/dean_agnes_reyes.jpg"), // Add the path to your profile image
                             radius: 24,
                           ),
                           SizedBox(

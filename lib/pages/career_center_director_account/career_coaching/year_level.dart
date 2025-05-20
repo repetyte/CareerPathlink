@@ -81,7 +81,7 @@ class _YearLevelState extends State<YearLevel> {
               children: [
                 Text(
                   'Year Level Engagement',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: const Color(0xFF2C3E50),
@@ -98,7 +98,7 @@ class _YearLevelState extends State<YearLevel> {
             const SizedBox(height: 8),
             Text(
               'Student participation across different academic levels',
-              style: GoogleFonts.inter(
+              style: GoogleFonts.montserrat(
                 fontSize: 12,
                 color: Colors.grey[600],
               ),
@@ -128,7 +128,7 @@ class _YearLevelState extends State<YearLevel> {
             SizedBox(height: 16),
             Text(
               'Loading engagement data...',
-              style: GoogleFonts.inter(
+              style: GoogleFonts.montserrat(
                 color: Colors.grey[600],
               ),
             ),
@@ -147,7 +147,7 @@ class _YearLevelState extends State<YearLevel> {
             Text(
               _errorMessage,
               textAlign: TextAlign.center,
-              style: GoogleFonts.inter(color: Colors.grey[700]),
+              style: GoogleFonts.montserrat(color: Colors.grey[700]),
             ),
             SizedBox(height: 16),
             ElevatedButton(
@@ -161,7 +161,7 @@ class _YearLevelState extends State<YearLevel> {
               ),
               child: Text(
                 'Try Again',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.montserrat(
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -187,7 +187,7 @@ class _YearLevelState extends State<YearLevel> {
                 SizedBox(height: 16),
                 Text(
                   'Error loading data',
-                  style: GoogleFonts.inter(color: Colors.grey[700]),
+                  style: GoogleFonts.montserrat(color: Colors.grey[700]),
                 ),
                 SizedBox(height: 16),
                 ElevatedButton(
@@ -244,7 +244,7 @@ class _YearLevelState extends State<YearLevel> {
                               ),
                               child: Text(
                                 '${index + 1}',
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.montserrat(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
@@ -254,7 +254,7 @@ class _YearLevelState extends State<YearLevel> {
                             const SizedBox(width: 12),
                             Text(
                               yearLevel,
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.montserrat(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                                 color: Color(0xFF2C3E50),
@@ -263,7 +263,7 @@ class _YearLevelState extends State<YearLevel> {
                             Spacer(),
                             Text(
                               '${data.totalStudents} students',
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.montserrat(
                                 fontSize: 12,
                                 color: Colors.grey[600],
                               ),
@@ -298,7 +298,7 @@ class _YearLevelState extends State<YearLevel> {
                               right: 0,
                               child: Text(
                                 '${data.studentDistribution.toStringAsFixed(1)}%',
-                                style: GoogleFonts.inter(
+                                style: GoogleFonts.montserrat(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w500,
                                   color: Color(0xFF2C3E50),
@@ -353,7 +353,7 @@ class _YearLevelState extends State<YearLevel> {
                               child: Center(
                                 child: Text(
                                   yearLevel[0],
-                                  style: GoogleFonts.inter(
+                                  style: GoogleFonts.montserrat(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
                                     color: _getColorForYearLevel(yearLevel),
@@ -364,7 +364,7 @@ class _YearLevelState extends State<YearLevel> {
                             const SizedBox(width: 12),
                             Text(
                               yearLevel,
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.montserrat(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                                 color: Color(0xFF2C3E50).withOpacity(0.5),
@@ -373,7 +373,7 @@ class _YearLevelState extends State<YearLevel> {
                             Spacer(),
                             Text(
                               'No data',
-                              style: GoogleFonts.inter(
+                              style: GoogleFonts.montserrat(
                                 fontSize: 12,
                                 color: Colors.grey[400],
                               ),
@@ -415,7 +415,7 @@ class _YearLevelState extends State<YearLevel> {
         SizedBox(height: 4),
         Text(
           title,
-          style: GoogleFonts.inter(
+          style: GoogleFonts.montserrat(
             fontSize: 10,
             fontWeight: FontWeight.w600,
             color: Color(0xFF2C3E50),
@@ -438,7 +438,7 @@ class _YearLevelState extends State<YearLevel> {
       child: Center(
         child: Text(
           value,
-          style: GoogleFonts.inter(
+          style: GoogleFonts.montserrat(
             fontSize: 14,
             fontWeight: FontWeight.bold,
             color: color,

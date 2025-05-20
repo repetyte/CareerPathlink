@@ -8,7 +8,7 @@ import 'dart:convert';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/services.dart';
 
-import '../../../models/career_coaching/user_model.dart';
+import '../../models/career_coaching/user_model.dart';
 
 class CareerCenterProfile {
   final String userId;
@@ -312,7 +312,7 @@ class _CareerCenterProfileScreenState extends State<CareerCenterProfileScreen> {
                 const SizedBox(height: 12),
                 Text(
                   "Reset Password?",
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: Colors.black87,
@@ -324,7 +324,7 @@ class _CareerCenterProfileScreenState extends State<CareerCenterProfileScreen> {
                   child: Text(
                     "A new password will be sent to your registered email. Continue?",
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontSize: 13,
                       color: Colors.grey[600],
                     ),
@@ -345,7 +345,7 @@ class _CareerCenterProfileScreenState extends State<CareerCenterProfileScreen> {
                       ),
                       child: Text(
                         "Cancel",
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 13,
                           fontWeight: FontWeight.w500,
                           color: Colors.grey[700],
@@ -365,7 +365,7 @@ class _CareerCenterProfileScreenState extends State<CareerCenterProfileScreen> {
                       ),
                       child: Text(
                         "Continue",
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 13,
                           fontWeight: FontWeight.w500,
                           color: Colors.white,
@@ -425,7 +425,7 @@ class _CareerCenterProfileScreenState extends State<CareerCenterProfileScreen> {
                       const SizedBox(height: 12),
                       Text(
                         "Password Reset Successful",
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                           color: Colors.black87,
@@ -437,7 +437,7 @@ class _CareerCenterProfileScreenState extends State<CareerCenterProfileScreen> {
                         child: Text(
                           "A new password has been sent to your email address.",
                           textAlign: TextAlign.center,
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.montserrat(
                             fontSize: 13,
                             color: Colors.grey[600],
                           ),
@@ -456,7 +456,7 @@ class _CareerCenterProfileScreenState extends State<CareerCenterProfileScreen> {
                         ),
                         child: Text(
                           "OK",
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.montserrat(
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
                             color: Colors.white,
@@ -550,7 +550,7 @@ class _CareerCenterProfileScreenState extends State<CareerCenterProfileScreen> {
                       const SizedBox(width: 8),
                       Text(
                         'Edit Profile',
-                        style: GoogleFonts.inter(
+                        style: GoogleFonts.montserrat(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
@@ -685,7 +685,7 @@ class _CareerCenterProfileScreenState extends State<CareerCenterProfileScreen> {
                           ),
                           child: Text(
                             'Cancel',
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.montserrat(
                               fontSize: 13,
                               color: primaryColor,
                               fontWeight: FontWeight.w500,
@@ -737,7 +737,7 @@ class _CareerCenterProfileScreenState extends State<CareerCenterProfileScreen> {
                           },
                           child: Text(
                             'Save Changes',
-                            style: GoogleFonts.inter(
+                            style: GoogleFonts.montserrat(
                               fontSize: 13,
                               color: Colors.white,
                               fontWeight: FontWeight.w500,
@@ -804,7 +804,7 @@ class _CareerCenterProfileScreenState extends State<CareerCenterProfileScreen> {
                 width: 140,
                 child: Text(
                   '$label:',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w500,
                       fontSize: 14,
                       color: const Color(0xFF9F9F9F)),
@@ -816,7 +816,7 @@ class _CareerCenterProfileScreenState extends State<CareerCenterProfileScreen> {
                     Text(
                       value ?? 'N/A',
                       style:
-                          GoogleFonts.inter(fontSize: 14, color: Colors.black),
+                          GoogleFonts.montserrat(fontSize: 14, color: Colors.black),
                     ),
                     if (isPassword)
                       TextButton(
@@ -828,7 +828,7 @@ class _CareerCenterProfileScreenState extends State<CareerCenterProfileScreen> {
                         ),
                         child: Text(
                           'Change Password?',
-                          style: GoogleFonts.inter(
+                          style: GoogleFonts.montserrat(
                             fontSize: 14,
                             color: const Color(0xFF3771C8),
                             decoration: TextDecoration.underline,
@@ -846,7 +846,7 @@ class _CareerCenterProfileScreenState extends State<CareerCenterProfileScreen> {
               padding: const EdgeInsets.only(left: 140, top: 4),
               child: Text(
                 'If you lost your password, a new password can be sent to this email.',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.montserrat(
                     fontSize: 12, color: const Color(0xFFFF0000)),
               ),
             ),
@@ -896,7 +896,7 @@ class _CareerCenterProfileScreenState extends State<CareerCenterProfileScreen> {
             children: [
               Text(
                 'About Me',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                     color: Colors.black),
@@ -1025,7 +1025,7 @@ class _CareerCenterProfileScreenState extends State<CareerCenterProfileScreen> {
                 children: [
                   Text(
                     profile.name,
-                    style: GoogleFonts.inter(
+                    style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.w600,
                       fontSize: 20,
                       color: Colors.white,
@@ -1043,7 +1043,7 @@ class _CareerCenterProfileScreenState extends State<CareerCenterProfileScreen> {
               ),
               Text(
                 profile.position ?? 'Career Center Director',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.montserrat(
                   fontWeight: FontWeight.w400,
                   fontSize: 15,
                   color: accentColor,
@@ -1064,7 +1064,7 @@ class _CareerCenterProfileScreenState extends State<CareerCenterProfileScreen> {
       appBar: AppBar(
         title: Text(
           'Profile',
-          style: GoogleFonts.inter(
+          style: GoogleFonts.montserrat(
               fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
         ),
         backgroundColor: primaryColor,

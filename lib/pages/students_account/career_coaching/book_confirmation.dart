@@ -23,7 +23,7 @@ class BookConfirmationScreen extends StatelessWidget {
               const SizedBox(height: 20),
               Text(
                 'Booking Confirmed!',
-                style: GoogleFonts.inter(
+                style: GoogleFonts.montserrat(
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                   color: Colors.black,
@@ -49,7 +49,7 @@ class BookConfirmationScreen extends StatelessWidget {
                 ),
                 child: Text(
                   'Back to Home',
-                  style: GoogleFonts.inter(
+                  style: GoogleFonts.montserrat(
                     fontWeight: FontWeight.w600,
                     fontSize: 14,
                     color: Colors.black,
