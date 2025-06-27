@@ -58,8 +58,8 @@ class _PartnerProfileScreenState extends State<PartnerProfileScreen> {
 
   // late Future<CareerCenterProfile> _profileFuture;
   // CareerCenterProfile? _profileData;
-  bool _isLoading = true;
-  String _errorMessage = '';
+  final bool _isLoading = true;
+  final String _errorMessage = '';
   // Uint8List? _profileImage;
 
   @override

@@ -50,14 +50,10 @@ class _AppointmentBookingScreenState extends State<AppointmentBookingScreen> {
       final userId = widget.studentAccount.username;
       debugPrint('Loaded user ID from preferences: $userId');
 
-      if (userId != null) {
-        setState(() => _currentUserId = userId);
-        await Provider.of<StudentNotificationProvider>(context, listen: false)
-            .loadNotifications(userId);
-      } else {
-        debugPrint('No user ID found in SharedPreferences');
-      }
-    } catch (e) {
+      setState(() => _currentUserId = userId);
+      await Provider.of<StudentNotificationProvider>(context, listen: false)
+          .loadNotifications(userId);
+        } catch (e) {
       debugPrint('Error loading user ID: $e');
     }
   }
